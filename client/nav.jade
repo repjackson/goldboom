@@ -10,55 +10,26 @@ template(name='nav')
                 +i name='one-ring'
                 // if currentUser.show_labels
                 |goldrun
-            a.item.zoomer.fly_right.clear_search.mobilehidden(href="/food" class="{{isActiveRoute regex='food'}}" title='food')
-                // i.large.food.icon
-                +i name='food'
-                if currentUser.show_labels
-                    span.mobile.hidden recipes
-            a.item.zoomer.fly_right.clear_search.mobilehidden(href="/transfers" class="{{isActiveRoute regex='transfers'}}" title='transfers')
-                +i name='exchange'
-                if currentUser.show_labels
-                    span.mobile.hidden transfers
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobilehidden(href="/products" class="{{isActiveRoute 'products'}}" title=products)
-                +i name='shopping-cart'
-                // i.large.shopping.cart.icon
-                if currentUser.show_labels
-                    span.mobile.hidden products
-            // +nav_item key='product' icon='shopping-cart'
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobilehidden(href="/groups" class="{{isActiveRoute regex='group'}}" title='groups')
-                +i name='campfire'
-                // i.large.fire.icon
-                if currentUser.show_labels
-                    span.mobile.hidden groups
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobilehidden(href="/badges" class="{{isActiveRoute regex='badge'}}" title='badges')
-                +i name='badge'
-                // i.large.fire.icon
-                if currentUser.show_labels
-                    span.mobile.hidden badges
-                    
-            a.item.zoomer.fly_right.clear_search.mobilehidden(href="/events" class="{{isActiveRoute regex='events'}}" title='events')
-                +i name='calendar'
-                if currentUser.show_labels
-                    span.mobile.hidden events
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobilehidden(href="/posts" class="{{isActiveRoute regex='post'}}" title='posts')
+            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/posts" class="{{isActiveRoute regex='post'}}" title='posts')
                 +i name='news'
                 // i.large.newspaper.icon
                 if currentUser.show_labels
                     span.mobile.hidden posts
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobilehidden(href="/users" class="{{isActiveRoute 'users'}}" title=users)
+            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}" title=users)
                 +i name='groups'
                 // i.large.users.icon
-                if currentUser.show_labels
-                    span.mobile.hidden users
-            a.item.zoomer.fly_right.clear_search.mobilehidden(href="/tasks" class="{{isActiveRoute regex='tasks'}}" title='tasks')
-                +i name='tasks'
-                if currentUser.show_labels
-                    span.mobile.hidden tasks
-            // +nav_item key='service' icon='wrench'
-            // +nav_item key='rental' icon='clock'
-            // +nav_item key='checkin' icon='checkmark'
-            // +nav_item key='log' icon='code'
-                    
+                // if currentUser.show_labels
+                span.mobile.hidden residents
+            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}" title=users)
+                +i name='manager'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden owners
+            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/checkins" class="{{isActiveRoute 'checkins'}}" title=checkins)
+                +i name='checkmark'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden checkins
             if currentUser
                 if unread_count
                     a.item(href="/user/#{currentUser.username}/inbox" title='unread messages')
@@ -70,16 +41,8 @@ template(name='nav')
                         i.remove.icon
         unless subs_ready
             .icon.item
-                +i name='river' cl='spinning'
+                +i name='one-ring' cl='spinning'
                 // i.yin.yang.large.loading.icon
-        if subs_ready
-            if is_connected
-                a.item(href="/search" title='global search')
-                    i.search.large.icon
-                // .item.mobile.hidden
-                //     .ui.icon.transparent.input
-                //         i.search.icon
-                //         input.global_search(type='text' placeholder='search...')
         unless currentUser
             // a.item(href="/register" title='register')
             //     +i name='plus'
@@ -87,12 +50,12 @@ template(name='nav')
             a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
                 i.sign.in.large.icon
                 // +i name='internal'
-                // span.mobilehidden login
+                span.mobile.hidden login
         unless is_connected
             a.item.zoomer.reconnect
                 i.spinner.big.loading.icon
                 +i name='disconnected'
-                |relink
+                |reconnect
                 i.large.circular.refresh.link.icon.zoomer.reconnect(title='reconnect now')
         .right.menu
             if currentUser
@@ -105,8 +68,6 @@ template(name='nav')
                     |&nbsp;
                 a.fly_up.zoomer.item.tada(href="/user/#{currentUser.username}/points" title='bank' class="{{isActiveRoute 'user_points'}}" )
                     |{{points_to_coins currentUser.points}}c
-                a.icon.item.zoomer.fly_down.add(href='/add' title='add doc')
-                    i.large.plus.icon
                 // a.icon.item(href="/mail/inbox")
             a.icon.item.toggle_rightbar.no_blink.zoomer
                 // .ui.avatar.image

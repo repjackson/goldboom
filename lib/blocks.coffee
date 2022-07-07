@@ -1,15 +1,4 @@
 if Meteor.isClient
-    Template.tip_button.helpers
-        can_tip: ->
-            @amount < Meteor.user().points
-    Template.tip_button.helpers 
-        post_tip_docs: ->
-            Docs.find 
-                model:'transfer'
-
-    Template.delete_button.events 
-        'click .delete_this': -> Docs.remove @
-    
     Template.model_label.helpers
         is_model: (input)->
             console.log input
@@ -224,8 +213,6 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.accordion').accordion()
         , 1000
-    Template.viewing_info.onRendered ->
-        Meteor.call 'log_view', @data._id, ->
     Template.comments.onRendered ->
         Meteor.setTimeout ->
             $('.accordion').accordion()

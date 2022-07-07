@@ -2,17 +2,29 @@ template(name='home')
     .ui.stackable.padded.grid
         .one.column.row
             .center.aligned.column
-                +home_button key='food' icon='food'
-                +home_button key='events' icon='calendar'
-                +home_button key='users' icon='groups'
-                +home_button key='products' icon='shopping-cart'
-                +home_button key='posts' icon='news'
-                +home_button key='transfers' icon='exchange'
-                +home_button key='rentals' icon='clock'
-                +home_button key='services' icon='wrench'
+                a.ui.massive.button(href="/healthclub")
+                    +i name='fitness'
+                    |healthclub
+                a.ui.massive.button(href="/buildings")
+                    +i name='building'
+                    |buildings
+                a.ui.massive.button(href="/residents")
+                    +i name='groups'
+                    |residents
+                a.ui.massive.button(href="/owners")
+                    +i name='manager'
+                    |owners
+                // +home_button key='food' icon='food'
+                // +home_button key='events' icon='calendar'
+                // +home_button key='users' icon='groups'
+                // +home_button key='products' icon='shopping-cart'
+                // +home_button key='posts' icon='news'
+                // +home_button key='transfers' icon='exchange'
+                // +home_button key='rentals' icon='clock'
+                // +home_button key='services' icon='wrench'
         .three.column.row
-            .column       
-                +latest_products
+            // .column       
+            //     +latest_products
             .column       
                 +latest_activity
             .column

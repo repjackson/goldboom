@@ -18,6 +18,21 @@ body {
     height-min: 800px !important;
 }
 
+
+.pulse {
+  animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
+}
+
+
 /*filter: invert(100%) hue-rotate(180deg);*/
 /*@media (prefers-color-scheme: dark) {*/
 /*}*/
@@ -210,7 +225,8 @@ body {
     /* border-radius: 15px !important; */
 }
 .topnav > .image:hover {
-    animation-name: spin;
+    /*animation-name: spin;*/
+    animation-name: pulse-animation;
     animation-duration: 5000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
@@ -323,12 +339,12 @@ body {
 
 
 .global_container{
-    transition: transform .25s; /* Animation */
+    transition: transform .25s; 
     /* padding-top: 5em !important; */
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 }
 .button:hover {
-    transition: transform .2s; /* Animation */
+    transition: transform .2s; 
     transform: scale(1.05) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     /*box-shadow: inset 0px 0px 10px 10px rgba(250,250,250,0.8);*/
 }
@@ -338,11 +354,11 @@ body {
 }
 
 .zoomer{
-    transition: transform .2s; /* Animation */
+    transition: transform .2s; 
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 }
 .zoomer:hover {
-    transition: transform .5s !important; /* Animation */
+    transition: transform .5s !important; 
     /*border-radius: 15px !important;*/
     /*overflow:scroll !important;*/
     box-shadow: 0px 0px 10px 10px rgba(200,200,200,0.1);
@@ -352,7 +368,7 @@ body {
     z-index:1000 !important;
 }
 .superzoomer:hover {
-    transition: transform .5s !important; /* Animation */
+    transition: transform .5s !important; 
     /*border-radius: 15px !important;*/
     /*overflow:scroll !important;*/
     box-shadow: 0px 0px 10px 10px rgba(250,250,250,0.8);
@@ -362,11 +378,11 @@ body {
     z-index:1000 !important;
 }
 .zoomers{
-    transition: transform .2s; /* Animation */
+    transition: transform .2s; 
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 }
 .zoomers:hover {
-    transition: transform .3s !important; /* Animation */
+    transition: transform .3s !important; 
     /*border-radius: 15px !important;*/
     /*overflow:scroll !important;*/
     /*box-shadow: inset 0px 0px 10px 10px rgba(250,250,250,0.8);*/
@@ -1198,8 +1214,8 @@ h1.ui.header{
 	overflow-x:scroll;
 	/*max-height:1000px;*/
 	/*max-height:85vh;*/
-    /* transition: background-color 3s; /* Animation */
-    /* transition: height 1s; /* Animation */ */
+    /* transition: background-color 3s; 
+    /* transition: height 1s;  */
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 
     /* background-color: (250,250,250,.1) !important; */

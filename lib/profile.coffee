@@ -154,15 +154,6 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'current_viewing_doc', Router.current().params.username, ->
         # @autorun -> Meteor.subscribe 'model_docs', 'group', ->
             
-    Template.user_groups.onCreated ->
-        @autorun -> Meteor.subscribe 'user_groups_member', Router.current().params.username, ->
-        # @autorun -> Meteor.subscribe 'user_groups_owner', Router.current().params.username, ->
-        
-        
-    Template.user_services.onCreated ->
-        @autorun -> Meteor.subscribe 'user_service_docs', Router.current().params.username, ->
-        @autorun -> Meteor.subscribe 'user_service_purchases', Router.current().params.username, ->
-        # @autorun -> Meteor.subscribe 'user_groups_owner', Router.current().params.username, ->
         
     Template.user_drafts.onCreated ->
         @autorun -> Meteor.subscribe 'user_drafts', Router.current().params.username, ->
@@ -179,30 +170,6 @@ if Meteor.isClient
                 limit:10
                 sort:sort_key:-1
             
-            
-    Template.user_services.events 
-        'click .add_user_service': ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            new_id = 
-                Docs.insert 
-                    model:'service'
-                    _author_id:user._id
-                    _author_username:user.username
-            Router.go "/service/#{new_id}/edit"
-                    
-    Template.user_services.helpers
-        user_service_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
-                model:'service'
-                _author_id:user._id
-        
-        service_purchase_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
-                model:'transfer'
-                transfer_type:'service_purchase'
-                _author_id:user._id
         
 if Meteor.isServer
     Meteor.publish 'user_drafts', (username)->
@@ -224,33 +191,6 @@ if Meteor.isServer
                 _author_id:1
                 image_id:1
                 _timestamp:1
-    Meteor.publish 'user_service_docs', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find {
-            model:'service'
-            _author_id:user._id
-        }
-    Meteor.publish 'user_service_purchases', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find {
-            model:'transfer'
-            transfer_type:'service_purchase'
-            _author_id:user._id
-        }
-        
-    Meteor.publish 'refered_users', (username)->
-        user = Meteor.users.findOne username:username
-        Meteor.users.find {
-            refered_by_id:user._id
-        },
-            fields:
-                username:1
-                image_id:1
-                tags:1
-                tags:1
-                refered_by_id:1
-                first_name:1
-                last_name:1
 if Meteor.isClient
     Template.user_social.helpers
         refered_user_docs: ->
@@ -304,10 +244,6 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.item').popup()
         , 1000
-    Template.doc_view.onRendered ->
-        Meteor.setTimeout ->
-            $('.button').popup()
-        , 2000
 
     Template.profile_layout.events
         'click .login_as_user': ->
@@ -351,31 +287,6 @@ if Meteor.isClient
     # Template.user_section.helpers
     #     user_section_template: ->
     #         "user_#{Router.current().params.group}"
-    Template.user_products.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'product', Router.current().params.username, ->
-
-    Template.user_products.helpers
-        user_product_docs: ->   
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
-                model:'product'
-                _author_id:user._id
-    Template.user_groups.helpers
-        group_memberships: ->   
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
-                model:'group'
-                member_ids:$in:[user._id]
-        user_group_memberships: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find
-                model:'group'
-                member_ids: $in:[user._id]
-        authored_group_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find
-                model:'group'
-                _author_id: user._id
 
     Template.profile_layout.helpers
         my_unread_log_docs: ->
@@ -680,23 +591,6 @@ if Meteor.isClient
     #                 $inc: credit: @amount
 
 
-    Template.group_events.helpers
-        group_event_docs: ->
-            Docs.find 
-                model:'event'
-                group_id:Router.current().params.doc_id
-    Template.group_posts.events 
-        'click .add_group_post': ->
-            new_id = 
-                Docs.insert 
-                    model:'post'
-                    group_id:Router.current().params.doc_id
-            Router.go "/doc/#{new_id}/edit"
-    Template.group_posts.helpers
-        group_post_docs: ->
-            Docs.find 
-                model:'post'
-                group_id:Router.current().params.doc_id
 
     Template.profile_layout.helpers
         owner_earnings: ->
@@ -782,8 +676,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-
-
     Template.user_single_doc_ref_editor.onCreated ->
         @autorun => Meteor.subscribe 'type', @data.model
 
