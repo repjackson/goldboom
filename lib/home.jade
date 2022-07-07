@@ -1,0 +1,69 @@
+template(name='home')
+    .ui.stackable.padded.grid
+        .one.column.row
+            .center.aligned.column
+                +home_button key='food' icon='food'
+                +home_button key='events' icon='calendar'
+                +home_button key='users' icon='groups'
+                +home_button key='products' icon='shopping-cart'
+                +home_button key='posts' icon='news'
+                +home_button key='transfers' icon='exchange'
+                +home_button key='rentals' icon='clock'
+                +home_button key='services' icon='wrench'
+        .three.column.row
+            .column       
+                +latest_products
+            .column       
+                +latest_activity
+            .column
+                +latest_checkins
+            .column
+                +latest_orders
+                
+template(name='latest_products')
+    .ui.header 
+        +i name='shopping-cart'
+        |latest products 
+    .ui.large.list.smallscroll
+        each model_docs 'product'
+            a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                small #{_when} by #{_author_username}
+                
+template(name='latest_activity')
+    .ui.header 
+        +i name='clock'
+        |latest activty 
+    .ui.large.list.smallscroll
+        each activity_docs 
+            a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                small #{_when} by #{_author_username}
+                
+template(name='latest_checkins')
+    .ui.header 
+        +i name='clock'
+        |latest checkins 
+    .ui.selection.divided.list
+        each model_docs 
+            a.item(href="/#{_parent_doc.model}/#{parent_id}" title="goto #{_parent.model}") #{body} #{_when}
+                +parent_info
+                +author_info
+        
+                
+template(name='parent_info')
+    .ui.large.label
+        with _parent_doc 
+            +model_label
+            |#{title}
+                
+template(name='latest_orders')
+    .ui.header 
+        +i name='order-history'
+        |latest orders 
+    .ui.selection.list.smallscroll
+        each latest_order_docs 
+            a.item(href="/order/#{_id}") #{body} #{_when} #{_author_username}
+                    
+template(name='home_button')
+    a.ui.big.circular.compact.image.label.fly_down(href="/#{key}")
+        +i name=icon
+        |#{key}
