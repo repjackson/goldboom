@@ -13,65 +13,116 @@ template(name='profile')
             .row
                 //- img.ui.image.checkin_banner(src="{{c.url banner_image width=1000 height=1000 crop='crop'}}")
                 .four.wide.column
-                    +profile_sidebar
+                    a(href="/user/#{username}")
+                        .ui.inline.header
+                            |@#{username}
+                        // +user_pill
+                    if first_name
+                        .ui.inline.header #{first_name}
+                    if last_name
+                        .ui.inline.header #{last_name}
+                    if status 
+                        .ui.big.label(title='status')
+                            i.clock.icon 
+                            |#{status}
+                    +online_label
+                    if roles 
+                        .ui.small.inline.header 
+                            +i name='shield'
+                            |roles
+                        each roles 
+                            .ui.label #{this}
+                    if is_current_user
+                        a.ui.large.icon.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
+                            +i name='settings'
+                            |account
+                    else if currentUser.admin_mode
+                        a.ui.large.icon.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
+                            +i name='settings'
+                            |account
+                    img.ui.medium.rounded.image.pointer.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                    // if subs_ready
+                    // a(href="/user/#{username}")
+                    // a(href="/user/#{username}")
+                    //     img.ui.small.rounded.image.inline.boop.mobile.only(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                    if publish_profile 
+                        .ui.label
+                            i.large.green.eye.icon(title='published profile')
+                            |public profile
+                    else 
+                        .ui.label
+                            i.large.lock.icon(title='private profile')
+                            |private profile
+                    div
+                    if company 
+                        .ui.large.label
+                            +i name='business' 
+                            |#{company}
+                    // if bio
+                    //     .smallscroll
+                    //         |!{bio}
+                    // .smallscroll
+                    //     each tags 
+                    //         .ui.large.label #{this}
+                    //         // |!{bio}
+                    if is_current_user
+                        +logout_button
+                    if in_dev 
+                        +print_this
+                    unless is_current_user
+                        // +request_button
+                        +follow_button
+                        +friend_button
                 .twelve.wide.column
-                    +user_dashboard
+                    +user_posts
+                    .ui.two.column.grid
+                        .column
+                            if status 
+                                .ui.label(title='status')
+                                    +i name='clock'
+                                    |#{status}
+                            +text_view key='display_name' label='display name'
+                            div
+                            +array_view key='tags' label='tags' icon='tags'
+                            +html_view key='bio' label='bio'
+                            +text_view key='status' label='status' icon='clock'
+                            +text_view key='address' label='address' icon='marker' 
+                            +text_view key='city' label='city' icon='marker' 
+                            +text_view key='state' label='state' icon='marker' 
+                            +phone_view key='phone' label='phone' icon='phone' 
+                            +text_view key='company' label='company' icon='business'
+                        .column
+                            +user_checkins
+                        .column
+                            +user_inbox
+                        .column
+                            a.ui.header.zoomers.calc_user_points
+                                // i.line.chart.icon
+                                +i name='line-chart'
+                                |stats
+                            +profile_stats
+                        .column 
+                            .ui.inline.header 
+                                +i name='binoculars'
+                                |currently viewing
+                            with current_viewing_doc
+                                a.ui.header.zoomers.fly_right(href="/doc/#{_id}")
+                                    img.ui.avatar.image(src="{{c.url image_id height=300 crop='crop'}}")
+                        
+                                    |#{title}
+                                    +model_label
+                        .content
+                            .ui.header 
+                                +i name='history'
+                                |viewing history
+                            // else 
+                            //     .ui.center.aligned.segment
+                            //         i.massive.loading.refresh.icon
+                              
                     
                     
                     
 template(name='user_dashboard')
-    +user_posts
-    .ui.one.column.grid
-        .column
-            if status 
-                .ui.label(title='status')
-                    +i name='clock'
-                    |#{status}
-            +text_view key='display_name' label='display name'
-            div
-            +array_view key='tags' label='tags' icon='tags'
-            +html_view key='bio' label='bio'
-            +text_view key='status' label='status' icon='clock'
-            +text_view key='address' label='address' icon='marker' 
-            +text_view key='city' label='city' icon='marker' 
-            +text_view key='state' label='state' icon='marker' 
-            +phone_view key='phone' label='phone' icon='phone' 
-            +text_view key='company' label='company' icon='business'
-        // .column
-        //     +user_checkins
-        // .column
-        //     +user_points
-        // .column
-        //     +user_events
-        .column
-            +user_inbox
-        .column
-            a.ui.header.zoomers.calc_user_points
-                // i.line.chart.icon
-                +i name='line-chart'
-                |stats
-            +profile_stats
-        .column 
-            .ui.inline.header 
-                +i name='binoculars'
-                |currently viewing
-            with current_viewing_doc
-                a.ui.header.zoomers.fly_right(href="/doc/#{_id}")
-                    img.ui.avatar.image(src="{{c.url image_id height=300 crop='crop'}}")
-        
-                    |#{title}
-                    +model_label
-        .content
-            .ui.header 
-                +i name='history'
-                |viewing history
-            // else 
-            //     .ui.center.aligned.segment
-            //         i.massive.loading.refresh.icon
-              
-
-template(name='profile_section')
-    +Template.dynamic template=section_template
 
 
 template(name='user_inbox')
@@ -120,17 +171,6 @@ template(name='profile_stats')
             |#{profile_views_logged_in} 
             |logged in views
         .item 
-            i.thumbs.up.grey.icon
-            |#{upvote_total} 
-            |upvoted points
-        .item 
-            i.thumbs.down.grey.icon
-            |#{downvote_total} 
-            |downvoted points
-        .item 
-            i.coins.icon 
-            |#{tip_count} tips totalling #{tip_total}pts
-        .item 
             i.chat.icon
             |comment amount: #{comment_count}
         .item
@@ -141,100 +181,6 @@ template(name='profile_stats')
             |viewed docs:#{viewed_total}
 
 
-template(name='profile_sidebar')                          
-    a(href="/user/#{username}")
-        .ui.inline.header
-            |@#{username}
-        // +user_pill
-    if first_name
-        .ui.inline.header #{first_name}
-    if last_name
-        .ui.inline.header #{last_name}
-    if status 
-        .ui.big.label(title='status')
-            i.clock.icon 
-            |#{status}
-    a.ui.large.label(href="/user/#{username}/points" title='points')
-        //- +i name='coins'
-        //- i.coins.icon
-        |#{points} pts
-    +link_view key='link' icon='globe'
-    +online_label
-    if roles 
-        .ui.small.inline.header 
-            +i name='shield'
-            |roles
-        each roles 
-            .ui.label #{this}
-    if linkedin_link
-        a.ui.circular.icon.large.compact.button.zoomers.pointer(href=linkedin_link target='_window' title='view linkedin profile')
-            +i name='linkedin'
-    if twitter_link
-        a.ui.circular.icon.large.compact.button.zoomers.pointer(href=twitter_link target='_window' title='view twitter profile')
-            +i name='twitter'
-    if instagram_link
-        a.ui.circular.icon.large.compact.button.zoomers.pointer(href=instagram_link target='_window' title='view instagram profile')
-            +i name='instagram'
-    if facebook_link
-        a.ui.circular.icon.large.compact.button.zoomers.pointer(href=facebook_link target='_window' title='view facebook profile')
-            +i name='facebook'
-    if one_link
-        a.ui.circular.icon.large.compact.button.zoomers.pointer(href=facebook_link target='_window' title='view facebook profile')
-            img.ui.avatar.image(src="{{c.url 'one_logo' height=500 width=500 gravity='face' crop='fill'}}")
-    if is_current_user
-        a.ui.large.icon.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
-            +i name='settings'
-            unless currentUser.hide_labels
-                |account
-    else if currentUser.admin_mode
-        a.ui.large.icon.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
-            +i name='settings'
-            unless currentUser.hide_labels
-                |account
-    img.ui.medium.rounded.image.boop.pointer.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
-    // if subs_ready
-    // a(href="/user/#{username}")
-    // a(href="/user/#{username}")
-    //     img.ui.small.rounded.image.inline.boop.mobile.only(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
-    .ui.inline.small.header(title='boops')
-        +i name='tap-gesture'
-        |#{boops}
-    if publish_profile 
-        .ui.label
-            i.large.green.eye.icon(title='published profile')
-            |public profile
-    else 
-        .ui.label
-            i.large.lock.icon(title='private profile')
-            |private profile
-    div
-    if company 
-        .ui.large.label
-            +i name='business' 
-            |#{company}
-    // if bio
-    //     .smallscroll
-    //         |!{bio}
-    // .smallscroll
-    //     each tags 
-    //         .ui.large.label #{this}
-    //         // |!{bio}
-    if is_current_user
-        +logout_button
-        +logout_other_clients_button
-    if in_dev 
-        +print_this
-    unless is_current_user
-        // +request_button
-        +follow_button
-        +friend_button
-                          
-                          
-template(name='profile_nav_item')        
-    a.ui.large.image.label.zoomer(href="/user/#{current_user.username}/#{section}" title=section class=profile_item_class)
-        +i name=icon cl='zoomer'
-        unless currentUser.hide_labels
-            strong #{section}
 template(name='online_label')
     if online 
         .ui.large.green.label 
@@ -247,11 +193,8 @@ template(name='user_checkins')
     .ui.inline.header 
         +i name='checkmark'
         |#{user_task_docs.count} checkins
-    each user_checkin_docs
-        img.ui.avatar.image(src="{{c.url _parent_doc.image_id height=300 crop='crop'}}")
-    .ui.header authored
-    .ui.header assigned
-    .ui.header completed
+    each user_checkin_docs  
+        .item #{_when}
         
         
         
@@ -417,8 +360,7 @@ template(name='send_message_button')
     .ui.button.send_message
         +i name='envelope'
         span.mobile.hidden
-            unless currentUser.hide_labels
-                |send message
+            |send message
             
 template(name="user_reviews") 
     if user_review_docs.count
@@ -459,19 +401,9 @@ template(name='user_posts')
 
 
 
-template(name='logout_other_clients_button')
-    .ui.compact.button.logout_other_clients(title='logout other clients')
-        +i name='globe'
-        span.mobile.hidden
-            unless currentUser.hide_labels
-                |log out other clients
-
-
-
 template(name='logout_button')
     .ui.large.button.logout(title='log out')
         // i.sign.out.alternate.icon
         +i name='exit'
         span.mobile.hidden
-            unless currentUser.hide_labels
-                |log out
+            |log out

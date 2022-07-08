@@ -4,11 +4,6 @@ if Meteor.isClient
         @render 'profile'
         ), name:'profile'
 
-    Template.profile_nav_item.helpers
-        profile_item_class: ->
-            console.log @
-            if Router.current().params.section is @section then 'big active' else ''
-            
 
     Template.user_inbox.onCreated ->
         @autorun -> Meteor.subscribe 'unread_logs',->
@@ -130,9 +125,6 @@ if Meteor.isClient
             if Meteor.user().current_viewing_doc_id
                 Docs.findOne Meteor.user().current_viewing_doc_id
 
-    Template.logout_other_clients_button.events
-        'click .logout_other_clients': ->
-            Meteor.logoutOtherClients()
 
     Template.logout_button.events
         'click .logout': (e,t)->
@@ -202,13 +194,7 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.profile.onCreated ->
-        # @autorun => Meteor.subscribe 'user_orders', Router.current().params.username
-        # @autorun => Meteor.subscribe 'model_docs', 'rental'
-        # @autorun => Meteor.subscribe 'joint_transactions', Router.current().params.username
         @autorun => Meteor.subscribe 'user_deposts', Router.current().params.username, ->
-        # @autorun => Meteor.subscribe 'model_docs', 'order', ->
-        # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
-
 
     Template.profile.helpers
         owner_earnings: ->

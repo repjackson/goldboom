@@ -19,6 +19,8 @@ if Meteor.isClient
     
     
     
+        
+        
     Router.route '/post/:doc_id', (->
         @layout 'layout'
         @render 'post_view'

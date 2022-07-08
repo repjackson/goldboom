@@ -264,6 +264,14 @@ Meteor.publish 'facet_sub', (
 
 
 
+Meteor.publish 'model_docs', (model)->
+    Docs.find {
+        model:model
+    }, 
+        limit:20
+        sort:
+            _timestamp:-1
+            
 # Meteor.publish 'ancestor_ids', (doc_id, username)->
 #     match = {}
 #     self = @

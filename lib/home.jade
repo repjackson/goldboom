@@ -29,17 +29,6 @@ template(name='home')
                 +latest_activity
             .column
                 +latest_checkins
-            .column
-                +latest_orders
-                
-template(name='latest_products')
-    .ui.header 
-        +i name='shopping-cart'
-        |latest products 
-    .ui.large.list.smallscroll
-        each model_docs 'product'
-            a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
-                small #{_when} by #{_author_username}
                 
 template(name='latest_activity')
     .ui.header 
@@ -67,13 +56,6 @@ template(name='parent_info')
             +model_label
             |#{title}
                 
-template(name='latest_orders')
-    .ui.header 
-        +i name='order-history'
-        |latest orders 
-    .ui.selection.list.smallscroll
-        each latest_order_docs 
-            a.item(href="/order/#{_id}") #{body} #{_when} #{_author_username}
                     
 template(name='home_button')
     a.ui.big.circular.compact.image.label.fly_down(href="/#{key}")
