@@ -45,26 +45,11 @@ template(name='profile')
                     // a(href="/user/#{username}")
                     // a(href="/user/#{username}")
                     //     img.ui.small.rounded.image.inline.boop.mobile.only(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
-                    if publish_profile 
-                        .ui.label
-                            i.large.green.eye.icon(title='published profile')
-                            |public profile
-                    else 
-                        .ui.label
-                            i.large.lock.icon(title='private profile')
-                            |private profile
                     div
                     if company 
                         .ui.large.label
                             +i name='business' 
                             |#{company}
-                    // if bio
-                    //     .smallscroll
-                    //         |!{bio}
-                    // .smallscroll
-                    //     each tags 
-                    //         .ui.large.label #{this}
-                    //         // |!{bio}
                     if is_current_user
                         +logout_button
                     if in_dev 
@@ -90,7 +75,6 @@ template(name='profile')
                             +text_view key='city' label='city' icon='marker' 
                             +text_view key='state' label='state' icon='marker' 
                             +phone_view key='phone' label='phone' icon='phone' 
-                            +text_view key='company' label='company' icon='business'
                         .column
                             +user_checkins
                         .column
@@ -101,30 +85,9 @@ template(name='profile')
                                 +i name='line-chart'
                                 |stats
                             +profile_stats
-                        .column 
-                            .ui.inline.header 
-                                +i name='binoculars'
-                                |currently viewing
-                            with current_viewing_doc
-                                a.ui.header.zoomers.fly_right(href="/doc/#{_id}")
-                                    img.ui.avatar.image(src="{{c.url image_id height=300 crop='crop'}}")
-                        
-                                    |#{title}
-                                    +model_label
-                        .content
-                            .ui.header 
-                                +i name='history'
-                                |viewing history
-                            // else 
-                            //     .ui.center.aligned.segment
-                            //         i.massive.loading.refresh.icon
                               
                     
                     
-                    
-template(name='user_dashboard')
-
-
 template(name='user_inbox')
     .column
         .ui.inline.header 
@@ -144,13 +107,13 @@ template(name='user_inbox')
                 +log_item
         .ui.small.header
             +i name='sent'
-            |sent
+            |sent messages
         .ui.list 
             each user_messages_sent
                 |#{body}
         .ui.small.header
             +i name='internal'
-            |received
+            |received messages
         .ui.list 
             each user_messages_received
                 |#{body}

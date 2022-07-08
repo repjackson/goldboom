@@ -1,7 +1,9 @@
 template(name='checkins')
     .ui.stackable.padded.grid
         .four.wide.column
-            .ui.header checkins
+            .ui.header
+                +i name='checkmark'
+                |checkins
             .ui.button.checkin
                 |checkin
         .twelve.wide.column
@@ -9,7 +11,8 @@ template(name='checkins')
                 each checkin_docs 
                     .item
                         .content 
-                            |#{_when} #{_author_username}
+                            |#{_when}
+                            +author_info
 
 template(name='doc_checkins')          
     .ui.inline.header 
