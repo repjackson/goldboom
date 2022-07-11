@@ -10,16 +10,25 @@ template(name='nav')
                 +i name='one-ring'
                 // if currentUser.show_labels
                 |goldrun
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/posts" class="{{isActiveRoute regex='post'}}" title='posts')
-                +i name='news'
-                // i.large.newspaper.icon
-                span.mobile.hidden posts
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}" title=users)
+            a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
+                // i.large.users.icon
+                +i name='fitness'
+                .mobile.hidden healthclub
+            a.icon.zoomer.item.fly_right(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
+                // i.large.exchange.icon
+                +i name='apartment'
+                span.mobile.hidden buildings
+            a.icon.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
+                // i.large.exchange.icon
+                +i name='room'
+                span.mobile.hidden units
+
+            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/residents" class="{{isActiveRoute 'residents'}}" title=users)
                 +i name='groups'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden residents
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}" title=users)
+            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/owners" class="{{isActiveRoute 'owners'}}" title=users)
                 +i name='manager'
                 // i.large.users.icon
                 // if currentUser.show_labels

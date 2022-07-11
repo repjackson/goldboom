@@ -2,6 +2,15 @@ template(name='home')
     .ui.stackable.padded.grid
         .one.column.row
             .center.aligned.column
+                .ui.header healthclub 
+                if is_checked_in 
+                    .ui.header currently checked in
+                    .ui.big.button.checkout
+                        |checkout
+                else 
+                    .ui.big.button.checkin 
+                        |checkin
+            .center.aligned.column
                 a.ui.massive.button(href="/healthclub")
                     +i name='fitness'
                     |healthclub

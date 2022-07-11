@@ -97,9 +97,3 @@ Template.layout.events
     #     $('.global_container')
     #     .transition('fade out', 200)
     #     .transition('fade in', 200)
-
-
-Router.route '/', (->
-    @layout 'layout'
-    @render 'home'
-    ), name:'home'

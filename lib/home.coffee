@@ -1,6 +1,30 @@
 if Meteor.isClient 
+    Router.route '/', (->
+        @layout 'layout'
+        @render 'home'
+        ), name:'home'
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
+    Template.home.events 
+        'click .checkin': ->
+            if Meteor.userId() 
+                Meteor.users.update Meteor.userId(),
+                    $set:
+                        checked_in:true
+                        checked_in_timestamp:Date.now()
+            else 
+                Router.go '/login'
+                
+        'click .checkout': ->
+            if Meteor.userId() 
+                Meteor.users.update Meteor.userId(),
+                    $set:
+                        checked_in:false
+                        checked_out_timestamp:Date.now()
+            else 
+                Router.go '/login'
+                
+                
     Template.latest_activity.helpers
         activity_docs: ->
             Docs.find 
