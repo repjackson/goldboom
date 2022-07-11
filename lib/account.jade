@@ -17,9 +17,10 @@ template(name='account')
                     +image_edit key='image_id' icon='picture' title='profile image' 
                     +image_edit key='background_image_id' icon='picture' title='background image' 
                     // if currentUser.admin_mode
-                    +boolean_edit key='admin' label='admin' icon='shield' 
-
-                    +print_this
+                    if in_dev
+                        +boolean_edit key='admin' label='admin' icon='shield' 
+                    if currentUser.admin_mode
+                        +print_this
                 .column
                     .ui.inline.header 
                         +i name='info'
@@ -28,7 +29,7 @@ template(name='account')
                     div
                     +text_edit key='last_name' label='last name' icon='user'
                     div
-                    +text_edit key='display_name' label='display name'
+                    // +text_edit key='display_name' label='display name'
                     div
                     +text_edit key='status' label='status' icon='clock'
                     div
@@ -43,15 +44,9 @@ template(name='account')
                     div
                     if address
                         +i name='marker'
-                    if company
-                        +i name='company'
                     if phone
                         +i name='phone'
                     +text_edit key='address' label='address' icon='marker' 
-                    div
-                    +text_edit key='city' label='city' icon='marker' 
-                    div
-                    +text_edit key='state' label='state' icon='marker' 
                     div
                     +phone_edit key='phone' label='phone' icon='phone' 
                     div

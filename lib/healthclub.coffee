@@ -75,7 +75,7 @@ if Meteor.isClient
 
         residents: ->
             Meteor.users.find
-                roles:$in:['resident','owner']
+                roles:$in:['resident']
                 owner:$ne:true
                 building_number:@building_number
                 checkin_number:@checkin_number
