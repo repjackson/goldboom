@@ -13,6 +13,8 @@ template(name='units')
             
 template(name='unit_card')
     a.ui.card(href="/unit/#{_id}") 
+        if image_id
+            img.ui.image(src="{{c.url image_id }}")
         .content 
             .ui.inline.header #{address}
             // .ui.inline.header ##{unit_number}
@@ -34,8 +36,6 @@ template(name='unit_card')
 
             
 
-
-
 template(name='unit_view')
     with current_doc
         .ui.stackable.padded.grid
@@ -52,6 +52,8 @@ template(name='unit_view')
                     //- +i name='apartment'
                     |unit
                     |#{unit_number}
+                img.ui.image(src="{{c.url image_id }}")
+
                 .ui.header 
                     |Building ##{building_number}
                 .ui.header 

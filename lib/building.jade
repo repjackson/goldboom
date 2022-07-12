@@ -124,9 +124,7 @@ template(name='building_edit')
                 div
                 +text_edit key='address' label='address' direct=true
                 // +text_edit key='email' label='Email' direct=true
-                +number_edit key='building_number' direct=true
-                +text_edit key='building_code' direct=true
-                +textarea_edit key='notes' direct=true
+                +html_edit key='notes' direct=true
                 
             .column
                 a.ui.big.fluid.green.button(href="/building/#{_id}")
