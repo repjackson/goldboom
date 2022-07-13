@@ -4,8 +4,14 @@ template(name='units')
             .ui.inline.header 
                 +i name='bedroom'
                 |units
-            .ui.icon.button.add_unit
-                i.plus.icon
+            .ui.icon.compact.button.add_unit
+                i.plus.large.icon
+            .ui.icon.input 
+                i.hashtag.icon
+                input.search_unit_number(type='text' placeholder='number')
+            .ui.icon.input 
+                i.building.icon
+                input.search_building_number(type='text' placeholder='building')
             .ui.cards
                 each unit_docs
                     +unit_card
