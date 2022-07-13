@@ -320,14 +320,6 @@ template(name='checkin_view')
                         if current_user.gov_red_flagged
                             .ui.disabled.massive.fluid.button
                                 |Government Id verification required
-                        unless current_user.gov_red_flagged
-                            if current_user.kiosk_photo
-                                if user.member_waiver_signed
-                                    if user.rules_and_regulations_signed
-                                        unless user.email_red_flagged
-                                            .ui.massive.fluid.basic.green.button.submit_checkin
-                                                .ui.inline.inverted.header 
-                                                    | check in
                 .row
                     .sixteen.wide.column
                         if timer_engaged
