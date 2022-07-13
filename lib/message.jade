@@ -173,7 +173,7 @@ template(name='message_item')
             if cost 
                 .ui.header cost: #{cost}pts
             if can_edit
-                +remove_button
+                +delete_button
             .ui.header
                 i.message.icon
                 |#{amount}pts
@@ -217,7 +217,7 @@ template(name='message_view')
                         |cost 
                         |#{cost}
                     if can_edit
-                        +remove_button
+                        +delete_button
                     .ui.header
                         i.message.icon
                         |#{amount}pts

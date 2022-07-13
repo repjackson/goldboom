@@ -397,7 +397,7 @@ template(name='text_edit')
         else if key
             |#{key}
             //- +clear_value
-    .ui.icon.large.input
+    .ui.icon.large.fluid.input
         i.grey.icon(class=icon)
         input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         
@@ -627,7 +627,7 @@ template(name='child_edit')
     .content
         each child_fields
             +Template.dynamic template=edit_template 
-        +remove_button
+        +delete_button
         //-     +text_edit key='key'
         //-     +text_edit key='field'
         //-     +single_doc_edit key='field' ref_model='field_type' ref_key='slug' label='Field Type'
@@ -666,7 +666,7 @@ template(name='child_view')
         //- |#{rank} #{title} #{title}
         //- |#{key}
         +Template.dynamic template=view_template 
-    +remove_button
+    +delete_button
     +view_button
         // if field_template
         //     .ui.header field template #{field_template}

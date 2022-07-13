@@ -1,4 +1,5 @@
 Router.route '/units', -> @render 'units'
+Router.route '/unit', -> @render 'units'
 Router.route '/unit/:doc_id', -> @render 'unit_view'
 Router.route '/unit/:doc_id/edit', -> @render 'unit_edit'
 

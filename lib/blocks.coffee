@@ -786,7 +786,7 @@ if Meteor.isClient
             Session.set('sort_icon', @icon)
 
 
-    Template.remove_button.events
+    Template.delete_button.events
         'click .remove_doc': (e,t)->
             console.log 'remove'
             if confirm "remove #{@model}?"
@@ -803,7 +803,7 @@ if Meteor.isClient
                     Docs.remove @_id
                 , 1000
                 # if @doc.redirect
-                Router.go "/docs/"
+                Router.go "/#{@model}/"
 
     Template.remove_icon.events
         'click .remove_doc': (e,t)->

@@ -12,7 +12,7 @@ template(name='units')
             
             
 template(name='unit_card')
-    a.ui.card(href="/unit/#{_id}") 
+    a.ui.card.fly_right(href="/unit/#{_id}") 
         if image_id
             img.ui.image(src="{{c.url image_id }}")
         .content 
@@ -34,13 +34,11 @@ template(name='unit_card')
                     +i name='clock' 
                     |for rent
 
-            
-
 template(name='unit_view')
     with current_doc
         .ui.stackable.padded.grid
             .four.wide.column
-                a.ui.large.button.fly_left(href="/units")
+                a.ui.large.compact.button.fly_left(href="/units")
                     i.large.left.chevron.icon
                     +i name='room'
                     |units
@@ -48,8 +46,8 @@ template(name='unit_view')
                     i.large.left.chevron.icon
                     |#{building_code}
                 .ui.header
-                    i.home.icon 
-                    //- +i name='apartment'
+                    // i.home.icon 
+                    +i name='apartment'
                     |unit
                     |#{unit_number}
                 img.ui.image(src="{{c.url image_id }}")
@@ -62,25 +60,25 @@ template(name='unit_view')
                     a.ui.icon.button(href="/unit/#{_id}/edit")
                         i.large.pencil.icon
                 // if can_edit
-                //     +text_edit key='building_code' label='building_code' direct=true
-                //     +number_edit key='building_number' label='building number' direct=true
-                //     +textarea_edit key='notes' direct=true
+                //     +text_edit key='building_code' label='building_code' 
+                //     +number_edit key='building_number' label='building number' 
+                //     +textarea_edit key='notes' 
             .six.wide.column
-                +html_view key='description' label='description' direct=true
+                +html_view key='description' label='description' 
                 +user_key
-                +number_view key='bedroom_count' label='bedrooms' icon='bedroom' direct=true
-                +number_view key='bathroom_count' label='bathrooms' icon='bath' direct=true
+                +number_view key='bedroom_count' label='bedrooms' icon='bedroom' 
+                +number_view key='bathroom_count' label='bathrooms' icon='bath' 
                 if link
-                    +link_view key='link' label='link' icon='link' direct=true
+                    +link_view key='link' label='link' icon='link' 
             .six.wide.column
-                +number_view key='square_feet' label='square feet' icon='ruler' direct=true
-                +number_view key='monthly_rent' label='monthly rent' icon='money' direct=true
-                +boolean_view key='for_rent' label='for rent' icon='money' direct=true
+                +number_view key='square_feet' label='square feet' icon='ruler' 
+                +number_view key='monthly_rent' label='monthly rent' icon='money' 
+                +boolean_view key='for_rent' label='for rent' icon='money' 
                     if for_rent 
-                        +date_view key='date_available_rent' label='date available to rent' direct=true
-                +boolean_view key='for_sale' label='for sale' icon='money' direct=true
+                        +date_view key='date_available_rent' label='date available to rent' 
+                +boolean_view key='for_sale' label='for sale' icon='money' 
                 if for_sale 
-                    +date_view key='date_available' label='date available' icon='calendar' direct=true
+                    +date_view key='date_available' label='date available' icon='calendar' 
 
                 +unit_residents
                 +unit_owners
@@ -94,27 +92,28 @@ template(name='unit_edit')
             .column
                 +image_edit key='image_id'
                 h2.ui.center.aligned.header #{unit_number} #{building_number} 
-                +text_edit key='address' label='address' direct=true
-                +number_edit key='unit_number' label='unit number' direct=true
-                +number_edit key='building_number' label='building number' direct=true
-                +link_edit key='link' label='link' icon='link' direct=true
-                // +text_edit key='email' label='Email' direct=true
+                +text_edit key='address' label='address' icon='marker'
+                +number_edit key='unit_number' label='unit number' icon='hashtag'
+                +number_edit key='building_number' label='building number' icon='apartment'
+                +link_edit key='link' label='link' icon='link' 
+                // +text_edit key='email' label='Email' 
             .column
                 a.ui.big.fluid.icon.green.button(href="/unit/#{_id}")
                     i.checkmark.big.icon
-                +html_edit key='description' label='description' direct=true
+                +html_edit key='description' label='description' 
             .column
-                +number_edit key='bedroom_count' label='bedrooms' icon='bedroom' direct=true
-                +number_edit key='bathroom_count' label='bathrooms' icon='bath' direct=true
-                +number_edit key='square_feet' label='square feet' icon='ruler' direct=true
-                +number_edit key='monthly_rent' label='monthly rent' icon='money' direct=true
-                +boolean_edit key='for_rent' label='for rent' icon='money' direct=true
+                +number_edit key='bedroom_count' label='bedrooms' icon='bedroom' 
+                +number_edit key='bathroom_count' label='bathrooms' icon='bath' 
+                +number_edit key='square_feet' label='square feet' icon='ruler' 
+                +number_edit key='monthly_rent' label='monthly rent' icon='money' 
+                +boolean_edit key='for_rent' label='for rent' icon='money' 
                     if for_rent 
-                        +date_edit key='date_available_rent' label='date available to rent' direct=true
-                +boolean_edit key='for_sale' label='for sale' icon='money' direct=true
+                        +date_edit key='date_available_rent' label='date available to rent' 
+                +boolean_edit key='for_sale' label='for sale' icon='money' 
                 if for_sale 
-                    +date_edit key='date_available' label='date available' icon='calendar' direct=true
-            
+                    +date_edit key='date_available' label='date available' icon='calendar' 
+                if currentUser.admin_mode
+                    +delete_button
             
 template(name='unit_permits')            
     .ui.segment
@@ -127,9 +126,9 @@ template(name='unit_permits')
                     .content
                         with resident 
                             +username_info
-                        +date_view key='expiration_date' icon='calendar delete' direct=true
-                        +text_view key='permit' icon='badge' direct=true
-                        +text_view key='license_plate' icon='driver-license-card' direct=true
+                        +date_view key='expiration_date' icon='calendar delete' 
+                        +text_view key='permit' icon='badge' 
+                        +text_view key='license_plate' icon='driver-license-card' 
 
 template(name='unit_owners')            
     .ui.segment
@@ -146,7 +145,7 @@ template(name='unit_owners')
                         a.header(href="/user/#{username}")
                              |#{first_name} #{last_name} 
                             .meta @#{username}
-                            //- +array_view key='tags' label='Tags' direct=true
+                            //- +array_view key='tags' label='Tags' 
 
 
 template(name='unit_residents')            
@@ -167,7 +166,7 @@ template(name='unit_residents')
                             .meta 
                                 i.calendar.icon(title='expiration date')
                                 |#{expiration_date}
-                            //- +array_view key='tags' label='Tags' direct=true
+                            //- +array_view key='tags' label='Tags' 
 
 
 template(name='user_key')
@@ -179,19 +178,19 @@ template(name='user_key')
         if is_admin
             +goto_model slug='key'
         with key
-            +boolean_view key='key_exists' label='key exists' direct=true
-            //- +number_view key='building_number' label='building number' direct=true
-            //- +number_view key='unit_number' label='unit #' direct=true
+            +boolean_view key='key_exists' label='key exists' 
+            //- +number_view key='building_number' label='building number' 
+            //- +number_view key='unit_number' label='unit #' 
             div
             if is_admin
-                +number_view key='tag_number' label='tag number' direct=true
+                +number_view key='tag_number' label='tag number' 
             if is_staff
                 if viewing_code
                     .ui.massive.yellow.basic.label
                         if fowler
-                            +boolean_view key='fowler' label='fowler' direct=true
+                            +boolean_view key='fowler' label='fowler' 
                         else
-                            +number_view key='tag_number' label='tag number' direct=true
+                            +number_view key='tag_number' label='tag number' 
                 else
                     .ui.icon.button.view_code
                         i.lock.icon

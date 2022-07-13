@@ -333,7 +333,7 @@ template(name='reviews')
                             // if currentUser
                         +voting_small
                         // if can_edit
-                        //     +remove_button
+                        //     +delete_button
 
 
 template(name='viewing')
@@ -467,7 +467,7 @@ template(name='events_column')
                                 .date
                                     |#{when}
                                 if is_dev
-                                    +remove_button
+                                    +delete_button
 
 
 
@@ -640,7 +640,7 @@ template(name='view_button')
         +i name='chevron right' cl='ui mini inline image'
 
 
-template(name='remove_button')
+template(name='delete_button')
     .ui.red.button.remove_doc(title='delete')
         i.remove.large.icon
         |delete
@@ -802,7 +802,7 @@ template(name='facet')
 //                         if currentUser
 //                             +voting_small
 //                             if can_edit
-//                                 +remove_button
+//                                 +delete_button
 
 
 // template(name='creation_info')
@@ -896,7 +896,7 @@ template(name='facet')
 //                                 .date
 //                                     |#{when}
 //                                 if is_dev
-//                                     +remove_button
+//                                     +delete_button
 
 
 
