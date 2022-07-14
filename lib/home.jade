@@ -3,37 +3,16 @@ template(name='home')
         .one.column.row
             .center.aligned.column
                 .ui.header healthclub 
-                if is_checked_in 
+                if currentUser.checked_in 
                     .ui.header currently checked in
                     .ui.big.button.checkout
+                        +i name='exit'
                         |checkout
                 else 
                     .ui.big.button.checkin 
+                        +i name='internal'
                         |checkin
-            .center.aligned.column
-                a.ui.massive.button(href="/healthclub")
-                    +i name='fitness'
-                    |healthclub
-                a.ui.massive.button(href="/buildings")
-                    +i name='building'
-                    |buildings
-                a.ui.massive.button(href="/residents")
-                    +i name='groups'
-                    |residents
-                a.ui.massive.button(href="/owners")
-                    +i name='manager'
-                    |owners
-                // +home_button key='food' icon='food'
-                // +home_button key='events' icon='calendar'
-                // +home_button key='users' icon='groups'
-                // +home_button key='products' icon='shopping-cart'
-                // +home_button key='posts' icon='news'
-                // +home_button key='transfers' icon='exchange'
-                // +home_button key='rentals' icon='clock'
-                // +home_button key='services' icon='wrench'
         .three.column.row
-            // .column       
-            //     +latest_products
             .column       
                 +latest_activity
             .column
@@ -53,9 +32,9 @@ template(name='latest_checkins')
         +i name='clock'
         |latest checkins 
     .ui.selection.divided.list
-        each model_docs 
-            a.item(href="/#{_parent_doc.model}/#{parent_id}" title="goto #{_parent.model}") #{body} #{_when}
-                +parent_info
+        each latest_checkin_docs 
+            a.item(href="/#{_parent_doc.model}/#{parent_id}" title="view checkin") 
+                |#{body} #{_when}
                 +author_info
         
                 
