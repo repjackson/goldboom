@@ -3,14 +3,28 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
+    Template.active_checkins.onCreated ->
+        @autorun => Meteor.subscribe 'active_checkins', ->
+    Template.active_checkins.helpers 
+        active_checkin_docs: ->
+            Docs.find 
+                model:'checkin'
+                active:true
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'users_from_search', Session.get('current_search_user'), ->
+    Template.active_checkins.events
+        'click .checkout': ->
+            Docs.update @_id,
+                $set:
+                    active:false
+                    checkout_timestamp:Date.now()
     Template.home.events
         'click .pick_user': ->
             console.log @
             Docs.insert 
                 model:'checkin'
+                active:true
                 resident_user_id:@_id
                 resident_username:@username
             Session.set('current_search_user',null)
@@ -86,6 +100,12 @@ if Meteor.isServer
         }, 
             sort:_timestamp:-1
             limit:10
+            
+    Meteor.publish 'active_checkins', ()->
+        Docs.find {
+            model:'checkin'
+            active:true
+        }
             
             
             

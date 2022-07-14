@@ -94,19 +94,19 @@ if Meteor.isClient
                 limit:10
     Template.user_posts.events 
         
-    Template.i.onRendered ->
-        Meteor.setTimeout ->
-            $('.image').popup()
-        , 2000
+    # Template.i.onRendered ->
+    #     Meteor.setTimeout ->
+    #         $('.image').popup()
+    #     , 2000
     Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
             $('.avatar').popup()
         , 2000
-    Template.nav.onRendered ->
-        Meteor.setTimeout ->
-            $('.item').popup()
-        , 1000
+    # Template.nav.onRendered ->
+    #     Meteor.setTimeout ->
+    #         $('.item').popup()
+    #     , 1000
 
     Template.profile.events
 
@@ -120,7 +120,6 @@ if Meteor.isClient
             Docs.find 
                 model:'log'
                 read_user_ids:$nin:[user._id]
-    Template.profile.helpers
         current_viewing_doc: ->
             if Meteor.user().current_viewing_doc_id
                 Docs.findOne Meteor.user().current_viewing_doc_id
@@ -191,10 +190,14 @@ if Meteor.isServer
                 views:1
                 _timestamp:-1
                 tags:1
+    Meteor.publish 'user_from_username_param', (username)->
+        Meteor.users.find 
+            username:username
 
 if Meteor.isClient
     Template.profile.onCreated ->
         @autorun => Meteor.subscribe 'user_deposts', Router.current().params.username, ->
+        @autorun => Meteor.subscribe 'user_from_username_param', Router.current().params.username, ->
 
     Template.profile.helpers
         owner_earnings: ->

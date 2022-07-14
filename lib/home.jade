@@ -2,7 +2,9 @@ template(name='home')
     .ui.stackable.padded.grid
         .one.column.row
             .center.aligned.column
-                .ui.header healthclub 
+                .ui.inline.header 
+                    +i name='fitness'
+                    |healthclub checkin
                 unless currentUser
                     .ui.large.input.lookup_user
                         input.search_user(type='text' placeholder='search user...')
@@ -19,11 +21,24 @@ template(name='home')
                         .ui.big.button.checkin 
                             +i name='internal'
                             |checkin
-        .three.column.row
+        .two.column.row
             .column       
-                +latest_activity
+                +active_checkins
+            // .column       
+            //     +latest_activity
             .column
                 +latest_checkins
+                
+template(name='active_checkins')
+    .ui.header 
+        +i name='clock'
+        |active checkins
+    .ui.large.list
+        each active_checkin_docs 
+            .item(href="/checkin/#{_id}") #{body} 
+                | #{_when} by #{_author_username}
+                .ui.button.checkout 
+                    |checkout
                 
 template(name='latest_activity')
     .ui.header 
@@ -42,6 +57,7 @@ template(name='latest_checkins')
         each latest_checkin_docs 
             a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
                 |#{body} #{_when}
+                |#{_author_username}
                 +author_info
         
                 
