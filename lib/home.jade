@@ -5,12 +5,14 @@ template(name='home')
                 .ui.inline.header 
                     +i name='fitness'
                     |healthclub checkin
+                +add_user_button
                 unless currentUser
                     .ui.large.input.lookup_user
                         input.search_user(type='text' placeholder='search user...')
-                each user_results 
-                    .ui.button.pick_user 
-                        |#{username}
+                    each user_results 
+                        a.ui.button.pick_user 
+                            |#{username}
+                            |#{building_number}: ##{unit_number}
                 if currentUser 
                     if currentUser.checked_in 
                         .ui.header currently checked in
@@ -36,8 +38,12 @@ template(name='active_checkins')
     .ui.large.list
         each active_checkin_docs 
             .item(href="/checkin/#{_id}") #{body} 
-                | #{_when} by #{_author_username}
+                a.ui.large.label.fly_down(href="/user/#{resident_username}") 
+                    strong #{resident_username}
+                    small #{building_number}: ##{unit_number}
+                | #{_when}
                 .ui.button.checkout 
+                    i.sign.out.icon
                     |checkout
                 
 template(name='latest_activity')
@@ -57,8 +63,8 @@ template(name='latest_checkins')
         each latest_checkin_docs 
             a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
                 |#{body} #{_when}
-                |#{_author_username}
-                +author_info
+                |#{resident_username}
+                // +author_info
         
                 
 template(name='parent_info')

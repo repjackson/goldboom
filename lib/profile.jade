@@ -56,10 +56,9 @@ template(name='profile')
                         +print_this
                     unless is_current_user
                         // +request_button
-                        +follow_button
-                        +friend_button
+                        // +follow_button
+                        // +friend_button
                 .twelve.wide.column
-                    +user_posts
                     .ui.two.column.grid
                         .column
                             if status 
@@ -72,9 +71,13 @@ template(name='profile')
                             +html_view key='bio' label='bio'
                             +text_view key='status' label='status' icon='clock'
                             +text_view key='address' label='address' icon='marker' 
-                            +text_view key='city' label='city' icon='marker' 
-                            +text_view key='state' label='state' icon='marker' 
                             +phone_view key='phone' label='phone' icon='phone' 
+                            .ui.header 
+                                +i name='apartment'
+                                |building number #{building_number}
+                            .ui.header 
+                                +i name='room'
+                                |unit number #{unit_number}
                         .column
                             +user_checkins
                         .column
@@ -370,3 +373,132 @@ template(name='logout_button')
         +i name='exit'
         span.mobile.hidden
             |log out
+            
+            
+template(name='account')
+    with user_from_user_id_param          
+        if background_image_id
+            img.ui.image.profile_banner(src="{{c.url background_image_id height=1000 crop='crop'}}")
+        else 
+            img.ui.image.profile_banner(src="{{c.url image_id height=1000 crop='crop'}}")
+        //- img.ui.fluid.image.checkin_banner(src="{{c.url banner_image_id width=1000 height=500 crop='crop'}}")    
+        .ui.stackable.padded.grid
+            .three.column.row
+                .column
+                    .ui.center.aligned.large.inline.grey.header
+                    //- +i name='pencil'
+                    .ui.small.inline.header @#{username}
+                    a.ui.green.fluid.icon.button.fly_down(href="/user/#{username}/") 
+                        i.checkmark.large.icon
+                    .ui.hidden.divider
+                    +image_edit key='image_id' icon='picture' title='profile image' 
+                    +image_edit key='background_image_id' icon='picture' title='background image' 
+                    // if currentUser.admin_mode
+                    if in_dev
+                        +boolean_edit key='admin' label='admin' icon='shield' 
+                    if currentUser.admin_mode
+                        +print_this
+                .column
+                    .ui.inline.header 
+                        +i name='info'
+                        |about
+                    +text_edit key='first_name' label='first name' icon='user'
+                    div
+                    +text_edit key='last_name' label='last name' icon='user'
+                    div
+                    +text_edit key='last_name' label='last name' icon='user'
+                    div
+                    +number_edit key='building_number' label='building number' icon='building'
+                    div
+                    +number_edit key='unit_number' label='unit number' icon='cubes'
+                    div
+                    // +text_edit key='display_name' label='display name'
+                    div
+                    +text_edit key='status' label='status' icon='clock'
+                    div
+                .column
+                    +array_edit key='tags' label='tags' icon='tags'
+                    +html_edit key='bio' label='bio'
+                .column 
+                    +array_edit key='roles' label='roles' icon='shield'
+                    .ui.inline.header 
+                        +i name='marker'
+                        |contact
+                    div
+                    if address
+                        +i name='marker'
+                    if phone
+                        +i name='phone'
+                    +text_edit key='address' label='address' icon='marker' 
+                    div
+                    +phone_edit key='phone' label='phone' icon='phone' 
+                    div
+                    +link_edit key='link' label='external link' icon='globe'
+                .column 
+                    .ui.inline.header 
+                        +i name='password'
+                        |username/password
+                    if is_current_user
+                        +password_edit
+                        //- +phone_editor
+                        +username_edit
+                    else currentUser.admin_mode
+                        +password_edit
+                        //- +phone_editor
+                        +username_edit
+                        .ui.orange.button.remove_user 
+                            i.remove.icon
+                            |delete user
+                .column 
+                    .ui.inline.header
+                        +i name='privacy'
+                        |privacy
+                    +boolean_edit key='publish_profile' label='publish profile' icon='eye'
+                    +user_sessions
+
+                    
+template(name='user_sessions')
+    .column
+        .ui.header 
+            +i name='time-machine'
+            |#{services.resume.loginTokens.length} user sessions
+        .ui.large.list 
+            each services.resume.loginTokens
+                .item(title=hashedToken)
+                    |#{when}
+                    i.remove.link.circular.zoomer.icon.clear_session(title='clear login session')
+    
+                    
+                    
+template(name='user_single_doc_ref_editor')
+    .ui.header #{label}
+    each choices
+        .ui.button.select_choice(class=choice_class title=title)
+            i.icon(class=icon)
+            |#{title}
+
+template(name='username_edit')
+    .ui.small.header 
+        i.i.cursor.icon
+        |change username [#{user_from_user_id_param.username}]
+    .ui.icon.fluid.input
+        input.new_username(type='text' placeholder='new username...')
+        i.play.link.icon.change_username
+
+template(name='password_edit')
+    .ui.small.inline.header
+        +i name='password'
+        |change password
+    //- .ui.fluid.input
+    //-     input#password(type='password', placeholder='old password')
+    .ui.icon.input
+        input#new_password(type='password', placeholder='new password')
+    // if is_dev
+    //     .ui.fluid.button.send_enrollment_email
+    //         |send enrollment email
+    // if is_admin
+    //     .ui.fluid.button.reset_password
+    //         |reset password
+    .ui.large.button.set_password
+        +i name='password' cl='ui mini inline image'
+        | set password            

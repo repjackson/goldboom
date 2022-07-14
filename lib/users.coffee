@@ -145,36 +145,6 @@ if Meteor.isClient
             
         'click .unpick_user_tag': -> 
             picked_user_tags.remove @valueOf()
-        'click .add_user': ->
-            new_username = prompt('username')
-            splitted = new_username.split(' ')
-            formatted = new_username.split(' ').join('_').toLowerCase()
-            console.log formatted
-                #   return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-            Meteor.call 'add_user', formatted, (err,res)->
-                console.log res
-                new_user = Meteor.users.findOne res
-                Meteor.users.update res,
-                    $set:
-                        first_name:splitted[0]
-                        last_name:splitted[1]
-
-                Router.go "/user/#{formatted}"
-                $('body').toast({
-                    title: "user created"
-                    # message: 'Please see desk staff for key.'
-                    class : 'success'
-                    icon:'user'
-                    position:'bottom right'
-                    # className:
-                    #     toast: 'ui massive message'
-                    # displayTime: 5000
-                    transition:
-                      showMethod   : 'zoom',
-                      showDuration : 250,
-                      hideMethod   : 'fade',
-                      hideDuration : 250
-                    })
                 
         'keyup .search_user': (e,t)->
             username_query = $('.search_user').val()
@@ -212,6 +182,40 @@ if Meteor.isClient
                     picked_user_tags.push val
                     $('.user_search').val('')
             
+            
+            
+    Template.add_user_button.events 
+        'click .add_user': ->
+            new_username = prompt('username')
+            splitted = new_username.split(' ')
+            formatted = new_username.split(' ').join('_').toLowerCase()
+            console.log formatted
+                #   return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            Meteor.call 'add_user', formatted, (err,res)->
+                console.log res
+                new_user = Meteor.users.findOne res
+                Meteor.users.update res,
+                    $set:
+                        first_name:splitted[0]
+                        last_name:splitted[1]
+
+                Router.go "/user/#{formatted}"
+                $('body').toast({
+                    title: "user created"
+                    # message: 'Please see desk staff for key.'
+                    class : 'success'
+                    icon:'user'
+                    position:'bottom right'
+                    # className:
+                    #     toast: 'ui massive message'
+                    # displayTime: 5000
+                    transition:
+                      showMethod   : 'zoom',
+                      showDuration : 250,
+                      hideMethod   : 'fade',
+                      hideDuration : 250
+                    })
+
             
     Template.users.helpers
         user_count: ->  Counts.get('user_counter')
