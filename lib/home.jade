@@ -3,15 +3,22 @@ template(name='home')
         .one.column.row
             .center.aligned.column
                 .ui.header healthclub 
-                if currentUser.checked_in 
-                    .ui.header currently checked in
-                    .ui.big.button.checkout
-                        +i name='exit'
-                        |checkout
-                else 
-                    .ui.big.button.checkin 
-                        +i name='internal'
-                        |checkin
+                unless currentUser
+                    .ui.large.input.lookup_user
+                        input.search_user(type='text' placeholder='search user...')
+                each user_results 
+                    .ui.button.pick_user 
+                        |#{username}
+                if currentUser 
+                    if currentUser.checked_in 
+                        .ui.header currently checked in
+                        .ui.big.button.checkout
+                            +i name='exit'
+                            |checkout
+                    else 
+                        .ui.big.button.checkin 
+                            +i name='internal'
+                            |checkin
         .three.column.row
             .column       
                 +latest_activity
@@ -33,7 +40,7 @@ template(name='latest_checkins')
         |latest checkins 
     .ui.selection.divided.list
         each latest_checkin_docs 
-            a.item(href="/#{_parent_doc.model}/#{parent_id}" title="view checkin") 
+            a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
                 |#{body} #{_when}
                 +author_info
         

@@ -5,7 +5,26 @@ if Meteor.isClient
         ), name:'home'
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
-    Template.home.events 
+        @autorun => Meteor.subscribe 'users_from_search', Session.get('current_search_user'), ->
+    Template.home.events
+        'click .pick_user': ->
+            console.log @
+            Docs.insert 
+                model:'checkin'
+                resident_user_id:@_id
+                resident_username:@username
+            Session.set('current_search_user',null)
+            $('.search_user').val('')
+        'keyup .search_user': _.throttle((e,t)->
+            search_user = $('.search_user').val().trim().toLowerCase()
+            # if search_user.length > 1
+            #     Session.set('current_search_user', search_user)
+            Session.set('current_search_user', search_user)
+            console.log Session.get('current_search_user')
+            # picked_tags.push search_user
+            # # $( "p" ).blur();
+        , 500)
+    
         'click .checkin': ->
             if Meteor.userId() 
                 Meteor.users.update Meteor.userId(),
@@ -38,7 +57,10 @@ if Meteor.isClient
             else 
                 Router.go '/login'
                 
-                
+    Template.home.helpers
+        user_results: ->
+            Meteor.users.find {}
+    
     Template.latest_activity.helpers
         activity_docs: ->
             Docs.find 
@@ -53,9 +75,17 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
 
 if Meteor.isServer
+    Meteor.publish 'users_from_search', (username_search)->
+        match = {}
+        match.username = {$regex:"#{username_search}", $options: 'i'}
+        Meteor.users.find match
+            
     Meteor.publish 'latest_model_docs', (model)->
         Docs.find {
             model:model
         }, 
             sort:_timestamp:-1
             limit:10
+            
+            
+            
