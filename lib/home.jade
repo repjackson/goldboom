@@ -9,7 +9,7 @@ template(name='home')
                 unless currentUser
                     .ui.large.input.lookup_user
                         input.search_user(type='text' placeholder='search user...')
-                    each user_results 
+                    each uncheckedin_user_docs 
                         a.ui.button.pick_user 
                             |#{username}
                             |#{building_number}: ##{unit_number}
@@ -45,6 +45,7 @@ template(name='active_checkins')
                 .ui.button.checkout 
                     i.sign.out.icon
                     |checkout
+                |#{string}
                 
 template(name='latest_activity')
     .ui.header 

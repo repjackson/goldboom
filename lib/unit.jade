@@ -57,9 +57,9 @@ template(name='unit_view')
                     |unit
                     |#{unit_number}
                 img.ui.image(src="{{c.url image_id }}")
-
-                .ui.header 
-                    |Building ##{building_number}
+                a.ui.big.button(href="/building/#{building_number}")
+                    .ui.header 
+                        |Building ##{building_number}
                 .ui.header 
                     |building #{building_code}
                 if can_edit 

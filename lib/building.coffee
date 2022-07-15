@@ -1,5 +1,6 @@
 Router.route '/buildings', -> @render 'buildings'
-Router.route '/building/:doc_id', -> @render 'building_view'
+Router.route '/building/:building_number', -> @render 'building_view'
+# Router.route '/building/:doc_id', -> @render 'building_view'
 Router.route '/building/:doc_id/edit', -> @render 'building_edit'
 
 
@@ -7,11 +8,13 @@ if Meteor.isClient
     Template.buildings.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'building', ->
     Template.building_view.onCreated ->
-        @autorun => Meteor.subscribe 'building', Router.current().params.building_code
-        @autorun => Meteor.subscribe 'building_units', Router.current().params.building_code
+        @autorun => Meteor.subscribe 'building', Router.current().params.building_number
+        @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number
+        @autorun => Meteor.subscribe 'building_by_number', Router.current().params.building_number
+        @autorun => Meteor.subscribe 'model_docs', 'building', ->
     Template.building_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'building_units', Router.current().params.building_code
+        @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number
 
     Template.buildings.onRendered ->
 
@@ -32,7 +35,7 @@ if Meteor.isClient
         building_unit_docs: ->
             current_building = 
                 Docs.findOne
-                    building_number:Router.current().params.doc_id
+                    building_number:Router.current().params.building_number
                     model:'building'
             Docs.find 
                 model:'unit'
@@ -40,16 +43,16 @@ if Meteor.isClient
                 
 
     Template.building_view.helpers
-        building: ->
+        current_building: ->
             Docs.findOne
                 model:'building'
-                slug: Router.current().params.building_code
+                building_number: Router.current().params.building_number
 
         units: ->
             Docs.find {
                 model:'unit'
             }, sort: unit_number:1
-                # building_slug:Router.current().params.building_code
+                # building_slug:Router.current().params.building_number
 
     Template.buildings.events
         'mouseenter .home_segment': (e,t)->
@@ -70,7 +73,7 @@ if Meteor.isClient
                     unit_number:unit_number
                     building_number:building_number
                     building_number:building_number
-                    building_code:building_label
+                    building_number:building_label
 
         'keyup .building_search': (e,t)->
             username_search = $('.username_search').val()
@@ -90,13 +93,13 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'building', (building_code)->
+    Meteor.publish 'building_by_number', (building_number)->
         Docs.find
             model:'building'
-            slug:building_code
+            building_number:building_number
 
 
-    Meteor.publish 'building_units', (building_code)->
+    Meteor.publish 'building_units', (building_number)->
         Docs.find
             model:'unit'
-            building_code:building_code
+            building_number:building_number

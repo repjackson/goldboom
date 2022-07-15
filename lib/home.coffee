@@ -12,7 +12,7 @@ if Meteor.isClient
                 active:true
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
-        @autorun => Meteor.subscribe 'users_from_search', Session.get('current_search_user'), ->
+        @autorun => Meteor.subscribe 'uncheckedin_users_from_search', Session.get('current_search_user'), ->
     Template.active_checkins.events
         'click .checkout': ->
             Docs.update @_id,
@@ -43,8 +43,8 @@ if Meteor.isClient
             if Meteor.userId() 
                 Meteor.users.update Meteor.userId(),
                     $set:
-                        checked_in:true
-                        checked_in_timestamp:Date.now()
+                        checkedin:true
+                        checkedin_timestamp:Date.now()
                 Docs.insert 
                     model:'checkin'
                     status:'active'
@@ -56,7 +56,7 @@ if Meteor.isClient
             if Meteor.userId() 
                 Meteor.users.update Meteor.userId(),
                     $set:
-                        checked_in:false
+                        checkedin:false
                         checked_out_timestamp:Date.now()
                 found = 
                     Docs.findOne 
@@ -89,8 +89,9 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
 
 if Meteor.isServer
-    Meteor.publish 'users_from_search', (username_search)->
+    Meteor.publish 'uncheckedin_users_from_search', (username_search)->
         match = {}
+        # match.checkedin = $ne:true
         match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find match
             

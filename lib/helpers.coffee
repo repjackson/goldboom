@@ -92,6 +92,8 @@ if Meteor.isClient
     Template.registerHelper 'hostname', () -> 
         window.location.hostname
     
+    Template.registerHelper 'string', () -> 
+        JSON.stringify(@) 
     Template.registerHelper 'is_checked_in', () -> 
         Meteor.user().checked_in
     Template.registerHelper 'points_to_coins', (input) -> input/100

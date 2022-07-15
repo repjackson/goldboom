@@ -12,7 +12,7 @@ template(name='buildings')
                     
                     
 template(name='building_card')
-    a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{_id}")
+    a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
         img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .content
             .ui.header 
@@ -24,7 +24,7 @@ template(name='building_card')
 
 
 template(name='building_view')
-    with current_doc
+    with current_building
         .ui.stackable.padded.grid
             .eight.wide.column
                 a.ui.big.button(href="/buildings")
