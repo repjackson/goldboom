@@ -825,6 +825,30 @@ if Meteor.isClient
             Router.go "/user/#{username}"
 
 
+    Template.session_icon_button.events
+        'click .set_session_value': ->
+            # console.log @key
+            # console.log @value
+            if Meteor.user() 
+                Meteor.users.update Meteor.userId(),
+                    $set:
+                        session:
+                            "#{@key}":@value
+            Session.set(@key, @value)
+            $('body').toast({
+                title: "session set #{@key} #{@value}"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
     Template.session_set.events
         'click .set_session_value': ->
             # console.log @key

@@ -5,9 +5,10 @@ template(name='home')
                 .ui.inline.header 
                     +i name='fitness'
                     |healthclub checkin
-                +add_user_button
+                if currentUser
+                    +add_user_button
                 unless currentUser
-                    .ui.large.icon.input.lookup_user
+                    .ui.massive.icon.input.lookup_user
                         i.search.icon
                         input.search_user(type='text' placeholder='search user...')
                     each checkedout_user_docs 

@@ -7,9 +7,11 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkins.helpers 
         active_checkin_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'checkin'
                 active:true
+            }, 
+                sort:_timestamp:-1
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
@@ -74,7 +76,8 @@ if Meteor.isClient
     Template.home.helpers
         checkedout_user_docs: ->
             match = {}
-            match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
+            if Session.get('current_search_user').length > 0
+                match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
             Meteor.users.find match
     
     Template.latest_activity.helpers
@@ -88,9 +91,11 @@ if Meteor.isClient
                 Docs.remove @_id
     Template.latest_checkins.helpers
         latest_checkin_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'checkin'
-            
+            }, 
+                sort:
+                    _timestamp:-1
     Template.latest_checkins.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
 
@@ -98,7 +103,8 @@ if Meteor.isServer
     Meteor.publish 'checkedout_users_from_search', (username_search)->
         match = {}
         # match.checkedin = $ne:true
-        match.username = {$regex:"#{username_search}", $options: 'i'}
+        if username_search.length > 0
+            match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find match
             
     Meteor.publish 'latest_model_docs', (model)->

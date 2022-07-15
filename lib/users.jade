@@ -9,15 +9,15 @@ template(name='users')
                 +add_user_button
             if currentUser
                 +session_boolean_toggle key='view_friends' label='friends' icon='friends'
-            +i name='campfire'
-            if picked_user_groups
-                #clear_groups.ui.primary.icon.compact.button
+            +i name='apartment'
+            if picked_user_buildings
+                #clear_buildings.ui.primary.icon.compact.button
                     i.remove.icon
-                each picked_user_groups
-                    .unselect_group.ui.primary.compact.button
+                each picked_user_buildings
+                    .unselect_building.ui.primary.compact.button
                         strong #{this}
-            each all_groups
-                .ui.compact.button.select_group(class=cloud_tag_class) 
+            each all_buildings
+                .ui.compact.button.select_building(class=cloud_tag_class) 
                     strong #{name}
             if picked_user_tags
                 // #clear_tags.ui.primary.icon.compact.button
