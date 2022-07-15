@@ -10,8 +10,8 @@ template(name='nav')
                 +i name='home'
                 // if currentUser.show_labels
                 span.mobile.hidden goldrun
-            a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
-                +i name='line-chart'
+            // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
+            //     +i name='line-chart'
             a.item(href='/admin' class="{{isActivePath '/admin'}}")
                 +i name='shield'
             // a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
@@ -42,6 +42,8 @@ template(name='nav')
             //     // i.large.users.icon
             //     // if currentUser.show_labels
             //     // span.mobile.hidden checkins
+            a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
+                +i name='news'
             a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
                 +i name='tasks'
                 // i.large.users.icon

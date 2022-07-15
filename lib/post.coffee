@@ -1,7 +1,8 @@
 if Meteor.isClient
     Template.posts.onCreated ->
-        document.title = 'rv posts'
+        document.title = 'gr posts'
         
+        Session.setDefault('view_mode', 'list')
         Session.setDefault('current_search', null)
         Session.setDefault('dummy', false)
         Session.setDefault('is_loading', false)
