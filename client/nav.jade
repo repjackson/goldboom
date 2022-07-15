@@ -56,8 +56,8 @@ template(name='nav')
             //     +i name='plus'
             //     span.mobilehidden register            
             a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
-                i.sign.in.large.green.icon.zoomer
-                // +i name='internal'
+                // i.sign.in.large.green.icon.zoomer
+                +i name='internal'
                 span.mobile.hidden login
         unless is_connected
             a.item.zoomer.reconnect
@@ -71,7 +71,8 @@ template(name='nav')
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=300 height=300 gravity='face' crop='fill'}}")
                     else
-                        i.user.icon
+                        // i.user.icon
+                        +i name='user-male'
                     strong #{currentUser.username}
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")

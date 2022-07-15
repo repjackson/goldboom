@@ -92,6 +92,10 @@ if Meteor.isClient
     Template.registerHelper 'hostname', () -> 
         window.location.hostname
     
+    Template.registerHelper '_resident', () -> 
+        Meteor.users.findOne @resident_user_id
+        
+        
     Template.registerHelper 'string', () -> 
         JSON.stringify(@) 
     Template.registerHelper 'is_checked_in', () -> 
@@ -123,11 +127,6 @@ if Meteor.isClient
     #     grandparent = Template.parentData(2)
     #     grandparent._author_id is Meteor.userId()
     Template.registerHelper 'to_percent', (number) -> (Math.floor(number*100)).toFixed(0)
-    Template.registerHelper 'long_time', (input) -> moment(input).format("h:mm a")
-    Template.registerHelper 'long_date', (input) -> moment(input).format("dddd, MMMM Do h:mm a")
-    Template.registerHelper 'short_date', (input) -> moment(input).format("dddd, MMMM Do")
-    Template.registerHelper 'med_date', (input) -> moment(input).format("MMM D 'YY")
-    Template.registerHelper 'medium_date', (input) -> moment(input).format("MMMM Do YYYY")
     # Template.registerHelper 'medium_date', (input) -> moment(input).format("dddd, MMMM Do YYYY")
     Template.registerHelper 'today', () -> moment(Date.now()).format("dddd, MMMM Do a")
     Template.registerHelper 'int', (input) -> input.toFixed(0)
@@ -388,7 +387,7 @@ if Meteor.isClient
             _id:@group_id
     
     Template.registerHelper 'user_groups', () ->
-        console.log @
+        # console.log @
         if @group_membership_ids
             Docs.find 
                 model:'group'

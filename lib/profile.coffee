@@ -130,7 +130,7 @@ if Meteor.isClient
             # Meteor.call 'insert_log', 'logout', Session.get('current_userid'), ->
                 
             Router.go '/login'
-            $(e.currentTarget).closest('.grid').transition('slide left', 500)
+            $(e.currentTarget).closest('.grid').transition('fly left', 500)
             
             Meteor.logout()
             $('body').toast({
