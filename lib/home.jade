@@ -33,14 +33,16 @@ template(name='home')
                     |info
                 .ui.large.list 
                     .item hours 7am-10pm
+                +water_readings
                 
             .column       
                 +active_checkins
-            .column
-                +water_readings
+            // .column
                 // +latest_activity
             .column
                 +latest_checkins
+            .column
+                
         .one.column.row
             .column
                 +map_view

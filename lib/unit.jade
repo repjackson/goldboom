@@ -74,6 +74,13 @@ template(name='unit_view')
                     |unit
                     |#{unit_number}
                 img.ui.image(src="{{c.url image_id }}")
+                if inside_image1
+                    img.ui.image(src="{{c.url inside_image1 }}")
+                if inside_image2
+                    img.ui.image(src="{{c.url inside_image2 }}")
+                if inside_image3
+                    img.ui.image(src="{{c.url inside_image3 }}")
+                    
                 a.ui.big.button(href="/building/#{building_number}")
                     .ui.header 
                         |building ##{building_number}
@@ -115,6 +122,9 @@ template(name='unit_edit')
         .ui.padded.three.column.centered.grid
             .column
                 +image_edit key='image_id'
+                +image_edit key='inside_image1'
+                +image_edit key='inside_image2'
+                +image_edit key='inside_image3'
                 h2.ui.center.aligned.header #{unit_number} #{building_number} 
                 +text_edit key='address' label='address' icon='marker'
                 +number_edit key='unit_number' label='unit number' icon='hashtag'
