@@ -2,42 +2,42 @@
 //     with kiosk_doc
 //         +Template.dynamic template=kiosk_view
 
-template(name='staff')
-    .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-                .ui.large.inline.header 
-                    //- i.user.shield.icon
-                    +i name='user-shield'
-                    |staff
-                //- i.massive.loading.brown.poo.icon
-                a.ui.large.button.add_resident
-                    //- i.user.add.large.icon
-                    +i name='add-user-male' classes='ui inline mini image'
-                    strong add resident
-                // .ui.header
-                //     |#{checkedin_members.count} checked in members
-                .ui.header 
-                    // i.clock.icon
-                    +i name='clock'
-                    |old checkins
-                .ui.list 
-                    each old_session_docs 
-                        .item #{when} #{resident_name}
+// template(name='staff')
+//     .ui.stackable.padded.grid
+//         .row
+//             .four.wide.column
+//                 .ui.large.inline.header 
+//                     //- i.user.shield.icon
+//                     +i name='user-shield'
+//                     |staff
+//                 //- i.massive.loading.brown.poo.icon
+//                 a.ui.large.button.add_resident
+//                     //- i.user.add.large.icon
+//                     +i name='add-user-male' classes='ui inline mini image'
+//                     strong add resident
+//                 // .ui.header
+//                 //     |#{checkedin_members.count} checked in members
+//                 .ui.header 
+//                     // i.clock.icon
+//                     +i name='clock'
+//                     |old checkins
+//                 .ui.list 
+//                     each old_session_docs 
+//                         .item #{when} #{resident_name}
 
-            .twelve.wide.column
-                // .ui.styled.fluid.large.accordion
-                // .active.title
-                +checkin_input
+//             .twelve.wide.column
+//                 // .ui.styled.fluid.large.accordion
+//                 // .active.title
+//                 +checkin_input
 
-                .ui.header
-                    +i name='groups' classes='ui inline image'
-                    |#{active_sessions.count} active sessions
-                    // i.dropdown.icon
-                // .active.content
-                .ui.stackable.doubling.centered.cards
-                    each active_sessions
-                        +session_card
+//                 .ui.header
+//                     +i name='groups' classes='ui inline image'
+//                     |#{active_sessions.count} active sessions
+//                     // i.dropdown.icon
+//                 // .active.content
+//                 .ui.stackable.doubling.centered.cards
+//                     each active_sessions
+//                         +session_card
 
 template(name='checkin_input')
     .ui.massive.fluid.left.icon.input
@@ -120,17 +120,17 @@ template(name='checkin_button')
 
 
 
-template(name='set_kiosk_template')            
-    .ui.button.set_kiosk_template #{label}
+// template(name='set_kiosk_template')            
+//     .ui.button.set_kiosk_template #{label}
 
 
-template(name='checin')
+// template(name='checin')
                 
-template(name='resident_guest')
-    with guest_doc
-        .ui.big.teal.basic.button.remove_guest 
-            i.remove.icon
-            |#{guest_name} #{first_name} #{last_name}
+// template(name='resident_guest')
+//     with guest_doc
+//         .ui.big.teal.basic.button.remove_guest 
+//             i.remove.icon
+//             |#{guest_name} #{first_name} #{last_name}
 
 
 
