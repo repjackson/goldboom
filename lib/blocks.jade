@@ -150,6 +150,10 @@ template(name='session_icon_button')
         // +i name=icon
         i.large.icon(class=icon)
 
+template(name='viewing_info')
+    i.eye.icon
+    |#{views} views
+
 template(name='session_key_value_edit')
     .ui.button.set_key_value(class=set_key_value_class)
         if key_value_is 'key' 'sort_key'

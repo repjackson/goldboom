@@ -3,7 +3,7 @@ template(name='home')
         .one.column.row
             .center.aligned.column
                 .ui.inline.header 
-                    +i name='fitness'
+                    +i name='dumbbell'
                     |healthclub checkin
                 if currentUser
                     +add_user_button
@@ -25,13 +25,25 @@ template(name='home')
                         .ui.big.button.checkin 
                             +i name='internal'
                             |checkin
-        .two.column.row
+        .three.column.row
             .column       
                 +active_checkins
-            // .column       
-            //     +latest_activity
+            .column
+                +water_readings
+                // +latest_activity
             .column
                 +latest_checkins
+                
+                
+template(name='water_readings')
+    .ui.header 
+        +i name='pool'
+        |water readings
+    .ui.large.list 
+        .item indoor hottub
+        .item outdoor hottub
+        .item pool
+        
                 
 template(name='active_checkins')
     .ui.header 
