@@ -28,6 +28,11 @@ template(name='nav')
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden people
+            a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
+                +i name='pool'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden readings
             a.item.mobile.hidden.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
                 +i name='checkmark'
                 // i.large.users.icon

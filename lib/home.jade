@@ -26,30 +26,28 @@ template(name='home')
                         .ui.big.button.checkin 
                             +i name='internal'
                             |checkin
-        .three.column.row
+        .two.column.row
+            .column       
+                +active_checkins
             .column       
                 .ui.header 
                     +i name='info'
                     |info
                 .ui.large.list 
                     .item hours 7am-10pm
-                +water_readings
-                
-            .column       
-                +active_checkins
             // .column
                 // +latest_activity
             .column
                 +latest_checkins
             .column
-                
+                +map_view
         .one.column.row
             .column
-                +map_view
+                +readings
                 
                 
 template(name='water_readings')
-    .ui.header 
+    a.ui.large.compact.button.zoomer.fly_right(href="/readings") 
         +i name='pool'
         |water readings
     .ui.large.list 

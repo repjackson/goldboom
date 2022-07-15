@@ -1,14 +1,16 @@
 template(name='readings')
-    +lower_hot_tub_readings
-    +upper_hot_tub_readings
-    +pool_readings
+    .ui.padded.grid 
+        .sixteen.wide.column
+            +lower_hot_tub_readings
+            +upper_hot_tub_readings
+            +pool_readings
 
 
 template(name='edit_pool_reading')
     with current_doc
         .ui.container
             .ui.inline.center.aligned.header
-                +i name='swimming' classes='ui avatar image'
+                +icolor name='swimming' classes='ui avatar image'
                 |edit pool reading
             .ui.form
                 +pool_ph
@@ -54,7 +56,7 @@ template(name='edit_lower_hot_tub_reading')
 template(name='lower_hot_tub_readings')    
     //- a.ui.big.button(href='/readings/lower' class="{{isActivePath '/readings/lower'}}") 
     .ui.inline.header
-        +i name='jacuzzi' 
+        +icolor name='jacuzzi' 
         |lower hot tub readings
     #add_lower_hot_tub_reading.ui.big.icon.button
         i.green.plus.icon
@@ -89,7 +91,7 @@ template(name='lower_hot_tub_readings')
 template(name='upper_hot_tub_readings')   
     //- a.ui.big.button(href='/readings/upper' class="{{isActivePath '/readings/upper'}}")
     .ui.inline.header
-        +i name='jacuzzi'
+        +icolor name='jacuzzi'
         | upper hot tub readings
     #add_upper_hot_tub_reading.ui.big.icon.button
         i.green.plus.icon
@@ -126,7 +128,7 @@ template(name='upper_hot_tub_readings')
 template(name='pool_readings') 
     //- a.ui.big.button(href='/readings/pool' class="{{isActivePath '/readings/pool'}}")
     .ui.inline.header 
-        +i name='swimming'
+        +icolor name='swimming'
         |pool readings
     #add_pool_reading.ui.big.icon.button
         i.green.plus.icon 
