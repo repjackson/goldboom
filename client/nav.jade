@@ -21,32 +21,32 @@ template(name='nav')
             a.icon.zoomer.item.fly_right(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
                 // i.large.exchange.icon
                 +i name='apartment'
-                span.mobile.hidden buildings
+                // span.mobile.hidden buildings
             a.icon.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                 // i.large.exchange.icon
                 +i name='room'
-                span.mobile.hidden units
+                // span.mobile.hidden units
 
             a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
                 +i name='groups'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden people
+                // span.mobile.hidden people
             a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
                 +i name='pool'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden readings
-            a.item.mobile.hidden.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
-                +i name='checkmark'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden checkins
+                // span.mobile.hidden readings
+            // a.item.mobile.hidden.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
+            //     +i name='checkmark'
+            //     // i.large.users.icon
+            //     // if currentUser.show_labels
+            //     // span.mobile.hidden checkins
             a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
                 +i name='tasks'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden tasks
+                // span.mobile.hidden tasks
             if currentUser
                 if unread_count
                     a.item(href="/user/#{currentUser.username}/inbox" title='unread messages')

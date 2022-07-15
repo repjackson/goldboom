@@ -7,29 +7,29 @@ template(name='staff')
                     |staff
                 //- i.massive.loading.brown.poo.icon
                 a.ui.large.fluid.button(href='/add_resident')
-                    i.user.add.large.icon
-                    //- +i name='plus' classes='ui inline mini image'
+                    // i.user.add.large.icon
+                    +i name='plus' classes='ui inline mini image'
                     strong
                         |resident
                 //- .ui.header
                 //-     |#{checkedin_members.count} checked in members
                 +inline_doc slug='staff_notices' classes='ui small grey header'
                 a.ui.fluid.button(href='/buildings')
-                    i.building.large.icon
-                    //- +i name='building' classes='ui mini inline image'
+                    // i.building.large.icon
+                    +i name='building' classes='ui mini inline image'
                     | buildings
                 a.ui.fluid.button(href='/residents')
-                    i.large.users.icon
-                    //- +i name='groups' classes='ui mini inline image'
+                    // i.large.users.icon
+                    +i name='groups' classes='ui mini inline image'
                     | residents
                 a.ui.fluid.button(href='/healthclub')
-                    i.large.tablet.icon
-                    //- +i name='android-tablet' classes='ui mini inline image'
+                    // i.large.tablet.icon
+                    +i name='android-tablet' classes='ui mini inline image'
                     | kiosk view
                 +unit_key_widget
                 a.ui.compact.fluid.large.button(href='readings')
-                    //- +ismall name='water' classes='ui inline image' 
-                    i.water.icon               
+                    +ismall name='water' classes='ui inline image' 
+                    // i.water.icon               
                     strong water
                 div
                 .ui.small.grey.header 

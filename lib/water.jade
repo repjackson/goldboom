@@ -1,6 +1,14 @@
 template(name='readings')
     .ui.padded.grid 
         .sixteen.wide.column
+            .ui.inline.header 
+                +i name='water'
+                |water readings
+            a.ui.button.fly_right(href="/staff")
+                i.chevron.left.icon
+                +i name='user-shield'
+                |staff
+            div
             +lower_hot_tub_readings
             +upper_hot_tub_readings
             +pool_readings

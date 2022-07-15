@@ -2,7 +2,8 @@ template(name='users')
     .ui.padded.stackable.grid
         .sixteen.wide.column
             .ui.inline.header
-                i.large.users.icon
+                // i.large.users.icon
+                +i name='groups'
                 |#{redditor_count}
                 |users
             if currentUser.admin
@@ -34,7 +35,8 @@ template(name='users')
                     strong #{name}
         .four.wide.column
             .ui.inline.header  
-                i.big.building.icon
+                // i.big.building.icon
+                +i name='apartment'
                 |building
             each building_tags 
                 .ui.large.label #{name}

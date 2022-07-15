@@ -385,7 +385,8 @@ if Meteor.isClient
         Docs.findOne 
             model:'group'
             _id:@group_id
-    
+    Template.registerHelper 'is_editing', () -> Session.equals 'editing_id', @_id
+
     Template.registerHelper 'user_groups', () ->
         # console.log @
         if @group_membership_ids

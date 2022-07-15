@@ -5,6 +5,9 @@ template(name='current_viewers')
     each current_viewer_users
         +user_info
 
+template(name='remove_button')
+    i.large.remove.circular.link.icon.zoomer(title='remove')
+
 template(name='visibility_settings')
     .title
         .ui.inline.header
