@@ -1043,7 +1043,7 @@ template(name='inline_doc')
                 
 
 template(name='session_edit_button')
-    if currentUser
+    if currentUser.admin_mode
         unless is_editing
             .edit_this.ui.small.button(title="Edit #{tags}" class=button_classes)
                 i.pencil.icon

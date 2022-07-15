@@ -14,7 +14,7 @@ template(name='units')
                 input.search_building_number(type='text' placeholder='building')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
-            // +search_input key='title'
+            +search_input key='address'
             +session_icon_button key='view_mode' value='grid' icon='th' 
             +session_icon_button key='view_mode' value='list' icon='list'
             
@@ -28,9 +28,20 @@ template(name='units')
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
 
-            .ui.cards.scrolling
-                each unit_docs
-                    +unit_card
+            if subs_ready
+                if session_is 'view_mode' 'grid'
+                    if one_result
+                        .ui.stackable.centered.one.cards
+                            each unit_docs
+                                +unit_card
+                    else
+                        .ui.stackable.centered.centered.cards
+                            each unit_docs
+                                +unit_card
+                else
+                    .ui.divided.selection.animated.list
+                        each unit_docs
+                            +unit_item
             
             
 template(name='unit_card')
@@ -40,7 +51,7 @@ template(name='unit_card')
         .content 
             .ui.inline.header #{address}
             // .ui.inline.header ##{unit_number}
-            .ui.header
+            .ui.large.image.label
                 +i name='building'
                 |##{building_number}
             if unit_residents
@@ -55,6 +66,30 @@ template(name='unit_card')
                 .ui.basic.label
                     +i name='clock' 
                     |for rent
+                    
+template(name='unit_item')
+    a.ui.item.fly_right(href="/unit/#{_id}") 
+        if image_id
+            img.ui.tiny.inline.image(src="{{c.url image_id }}")
+        .ui.inline.header #{address}
+        // .ui.inline.header ##{unit_number}
+        .ui.large.image.label
+            +i name='building'
+            |##{building_number}
+        if unit_residents
+            .ui.large.label
+                +i name='groups'
+                each unit_residents 
+                    |#{username}
+                    // +user_info
+        if for_sale 
+            .ui.basic.label
+                +i name='money' 
+                |for sale
+        if for_rent 
+            .ui.basic.label
+                +i name='clock' 
+                |for rent
 
 template(name='unit_view')
     with current_doc
@@ -84,11 +119,11 @@ template(name='unit_view')
                 a.ui.big.button(href="/building/#{building_number}")
                     .ui.header 
                         |building ##{building_number}
-                .ui.header 
-                    |building #{building_code}
                 if can_edit 
-                    a.ui.icon.button(href="/unit/#{_id}/edit")
+                    a.ui.large.compact.button(href="/unit/#{_id}/edit")
                         i.large.pencil.icon
+                        |edit
+                +viewing_info
                 // if can_edit
                 //     +text_edit key='building_code' label='building_code' 
                 //     +number_edit key='building_number' label='building number' 

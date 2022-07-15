@@ -212,13 +212,15 @@ template(name='checkin_view')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'grfront' width=1000 height=1000 crop='crop'}}")
     with current_doc
         .ui.stackable.padded.grid
-            .twelve.wide.column
+            .eight.wide.column
                 a.ui.big.button(href="/checkins")
                     i.large.left.chevron.icon
+                    +i name='checkmark'
                     |checkins
                 a.ui.big.button(href="/staff")
                     i.large.left.chevron.icon
-                    i.big.shield.icon
+                    // i.big.shield.icon
+                    +i name='user-shield'
                     |staff
                     // |#{checkin.building_code}
                 .ui.header
@@ -242,91 +244,85 @@ template(name='checkin_view')
                         +text_edit key='building_code' direct=true
                         +textarea_edit key='notes' direct=true
                 +print_this
-            .four.wide.column
                 if currentUser
                     +delete_button
-        if loading_checkin
-            .ui.center.aligned.basic.segment
-                i.massive.loading.refresh.icon
-                .ui.massive.header Running checks and loading profile
-        else 
-            .ui.padded.middle.aligned.grid.header-wrapper
-                .two.column.row
-                    .column
-                        //- if is_staff
-                        //- a.ui.header(href="/user/#{user.username}")
-                        .ui.big.icon.basic.button.cancel_checkin
-                            i.big.ban.icon
-                            |cancel
-                        if current_resident.kiosk_photo
-                            with current_resident
-                                +image_view key='kiosk_photo' label='photo' direct=true classes='medium circular shadowed'
-                        else
-                            //- h1.ui.header Please click below to add photo
-                            //- .ui.header (switch camera to front)
-                            with current_resident
-                                +image_edit key='kiosk_photo' label=' ' direct=true
-                        //- img.ui.medium.circular.image(src="{{c.url user.image_id width=500 height=500 gravity='face' crop='fill'}}")
-                        //- .meta @#{user.username}
-                        //- +camera
-                    .column
-                        with current_doc
-                            h1.ui.huge.header.f11
-                                |#{resident_first_name} #{resident_last_name} 
-                        if adding_guests
-                            .ui.header 
-                                i.users.teal.icon
-                                |guests
-                            .ui.small.inline.header recent guests
-                            each resident_guests
-                                .ui.big.basic.teal.button.add_recent_guest #{guest_name} #{first_name} #{last_name}
-                            div
-                            .ui.big.basic.button.add_guest
-                                i.plus.icon
-                                strong new guest
-                            +multi_doc_input key='guests' ref_model='guest' title='lookup previous...' direct=true
-                            div
-                            with checking_in_doc
-                                if checking_in_doc.guest_ids
-                                    .ui.inline.header guests for this session
-                                    each checking_in_doc.guest_ids
-                                        +resident_guest
-                        else
-                            .ui.big.basic.fluid.button.toggle_adding_guest 
-                                i.plus.large.icon
-                                |guest
-                        with user
-                            +user_check_steps
-                .row
-                    .sixteen.wide.column
-                        unless current_user.kiosk_photo
-                            .ui.disabled.massive.fluid.button
-                                |new photo required to sign in
-                            //- .ui.center.aligned.header
-                            //-     |please click 'Choose File' above, switch the camera to the front, and take photo to proceed 
-                        unless current_user.member_waiver_signed
-                            .ui.massive.fluid.red.basic.button.sign_guidelines
-                                .ui.inline.header 
-                                    i.edit.icon
-                                    | sign member waiver            
-                        unless current_user.rules_and_regulations_signed
-                            .ui.massive.fluid.red.basic.button.sign_rules
-                                .ui.inline.header 
-                                    i.edit.icon
-                                    | sign rules and regs
-                        if current_user.email_red_flagged
-                            .ui.disabled.massive.fluid.button
-                                |email verification required, please see staff
-                        if current_user.gov_red_flagged
-                            .ui.disabled.massive.fluid.button
-                                |Government Id verification required
-                .row
-                    .sixteen.wide.column
-                        if timer_engaged
-                            .ui.small.grey.header auto check in #{timer} seconds
-                            .ui.button.cancel_auto_checkin
-                                i.ban.icon
-                                | cancel auto check in
+            if loading_checkin
+                .ui.center.aligned.basic.segment
+                    i.massive.loading.refresh.icon
+                    .ui.massive.header Running checks and loading profile
+            else 
+                .eight.wide.column
+                    //- if is_staff
+                    //- a.ui.header(href="/user/#{user.username}")
+                    .ui.big.red.button.cancel_checkin
+                        i.big.ban.icon
+                        |cancel
+                    if current_resident.kiosk_photo
+                        with current_resident
+                            +image_view key='kiosk_photo' label='photo' direct=true classes='medium circular shadowed'
+                    else
+                        //- h1.ui.header Please click below to add photo
+                        //- .ui.header (switch camera to front)
+                        with current_resident
+                            +image_edit key='kiosk_photo' label=' ' direct=true
+                    //- img.ui.medium.circular.image(src="{{c.url user.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    //- .meta @#{user.username}
+                    //- +camera
+                    with current_doc
+                        h1.ui.huge.header.f11
+                            |#{resident_first_name} #{resident_last_name} 
+                    if adding_guests
+                        .ui.header 
+                            i.users.teal.icon
+                            |guests
+                        .ui.small.inline.header recent guests
+                        each resident_guests
+                            .ui.big.basic.teal.button.add_recent_guest #{guest_name} #{first_name} #{last_name}
+                        div
+                        .ui.big.basic.button.add_guest
+                            i.plus.icon
+                            strong new guest
+                        +multi_doc_input key='guests' ref_model='guest' title='lookup previous...' direct=true
+                        div
+                        with checking_in_doc
+                            if checking_in_doc.guest_ids
+                                .ui.inline.header guests for this session
+                                each checking_in_doc.guest_ids
+                                    +resident_guest
+                    else
+                        .ui.big.basic.fluid.button.toggle_adding_guest 
+                            i.plus.large.icon
+                            |guest
+                    with user
+                        +user_check_steps
+                    unless current_user.kiosk_photo
+                        .ui.disabled.massive.fluid.button
+                            |new photo required to sign in
+                        //- .ui.center.aligned.header
+                        //-     |please click 'Choose File' above, switch the camera to the front, and take photo to proceed 
+                    unless current_user.member_waiver_signed
+                        .ui.massive.fluid.red.basic.button.sign_guidelines
+                            .ui.inline.header 
+                                i.edit.icon
+                                | sign member waiver            
+                    unless current_user.rules_and_regulations_signed
+                        .ui.massive.fluid.red.basic.button.sign_rules
+                            .ui.inline.header 
+                                i.edit.icon
+                                | sign rules and regs
+                    if current_user.email_red_flagged
+                        .ui.disabled.massive.fluid.button
+                            |email verification required, please see staff
+                    if current_user.gov_red_flagged
+                        .ui.disabled.massive.fluid.button
+                            |Government Id verification required
+        .row
+            .sixteen.wide.column
+                if timer_engaged
+                    .ui.small.grey.header auto check in #{timer} seconds
+                    .ui.button.cancel_auto_checkin
+                        i.ban.icon
+                        | cancel auto check in
 
 
 template(name='checkin_edit')         

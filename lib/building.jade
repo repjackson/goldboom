@@ -83,7 +83,7 @@ template(name='building_permits')
     .ui.segment
         .ui.header 
             +i name='badge'
-            |building Permits
+            |building permits
         .ui.cards
             each permits
                 .ui.card
@@ -97,9 +97,9 @@ template(name='building_permits')
 template(name='building_owners')            
     .ui.segment
         .ui.header 
-            //- +i name='rent'
-            i.money.icon
-            |building Owners
+            +i name='rent'
+            // i.money.icon
+            |building owners
         .ui.four.cards
             each building_owner_docs
                 .ui.card

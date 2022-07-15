@@ -30,9 +30,6 @@ template(name='home')
                             |check in as #{currentUser.username}
         .two.column.row
             .column       
-                a.ui.big.button(href="/staff") 
-                    +i name='shield'
-                    |staff
                 +active_checkins
             .column       
                 .ui.header 
@@ -50,6 +47,9 @@ template(name='home')
                 a.ui.large.compact.button.fly_down(href="/tasks")
                     +i name='tasks'
                     |tasks
+                a.ui.large.compact.button.fly_down(href="/staff") 
+                    +i name='shield'
+                    |staff
                 a.ui.large.compact.button.fly_down(href="/services")
                     +i name='service'
                     |services

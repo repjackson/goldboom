@@ -63,14 +63,6 @@ template(name='nav')
             .icon.item
                 +i name='one-ring' cl='spinning'
                 // i.yin.yang.large.loading.icon
-        unless currentUser
-            // a.item(href="/register" title='register')
-            //     +i name='plus'
-            //     span.mobilehidden register            
-            a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
-                // i.sign.in.large.green.icon.zoomer
-                +i name='internal'
-                span.mobile.hidden login
         unless is_connected
             a.item.zoomer.reconnect
                 i.spinner.big.loading.icon
@@ -78,6 +70,14 @@ template(name='nav')
                 |reconnect
                 i.large.circular.refresh.link.icon.zoomer.reconnect(title='reconnect now')
         .right.menu
+            unless currentUser
+                // a.item(href="/register" title='register')
+                //     +i name='plus'
+                //     span.mobilehidden register            
+                a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
+                    // i.sign.in.large.green.icon.zoomer
+                    +i name='internal'
+                    span.mobile.hidden login
             if currentUser
                 a.item(href="/inbox" class="{{isActiveRoute 'inbox'}}" title='inbox')
                     +i name='inbox'
