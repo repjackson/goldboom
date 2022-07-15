@@ -201,7 +201,7 @@ template(name='unit_permits')
 
 template(name='unit_owners')            
     .ui.segment
-        .ui.header 
+        a.ui.header(href="/users")
             +i name='rent'
             // i.money.icon
             |unit owners
@@ -219,7 +219,7 @@ template(name='unit_owners')
 
 template(name='unit_residents')            
     .ui.segment
-        .ui.header
+        a.ui.header.fly_down(href="/users")
             +i name='person-at-home'
             |#{unit_resident_docs.count} unit residents
         .ui.four.cards
