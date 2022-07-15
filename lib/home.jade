@@ -119,14 +119,23 @@ template(name='latest_checkins')
                     i.large.red.sign.out.alternate.icon
                 |#{_when}
                 |#{resident_username}
-                if _resident.verified 
-                    +i name='verified-account'
-                else 
-                    +i name='unverified-account'
+                with _resident
+                    +verification_label
                 
                 // +author_info
                 if currentUser.admin_mode
                     i.red.circular.remove.icon.delete_checkin
+        
+template(name='verification_label')        
+    if verified 
+        .ui.image.label
+            +i name='verified-account'
+            |verified
+    else 
+        .ui.image.label
+            +i name='unverified-account'
+            |unverified
+        
         
                 
 template(name='parent_info')

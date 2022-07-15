@@ -26,6 +26,8 @@ template(name='profile')
                             i.clock.icon 
                             |#{status}
                     +online_label
+                    +verification_label
+                    div
                     if roles 
                         .ui.small.inline.header 
                             +i name='shield'
@@ -33,14 +35,14 @@ template(name='profile')
                         each roles 
                             .ui.label #{this}
                     if is_current_user
-                        a.ui.large.icon.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
+                        a.ui.large.icon.compact.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
                             +i name='settings'
                             |account
                     else if currentUser.admin_mode
                         a.ui.large.icon.button.fly_up(href="/user/#{_id}/edit" title='profile settings')
                             +i name='settings'
                             |account
-                    img.ui.medium.rounded.image.pointer.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                    img.ui.medium.circular.image.pointer.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
                     // if subs_ready
                     // a(href="/user/#{username}")
                     // a(href="/user/#{username}")
@@ -79,7 +81,12 @@ template(name='profile')
                                 +i name='room'
                                 |unit number #{unit_number}
                         .column
+                            +membership_status
+                        .column
                             +user_checkins
+                            +user_unit
+                            +user_guests
+                            +user_permit
                         .column
                             +user_inbox
                         .column
@@ -398,6 +405,7 @@ template(name='account')
                         +boolean_edit key='admin' label='admin' icon='shield' 
                     if currentUser.admin_mode
                         +print_this
+                    +boolean_edit key='verified' label='verified' icon='verified-account'
                 .column
                     .ui.inline.header 
                         +i name='info'

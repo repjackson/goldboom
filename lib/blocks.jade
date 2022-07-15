@@ -1007,10 +1007,10 @@ template(name='facet_staff_select')
             else
                 div(class=doc_classes)
                     |#{staff}
-            if is_admin
+            if currentUser.admin_mode
                 +session_edit_icon
     else
-        if is_admin
+        if currentUser.admin_mode
             .ui.header no doc found
             .create_doc.ui.button
                 i.plus.icon
@@ -1031,8 +1031,40 @@ template(name='inline_doc')
             if is_staff
                 +session_edit_icon
     else
-        if is_admin
+        if currentUser.admin_mode
             .ui.header no doc found
             .create_doc.ui.inline.button
                 i.plus.icon
                 |create #{slug} doc
+                
+
+template(name='session_edit_button')
+    if currentUser
+        unless is_editing
+            .edit_this.ui.small.button(title="Edit #{tags}" class=button_classes)
+                i.pencil.icon
+                |edit
+        else
+            .save_doc.ui.green.button(class=button_classes)
+                i.check.icon
+                |save
+
+
+template(name='detect')
+    .ui.icon.big.button.detect_fields(title='detect fields')
+        i.dna.icon
+        //- |Detect Fields
+
+
+template(name='session_edit_icon')
+    if currentUser
+        unless is_editing
+            i.pencil.link.icon.edit_this(title=tags class=button_classes)
+        else
+            .save_doc.ui.icon.button(class=button_classes title='save')
+                i.green.check.icon
+
+// template(name='edit_button')
+//     a.ui.icon.compact.button(href="/m/#{model}/#{_id}/edit" title='edit')
+//         i.pencil.icon
+        

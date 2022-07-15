@@ -2,10 +2,9 @@ template(name='staff')
     .ui.stackable.padded.grid
         .row
             .four.wide.column
-                //- .ui.grey.large.header 
-                //-     //- i.user.shield.icon
-                //-     +i name='user-shield'
-                //-     |staff
+                .ui.large.header 
+                    +i name='user-shield'
+                    |staff
                 //- i.massive.loading.brown.poo.icon
                 a.ui.large.fluid.button(href='/add_resident')
                     i.user.add.large.icon
@@ -84,7 +83,7 @@ template(name='staff')
                         |checklist not completed
 
             .twelve.wide.column
-                //- +schedule
+                +schedule
                 .ui.inline.grey.header #{checkedin_members.count} checked in members
                 .ui.stackable.four.cards
                     each sessions
@@ -240,7 +239,7 @@ template(name='schedule')
                 th sat
         tbody
             tr
-                td 7/8a-12p
+                td 7-12p
                 td 
                     +facet_staff_select tags='shift,sunday,morning'
                 td 
@@ -272,7 +271,7 @@ template(name='schedule')
                 td 
                     +facet_staff_select tags='shift,saturday,afternoon'
             tr
-                td 5p-9/10p
+                td 5p-10p
                 td 
                     +facet_staff_select tags='shift,sunday,evening'
                 td 

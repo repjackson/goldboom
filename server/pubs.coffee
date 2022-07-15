@@ -353,3 +353,17 @@ Meteor.publish 'model_docs', (model)->
 # #                 name: tag.doc_id
 # #                 count: tag.count
 # #                 index: i
+
+
+
+Meteor.publish 'facet_doc', (tags)->
+    split_array = tags.split ','
+    Docs.find
+        tags: split_array
+
+
+Meteor.publish 'inline_doc', (slug)->
+    Docs.find
+        model:'inline_doc'
+        slug:slug
+

@@ -245,9 +245,8 @@ template(name='resident_info')
 template(name='user_permit')
     .ui.segment
         .ui.inline.center.aligned.header 
+            +i name='parking-ticket'
             |permit
-        +goto_model slug='parking_permit'
-        
         with permit_doc
             .ui.inline.header permit
             .ui.inline.header #{permit}
@@ -269,7 +268,7 @@ template(name='user_permits')
         .ui.segment
             .ui.inline.center.aligned.header 
                 i.id.card.alternate.icon
-                +goto_model slug='parking_permit'
+                // +goto_model slug='parking_permit'
                 |permits
 
             
@@ -280,7 +279,7 @@ template(name='user_signatures')
             | signatures
         .ui.link.large.list
             a.item(href='#') Rules and Regulations
-            +goto_model slug='rules_regs_signing'
+            // +goto_model slug='rules_regs_signing'
 
             a.item(href='#') Proof of Residency
             a.item(href='#') Injury Waiver
@@ -311,7 +310,7 @@ template(name='user_guests')
         .ui.inline.center.aligned.header 
             i.users.icon
             |guests
-        +goto_model slug='guest'
+        // +goto_model slug='guest'
         //- +add_button model='guest'
         //- .ui.button.add_guest
         //-     |Add Guest
@@ -329,10 +328,9 @@ template(name='user_guests')
             
 template(name='user_unit')
     .ui.segment
-        .ui.inline.center.aligned.header 
-            i.home.icon
+        a.ui.inline.center.aligned.header(href="/units")
+            +i name='room'
             |unit
-        +goto_model slug='unit'
         with unit
             +number_view key='building_number' label='building number' direct=true
             +number_view key='unit_number' label='unit #' direct=true
