@@ -211,7 +211,8 @@ if Meteor.isServer
             address_number:unit.building_number
     Meteor.publish 'user_key', (unit_id)->
         unit = Docs.findOne unit_id
-        Docs.find
-            model:'key'
-            building_number:unit.building_number
-            unit_number:unit.unit_number
+        if unit
+            Docs.find
+                model:'key'
+                building_number:unit.building_number
+                unit_number:unit.unit_number

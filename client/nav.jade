@@ -111,6 +111,7 @@ template(name='footer')
                             img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                             |#{title}
                             +model_label
+                            |#{building_number}
                             +print_this
                             |#{when}
             if currentUser.admin_mode

@@ -8,10 +8,10 @@ if Meteor.isClient
     Template.buildings.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'building', ->
     Template.building_view.onCreated ->
-        @autorun => Meteor.subscribe 'building', Router.current().params.building_number
-        @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number
-        @autorun => Meteor.subscribe 'building_by_number', Router.current().params.building_number
-        @autorun => Meteor.subscribe 'model_docs', 'building', ->
+        @autorun => Meteor.subscribe 'building', Router.current().params.building_number, ->
+        @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number, ->
+        @autorun => Meteor.subscribe 'building_by_number', Router.current().params.building_number, ->
+        # @autorun => Meteor.subscribe 'model_docs', 'building', ->
     Template.building_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number
@@ -44,9 +44,10 @@ if Meteor.isClient
 
     Template.building_view.helpers
         current_building: ->
+            console.log Router.current().params.building_number
             Docs.findOne
                 model:'building'
-                building_number: Router.current().params.building_number
+                # building_number: Router.current().params.building_number
 
         units: ->
             Docs.find {
@@ -94,9 +95,10 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'building_by_number', (building_number)->
+        console.log 'finding building', building_number
         Docs.find
             model:'building'
-            building_number:building_number
+            building_number:parseInt(building_number)
 
 
     Meteor.publish 'building_units', (building_number)->
