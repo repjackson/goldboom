@@ -28,6 +28,9 @@ template(name='home')
                             |checkin
         .two.column.row
             .column       
+                a.ui.big.button(href="/staff") 
+                    +i name='shield'
+                    |staff
                 +active_checkins
             .column       
                 .ui.header 
@@ -35,6 +38,13 @@ template(name='home')
                     |info
                 .ui.large.list 
                     .item hours 7am-10pm
+                    a.item.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
+                        +i name='marker'
+                        |2959 Shadow Creek Dr, Boulder, CO 80303
+                    a.item.zoomer(href="tel:303-545-1787") 
+                        +i name='phone'
+                        |phone: (303) 545-1787
+
             // .column
                 // +latest_activity
             .column
