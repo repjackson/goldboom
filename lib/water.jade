@@ -66,8 +66,9 @@ template(name='lower_hot_tub_readings')
     .ui.inline.header
         +icolor name='jacuzzi' 
         |lower hot tub readings
-    #add_lower_hot_tub_reading.ui.big.icon.button
-        i.green.plus.icon
+    if currentUser
+        #add_lower_hot_tub_reading.ui.big.icon.button
+            i.green.plus.icon
     table.ui.striped.very.large.table
         thead
             tr
@@ -101,8 +102,9 @@ template(name='upper_hot_tub_readings')
     .ui.inline.header
         +icolor name='jacuzzi'
         | upper hot tub readings
-    #add_upper_hot_tub_reading.ui.big.icon.button
-        i.green.plus.icon
+    if currentUser
+        #add_upper_hot_tub_reading.ui.big.icon.button
+            i.green.plus.icon
     .ui.small.header keep 6 tabs of bromine in filter system at all times.  if a tab has dissolved to less than half its original size, replace.
     table.ui.striped.very.large.table
         thead
@@ -138,8 +140,9 @@ template(name='pool_readings')
     .ui.inline.header 
         +icolor name='swimming'
         |pool readings
-    #add_pool_reading.ui.big.icon.button
-        i.green.plus.icon 
+    if currentUser
+        #add_pool_reading.ui.big.icon.button
+            i.green.plus.icon 
     table.ui.striped.very.large.table
         thead
             tr

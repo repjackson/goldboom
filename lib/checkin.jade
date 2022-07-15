@@ -195,7 +195,7 @@ template(name='checkin_card')
                         i.clipboard.icon(title='staff notes')
                         |#{staff_notes}       
             if checkin_guest_docs.count
-                .ui.small.header Guests
+                .ui.small.header guests
                 each checkin_guest_docs
                     .ui.large.label 
                         |#{guest_name} #{first_name} #{last_name}

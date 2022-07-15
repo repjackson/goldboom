@@ -153,9 +153,10 @@ template(name='session_icon_button')
         // +i name=icon
         i.large.icon(class=icon)
 
-template(name='viewing_info')
-    i.eye.icon
-    |#{views} views
+template(name='key_value_icon')
+    if parent_is key value 
+        +i name=icon
+
 
 template(name='session_key_value_edit')
     .ui.button.set_key_value(class=set_key_value_class)

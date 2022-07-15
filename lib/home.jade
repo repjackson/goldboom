@@ -5,7 +5,7 @@ template(name='home')
                 .ui.inline.header 
                     +i name='dumbbell'
                     |healthclub check in
-                if currentUser
+                if currentUser.admin_mode
                     +add_user_button
                 unless currentUser
                     .ui.massive.icon.input.lookup_user
@@ -53,6 +53,9 @@ template(name='home')
                 a.ui.large.compact.button.fly_down(href="/services")
                     +i name='service'
                     |services
+                a.ui.large.compact.button.fly_down(href="/posts")
+                    +i name='news'
+                    |posts
                 a.ui.large.compact.button.fly_down(href="/products")
                     +i name='shopping-cart'
                     |products
@@ -106,25 +109,28 @@ template(name='latest_activity')
                 small #{_when} by #{_author_username}
                 
 template(name='latest_checkins')
-    .ui.header 
-        +i name='clock'
-        |latest checkins 
-    .ui.selection.divided.list
-        each latest_checkin_docs 
-            // a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
-            .item
-                if active
-                    i.large.green.checkmark.icon
-                else 
-                    i.large.red.sign.out.alternate.icon
-                |#{_when}
-                |#{resident_username}
-                with _resident
-                    +verification_label
-                
-                // +author_info
-                if currentUser.admin_mode
-                    i.red.circular.remove.icon.delete_checkin
+    .ui.segment.alpha
+        .ui.header 
+            +i name='history'
+            |latest checkins 
+        .ui.selection.divided.list.smallscroll
+            each latest_checkin_docs 
+                // a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
+                .item
+                    if active
+                        i.large.green.checkmark.icon
+                    else 
+                        i.large.red.sign.out.alternate.icon
+                    |#{_when}
+                    |#{resident_username}
+                    with _resident
+                        +verification_label
+                    
+                    // +author_info
+                    if currentUser.admin_mode
+                        i.red.circular.remove.icon.delete_checkin
+                    a.ui.circular.icon.button.zoomer.fly_right(href="/checkin/#{_id}" title='view checkin')
+                        i.chevron.right.icon
         
 template(name='verification_label')        
     if verified 
