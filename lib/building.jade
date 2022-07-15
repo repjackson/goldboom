@@ -19,6 +19,8 @@ template(name='building_card')
             .ui.inline.header 
                 +i name='room'
                 |units
+            each units 
+                .ui.label ##{unit_number}
             each location_tags 
                 .ui.basic.label #{this}
 
@@ -101,7 +103,7 @@ template(name='building_residents')
                 .ui.item
                     img.ui.tiny.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     .content
-                        a.header(href="/user/#{username}")
+                        a.header.fly_right(href="/user/#{username}")
                              |#{first_name} #{last_name} 
                             .meta @#{username}
                             .meta 

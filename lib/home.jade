@@ -7,9 +7,10 @@ template(name='home')
                     |healthclub checkin
                 +add_user_button
                 unless currentUser
-                    .ui.large.input.lookup_user
+                    .ui.large.icon.input.lookup_user
+                        i.search.icon
                         input.search_user(type='text' placeholder='search user...')
-                    each uncheckedin_user_docs 
+                    each checkedout_user_docs 
                         a.ui.button.pick_user 
                             |#{username}
                             |#{building_number}: ##{unit_number}
@@ -45,7 +46,7 @@ template(name='active_checkins')
                 .ui.button.checkout 
                     i.sign.out.icon
                     |checkout
-                |#{string}
+                // |#{string}
                 
 template(name='latest_activity')
     .ui.header 
@@ -62,10 +63,17 @@ template(name='latest_checkins')
         |latest checkins 
     .ui.selection.divided.list
         each latest_checkin_docs 
-            a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
+            // a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
+            .item
+                if active
+                    i.large.green.checkmark.icon
+                else 
+                    i.large.red.sign.out.alternate.icon
                 |#{body} #{_when}
                 |#{resident_username}
                 // +author_info
+                if in_dev 
+                    i.red.circular.remove.icon.delete_checkin
         
                 
 template(name='parent_info')
