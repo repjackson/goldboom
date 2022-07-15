@@ -9,7 +9,7 @@ template(name='nav')
             a.item(href="/" title='goldrun')
                 +i name='one-ring'
                 // if currentUser.show_labels
-                |goldrun
+                span.mobile.hidden goldrun
             // a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
@@ -23,17 +23,17 @@ template(name='nav')
                 +i name='room'
                 span.mobile.hidden units
 
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}" title='users')
+            a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
                 +i name='groups'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden people
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
+            a.item.mobile.hidden.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
                 +i name='checkmark'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden checkins
-            a.item.mobile.hidden.zoomer.fly_right.clear_search.mobile.hidden(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
+            a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
                 +i name='tasks'
                 // i.large.users.icon
                 // if currentUser.show_labels
@@ -56,7 +56,7 @@ template(name='nav')
             //     +i name='plus'
             //     span.mobilehidden register            
             a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
-                i.sign.in.large.icon
+                i.sign.in.large.green.icon.zoomer
                 // +i name='internal'
                 span.mobile.hidden login
         unless is_connected

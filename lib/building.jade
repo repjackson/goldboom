@@ -54,8 +54,11 @@ template(name='building_view')
                 .ui.header 
                     +i name='room'
                     |building units
-                each building_unit_docs 
-                    .ui.header #{unit_number}
+                .ui.selection.list
+                    each building_unit_docs
+                        a.item(href="/unit/#{_id}") 
+                            img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                            .ui.inline.header #{unit_number}
                 if is_springdale
                     +building_permits
 

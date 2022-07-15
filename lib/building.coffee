@@ -54,7 +54,7 @@ if Meteor.isClient
                 model:'building'
                 # building_number: Router.current().params.building_number
 
-        units: ->
+        building_unit_docs: ->
             Docs.find {
                 model:'unit'
             }, sort: unit_number:1
