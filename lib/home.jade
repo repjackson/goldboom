@@ -4,7 +4,7 @@ template(name='home')
             .center.aligned.column
                 .ui.inline.header 
                     +i name='dumbbell'
-                    |healthclub checkin
+                    |healthclub check in
                 if currentUser
                     +add_user_button
                 unless currentUser
@@ -21,11 +21,13 @@ template(name='home')
                         .ui.header currently checked in
                         .ui.big.button.checkout
                             +i name='exit'
-                            |checkout
+                            img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            |check out as #{currentUser.username}
                     else 
                         .ui.big.button.checkin 
                             +i name='internal'
-                            |checkin
+                            img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            |check in as #{currentUser.username}
         .two.column.row
             .column       
                 a.ui.big.button(href="/staff") 
@@ -35,16 +37,28 @@ template(name='home')
             .column       
                 .ui.header 
                     +i name='info'
-                    |info
-                .ui.large.list 
-                    .item hours 7am-10pm
-                    a.item.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
-                        +i name='marker'
-                        |2959 Shadow Creek Dr, Boulder, CO 80303
-                    a.item.zoomer(href="tel:303-545-1787") 
-                        +i name='phone'
-                        |phone: (303) 545-1787
-
+                    | hours 7am-10pm
+                a.ui.large.compact.button.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
+                    +i name='marker'
+                    |2959 Shadow Creek Dr, Boulder, CO 80303
+                a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
+                    +i name='phone'
+                    |phone: (303) 545-1787
+                a.ui.large.compact.button.fly_down(href="/events")
+                    +i name='calendar'
+                    |events
+                a.ui.large.compact.button.fly_down(href="/tasks")
+                    +i name='tasks'
+                    |tasks
+                a.ui.large.compact.button.fly_down(href="/services")
+                    +i name='service'
+                    |services
+                a.ui.large.compact.button.fly_down(href="/products")
+                    +i name='shopping-cart'
+                    |products
+                a.ui.large.compact.button.fly_down(href="/posts")
+                    +i name='news'
+                    |posts
             // .column
                 // +latest_activity
             .column

@@ -10,6 +10,10 @@ template(name='nav')
                 +i name='home'
                 // if currentUser.show_labels
                 span.mobile.hidden goldrun
+            a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
+                +i name='line-chart'
+            a.item(href='/admin' class="{{isActivePath '/admin'}}")
+                +i name='shield'
             // a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
@@ -122,6 +126,7 @@ template(name='footer')
                             |#{when}
             // if currentUser.admin_mode
             .column
+                +footer_chat
                 .ui.inline.header 
                     i.chess.icon
                     |#{result_docs.count}
@@ -139,5 +144,49 @@ template(name='footer')
                             |#{username}
                             
                         +print_this
-            
+
+
+template(name='my_latest_activity')
+    .ui.grey.header 
+        i.grey.rss.icon
+        |your activity
+    .ui.list
+        each my_latest_activity
+            .item 
+                img.ui.avatar.image(src="{{c.url author.kiosk_photo width=200 height=200 gravity='face' crop='fill'}}")
+                |#{text} #{body}
+                small #{when}
+
+
+// template(name='latest_activity')
+//     .ui.grey.header 
+//         i.grey.rss.icon
+//         |all activity
+//     .ui.list
+//         each latest_activity
+//             .item 
+//                 img.ui.avatar.image(src="{{c.url author.kiosk_photo width=200 height=200 gravity='face' crop='fill'}}")
+//                 |#{text} #{body} 
+//                 .ui.label #{log_type}
+//                 small #{when}
+
                 
+template(name='footer_chat')
+    .ui.grey.inline.header 
+        i.outline.comments.icon
+        |chat
+    .ui.list.scroll
+        each chat_messages
+            .item(title="by #{author.name} #{when}")
+                if author
+                    img.ui.avatar.image(src="{{c.url author.kiosk_photo width=200 height=200 gravity='face' crop='fill'}}")
+                |#{text}
+                //- small #{when}
+                if is_author
+                    span
+                        i.remove.link.icon.remove_message
+    .ui.bottom.attached.fluid.icon.input
+        i.plus.blue.icon
+        input.new_footer_chat_message(type='text' placeholder='add message')
+
+

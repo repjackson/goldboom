@@ -2,7 +2,8 @@ template(name='admin')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
-                .ui.header 
+                .ui.inline.header 
+                    +i name='shield'
                     |admin
                 +call_method name='calculate_model_doc_count'
                 a.ui.large.button(href='/users')
@@ -22,6 +23,7 @@ template(name='admin')
                         +author_info
             .column
                 .ui.header 
+                    +i name='money'
                     |payments
                 .largescroll
                     each payments
@@ -35,12 +37,6 @@ template(name='admin')
 
     .ui.stackable.padded.grid
         .four.column.row
-            .column
-                h1.ui.header
-                    i.shield.icon
-                    |gr+ admin
-                with gs
-                    +boolean_edit key='rick_mode' direct=true
             .column
                 +transactions_small
             .column
