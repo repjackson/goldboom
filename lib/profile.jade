@@ -72,10 +72,10 @@ template(name='profile')
                             +text_view key='status' label='status' icon='clock'
                             +text_view key='address' label='address' icon='marker' 
                             +phone_view key='phone' label='phone' icon='phone' 
-                            .ui.header 
+                            a.ui.big.button(href="/building/#{building_number}") 
                                 +i name='apartment'
                                 |building number #{building_number}
-                            .ui.header 
+                            a.ui.big.button(href="/building/#{building_number}/unit/#{unit_number}")
                                 +i name='room'
                                 |unit number #{unit_number}
                         .column
@@ -408,9 +408,9 @@ template(name='account')
                     div
                     +text_edit key='last_name' label='last name' icon='user'
                     div
-                    +number_edit key='building_number' label='building number' icon='building'
+                    +number_edit key='building_number' label='building number' icon='apartment'
                     div
-                    +number_edit key='unit_number' label='unit number' icon='cubes'
+                    +number_edit key='unit_number' label='unit number' icon='room'
                     div
                     // +text_edit key='display_name' label='display name'
                     div

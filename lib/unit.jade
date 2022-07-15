@@ -12,7 +12,7 @@ template(name='units')
             .ui.icon.input 
                 i.building.icon
                 input.search_building_number(type='text' placeholder='building')
-            .ui.cards
+            .ui.cards.scrolling
                 each unit_docs
                     +unit_card
             
