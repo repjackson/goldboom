@@ -56,7 +56,13 @@ template(name='profile')
                         +logout_button
                     if in_dev 
                         +print_this
-                    unless is_current_user
+                    a.ui.large.compact.button(href="/building/#{building_number}") 
+                        +i name='apartment'
+                        |building number #{building_number}
+                    a.ui.large.compact.button(href="/building/#{building_number}/unit/#{unit_number}")
+                        +i name='room'
+                        |unit number #{unit_number}
+                    // unless is_current_user
                         // +request_button
                         // +follow_button
                         // +friend_button
@@ -91,21 +97,17 @@ template(name='profile')
                             +text_view key='status' label='status' icon='clock'
                             +text_view key='address' label='address' icon='marker' 
                             +phone_view key='phone' label='phone' icon='phone' 
-                            a.ui.big.button(href="/building/#{building_number}") 
-                                +i name='apartment'
-                                |building number #{building_number}
-                            a.ui.big.button(href="/building/#{building_number}/unit/#{unit_number}")
-                                +i name='room'
-                                |unit number #{unit_number}
+                        // .column
+                        //     +membership_status
                         .column
-                            +membership_status
-                        .column
-                            +user_checkins
                             +user_unit
                         .column
-                            +user_guests
+                            +user_models key='guest' icon='check-in-desk'
+                        .column
                             +user_models key='space' icon='garage'
-                            +user_models key='checkin' icon='checkin'
+                        .column
+                            +user_models key='checkin' icon='checkmark'
+                        .column
                             +user_models key='violation' icon='foul'
                         .column
                             +user_permit
@@ -125,9 +127,9 @@ template(name='user_models')
         .ui.header 
             +i name=icon
             |#{key}s
-        .ui.list 
+        .ui.large.selection.animated.list 
             each user_model_docs 
-                .item 
+                a.item.fly_down(href="/#{model}/#{_id}")
                     |#{_when}
          
 template(name='profile_nav_item')        
@@ -396,7 +398,7 @@ template(name='user_posts')
         // if is_current_user
         //     .ui.circular.button.add_user_post
         //         i.large.plus.icon
-        .ui.selection.link.animated.divided.list.scrolling
+        .ui.selection.link.animated.divided.list.scrollin
             each user_authored_post_docs
                 a.item.fly_left(href="/doc/#{_id}") 
                     if image_id

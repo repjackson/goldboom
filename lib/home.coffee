@@ -51,6 +51,8 @@ if Meteor.isClient
                     model:'checkin'
                     status:'active'
                     active:true
+                    building_number:Meteor.user().building_number
+                    unit_number:Meteor.user().unit_number
             else 
                 Router.go '/login'
                 

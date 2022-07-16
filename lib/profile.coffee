@@ -3,6 +3,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'profile'
         ), name:'profile'
+    Router.route '/inbox', (->
+        @layout 'layout'
+        @render 'user_inbox'
+        ), name:'inbox'
 
 
     Template.user_inbox.onCreated ->
@@ -58,30 +62,6 @@ if Meteor.isClient
         
         
                 
-if Meteor.isClient
-    Template.user_checkins.onCreated ->
-        @autorun -> Meteor.subscribe 'user_checkins', Router.current().params.username, ->
-    Template.user_checkins.helpers
-        user_checkin_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
-                _author_id:user._id
-                model:'checkin'
-if Meteor.isServer 
-    Meteor.publish 'user_checkins', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find {
-            _id:$in:user.favorite_ids
-        }, 
-            limit:5
-            fields:
-                title:1
-                model:1
-                image_id:1
-
-
-
-
 if Meteor.isClient    
     Template.user_posts.onCreated ->
         @autorun -> Meteor.subscribe 'user_model_docs', 'post', Router.current().params.username, ->

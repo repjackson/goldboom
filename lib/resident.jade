@@ -306,25 +306,6 @@ template(name='user_checkins')
             
             
             
-template(name='user_guests')
-    .ui.segment.alpha
-        .ui.inline.center.aligned.header 
-            +i name='check-in-desk'
-            |guests
-        // +goto_model slug='guest'
-        //- +add_button model='guest'
-        //- .ui.button.add_guest
-        //-     |Add Guest
-        //- with user_from_username_param
-        //-     .ui.header total guests #{total_guests}
-            //- .ui.header guests this month #{current_month_guests}
-        .ui.link.large.list
-            each resident_guests
-                a.item(href="/m/guest/#{_id}/view")
-                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                    .content
-                        |#{guest_name} #{first_name} #{last_name} #{username}
-
             
             
 template(name='user_unit')

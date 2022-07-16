@@ -52,7 +52,8 @@ template(name='log_item')
         +when
         +read_button
         // +group_info
-        +author_info
+        |by #{_author_username}
+        // +author_info
         if in_dev 
             +print_this
         
