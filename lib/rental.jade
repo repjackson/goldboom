@@ -20,10 +20,11 @@ template(name='rentals')
             
             +sort_direction_toggle
             // +sort_key_toggle
-            +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-            +session_set key='sort_key' value='points' label='points' icon='hashtag'
-            +session_set key='sort_key' value='views' label='views' icon='eye'
-            +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
+            +session_set key='sort_key' value='price' label='price' icon='money'
+            // +session_set key='sort_key' value='' label='added' icon='clock'
+            // +session_set key='sort_key' value='points' label='points' icon='hashtag'
+            // +session_set key='sort_key' value='views' label='views' icon='eye'
+            // +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
@@ -95,31 +96,30 @@ template(name='rental_view')
                     i.large.left.chevron.icon
                     +i name='building'
                     |#{building_number}
-                a.ui.large.compact.button(href="/building/#{building_number}/unit/#{unit_number}")
+                a.ui.large.compact.disabled.button(href="/building/#{building_number}/unit/#{unit_number}")
                     i.large.left.chevron.icon
                     +i name='room'
                     |unit #{unit_number}
                 .ui.header
                     // i.home.icon 
                     +i name='garage'
-                    |viewing parking rental
-                    |#{rental_number}
+                    small viewing
+                    strong rental
+                    |#{title}
                 +image_view key='image_id' label='image'
                 +image_view key='image_id2' label='image 2'
-                h2.ui.center.aligned.header #{rental_number} #{building_number} 
                 +text_view key='address' label='address' icon='marker'
                 +number_view key='unit_number' label='unit number' icon='room'
                 +number_view key='building_number' label='building number' icon='apartment'
                 +link_view key='link' label='link' icon='link' 
-                if in_garage
-                    .ui.large.image.label
-                        +i name='garage'
-                        |garage
-                else 
-                    .ui.large.image.label
-                        |outside
+                +array_view key='location_tags' label='location tags'
                 +array_view key='tags' label='tags' icon='tags'
+                .ui.header 
+                    |price: #{price}
             .eight.wide.column
+                +rental_orders
+                .ui.big.green.button
+                    |rent
                 if can_edit 
                     a.ui.large.compact.button(href="/rental/#{_id}/edit")
                         i.large.pencil.icon
@@ -130,14 +130,18 @@ template(name='rental_view')
                 +comments
 
             
+template(name='rental_orders')
+    .ui.header 
+        |rental orders
+            
+            
 template(name='rental_edit')         
     with current_doc
         .ui.padded.two.column.centered.grid
             .column
-                +boolean_edit key='in_garage' label='in garage' icon='garage'
+                +text_edit key='title' label='title' icon='header'
                 +image_edit key='image_id' label='image'
                 +image_edit key='image_id2' label='image 2'
-                h2.ui.center.aligned.header #{rental_number} #{building_number} 
                 +text_edit key='address' label='address' icon='marker'
                 +number_edit key='unit_number' label='unit number' icon='room'
                 +number_edit key='building_number' label='building number' icon='apartment'
