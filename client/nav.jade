@@ -93,6 +93,11 @@ template(name='nav')
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden keys
+        a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
+            +i name='garage'
+            // i.large.users.icon
+            // if currentUser.show_labels
+            span.mobile.hidden parking spaces
         a.item.zoomer.fly_right.clear_search(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
             +i name='exchange'
             // i.large.users.icon

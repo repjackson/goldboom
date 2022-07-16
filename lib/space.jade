@@ -1,0 +1,211 @@
+template(name='spaces')
+    .ui.stackable.padded.grid
+        .four.wide.column
+            .ui.inline.header 
+                +i name='bedroom'
+                |spaces
+            .ui.icon.compact.button.add_space
+                i.plus.large.icon
+            .ui.icon.input 
+                i.hashtag.icon
+                input.search_space_number(type='text' placeholder='number')
+            .ui.icon.input 
+                i.building.icon
+                input.search_building_number(type='text' placeholder='building')
+        .twelve.wide.column
+            .ui.inline.header(title='result count') #{result_docs.count}
+            +search_input key='address'
+            +session_icon_button key='view_mode' value='grid' icon='th' 
+            +session_icon_button key='view_mode' value='list' icon='list'
+            
+            +sort_direction_toggle
+            // +sort_key_toggle
+            +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
+            +session_set key='sort_key' value='points' label='points' icon='hashtag'
+            +session_set key='sort_key' value='views' label='views' icon='eye'
+            +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
+            // +session_set key='limit' value=10
+            // +session_set key='limit' value=25
+            // +session_set key='limit' value=100
+
+            if subs_ready
+                if session_is 'view_mode' 'grid'
+                    if one_result
+                        .ui.stackable.centered.one.cards
+                            each space_docs
+                                +space_card
+                    else
+                        .ui.stackable.centered.centered.cards
+                            each space_docs
+                                +space_card
+                else
+                    .ui.divided.selection.animated.list
+                        each space_docs
+                            +space_item
+            
+            
+template(name='space_card')
+    a.ui.card.fly_right(href="/space/#{_id}") 
+        if image_id
+            img.ui.image(src="{{c.url image_id }}")
+        .content 
+            .ui.inline.header #{address}
+            // .ui.inline.header ##{space_number}
+            .ui.large.image.label
+                +i name='building'
+                |##{building_number}
+            if space_residents
+                +i name='groups'
+                each space_residents 
+                    +user_info
+            if for_sale 
+                .ui.basic.label
+                    +i name='money' 
+                    |for sale
+            if for_rent 
+                .ui.basic.label
+                    +i name='clock' 
+                    |for rent
+                    
+template(name='space_item')
+    a.ui.item.fly_right(href="/space/#{_id}") 
+        if image_id
+            img.ui.tiny.inline.image(src="{{c.url image_id }}")
+        .ui.inline.header #{address}
+        // .ui.inline.header ##{space_number}
+        .ui.large.image.label
+            +i name='building'
+            |##{building_number}
+        if space_residents
+            .ui.large.label
+                +i name='groups'
+                each space_residents 
+                    |#{username}
+                    // +user_info
+        if for_sale 
+            .ui.basic.label
+                +i name='money' 
+                |for sale
+        if for_rent 
+            .ui.basic.label
+                +i name='clock' 
+                |for rent
+
+template(name='space_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .eight.wide.column
+                a.ui.large.compact.button.fly_left(href="/spaces")
+                    i.large.left.chevron.icon
+                    +i name='room'
+                    |spaces
+                a.ui.big.button(href="/building/#{building_number}")
+                    i.large.left.chevron.icon
+                    +i name='building'
+                    |#{building_number}
+                .ui.header
+                    // i.home.icon 
+                    +i name='room'
+                    |space
+                    |#{space_number}
+                +image_view key='image_id' label='image'
+                +image_view key='image_id2' label='image 2'
+                h2.ui.center.aligned.header #{space_number} #{building_number} 
+                +text_view key='address' label='address' icon='marker'
+                +number_view key='unit_number' label='unit number' icon='room'
+                +number_view key='building_number' label='building number' icon='apartment'
+                +link_view key='link' label='link' icon='link' 
+                +array_view key='tags' label='tags' icon='tags'
+            .eight.wide.column
+                if can_edit 
+                    a.ui.large.compact.button(href="/space/#{_id}/edit")
+                        i.large.pencil.icon
+                        |edit
+                +viewing_info
+                +space_residents
+                +space_owners
+                +comments
+
+            
+template(name='space_edit')         
+    with current_doc
+        .ui.padded.two.column.centered.grid
+            .column
+                +text_edit key='title' label='title' icon='header'
+                +image_edit key='image_id' label='image'
+                +image_edit key='image_id2' label='image 2'
+                h2.ui.center.aligned.header #{space_number} #{building_number} 
+                +text_edit key='address' label='address' icon='marker'
+                +number_edit key='unit_number' label='unit number' icon='room'
+                +number_edit key='building_number' label='building number' icon='apartment'
+                +link_edit key='link' label='link' icon='link' 
+                +array_edit key='tags' label='tags' icon='tags'
+            .column
+                a.ui.big.fluid.icon.green.button(href="/space/#{_id}")
+                    i.checkmark.big.icon
+                +html_edit key='description' label='description' 
+                if currentUser.admin_mode
+                    +delete_button
+            
+template(name='space_permits')            
+    .ui.segment
+        .ui.header 
+            +i name='badge'
+            |space Permits
+        .ui.cards
+            each permits
+                .ui.card
+                    .content
+                        with resident 
+                            +username_info
+                        +date_view key='expiration_date' icon='calendar delete' 
+                        +text_view key='permit' icon='badge' 
+                        +text_view key='license_plate' icon='driver-license-card' 
+
+template(name='space_owners')            
+    .ui.segment
+        a.ui.header(href="/users")
+            +i name='rent'
+            // i.money.icon
+            |space owners
+        .ui.four.cards
+            each owners
+                .ui.card
+                    .image
+                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    .content
+                        a.header(href="/user/#{username}")
+                             |#{first_name} #{last_name} 
+                            .meta @#{username}
+                            //- +array_view key='tags' label='Tags' 
+
+
+template(name='space_residents')            
+    .ui.segment
+        a.ui.header.fly_down(href="/users")
+            +i name='person-at-home'
+            |#{space_resident_docs.count} space residents
+        .ui.four.cards
+            each space_resident_docs
+                .ui.card
+                    .image
+                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    .content
+                        a.header(href="/user/#{username}")
+                             |#{first_name} #{last_name} 
+                            .meta @#{username}
+                            .meta 
+                                i.calendar.icon(title='expiration date')
+                                |#{expiration_date}
+                            //- +array_view key='tags' label='Tags' 
+
+            
+template(name='unit_spaces')
+    .ui.segment.alpha
+        .ui.inline.header 
+            +i name='foul'
+            |spaces 
+        i.circular.large.plus.link.icon.zoomer.add_unit_space(title='add unit space')
+        .ui.list 
+            each unit_space_docs 
+                .item #{_when} #{_author_username}
