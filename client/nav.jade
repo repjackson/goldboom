@@ -88,6 +88,11 @@ template(name='nav')
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden checkins
+        a.item.zoomer.fly_right.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
+            +i name='key'
+            // i.large.users.icon
+            // if currentUser.show_labels
+            span.mobile.hidden keys
         a.item.zoomer.fly_right.clear_search(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
             +i name='exchange'
             // i.large.users.icon
