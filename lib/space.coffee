@@ -34,17 +34,6 @@ if Meteor.isClient
                 model:'space'
                 
                 
-    Template.unit_spaces.events 
-        'click .add_unit_space': ->
-            new_id = 
-                Docs.insert 
-                    model:'space'
-                    unit_number:@unit_number
-                    building_number:@building_number
-                    submitted:false
-                    status:'draft'
-            Router.go "/space/#{new_id}/edit"
-
                 
     Template.space_owners.helpers
         owners: ->

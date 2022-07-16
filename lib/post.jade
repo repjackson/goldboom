@@ -452,13 +452,13 @@ template(name='viewing_info')
         each read_user_ids
             +user_info
             // img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-    .ui.small.header 
-        |#{views} views
-    .ui.small.header 
-        |last user viewed: {{med_date last_user_viewed_timestamp}}
-        |last user viewed
-    .ui.small.header 
-        |last anon viewed: {{med_date last_anon_viewed_timestamp}}
+        .item 
+            |#{views} views
+        .item 
+            |last user viewed: {{med_date last_user_viewed_timestamp}}
+            |last user viewed
+        .item 
+            |last anon viewed: {{med_date last_anon_viewed_timestamp}}
 
 
 template(name='publish_info')

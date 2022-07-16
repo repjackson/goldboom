@@ -137,12 +137,12 @@ template(name='latest_checkins')
         
 template(name='verification_label')        
     if verified 
-        .ui.image.label
-            +i name='verified-account'
+        .ui.image.large.label
+            +i name='id-verified'
             |verified
     else 
-        .ui.image.label
-            +i name='unverified-account'
+        .ui.image.large.label
+            +i name='id-not-verified'
             |unverified
         
         
