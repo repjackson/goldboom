@@ -12,6 +12,18 @@ if Meteor.isClient
             $('.ui.toast').toast('close')
             Meteor.call 'mark_unread_logs_read', ->
             
+    Template.user_models.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs',@data.key,->
+    Template.user_models.helpers
+        user_model_docs: ->
+            user = Meteor.users.findOne username:Router.current().params.username
+            # if user
+            Docs.find 
+                model:@key
+                unit_number:user.unit_number 
+                building_number:user.building_number
+                
+            
 if Meteor.isServer
     Meteor.methods
         mark_unread_logs_read: ->

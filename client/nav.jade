@@ -163,7 +163,8 @@ template(name='footer')
                         .ui.image.label 
                             img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                             |#{title}
-                            +model_label
+                            // +model_label
+                            |[#{model}]
                             |#{building_number}
                             +print_this
                             |#{when}

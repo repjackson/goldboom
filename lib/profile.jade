@@ -104,6 +104,9 @@ template(name='profile')
                             +user_unit
                         .column
                             +user_guests
+                            +user_models key='space' icon='garage'
+                            +user_models key='checkin' icon='checkin'
+                            +user_models key='violation' icon='foul'
                         .column
                             +user_permit
                         .column
@@ -116,6 +119,16 @@ template(name='profile')
                                 |stats
                             +profile_stats
          
+         
+template(name='user_models')
+    .ui.segment.alpha
+        .ui.header 
+            +i name=icon
+            |#{key}s
+        .ui.list 
+            each user_model_docs 
+                .item 
+                    |#{_when}
          
 template(name='profile_nav_item')        
     a.ui.big.image.circular.label.zoomer(href="/user/#{current_user.username}/#{section}" title=section)
