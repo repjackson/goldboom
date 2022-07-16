@@ -110,20 +110,26 @@ template(name='building_view')
             .eight.wide.column
                 +building_residents
                 +building_owners
-                .ui.header 
-                    +i name='room'
-                    |building units
-                .ui.selection.list
-                    each building_unit_docs
-                        a.item(href="/unit/#{_id}") 
-                            img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-                            .ui.inline.header #{unit_number}
-                if is_springdale
-                    +building_permits
+                +building_units
+                +building_violations
+                
+                
+template(name='building_units')                
+    .ui.segment.alpha
+        .ui.header 
+            +i name='room'
+            |building units
+        .ui.selection.list
+            each building_unit_docs
+                a.item(href="/unit/#{_id}") 
+                    img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                    .ui.inline.header #{unit_number}
+        if is_springdale
+            +building_permits
 
             
 template(name='building_permits')            
-    .ui.segment
+    .ui.segment.alpha
         .ui.header 
             +i name='badge'
             |building permits
@@ -137,8 +143,23 @@ template(name='building_permits')
                         +text_view key='permit' icon='badge' direct=true
                         +text_view key='license_plate' icon='driver-license-card' direct=true
 
+template(name='building_violations')            
+    .ui.segment.alpha
+        .ui.header 
+            +i name='foul'
+            |building permits
+        .ui.cards
+            each permits
+                .ui.card
+                    .content
+                        with resident 
+                            +username_info
+                        +date_view key='expiration_date' icon='calendar delete' direct=true
+                        +text_view key='permit' icon='badge' direct=true
+                        +text_view key='license_plate' icon='driver-license-card' direct=true
+
 template(name='building_owners')            
-    .ui.segment
+    .ui.segment.alpha
         .ui.header 
             +i name='rent'
             // i.money.icon
@@ -155,7 +176,7 @@ template(name='building_owners')
                             //- +array_view key='tags' label='Tags' direct=true
 
 template(name='building_residents')            
-    .ui.segment
+    .ui.segment.alpha
         .ui.header
             +i name='groups'
             // i.users.icon

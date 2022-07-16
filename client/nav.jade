@@ -25,15 +25,6 @@ template(name='nav')
             //     // i.large.users.icon
             //     // if currentUser.show_labels
             //     // span.mobile.hidden checkins
-            a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
-                +i name='news'
-                .mobile.hidden posts
-            a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
-                +i name='tasks'
-                .mobile.hidden tasks
-                // i.large.users.icon
-                // if currentUser.show_labels
-                // span.mobile.hidden tasks
             // if currentUser
             //         a.item.zoomer.clear_read(title='mark all read')
             //             // i.envelope.icon
@@ -111,6 +102,15 @@ template(name='nav')
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden readings
+        a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
+            +i name='news'
+            .mobile.hidden posts
+        a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
+            +i name='tasks'
+            .mobile.hidden tasks
+            // i.large.users.icon
+            // if currentUser.show_labels
+            // span.mobile.hidden tasks
 
 
 
