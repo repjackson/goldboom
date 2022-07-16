@@ -1227,7 +1227,7 @@ h1.ui.header{
 .topnav::-webkit-scrollbar {
     height: 0px;
 }
-.topnav {
+.secnav {
     border-radius: 0 0 15px 15px  !important;
 }
 .secnav::-webkit-scrollbar {

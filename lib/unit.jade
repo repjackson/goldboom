@@ -95,6 +95,11 @@ template(name='unit_view')
     with current_doc
         .ui.stackable.padded.grid
             .four.wide.column
+                .ui.header
+                    // i.home.icon 
+                    +i name='room'
+                    |unit
+                    |#{unit_number}
                 a.ui.large.compact.button.fly_left(href="/units")
                     i.large.left.chevron.icon
                     +i name='room'
@@ -103,11 +108,6 @@ template(name='unit_view')
                     i.large.left.chevron.icon
                     +i name='building'
                     |#{building_number}
-                .ui.header
-                    // i.home.icon 
-                    +i name='room'
-                    |unit
-                    |#{unit_number}
                 img.ui.image(src="{{c.url image_id }}")
                 if inside_image1
                     img.ui.image(src="{{c.url inside_image1 }}")
@@ -144,7 +144,7 @@ template(name='unit_view')
                 +boolean_view key='for_sale' label='for sale' icon='money' 
                 if for_sale 
                     +date_view key='date_available' label='date available' icon='calendar' 
-
+                +unit_violations
                 +unit_residents
                 +unit_owners
                 +comments
@@ -218,7 +218,7 @@ template(name='unit_owners')
 
 
 template(name='unit_residents')            
-    .ui.segment
+    .ui.segment.alpha
         a.ui.header.fly_down(href="/users")
             +i name='person-at-home'
             |#{unit_resident_docs.count} unit residents

@@ -17,7 +17,7 @@ template(name='home')
                             |#{username}
                             |#{building_number}: ##{unit_number}
                 if currentUser 
-                    if currentUser.checked_in 
+                    if currentUser.checkedin 
                         .ui.header currently checked in
                         .ui.big.button.checkout
                             +i name='exit'
