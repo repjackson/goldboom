@@ -271,7 +271,7 @@ template(name='image_edit')
     .ui.form.pointer
         // if icon
         //     i.icon(class=icon)
-        +i name='image'
+        +i name='edit-image'
         .ui.inline.header
             if title
                 |#{title}
@@ -282,7 +282,7 @@ template(name='image_edit')
             else
                 |#{this}
             a(href="https://www.google.com/search?tbm=isch&q=#{../title}" target='_window' title='search google for image from title')
-                i.search.grey.circular.link.icon.zoomer
+                i.google.grey.circular.link.icon.zoomer
         .field
             if field_value
                 //- label Image
@@ -576,8 +576,8 @@ template(name='datetime_view')
 
 template(name='array_edit')
     if icon
-        i.large.icon(class=icon)
-        // +i name=icon cl='ui avatar image'
+        // i.large.icon(class=icon)
+        +i name=icon cl='ui avatar image'
     .ui.inline.header.add_element.pointer(title='add tag')
         |#{field_value.length}
         if title

@@ -9,7 +9,7 @@ template(name='buildings')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             // +search_input key='title'
-            +session_icon_button key='view_mode' value='grid' icon='grid' 
+            +session_icon_button key='view_mode' value='grid' icon='th' 
             +session_icon_button key='view_mode' value='list' icon='list'
             
             +sort_direction_toggle
@@ -21,12 +21,55 @@ template(name='buildings')
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
+            if subs_ready
+                if session_is 'view_mode' 'grid'
+                    if one_result
+                        .ui.stackable.centered.one.cards
+                            each building_docs
+                                +building_card
+                    else
+                        .ui.stackable.centered.centered.cards
+                            each building_docs
+                                +building_card
+                else
+                    .ui.divided.selection.animated.list
+                        each building_docs
+                            +building_item
 
-            .ui.cards
-                each building_docs
-                    +building_card
                     
-                    
+template(name='building_item')
+    a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
+        img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+        .content
+            .ui.header ##{building_number}
+            .ui.inline.header 
+                +i name='room'
+                |units
+            each units 
+                .ui.label ##{unit_number}
+            .ui.inline.small.grey.header 
+                +i name='groups'
+                |residents
+            each units 
+                .ui.label ##{unit_number}
+            .ui.inline.small.grey.header 
+                +i name='rent'
+                |owners
+            each units 
+                .ui.label ##{unit_number}
+            .ui.inline.small.grey.header 
+                +i name='foul'
+                |violations
+            each units 
+                .ui.label ##{unit_number}
+            .ui.inline.small.grey.header 
+                +i name='foul'
+                |comments
+            each units 
+                .ui.label ##{unit_number}
+            each location_tags 
+                .ui.basic.label #{this}
+
 template(name='building_card')
     a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
         img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")

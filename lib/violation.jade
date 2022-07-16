@@ -131,6 +131,7 @@ template(name='violation_edit')
     with current_doc
         .ui.padded.two.column.centered.grid
             .column
+                +text_edit key='title' label='title' icon='header'
                 +image_edit key='image_id' label='image'
                 +image_edit key='image_id2' label='image 2'
                 h2.ui.center.aligned.header #{violation_number} #{building_number} 

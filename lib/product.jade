@@ -57,7 +57,7 @@ template(name='products')
 template(name='product_card')
     .card
         a.fly_right(href="/product/#{_id}")
-            img.ui.image.zoomer(src=image)
+            img.ui.image.zoomer(src="{{c.url image_id width=400 height=400}}")
         .content
             a.ui.header(href="/product/#{_id}")
                 | #{title}
@@ -96,7 +96,7 @@ template(name='product_item')
     .item
         a.fly_right(href="/product/#{_id}")
             if subs_ready
-                img.ui.inline.small.image.zoomer(src=image)
+                img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=400}}")
                 a.ui.inline.header(href="/product/#{_id}")
                     | #{title}
                 // .ui.label #{link}

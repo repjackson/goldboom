@@ -2,18 +2,19 @@ template(name='nav')
     // #topnav.topnav.ui.attached.borderless.big.four.item.menu.hscroll(class=darkmode_class)
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
-    #topnav.topnav.ui.attached.borderless.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.icon.zoomer
-            a.item(href="/" title='goldrun')
-                +i name='home'
+            a.header.item(href="/" title='home')
+                +i name='one-ring'
                 // if currentUser.show_labels
-                span.mobile.hidden goldrun
+                span.mobile.hidden Gold Run
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
             //     +i name='line-chart'
             a.item(href='/admin' class="{{isActivePath '/admin'}}")
                 +i name='user-shield'
+                .mobile.hidden admin
             // a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
@@ -26,8 +27,10 @@ template(name='nav')
             //     // span.mobile.hidden checkins
             a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
                 +i name='news'
+                .mobile.hidden posts
             a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
                 +i name='tasks'
+                .mobile.hidden tasks
                 // i.large.users.icon
                 // if currentUser.show_labels
                 // span.mobile.hidden tasks
@@ -73,7 +76,7 @@ template(name='nav')
                     strong #{currentUser.username}
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
-    .ui.attached.small.menu.hscroll.secnav
+    .ui.attached.small.inverted.menu.hscroll.secnav
         a.icon.zoomer.item.fly_right(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
             // i.large.exchange.icon
             +i name='apartment'
