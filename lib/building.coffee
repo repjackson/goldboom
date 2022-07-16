@@ -35,7 +35,8 @@ if Meteor.isClient
         building_docs: ->
             Docs.find {
                 model:'building'
-            }, sort:slug:1
+            },
+                sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
 
         building_unit_docs: ->
             current_building = 

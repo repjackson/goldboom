@@ -20,11 +20,6 @@ template(name='nav')
             //     +i name='fitness'
             //     .mobile.hidden healthclub
 
-            // a.item.mobile.hidden.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
-            //     +i name='checkmark'
-            //     // i.large.users.icon
-            //     // if currentUser.show_labels
-            //     // span.mobile.hidden checkins
             // if currentUser
             //         a.item.zoomer.clear_read(title='mark all read')
             //             // i.envelope.icon
@@ -88,6 +83,16 @@ template(name='nav')
             // i.large.exchange.icon
             +i name='campfire'
             span.mobile.hidden groups
+        a.item.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
+            +i name='checkmark'
+            // i.large.users.icon
+            // if currentUser.show_labels
+            span.mobile.hidden checkins
+        a.item.zoomer.fly_right.clear_search(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
+            +i name='exchange'
+            // i.large.users.icon
+            // if currentUser.show_labels
+            span.mobile.hidden transfers
         a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
             // i.large.exchange.icon
             +i name='service-bell'
@@ -166,12 +171,12 @@ template(name='footer')
                     |#{all_users.count}
                     |users
                 each all_users
-                    .ui.label 
-                        a(href="/user/#{username}") 
+                    a.ui.image.label.zoomer(href="/user/#{username}") 
+                        if image_id
                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                            |#{username}
-                            
-                        +print_this
+                        |#{username}
+                        
+                    +print_this
 
 
 template(name='my_latest_activity')

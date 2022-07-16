@@ -30,9 +30,10 @@ if Meteor.isClient
             
     Template.units.helpers
         unit_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'unit'
-                
+            },
+                sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
                 
                 
 
