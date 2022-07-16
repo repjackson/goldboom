@@ -13,7 +13,7 @@ template(name='nav')
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
             //     +i name='line-chart'
             a.item(href='/admin' class="{{isActivePath '/admin'}}")
-                +i name='shield'
+                +i name='user-shield'
             // a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
@@ -80,7 +80,7 @@ template(name='nav')
             span.mobile.hidden buildings
         a.icon.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
             // i.large.exchange.icon
-            +i name='police-fine'
+            +i name='foul'
             span.mobile.hidden violations
         a.icon.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
             // i.large.exchange.icon
@@ -89,22 +89,22 @@ template(name='nav')
         a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
             // i.large.exchange.icon
             +i name='shopping-cart'
-            span.mobile.hidden units
+            span.mobile.hidden products
         a.icon.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
             // i.large.exchange.icon
             +i name='campfire'
-            span.mobile.hidden units
+            span.mobile.hidden groups
         a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
             // i.large.exchange.icon
-            +i name='wrench'
-            span.mobile.hidden units
+            +i name='service-bell'
+            span.mobile.hidden services
         a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
             +i name='groups'
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden people
         a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
-            +i name='pool'
+            +i name='water'
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden readings
