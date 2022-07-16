@@ -84,7 +84,7 @@ template(name='profile')
                     //     +profile_nav_item section='food' icon='food'
                     //     +profile_nav_item section='voting' icon='facebook-like'
                 
-                    .ui.two.column.stackable.grid
+                    .ui.three.column.stackable.grid
                         .column
                             if status 
                                 .ui.label(title='status')
@@ -104,15 +104,18 @@ template(name='profile')
                         .column
                             +user_models key='guest' icon='check-in-desk'
                         .column
+                            +user_models key='post' icon='news'
+                        .column
                             +user_models key='space' icon='garage'
                         .column
                             +user_models key='checkin' icon='checkmark'
                         .column
                             +user_models key='violation' icon='foul'
                         .column
-                            +user_permit
+                            +user_models key='permit' icon='id-card'
                         .column
                             +comments
+                        .column
                             +user_inbox
                         .column
                             a.ui.header.zoomers.calc_user_points
@@ -295,28 +298,6 @@ template(name='user_comments')
                  
                  
                      
-template(name='user_services')
-    .ui.inline.header 
-        +i name='wrench'
-        |services
-    .ui.button.add_user_service
-        |add service
-    .ui.selection.animated.link.list
-        each user_service_docs 
-            a.item.zoomer.fly_right(href="/doc/#{_id}")
-                img.ui.tiny.inline.image(src="{{c.url image_id height=200 width=200 background='white' crop='pad'}}")
-                |#{title}
-    .ui.header 
-        +i name='shopping-cart'
-        |purchases
-    .ui.list 
-        each service_purchase_docs 
-            a.item.zoomer.fly_right(href="/doc/#{_id}")
-                img.ui.avatar.image(src="{{c.url parent_image_id height=200 width=200 background='white' crop='pad'}}")
-                |#{parent_title} #{amount}
-            
-        
-                     
                     
 template(name='user_social')
     .ui.inline.header 
@@ -377,43 +358,6 @@ template(name='send_message_button')
         span.mobile.hidden
             |send message
             
-template(name="user_reviews") 
-    if user_review_docs.count
-        // .ui.fluid.styled.accordion.alpha
-        .column
-            .ui.header 
-                +i name='star'
-                |#{user_review_docs.count} reviews
-            .ui.link.selection.animated.list 
-                each user_review_docs
-                    |#{amount}
-
-template(name='user_posts')
-    if user_authored_post_docs.count
-        // .ui.fluid.styled.accordion.alpha
-        .ui.inline.header 
-            +i name='news'
-            |#{user_authored_post_docs.count}
-            |recent posts
-        // if is_current_user
-        //     .ui.circular.button.add_user_post
-        //         i.large.plus.icon
-        .ui.selection.link.animated.divided.list.scrollin
-            each user_authored_post_docs
-                a.item.fly_left(href="/doc/#{_id}") 
-                    if image_id
-                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 background='white' crop='pad'}}")
-                    .ui.inline.small.header
-                        |#{title}
-                    .description
-                        |#{_when}
-                        each five_tags
-                            .ui.black.label #{this}
-                    // if watson 
-                    //     +doc_sentiment
-                    //     +doc_emotion
-                            
-
 
 
 template(name='logout_button')

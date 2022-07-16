@@ -86,8 +86,8 @@ template(name='building_card')
 
 template(name='building_view')
     with current_building
-        .ui.stackable.padded.grid
-            .eight.wide.column
+        .ui.stackable.padded.three.column.grid
+            .column
                 a.ui.big.button(href="/buildings")
                     i.large.left.chevron.icon
                     // |#{building_code}
@@ -107,12 +107,34 @@ template(name='building_view')
                 .ui.header 
                     |building letter: #{building_letter}
                 +user_key
-            .eight.wide.column
+            .column
                 +building_residents
+            .column
+                +building_segment key='unit' icon='room'
+            .column
+                +building_segment key='violation' icon='room'
+            .column
+                +building_segment key='space' icon='garage'
+            .column
                 +building_owners
-                +building_units
-                +building_violations
+            .column
+                +building_segment key='permit' icon='room'
+            .column
+                +building_segment key='task' icon='tasks'
+            .column
+                +building_segment key='key' icon='key'
+                // +building_units
+            .column
+                // +building_segment key='' icon='room'
+                // +building_violations
                 
+                
+                
+template(name='building_segment')
+    .ui.segment.alpha 
+        .ui.header 
+            +i name=icon
+            |#{key}
                 
 template(name='building_units')                
     .ui.segment.alpha

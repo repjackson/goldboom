@@ -17,7 +17,7 @@ if Meteor.isClient
             Meteor.call 'mark_unread_logs_read', ->
             
     Template.user_models.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs',@data.key,->
+        @autorun => Meteor.subscribe 'user_model_docs',@data.key,->
     Template.user_models.helpers
         user_model_docs: ->
             user = Meteor.users.findOne username:Router.current().params.username
@@ -62,34 +62,6 @@ if Meteor.isClient
         
         
                 
-if Meteor.isClient    
-    Template.user_posts.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'post', Router.current().params.username, ->
-    Template.user_comments.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'comment', Router.current().params.username, ->
-        
-    Template.user_comments.helpers
-        user_comment_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
-                model:'comment'
-                _author_id:user._id
-        
-    Template.user_posts.helpers
-        user_authored_post_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find {
-                model:'post'
-                _author_id:user._id
-            }, 
-                sort:_timestamp:-1
-                limit:10
-    Template.user_posts.events 
-        
-    # Template.i.onRendered ->
-    #     Meteor.setTimeout ->
-    #         $('.image').popup()
-    #     , 2000
     Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
@@ -167,21 +139,23 @@ if Meteor.isServer
         user = Meteor.users.findOne username:username
         Docs.find {
             model:model
-            _author_id:user._id
-            published:true
+            # _author_id:user._id
+            # published:true
+            building_number:user.building_number
+            unit_number:user.unit_number
         }, 
             limit:20
             sort:
                 _timestamp:-1
-            fields:
-                title:1
-                model:1
-                image_id:1
-                _author_id:1
-                points:1
-                views:1
-                _timestamp:-1
-                tags:1
+            # fields:
+            #     title:1
+            #     model:1
+            #     image_id:1
+            #     _author_id:1
+            #     points:1
+            #     views:1
+            #     _timestamp:-1
+            #     tags:1
     Meteor.publish 'user_from_username_param', (username)->
         Meteor.users.find 
             username:username
