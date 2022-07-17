@@ -62,15 +62,6 @@ if Meteor.isClient
                     rental_number:rental.rental_number
 
 
-    Template.rental_permits.helpers
-        permits: ->
-            rental =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if rental
-                Docs.find
-                    model: 'parking_permit'
-                    address_number:rental.building_number
 
 
     Template.rental_view.helpers
@@ -86,6 +77,13 @@ if Meteor.isClient
                 # rental_slug:Router.current().params.rental_code
 
     Template.rental_view.events
+        'click .rent': ->
+            Docs.insert 
+                model:'order'
+                parent_id:Router.current().params.doc_id
+                rental_id:Router.current().params.doc_id
+                order_type:'rental'
+            
         'keyup .rental_number': (e,t)->
             if e.which is 13
                 rental_number = parseInt $('.rental_number').val().trim()
@@ -98,43 +96,14 @@ if Meteor.isClient
                     rental_number:rental.rental_number
                     rental_code:rental.slug
 
-
-
-    Template.user_key.onCreated ->
-        @autorun => Meteor.subscribe 'user_key', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'rental_key_access'
-    Template.user_key.helpers
-        key: -> Docs.findOne model:'key'
-        viewing_code: -> Session.get 'viewing_code'
-        access_log: ->
-            Docs.find {
-                model:'rental_key_access'
-                key_id:Docs.findOne(model:'key')._id
-            }, sort:_timestamp:-1
-    Template.user_key.events
-        'click .view_code': ->
-            access = prompt 'admin code'
-            if access is '2959'
-                Session.set 'viewing_code', true
-                Meteor.setTimeout ->
-                    Session.set 'viewing_code', false
-                , 5000
-                new_id = Docs.insert
-                    model:'rental_key_access'
-                    key_id:Docs.findOne(model:'key')._id
-                    owner_user_id:Meteor.users.findOne username:Router.current().params.username
-                    owner_username:Router.current().params.username
-            else
-                alert 'wrong code'
-
-
-
-
-
-
-
-
-
+    Template.rental_orders.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'order', ->
+    
+    Template.rental_orders.helpers
+        rental_order_docs: ->
+            Docs.find 
+                model:'order'
+                rental_id:Router.current().params.doc_id
 
     Template.rental_card.onCreated ->
         @autorun => Meteor.subscribe 'rental_residents', @data._id

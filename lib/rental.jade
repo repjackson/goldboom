@@ -118,7 +118,7 @@ template(name='rental_view')
                     |price: #{price}
             .eight.wide.column
                 +rental_orders
-                .ui.big.green.button
+                .ui.big.green.button.rent
                     |rent
                 if can_edit 
                     a.ui.large.compact.button(href="/rental/#{_id}/edit")
@@ -133,6 +133,9 @@ template(name='rental_view')
 template(name='rental_orders')
     .ui.header 
         |rental orders
+    .ui.list 
+        each rental_order_docs
+            .ui.header #{_when}
             
             
 template(name='rental_edit')         
