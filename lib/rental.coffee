@@ -83,7 +83,10 @@ if Meteor.isClient
                 parent_id:Router.current().params.doc_id
                 rental_id:Router.current().params.doc_id
                 order_type:'rental'
-            
+                active:true
+            Docs.update @_id,
+                $set:
+                    available:false
         'keyup .rental_number': (e,t)->
             if e.which is 13
                 rental_number = parseInt $('.rental_number').val().trim()
@@ -99,12 +102,38 @@ if Meteor.isClient
     Template.rental_orders.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'order', ->
     
+    Template.rental_orders.events
+        'click .return_rental': ->
+            Docs.update @_id,
+                $set:
+                    active:false
+                    return_timestamp:Date.now()
+            Docs.update Router.current().params.doc_id, 
+                $set:
+                    available:true
+                    returned_last_timestamp:Date.now()
+        'click .return_active_rental': ->
+            active_rental = 
+                Docs.findOne 
+                    model:'order'
+                    active:true
+            Docs.update active_rental._id,  
+                $set:
+                    active:false
+                    return_timestamp:Date.now()
+            Docs.update Router.current().params.doc_id, 
+                $set:
+                    available:true
+                    returned_last_timestamp:Date.now()
+
     Template.rental_orders.helpers
         rental_order_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'order'
                 rental_id:Router.current().params.doc_id
-
+            },
+                sort:
+                    _timestamp:-1
     Template.rental_card.onCreated ->
         @autorun => Meteor.subscribe 'rental_residents', @data._id
         @autorun => Meteor.subscribe 'rental_owners', @data._id

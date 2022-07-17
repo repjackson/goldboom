@@ -4,8 +4,9 @@ template(name='rentals')
             .ui.inline.header 
                 +i name='garage'
                 |rentals
-            .ui.icon.compact.button.add_rental
-                i.plus.large.icon
+            if currentUser
+                .ui.icon.compact.button.add_rental
+                    i.plus.large.icon
             .ui.icon.input 
                 i.hashtag.icon
                 input.search_rental_number(type='text' placeholder='number')
@@ -50,26 +51,35 @@ template(name='rental_card')
         if image_id
             img.ui.image(src="{{c.url image_id }}")
         .content 
-            .ui.inline.header #{address}
+            .ui.inline.header #{title}
             // .ui.inline.header ##{rental_number}
+            i.marker.icon 
+            |#{location}
             .ui.large.image.label
                 +i name='building'
                 |##{building_number}
-            if rental_residents
-                +i name='groups'
-                each _residents 
-                    +user_info
-            if for_rent 
-                .ui.basic.label
-                    +i name='clock' 
-                    |for rent
+            if available 
+                .ui.green.label
+                    .ui.big.checkmark.icon
+                    |available
                     
 template(name='rental_item')
     a.ui.item.fly_right(href="/rental/#{_id}") 
         if image_id
             img.ui.tiny.inline.image(src="{{c.url image_id }}")
-        .ui.inline.header #{address}
+        .ui.inline.header #{title}
         // .ui.inline.header ##{rental_number}
+        .ui.label
+            i.marker.icon 
+            |#{location}
+        if available 
+            .ui.big.green.label 
+                i.checkmark.icon
+                |available 
+        else 
+            .ui.big.red.label 
+                i.large.cancel.icon 
+                |unavailable
         .ui.large.image.label
             +i name='building'
             |##{building_number}
@@ -105,6 +115,14 @@ template(name='rental_view')
                     +i name='garage'
                     small viewing
                     strong rental
+                    if available
+                        .ui.green.big.label
+                            i.big.clock.icon
+                            |available
+                    else 
+                        .ui.big.red.label
+                            i.big.cancel.icon
+                            |unavailable
                     |#{title}
                 +image_view key='image_id' label='image'
                 +image_view key='image_id2' label='image 2'
@@ -117,9 +135,15 @@ template(name='rental_view')
                 .ui.header 
                     |price: #{price}
             .eight.wide.column
+                if available
+                    .ui.big.green.button.rent
+                        i.checkmark.large.icon
+                        |rent
+                else 
+                    .ui.big.teal.button.return_active_rental
+                        i.large.undo.icon
+                        |return
                 +rental_orders
-                .ui.big.green.button.rent
-                    |rent
                 if can_edit 
                     a.ui.large.compact.button(href="/rental/#{_id}/edit")
                         i.large.pencil.icon
@@ -132,10 +156,17 @@ template(name='rental_view')
             
 template(name='rental_orders')
     .ui.header 
+        +i name='order-history'
         |rental orders
     .ui.list 
         each rental_order_docs
-            .ui.header #{_when}
+            .ui.header #{_when} by #{_author_username}
+            if active 
+                .ui.button.return_rental 
+                    i.undo.big.icon 
+                    |return
+            else 
+                |returned: {{long_time return_timestamp}}
             
             
 template(name='rental_edit')         
