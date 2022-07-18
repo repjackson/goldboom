@@ -2,16 +2,25 @@ Router.route '/units', -> @render 'units'
 Router.route '/unit', -> @render 'units'
 Router.route '/unit/:doc_id', -> @render 'unit_view'
 Router.route '/unit/:doc_id/edit', -> @render 'unit_edit'
+Router.route '/building/:building_number/unit/:unit_number', (->
+    @layout 'layout'
+    @render 'unit_view'
+    ), name:'unit_view'
 
 
 if Meteor.isClient
     Template.units.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'unit', ->
     Template.unit_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'unit_by_both', Router.current().params.building_number, Router.current().params.unit_number, ->
     Template.unit_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
             
+    Template.unit_view.helpers
+        current_unit: ->
+            Docs.findOne 
+                model:'unit'
             
     Template.unit_owners.onCreated ->
         @autorun => Meteor.subscribe 'unit_owners', Router.current().params.doc_id
@@ -174,6 +183,13 @@ if Meteor.isServer
         Docs.find
             model:'unit'
             slug:unit_code
+
+    Meteor.publish 'unit_by_both', (building_number,unit_number)->
+        console.log building_number, unit_number
+        Docs.find
+            model:'unit'
+            building_number:parseInt(building_number)
+            unit_number:parseInt(unit_number)
 
 
     Meteor.publish 'unit_units', (unit_code)->

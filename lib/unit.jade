@@ -44,7 +44,6 @@ template(name='units')
                     each unit_docs
                         +unit_item
             
-            
 template(name='unit_card')
     a.ui.card.fly_right(href="/unit/#{_id}") 
         if image_id
@@ -94,7 +93,7 @@ template(name='unit_item')
                 |for rent
 
 template(name='unit_view')
-    with current_doc
+    with current_unit
         .ui.stackable.padded.grid
             .four.wide.column
                 .ui.header
