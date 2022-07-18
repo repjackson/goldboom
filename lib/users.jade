@@ -97,24 +97,26 @@ template(name='user_card')
             a.ui.inline.header.pointer.blink(href="/user/#{username}" style="color:#{theme_color};")
                 |#{name}
             |@#{username}
+            +building_label
+            +unit_label
             .ui.large.label #{points}pts
                 //- |#{username}
             if points
                 .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
-            if one_ratio
-                .ui.label(style="color:#{current_user.theme_color};" title='one ratio') {{to_percent one_ratio}}%
-            if flow_volume
-                .ui.label(style="color:#{current_user.theme_color};" title='flow volume') #{flow_volume}
-            if debit_tags
-                div
-                i.gift.icon(title='gifted tags')
-                each debit_tags
-                    .ui.small.label #{title}
-            if credit_tags
-                div
-                i.chevron.down.icon(title='received gift tags')
-                each credit_tags
-                    .ui.small.label #{title}
+            // if one_ratio
+            //     .ui.label(style="color:#{current_user.theme_color};" title='one ratio') {{to_percent one_ratio}}%
+            // if flow_volume
+            //     .ui.label(style="color:#{current_user.theme_color};" title='flow volume') #{flow_volume}
+            // if debit_tags
+            //     div
+            //     i.gift.icon(title='gifted tags')
+            //     each debit_tags
+            //         .ui.small.label #{title}
+            // if credit_tags
+            //     div
+            //     i.chevron.down.icon(title='received gift tags')
+            //     each credit_tags
+            //         .ui.small.label #{title}
             // if bio 
             //     .smallcut
             //         |!{bio}
@@ -145,6 +147,16 @@ template(name='user_card')
                 |#{profile_views}
             +join
 
+template(name='building_label')
+    .ui.big.label 
+        +i name='building'
+        |#{building_number}
+template(name='unit_label')
+    .ui.big.label 
+        +i name='room'
+        |#{unit_number}
+
+
 template(name='join')
     .ui.label(title='joined')
         i.user.plus.icon
@@ -161,10 +173,12 @@ template(name='user_item')
             small @#{username}
             if points
                 .ui.inline.header(style="color:#{current_user.theme_color};") #{points}p
-            if one_ratio
-                .ui.label(style="color:#{current_user.theme_color};" title='one ratio') {{to_percent one_ratio}}%
-            if flow_volume
-                .ui.label(style="color:#{current_user.theme_color};" title='flow volume') #{flow_volume}
+            +building_label
+            +unit_label
+            // if one_ratio
+            //     .ui.label(style="color:#{current_user.theme_color};" title='one ratio') {{to_percent one_ratio}}%
+            // if flow_volume
+            //     .ui.label(style="color:#{current_user.theme_color};" title='flow volume') #{flow_volume}
             // if debit_tags
             //     div
             //     i.gift.icon(title='gifted tags')

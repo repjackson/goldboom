@@ -103,6 +103,8 @@ template(name='product_item')
                 span.smallcut !{content}
                 .ui.label #{points}p
                 // .ui.label #{type}
+                +building_label
+                +unit_label
                 .ui.label ##{id}
                 .ui.label #{relevance}
                 if _author_username
@@ -172,77 +174,8 @@ template(name='product_view')
                 if can_edit 
                     +edit_button
                 // +viewing_info
-            .eight.wide.column 
-                with details
-                    .ui.header details
-                    .f7 #{generatedText}
-                    .ui.animated.list 
-                        if currentUser.admin_mode
-                            .item id #{id}
-                        // .item title #{title}
-                            // .item bars #{bars}
-                        // .item imageType #{imageType}
-                        .ui.inline.header 
-                            +i name='badge'
-                            |badges 
-                        each badges
-                            .ui.label #{this}
-                        div
-                        .ui.inline.header 
-                            +i name='badge'
-                            |important badges
-                        each importantBadges
-                            .ui.label #{this}
-            .eight.wide.column 
-                with details
-                    .ui.small.inline.header 
-                        +i name='ingredients'
-                        |ingredients
-                    each split_ingredient_list
-                        .ui.compact.button.pick_product_tag
-                            |#{this}
-                    
-                    .ui.list
-                        // .item ingredientList #{ingredientList}
-                        // .item ingredients #{ingredients}
-                        .item likes #{likes}
-                        .item aisle #{aisle}
-                        .item nutrition
-                        .ui.list
-                            each nutrition.nutrients
-                                .item 
-                                    .content
-                                        .header #{name}
-                                        .description
-                                            | #{amount}
-                                            | #{unit}
-                                            | #{percentOfDailyNeeds}%/daily
-                            //     .item percentProtein #{percentProtein}
-                            //     .item percentFat #{percentFat}
-                            //     .item percentCarbs #{percentCarbs}
-                        // .ui.list
-                        //     each servings
-                        //         .item number #{number}
-                        //         .item size #{size}
-                        //         .item unit #{unit}
-                        .item spoonacularScore #{spoonacularScore}
-            .eight.wide.column 
-                with details
-                    .ui.header 
-                        +i name='ingredients'
-                        |#{ingredientCount}
-                        |ingredients 
-                    
-                    each ingredients
-                        .ui.label 
-                            .header #{name}
-                            .description !{description}
-                                if safety_level
-                                    .ui.label safety_level #{safety_level}
-
                 +print_this
 
-            .four.wide.column
                 // +text_view key='size_content' label='size content' 
                 a.ui.circular.button(href=product_link)
                     // i.wordpress.large.icon
@@ -300,7 +233,6 @@ template(name='product_view')
                 i.refresh.large.link.icon.calc_stats(title='refresh_stats')
             .four.wide.column
                 +product_reviews
-            .four.wide.column
                 +product_subscriptions
                 // .ui.green.large.button.add_to_cart
                 //     // i.cart.plus.large.icon
@@ -327,15 +259,15 @@ template(name='product_edit')
                     a.ui.green.button(href="/product/#{_id}")
                         i.save.icon 
                         |save
+                    +number_edit key='building_number' label='building number' icon='building'
+                    +number_edit key='unit_number' label='unit number' icon='room'
                 .eight.wide.column
                     +text_edit key='title' label='title' 
                     +image_edit key='image_id' label='image' 
                     +image_edit key='image_id2' label='alt image' 
                     +link_edit key='link' label='external link' 
-                    +image_edit key='image_id' label='image' icon='image'
                     // div
                     +float_edit key='price_usd' label='price' icon='us-dollar-circled'
-                    +number_edit key='price_points' label='point price' icon='coins'
                     // +text_edit key='size_content' label='size description' icon='content'
                     .ui.inline.header 
                         +i name='product'

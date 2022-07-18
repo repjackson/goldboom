@@ -152,13 +152,20 @@ template(name='checkins')
 template(name='checkin_card')
     a.ui.card(href="/checkin/#{_id}") 
         .content 
-            .ui.header  
-                |#{when}
-            .ui.header  
+            .ui.big.label  
+                |#{_when}
+            .ui.big.label  
                 |#{resident_first_name} #{resident_last_name}
-            .ui.header 
-                |#{checkin_number}, #{checkin_building}
-            |#{_author_username}
+            .ui.big.label 
+                +i name='building'
+                |#
+                strong #{building_number}
+            .ui.big.label 
+                +i name='room'
+                |##{unit_number}
+            .ui.big.label 
+                small author:
+                |#{_author_username}
         if session_resident.kiosk_photo
             img.ui.image(src="{{c.url session_resident.kiosk_photo width=300 height=300 gravity='face' crop='fill'}}")
         else
