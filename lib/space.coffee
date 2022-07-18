@@ -199,18 +199,3 @@ if Meteor.isServer
                 # roles:$in:['resident']
                 building_number:space.building_number
                 space_number:space.space_number
-
-    Meteor.publish 'space_permits', (space_id)->
-        space =
-            Docs.findOne
-                _id:space_id
-        Docs.find
-            model: 'parking_permit'
-            address_number:space.building_number
-    Meteor.publish 'user_key', (space_id)->
-        space = Docs.findOne space_id
-        if space
-            Docs.find
-                model:'key'
-                building_number:space.building_number
-                space_number:space.space_number

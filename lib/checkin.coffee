@@ -280,31 +280,6 @@ if Meteor.isClient
 
 
 
-if Meteor.isServer
-    Meteor.publish 'kiosk_document', ()->
-        Docs.find
-            model:'kiosk'
-
-
-
-    # publishComposite 'session', (doc_id)->
-    #     {
-    #         find: ->
-    #             Docs.find doc_id
-    #         children: [
-    #             { find: (doc) ->
-    #                 Meteor.users.find
-    #                     _id: doc.user_id
-    #                 }
-    #             { find: (doc) ->
-    #                 Docs.find
-    #                     model: 'guest'
-    #                     _id:doc.guest_ids
-    #                 }
-    #             ]
-    #     }
-
-
 if Meteor.isClient
     Template.checkin_input.onCreated ->
         @autorun => Meteor.subscribe 'health_club_members', Session.get('name_search'), ->
@@ -706,20 +681,8 @@ if Meteor.isServer
                 building_number:building_number
                 unit_number:unit_number
 
-    Meteor.publish 'sessions', ->
-        Docs.find
-            model:'checkin'
-            # model:$in:['checkin','garden_key_checkout','unit_key_checkout']
-            active:true
-
     Meteor.publish 'old_sessions', ->
         Docs.find
             model:'checkin'
             # model:$in:['checkin','garden_key_checkout','unit_key_checkout']
             active:$ne:true
-
-
-    Meteor.publish 'session_guests', (session_data)->
-        if session_data
-            Docs.find
-                _id:$in:session_data.guest_ids

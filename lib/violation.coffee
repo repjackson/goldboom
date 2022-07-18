@@ -210,18 +210,3 @@ if Meteor.isServer
                 # roles:$in:['resident']
                 building_number:violation.building_number
                 violation_number:violation.violation_number
-
-    Meteor.publish 'violation_permits', (violation_id)->
-        violation =
-            Docs.findOne
-                _id:violation_id
-        Docs.find
-            model: 'parking_permit'
-            address_number:violation.building_number
-    Meteor.publish 'user_key', (violation_id)->
-        violation = Docs.findOne violation_id
-        if violation
-            Docs.find
-                model:'key'
-                building_number:violation.building_number
-                violation_number:violation.violation_number

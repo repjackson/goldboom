@@ -29,7 +29,8 @@ template(name='rentals')
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
-
+            .ui.header 
+                |items 
             if subs_ready
                 if session_is 'view_mode' 'grid'
                     if one_result
@@ -44,6 +45,11 @@ template(name='rentals')
                     .ui.divided.selection.animated.list
                         each rental_docs
                             +rental_item
+            .ui.header 
+                |units
+            .ui.large.list
+                each unit_rental_docs 
+                    .ui.header #{unit_number}
             
             
 template(name='rental_card')

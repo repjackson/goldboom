@@ -114,14 +114,6 @@ Meteor.publish 'public_posts', (child_id)->
     }, limit:20
 
 
-Meteor.publish 'model_docs', (
-    model
-    limit=20
-    )->
-    Docs.find {
-        model: model
-        # app:'goldrun'
-    }, limit:limit
 
 Meteor.publish 'document_by_slug', (slug)->
     Docs.find

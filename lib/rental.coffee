@@ -7,6 +7,7 @@ Router.route '/rental/:doc_id/edit', -> @render 'rental_edit'
 if Meteor.isClient
     Template.rentals.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'rental', ->
+        @autorun => Meteor.subscribe 'model_docs', 'unit', ->
     Template.rental_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.rental_edit.onCreated ->
@@ -32,7 +33,10 @@ if Meteor.isClient
         rental_docs: ->
             Docs.find 
                 model:'rental'
-                
+        unit_rental_docs: ->
+            Docs.find 
+                model:'unit'
+                for_rent:true
                 
                 
     Template.rental_owners.helpers
@@ -195,20 +199,5 @@ if Meteor.isServer
         if rental
             Meteor.users.find
                 # roles:$in:['resident']
-                building_number:rental.building_number
-                rental_number:rental.rental_number
-
-    Meteor.publish 'rental_permits', (rental_id)->
-        rental =
-            Docs.findOne
-                _id:rental_id
-        Docs.find
-            model: 'parking_permit'
-            address_number:rental.building_number
-    Meteor.publish 'user_key', (rental_id)->
-        rental = Docs.findOne rental_id
-        if rental
-            Docs.find
-                model:'key'
                 building_number:rental.building_number
                 rental_number:rental.rental_number

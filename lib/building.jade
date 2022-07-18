@@ -40,35 +40,34 @@ template(name='buildings')
 template(name='building_item')
     a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-        .content
-            .ui.header ##{building_number}
-            .ui.inline.header 
-                +i name='room'
-                |units
-            each units 
-                .ui.label ##{unit_number}
-            .ui.inline.small.grey.header 
-                +i name='groups'
-                |residents
-            each units 
-                .ui.label ##{unit_number}
-            .ui.inline.small.grey.header 
-                +i name='rent'
-                |owners
-            each units 
-                .ui.label ##{unit_number}
-            .ui.inline.small.grey.header 
-                +i name='foul'
-                |violations
-            each units 
-                .ui.label ##{unit_number}
-            .ui.inline.small.grey.header 
-                +i name='foul'
-                |comments
-            each units 
-                .ui.label ##{unit_number}
-            each location_tags 
-                .ui.basic.label #{this}
+        .ui.inline.header ##{building_number}
+        .ui.inline.header 
+            +i name='room'
+            |units
+        each units 
+            .ui.label ##{unit_number}
+        .ui.inline.small.grey.header 
+            +iios name='groups'
+            |residents
+        each units 
+            .ui.label ##{unit_number}
+        .ui.inline.small.grey.header 
+            +iios name='rent'
+            |owners
+        each units 
+            .ui.label ##{unit_number}
+        .ui.inline.small.grey.header 
+            +iios name='foul'
+            |violations
+        each units 
+            .ui.label ##{unit_number}
+        .ui.inline.small.grey.header 
+            +iios name='chat'
+            |comments
+        each units 
+            .ui.label ##{unit_number}
+        each location_tags 
+            .ui.basic.label #{this}
 
 template(name='building_card')
     a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
