@@ -36,7 +36,6 @@ template(name='buildings')
                         each building_docs
                             +building_item
 
-                    
 template(name='building_item')
     a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
@@ -82,7 +81,6 @@ template(name='building_card')
             each location_tags 
                 .ui.basic.label #{this}
 
-
 template(name='building_view')
     with current_building
         .ui.stackable.padded.three.column.grid
@@ -101,6 +99,7 @@ template(name='building_view')
                     a.ui.icon.large.compact.button(href="/building/#{_id}/edit" title='edit')
                         i.large.pencil.icon
                 +image_view key='image_id' direct=true
+            .column
                 .ui.header 
                     |building ##{building_number}
                 .ui.header 
@@ -222,7 +221,6 @@ template(name='building_edit')
         .ui.padded.two.column.centered.grid
             .column
                 +image_edit key='image_id' direct=true
-                h2.ui.center.aligned.header #{building_number} #{building_number} 
                 +number_edit key='building_number' label='building number' direct=true
                 div
                 +text_edit key='building_letter' label='building code' direct=true

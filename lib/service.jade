@@ -99,11 +99,16 @@ template(name='service_view')
     .ui.stackable.padded.grid
         .row 
             .four.wide.column.scrolling
+                .ui.header #{title}
+                if can_edit 
+                    +edit_button
+                +image_view key='image_id'
                 .ui.inline.grey.header {{from_now start_datetime}}
                 .ui.list
                     .item #{views} views
                 each viewers
                     .ui.label #{username
+                +comments
                 +array_view key='location_tags' label='location_tags' 
             .twelve.wide.column.scrolling   
                 .ui.green.button 

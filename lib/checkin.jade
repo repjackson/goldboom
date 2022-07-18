@@ -330,7 +330,6 @@ template(name='checkin_edit')
         .ui.padded.two.column.centered.grid
             .column
                 +image_edit key='image_id'
-                h2.ui.center.aligned.header #{checkin_number} #{building_number} 
                 +number_edit key='checkin_number' label='checkin number' direct=true
                 +number_edit key='building_number' label='building number' direct=true
                 +text_edit key='address' label='address' direct=true

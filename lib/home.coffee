@@ -12,6 +12,8 @@ if Meteor.isClient
                 active:true
             }, 
                 sort:_timestamp:-1
+    Template.rental_checkins.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'rental', ->
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
@@ -21,6 +23,19 @@ if Meteor.isClient
                 $set:
                     active:false
                     checkout_timestamp:Date.now()
+    Template.rental_checkins.helpers
+        rental_item_docs: ->
+            Docs.find 
+                model:'rental'
+    Template.rental_checkins.events
+        'click .checkout_rental': ->
+            new_id =
+                Docs.insert 
+                    model:'order'
+                    order_type:'rental'
+                    rental_id:@_id
+                    parent_id:@_id
+            Router.go "/order/#{new_id}/edit"
     Template.home.events
         'click .pick_user': ->
             console.log @
@@ -105,7 +120,7 @@ if Meteor.isServer
     Meteor.publish 'checkedout_users_from_search', (username_search)->
         match = {}
         # match.checkedin = $ne:true
-        if username_search.length > 0
+        if username_search and username_search.length > 0
             match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find match
             

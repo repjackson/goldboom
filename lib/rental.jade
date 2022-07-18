@@ -30,6 +30,7 @@ template(name='rentals')
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
             .ui.header 
+                +i name='bicycle'
                 |items 
             if subs_ready
                 if session_is 'view_mode' 'grid'
@@ -46,6 +47,15 @@ template(name='rentals')
                         each rental_docs
                             +rental_item
             .ui.header 
+                +i name='garage'
+                |parking spaces
+            .ui.large.list
+                each parking_rental_docs 
+                    .ui.header #{unit_number}
+                        |#{_when}
+            
+            .ui.header 
+                +i name='room'
                 |units
             .ui.large.list
                 each unit_rental_docs 
