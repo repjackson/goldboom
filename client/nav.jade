@@ -99,6 +99,11 @@ template(name='nav')
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden rentals
+        a.item.zoomer.fly_right.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+            +i name='calendar'
+            // i.large.users.icon
+            // if currentUser.show_labels
+            span.mobile.hidden events
         a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
             +i name='garage'
             // i.large.users.icon

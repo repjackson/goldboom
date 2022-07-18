@@ -61,7 +61,7 @@ template(name='rentals')
                     |units
                 .ui.large.list
                     each unit_rental_docs 
-                        a.item.zoomer(href='unit/#{_id}') 
+                        a.item.zoomer(href='/unit/#{_id}') 
                             img.ui.small.inline.image.zoomer(src="{{c.url image_id }}")
                             .ui.inline.header 
                                 +i name='building'
