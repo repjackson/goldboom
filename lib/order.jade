@@ -1,6 +1,6 @@
 template(name='orders')
     .ui.stackable.padded.grid 
-        .sixteen.wide.column
+        .four.wide.column.scrolling
             .ui.inline.header 
                 +i name='exchange'
                 |#{artist_docs.count} orders
@@ -8,7 +8,6 @@ template(name='orders')
                 i.large.red.circular.link.remove.icon.clear
             .ui.large.input 
                 input.order_search(type='text' placeholder='search...' value=current_search)
-        .four.wide.column.scrolling
             if currentUser
                 .ui.header your points #{currentUser.points}
                 a.ui.big.icon.button.new_order

@@ -129,7 +129,7 @@ template(name='profile')
          
 template(name='user_models')
     .ui.segment.alpha
-        .ui.header 
+        a.ui.header.zoomer(href="/#{key}")
             +i name=icon
             |#{key}s
         .ui.large.selection.animated.list 

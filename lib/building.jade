@@ -130,9 +130,9 @@ template(name='building_view')
                 
 template(name='building_segment')
     .ui.segment.alpha 
-        .ui.header 
+        a.ui.header.zoomer.fly_up(href="/#{key}")
             +i name=icon
-            |#{key}
+            |#{key}s
                 
 template(name='building_units')                
     .ui.segment.alpha

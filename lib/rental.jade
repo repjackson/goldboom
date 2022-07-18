@@ -29,37 +29,47 @@ template(name='rentals')
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
-            .ui.header 
-                +i name='bicycle'
-                |items 
-            if subs_ready
-                if session_is 'view_mode' 'grid'
-                    if one_result
-                        .ui.stackable.centered.one.cards
-                            each rental_docs
-                                +rental_card
+            .ui.segment.alpha
+                .ui.header 
+                    +i name='bicycle'
+                    |items 
+                if subs_ready
+                    if session_is 'view_mode' 'grid'
+                        if one_result
+                            .ui.stackable.centered.one.cards
+                                each rental_docs
+                                    +rental_card
+                        else
+                            .ui.stackable.centered.centered.cards
+                                each rental_docs
+                                    +rental_card
                     else
-                        .ui.stackable.centered.centered.cards
+                        .ui.divided.selection.animated.list
                             each rental_docs
-                                +rental_card
-                else
-                    .ui.divided.selection.animated.list
-                        each rental_docs
-                            +rental_item
-            .ui.header 
-                +i name='garage'
-                |parking spaces
-            .ui.large.list
-                each parking_rental_docs 
-                    .ui.header #{unit_number}
-                        |#{_when}
-            
-            .ui.header 
-                +i name='room'
-                |units
-            .ui.large.list
-                each unit_rental_docs 
-                    .ui.header #{unit_number}
+                                +rental_item
+            .ui.segment.alpha
+                .ui.header 
+                    +i name='garage'
+                    |parking spaces
+                .ui.large.list
+                    each parking_rental_docs 
+                        .ui.header #{unit_number}
+                            |#{_when}
+            .ui.segment.alpha
+                .ui.header 
+                    +i name='room'
+                    |units
+                .ui.large.list
+                    each unit_rental_docs 
+                        a.item.zoomer(href='unit/#{_id}') 
+                            img.ui.small.inline.image.zoomer(src="{{c.url image_id }}")
+                            .ui.inline.header 
+                                +i name='building'
+                                |#{building_number}
+                            .ui.inline.header 
+                                +i name='room'
+                                |#{unit_number}
+                        
             
             
 template(name='rental_card')
