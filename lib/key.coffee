@@ -13,13 +13,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
             
             
-    Template.key_owners.onCreated ->
-        @autorun => Meteor.subscribe 'key_owners', Router.current().params.doc_id
-    Template.key_permits.onCreated ->
-        @autorun => Meteor.subscribe 'key_permits', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'key_keys', Router.current().params.key_code
-
-
     Template.keys.events
         'click .add_key': ->
             new_id = 
@@ -34,83 +27,6 @@ if Meteor.isClient
                 model:'key'
                 
                 
-    Template.unit_keys.events 
-        'click .add_unit_key': ->
-            new_id = 
-                Docs.insert 
-                    model:'key'
-                    unit_number:@unit_number
-                    building_number:@building_number
-                    submitted:false
-                    status:'draft'
-            Router.go "/key/#{new_id}/edit"
-
-                
-    Template.key_owners.helpers
-        owners: ->
-            key =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if key
-                Meteor.users.find
-                    owner:true
-                    # roles:$in:['owner']
-                    building_number:key.building_number
-                    key_number:key.key_number
-
-    Template.key_residents.onCreated ->
-        @autorun => Meteor.subscribe 'key_residents', Router.current().params.doc_id
-    Template.key_residents.helpers
-        key_resident_docs: ->
-            key =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if key
-                Meteor.users.find
-                    # roles:$in:['resident','owner']
-                    # owner:$ne:true
-                    building_number:key.building_number
-                    key_number:key.key_number
-
-
-    Template.key_permits.helpers
-        permits: ->
-            key =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if key
-                Docs.find
-                    model: 'parking_permit'
-                    address_number:key.building_number
-
-
-    Template.key_view.helpers
-        key: ->
-            Docs.findOne
-                model:'key'
-                slug: Router.current().params.key_code
-
-        keys: ->
-            Docs.find {
-                model:'key'
-            }, sort: key_number:1
-                # key_slug:Router.current().params.key_code
-
-    Template.key_view.events
-        'keyup .key_number': (e,t)->
-            if e.which is 13
-                key_number = parseInt $('.key_number').val().trim()
-                key_number = parseInt $('.key_number').val()
-                key_label = $('.key_label').val().trim()
-                key = Docs.findOne model:'key'
-                Docs.insert
-                    model:'key'
-                    key_number:key_number
-                    key_number:key.key_number
-                    key_code:key.slug
-
-
-
     Template.user_key.onCreated ->
         @autorun => Meteor.subscribe 'user_key', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'model_docs', 'key_key_access'
@@ -147,36 +63,6 @@ if Meteor.isClient
 
 
 
-    Template.key_card.onCreated ->
-        @autorun => Meteor.subscribe 'key_residents', @data._id
-        @autorun => Meteor.subscribe 'key_owners', @data._id
-        @autorun => Meteor.subscribe 'key_permits', @data._id
-        # @autorun => Meteor.subscribe 'key_keys', Router.current().params.key_code
-
-    Template.key_card.helpers
-        owners: ->
-            Meteor.users.find
-                roles:$in:['owner']
-                building_number:@building_number
-                key_number:@key_number
-
-        residents: ->
-            Meteor.users.find
-                roles:$in:['resident','owner']
-                owner:$ne:true
-                building_number:@building_number
-                key_number:@key_number
-
-        permits: ->
-            Docs.find
-                model: 'parking_permit'
-                address_number:@building_number
-
-
-
-
-
-
 if Meteor.isServer
     Meteor.publish 'key', (key_code)->
         Docs.find
@@ -184,40 +70,6 @@ if Meteor.isServer
             slug:key_code
 
 
-    Meteor.publish 'key_keys', (key_code)->
-        Docs.find
-            model:'key'
-            key_code:key_code
-
-
-    Meteor.publish 'key_owners', (key_id)->
-        key =
-            Docs.findOne
-                _id:key_id
-        if key
-            Meteor.users.find
-                # roles:$in:['owner']
-                owner:true
-                building_number:key.building_number
-                key_number:key.key_number
-
-    Meteor.publish 'key_residents', (key_id)->
-        key =
-            Docs.findOne
-                _id:key_id
-        if key
-            Meteor.users.find
-                # roles:$in:['resident']
-                building_number:key.building_number
-                key_number:key.key_number
-
-    Meteor.publish 'key_permits', (key_id)->
-        key =
-            Docs.findOne
-                _id:key_id
-        Docs.find
-            model: 'parking_permit'
-            address_number:key.building_number
     Meteor.publish 'user_key', (key_id)->
         key = Docs.findOne key_id
         if key

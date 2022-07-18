@@ -175,8 +175,8 @@ template(name='rental_view')
                         i.large.pencil.icon
                         |edit
                 +viewing_info
-                +rental_residents
-                +rental_owners
+                +doc_residents
+                +doc_owners
                 +comments
 
             
@@ -215,54 +215,3 @@ template(name='rental_edit')
                 if currentUser.admin_mode
                     +delete_button
             
-template(name='rental_permits')            
-    .ui.segment
-        .ui.header 
-            +i name='badge'
-            |rental Permits
-        .ui.cards
-            each permits
-                .ui.card
-                    .content
-                        with resident 
-                            +username_info
-                        +date_view key='expiration_date' icon='calendar delete' 
-                        +text_view key='permit' icon='badge' 
-                        +text_view key='license_plate' icon='driver-license-card' 
-
-template(name='rental_owners')            
-    .ui.segment
-        a.ui.header(href="/users")
-            +i name='rent'
-            // i.money.icon
-            |rental owners
-        .ui.four.cards
-            each owners
-                .ui.card
-                    .image
-                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    .content
-                        a.header(href="/user/#{username}")
-                             |#{first_name} #{last_name} 
-                            .meta @#{username}
-                            //- +array_view key='tags' label='Tags' 
-
-
-template(name='rental_residents')            
-    .ui.segment
-        a.ui.header.fly_down(href="/users")
-            +i name='person-at-home'
-            |#{rental_resident_docs.count} rental residents
-        .ui.four.cards
-            each rental_resident_docs
-                .ui.card
-                    .image
-                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    .content
-                        a.header(href="/user/#{username}")
-                             |#{first_name} #{last_name} 
-                            .meta @#{username}
-                            .meta 
-                                i.calendar.icon(title='expiration date')
-                                |#{expiration_date}
-                            //- +array_view key='tags' label='Tags' 

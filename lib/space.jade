@@ -72,10 +72,10 @@ template(name='space_item')
         .ui.large.image.label
             +i name='building'
             |##{building_number}
-        if space_residents
+        if doc_residents
             .ui.large.label
                 +i name='groups'
-                each space_residents 
+                each doc_residents 
                     |#{username}
                     // +user_info
         if for_rent 
@@ -85,31 +85,27 @@ template(name='space_item')
 
 template(name='space_view')
     with current_doc
-        .ui.stackable.padded.grid
-            .eight.wide.column
+        .ui.stackable.padded.three.column.grid
+            .column
                 a.ui.large.compact.button.fly_left(href="/spaces")
                     i.large.left.chevron.icon
                     +i name='garage'
                     |spaces
-                a.ui.large.compact.button(href="/building/#{building_number}")
-                    i.large.left.chevron.icon
-                    +i name='building'
-                    |#{building_number}
-                a.ui.large.compact.button(href="/building/#{building_number}/unit/#{unit_number}")
-                    i.large.left.chevron.icon
-                    +i name='room'
-                    |unit #{unit_number}
+                +building_nav_button
+                +unit_nav_button
                 .ui.header
                     // i.home.icon 
                     +i name='garage'
                     |viewing parking space
                     |#{space_number}
+            .column
                 +image_view key='image_id' label='image'
                 +image_view key='image_id2' label='image 2'
                 +text_view key='address' label='address' icon='marker'
                 +number_view key='unit_number' label='unit number' icon='room'
                 +number_view key='building_number' label='building number' icon='apartment'
                 +link_view key='link' label='link' icon='link' 
+            .column
                 if in_garage
                     .ui.large.image.label
                         +i name='garage'
@@ -118,14 +114,15 @@ template(name='space_view')
                     .ui.large.image.label
                         |outside
                 +array_view key='tags' label='tags' icon='tags'
-            .eight.wide.column
+            .column
                 if can_edit 
                     a.ui.large.compact.button(href="/space/#{_id}/edit")
                         i.large.pencil.icon
                         |edit
                 +viewing_info
-                +space_residents
-                +space_owners
+            .column
+                +doc_residents
+                +doc_owners
                 +comments
 
             
@@ -150,47 +147,15 @@ template(name='space_edit')
                 if currentUser.admin_mode
                     +delete_button
             
-template(name='space_permits')            
-    .ui.segment
-        .ui.header 
-            +i name='badge'
-            |space Permits
-        .ui.cards
-            each permits
-                .ui.card
-                    .content
-                        with resident 
-                            +username_info
-                        +date_view key='expiration_date' icon='calendar delete' 
-                        +text_view key='permit' icon='badge' 
-                        +text_view key='license_plate' icon='driver-license-card' 
 
-template(name='space_owners')            
-    .ui.segment
-        a.ui.header(href="/users")
-            +i name='rent'
-            // i.money.icon
-            |space owners
-        .ui.four.cards
-            each owners
-                .ui.card
-                    .image
-                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    .content
-                        a.header(href="/user/#{username}")
-                             |#{first_name} #{last_name} 
-                            .meta @#{username}
-                            //- +array_view key='tags' label='Tags' 
-
-
-template(name='space_residents')            
-    .ui.segment
+template(name='doc_residents')
+    .ui.segment.alpha
         a.ui.header.fly_down(href="/users")
             +i name='person-at-home'
-            |#{space_resident_docs.count} space residents
-        .ui.four.cards
-            each space_resident_docs
-                .ui.card
+            |#{doc_resident_docs.count} #{model} residents
+        .ui.large.list
+            each doc_resident_docs
+                .item
                     .image
                         img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     .content

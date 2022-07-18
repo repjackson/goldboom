@@ -25,12 +25,6 @@ if Meteor.isClient
                     model:'building'
             Router.go "/building/#{new_id}/edit"
             
-    Template.building_residents.onCreated ->
-        @autorun => Meteor.subscribe 'building_residents', Router.current().params.building_number, ->
-    Template.building_residents.helpers
-        building_resident_docs: ->
-            Meteor.users.find 
-                building_number:parseInt(Router.current().params.building_number)
     Template.buildings.helpers
         building_docs: ->
             Docs.find {

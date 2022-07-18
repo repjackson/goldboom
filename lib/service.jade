@@ -56,7 +56,6 @@ template(name='services')
             else 
                 .ui.center.aligned.basic.segment
                     i.massive.yin.yang.loading.grey.icon
-
         
 template(name='service_card')
     .card
@@ -69,6 +68,7 @@ template(name='service_card')
             .ui.label 
                 i.user.icon
                 |#{_author_username}
+            +bu
             each tags 
                 .ui.label #{this}
             span.smallscroll
@@ -89,11 +89,16 @@ template(name='service_item')
             .ui.label 
                 i.user.icon
                 |#{_author_username}
+            +bu
             span.smallscroll
                 |!{description}
             a.ui.icon.button.zoomer(href="/service/#{_id}")
                 i.right.large.chevron.icon
         
+template(name='bu')
+    +building_label
+    +unit_label
+
 
 template(name='service_view')
     .ui.stackable.padded.grid

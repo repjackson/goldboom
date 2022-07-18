@@ -14,13 +14,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
             
             
-    Template.rental_owners.onCreated ->
-        @autorun => Meteor.subscribe 'rental_owners', Router.current().params.doc_id
-    Template.rental_permits.onCreated ->
-        @autorun => Meteor.subscribe 'rental_permits', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'rental_rentals', Router.current().params.rental_code
-
-
     Template.rentals.events
         'click .add_rental': ->
             new_id = 
@@ -39,35 +32,6 @@ if Meteor.isClient
                 for_rent:true
                 
                 
-    Template.rental_owners.helpers
-        owners: ->
-            rental =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if rental
-                Meteor.users.find
-                    owner:true
-                    # roles:$in:['owner']
-                    building_number:rental.building_number
-                    rental_number:rental.rental_number
-
-    Template.rental_residents.onCreated ->
-        @autorun => Meteor.subscribe 'rental_residents', Router.current().params.doc_id
-    Template.rental_residents.helpers
-        rental_resident_docs: ->
-            rental =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if rental
-                Meteor.users.find
-                    # roles:$in:['resident','owner']
-                    # owner:$ne:true
-                    building_number:rental.building_number
-                    rental_number:rental.rental_number
-
-
-
-
     Template.rental_view.helpers
         rental: ->
             Docs.findOne
@@ -138,66 +102,3 @@ if Meteor.isClient
             },
                 sort:
                     _timestamp:-1
-    Template.rental_card.onCreated ->
-        @autorun => Meteor.subscribe 'rental_residents', @data._id
-        @autorun => Meteor.subscribe 'rental_owners', @data._id
-        @autorun => Meteor.subscribe 'rental_permits', @data._id
-        # @autorun => Meteor.subscribe 'rental_rentals', Router.current().params.rental_code
-
-    Template.rental_card.helpers
-        owners: ->
-            Meteor.users.find
-                roles:$in:['owner']
-                building_number:@building_number
-                rental_number:@rental_number
-
-        residents: ->
-            Meteor.users.find
-                roles:$in:['resident','owner']
-                owner:$ne:true
-                building_number:@building_number
-                rental_number:@rental_number
-
-        permits: ->
-            Docs.find
-                model: 'parking_permit'
-                address_number:@building_number
-
-
-
-
-
-
-if Meteor.isServer
-    Meteor.publish 'rental', (rental_code)->
-        Docs.find
-            model:'rental'
-            slug:rental_code
-
-
-    Meteor.publish 'rental_rentals', (rental_code)->
-        Docs.find
-            model:'rental'
-            rental_code:rental_code
-
-
-    Meteor.publish 'rental_owners', (rental_id)->
-        rental =
-            Docs.findOne
-                _id:rental_id
-        if rental
-            Meteor.users.find
-                # roles:$in:['owner']
-                owner:true
-                building_number:rental.building_number
-                rental_number:rental.rental_number
-
-    Meteor.publish 'rental_residents', (rental_id)->
-        rental =
-            Docs.findOne
-                _id:rental_id
-        if rental
-            Meteor.users.find
-                # roles:$in:['resident']
-                building_number:rental.building_number
-                rental_number:rental.rental_number

@@ -103,9 +103,7 @@ template(name='product_item')
                 span.smallcut !{content}
                 .ui.label #{points}p
                 // .ui.label #{type}
-                +building_label
-                +unit_label
-                .ui.label ##{id}
+                +bu
                 .ui.label #{relevance}
                 if _author_username
                     a.ui.label.fly_down(href="/user/#{_author_username}/product")
@@ -115,23 +113,10 @@ template(name='product_item')
                     .ui.label #{this}
                 if currentUser.admin_mode
                     +delete_button
-                if details.glutenFree
+                if is_food
                     .ui.big.label
-                        +i name='no-gluten'
-                        |gluten free
-                with details
-                    .ui.label(title='aggregateLikes')
-                        i.thumbs.up.icon
-                        |#{aggregateLikes}
-                    .ui.label(title='')
-                        i.clock.up.icon
-                        |ready in 
-                        strong #{readyInMinutes}
-                        |minutes
-                    .ui.label(title='servings')
-                        i.hashtag.icon
-                        strong #{servings}
-                        |servings
+                        +i name='food'
+                        |food
             else 
                 i.shopping.cart.loading.big.icon
 template(name='product_view')
@@ -144,7 +129,6 @@ template(name='product_view')
                     +i name='product'
                     |shop
                 .ui.inline.header !{title}
-                .ui.big.label source: #{source}
                 with details
                     each breadcrumbs 
                         .ui.label.pick_product_tag #{this}
@@ -159,13 +143,7 @@ template(name='product_view')
                 +voting_full
                 a.ui.label(href=link target='_window') #{link}
                 // .ui.label #{type}
-                .ui.label #{relevance}
-                .ui.big.label id #{id}
-                
-                +i name='tags'
-                each tags 
-                    .ui.compact.button.pick_product_tag
-                        |#{this}
+                +tags
                 .f7 !{content}
                 .ui.inline.header 
                     |related products
@@ -208,7 +186,8 @@ template(name='product_view')
                 
                 // +product_orders
             .four.wide.column
-                .ui.header #{price_points} points
+                if price_points
+                    .ui.header #{price_points} points
                 .ui.header $#{price_usd}
                 .ui.big.green.button.add_to_cart
                     i.cart.plus.large.icon
@@ -248,6 +227,14 @@ template(name='product_view')
                     |related products
                 each related_products
                     a.ui.header(href="/doc/#{_id}") #{title}
+                    
+template(name='tags') 
+    +i name='tags'
+    each tags 
+        .ui.compact.button.pick_product_tag
+            |#{this}
+
+                    
 template(name='product_edit')
     with current_doc 
         .ui.stackable.padded.grid
@@ -487,10 +474,3 @@ template(name='order_button')
         i.cart.plus.large.icon
         strong ${{fixed price_usd}}
         // |order #{serving_unit}
-        // small order for
-        // strong #{price_franc}f
-    // else 
-    //     .ui.grey.header sold out
-        //- .ui.teal.large.button.join_waitlist
-        //-     i.clock.large.icon
-        //-     |join wait list
