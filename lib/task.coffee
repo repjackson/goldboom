@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.tasks.onCreated ->
-        document.title = 'rv tasks'
+        document.title = 'gr tasks'
         
         Session.setDefault('current_search', null)
         Session.setDefault('is_loading', false)

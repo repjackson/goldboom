@@ -40,8 +40,8 @@ if Meteor.isClient
     Template.product_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.products.onCreated ->
-        document.title = 'rv shop'
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'rv shop'
+        document.title = 'gr shop'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'gr shop'
         
         # @autorun => @subscribe 'model_docs','artist', ->
         @autorun => @subscribe 'product_facets',

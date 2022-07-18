@@ -79,7 +79,7 @@ if Meteor.isClient
     # Template.groups.onRendered ->
     #     Session.set('model',Router.current().params.model)
     Template.groups.onCreated ->
-        document.title = 'rv groups'
+        document.title = 'gr groups'
         
         Session.setDefault('limit',20)
         Session.setDefault('sort_key','_timestamp')

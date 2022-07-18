@@ -69,10 +69,11 @@ template(name='unit_card')
                     |for rent
                     
 template(name='unit_item')
-    a.ui.link.segment.alpha.fly_right.zoomer(href="/unit/#{_id}") 
+    div
+    a.ui.segment.alpha.fly_right.zoomer(href="/unit/#{_id}") 
         if image_id
             img.ui.small.inline.rounded.image.zoomer(src="{{c.url image_id }}")
-        .ui.inline.header #{address}
+        .ui.inline.header.zoomer #{address}
         // .ui.inline.header ##{unit_number}
         .ui.large.image.label
             +i name='building'

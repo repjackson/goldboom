@@ -1,6 +1,6 @@
 if Meteor.isClient
-    Template.transfers.onCreated ->
-        document.title = 'rv transfers'
+    Template.orders.onCreated ->
+        document.title = 'gr orders'
         
         Session.setDefault('current_search', null)
         Session.setDefault('porn', false)
@@ -9,65 +9,65 @@ if Meteor.isClient
         @autorun => @subscribe 'doc_by_id', Session.get('full_doc_id'), ->
         @autorun => @subscribe 'agg_emotions',
             picked_tags.array()
-        @autorun => @subscribe 'transfer_tag_results',
+        @autorun => @subscribe 'order_tag_results',
             picked_tags.array()
             
-    Template.transfers.onCreated ->
-        @autorun => @subscribe 'model_docs', 'transfer', ->
-        @autorun => @subscribe 'transfers',
+    Template.orders.onCreated ->
+        @autorun => @subscribe 'model_docs', 'order', ->
+        @autorun => @subscribe 'orders',
             picked_tags.array()
             # Session.get('dummy')
     
     
     
-    Router.route '/transfer/:doc_id', (->
+    Router.route '/order/:doc_id', (->
         @layout 'layout'
-        @render 'transfer_view'
-        ), name:'transfer_view'
-    Router.route '/transfer/:doc_id/edit', (->
+        @render 'order_view'
+        ), name:'order_view'
+    Router.route '/order/:doc_id/edit', (->
         @layout 'layout'
-        @render 'transfer_edit'
-        ), name:'transfer_edit'
-    Router.route '/transfers', (->
+        @render 'order_edit'
+        ), name:'order_edit'
+    Router.route '/orders', (->
         @layout 'layout'
-        @render 'transfers'
-        ), name:'transfers'
-    Template.transfers.onCreated ->
-        @autorun => Meteor.subscribe 'model_counter',('transfer'), ->
-    Template.transfers.helpers
-        total_transfer_count: -> Counts.get('model_counter') 
-        transfer_docs: ->
+        @render 'orders'
+        ), name:'orders'
+    Template.orders.onCreated ->
+        @autorun => Meteor.subscribe 'model_counter',('order'), ->
+    Template.orders.helpers
+        total_order_count: -> Counts.get('model_counter') 
+        order_docs: ->
             Docs.find 
-                model:'transfer'
-    Template.transfers.events 
-        'click .new_transfer': ->
+                model:'order'
+    Template.orders.events 
+        'click .new_order': ->
             new_id = 
                 Docs.insert 
-                    model:'transfer'
+                    model:'order'
                     complete:false
-            Router.go "/transfer/#{new_id}/edit"
+            Router.go "/order/#{new_id}/edit"
 
 
     Template.user_points.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs','transfer', ->
+        @autorun => Meteor.subscribe 'model_docs','order', ->
     Template.user_points.helpers
         points_in_docs: ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             
             Docs.find 
-                model:'transfer'
+                model:'order'
                 target_id:user._id
 
         points_out_docs: ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find 
-                model:'transfer'
+                model:'order'
                 _author_id:user._id
 
 
-    Template.transfer_view.onCreated ->
+    Template.order_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.transfer_view.onRendered ->
+    Template.order_view.onRendered ->
         # console.log @
         found_doc = Docs.findOne Router.current().params.doc_id
 
@@ -79,7 +79,7 @@ if Meteor.isClient
         term_image: ->
             # console.log Template.currentData().name
             found = Docs.findOne {
-                model:'transfer'
+                model:'order'
                 tags:$in:[Template.currentData().name]
                 "watson.metadata.image":$exists:true
             }, sort:ups:-1
@@ -92,7 +92,7 @@ if Meteor.isClient
         flat_term_image: ->
             # console.log Template.currentData()
             found = Docs.findOne {
-                model:'transfer'
+                model:'order'
                 tags:$in:[Template.currentData()]
                 "watson.metadata.image":$exists:true
             }, sort:ups:-1
@@ -111,7 +111,7 @@ if Meteor.isClient
             # Meteor.call 'call_wiki', @name, ->
     
     
-    Template.transfers.events
+    Template.orders.events
         'click .select_search': ->
             picked_tags.push @name
             Session.set('full_doc_id', null)
@@ -119,7 +119,7 @@ if Meteor.isClient
             $('#search').val('')
             Session.set('current_search', null)
     
-    Template.transfer_card.helpers
+    Template.order_card.helpers
         five_cleaned_tags: ->
             # console.log picked_tags.array()
             # console.log @tags[..5] not in picked_tags.array()
@@ -132,14 +132,14 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Template.transfer_view.onCreated ->
-        @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id, ->
+    Template.order_view.onCreated ->
+        @autorun => Meteor.subscribe 'product_from_order_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.transfer_card.onCreated ->
+    Template.order_card.onCreated ->
         @autorun => Meteor.subscribe 'target_from_doc_id', (@data._id), ->
         
-    Template.transfer_view.onRendered ->
+    Template.order_view.onRendered ->
 
 
 
@@ -151,35 +151,35 @@ if Meteor.isServer
                 first_name:1
                 last_name:1
                 image_id:1
-    Meteor.publish 'product_from_transfer_id', (transfer_id)->
-        transfer = Docs.findOne transfer_id
+    Meteor.publish 'product_from_order_id', (order_id)->
+        order = Docs.findOne order_id
         Docs.find 
-            _id:transfer.product_id
+            _id:order.product_id
 if Meteor.isClient
-    Template.transfer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'target_from_transfer_id', Router.current().params.doc_id, ->
+    Template.order_edit.onCreated ->
+        @autorun => Meteor.subscribe 'target_from_order_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
 
-    Template.transfer_view.helpers
+    Template.order_view.helpers
         _target: ->
-            transfer = Docs.findOne Router.current().params.doc_id
-            if transfer and transfer.target_id
+            order = Docs.findOne Router.current().params.doc_id
+            if order and order.target_id
                 Meteor.users.findOne
-                    _id: transfer.target_id
+                    _id: order.target_id
 
-    Template.transfer_edit.helpers
+    Template.order_edit.helpers
         # terms: ->
         #     Terms.find()
         suggestions: ->
             Results.find(model:'tag')
         _target: ->
-            transfer = Docs.findOne Router.current().params.doc_id
-            if transfer and transfer.target_id
+            order = Docs.findOne Router.current().params.doc_id
+            if order and order.target_id
                 Meteor.users.findOne
-                    _id: transfer.target_id
+                    _id: order.target_id
         members: ->
-            transfer = Docs.findOne Router.current().params.doc_id
+            order = Docs.findOne Router.current().params.doc_id
             Meteor.users.find({
                 # levels: $in: ['member','domain']
                 _id: $ne: Meteor.userId()
@@ -188,8 +188,8 @@ if Meteor.isClient
                 limit:10
                 })
         # subtotal: ->
-        #     transfer = Docs.findOne Router.current().params.doc_id
-        #     transfer.amount*transfer.target_ids.length
+        #     order = Docs.findOne Router.current().params.doc_id
+        #     order.amount*order.target_ids.length
         
         point_max: ->
             if Meteor.user().username is 'one'
@@ -198,17 +198,17 @@ if Meteor.isClient
                 Meteor.user().points
         
         can_submit: ->
-            transfer = Docs.findOne Router.current().params.doc_id
-            transfer.amount and transfer.target_id
-    Template.transfer_edit.events
+            order = Docs.findOne Router.current().params.doc_id
+            order.amount and order.target_id
+    Template.order_edit.events
         'click .cancel': ->
             if confirm 'cancel?'
                 Docs.remove @_id
-                Router.go "/transfers"
+                Router.go "/orders"
         'click .submit': ->
-            Meteor.call 'send_transfer', @_id, =>
+            Meteor.call 'send_order', @_id, =>
                 $('body').toast({
-                    title: "transfer sent"
+                    title: "order sent"
                     # message: 'Please see desk staff for key.'
                     class : 'info'
                     icon:'remove'
@@ -222,26 +222,26 @@ if Meteor.isClient
                       hideMethod   : 'fade',
                       hideDuration : 250
                     })
-                Router.go "/transfer/#{@_id}"
+                Router.go "/order/#{@_id}"
 
 
 
 if Meteor.isServer
-    Meteor.publish 'target_from_doc_id', (transfer_id)->
-        transfer = Docs.findOne transfer_id
-        if transfer
-            Meteor.users.find transfer.target_id
+    Meteor.publish 'target_from_doc_id', (order_id)->
+        order = Docs.findOne order_id
+        if order
+            Meteor.users.find order.target_id
     Meteor.methods
-        send_transfer: (transfer_id)->
-            transfer = Docs.findOne transfer_id
-            target = Meteor.users.findOne transfer.target_id
-            transferer = Meteor.users.findOne transfer._author_id
+        send_order: (order_id)->
+            order = Docs.findOne order_id
+            target = Meteor.users.findOne order.target_id
+            orderer = Meteor.users.findOne order._author_id
 
-            console.log 'sending transfer', transfer
+            console.log 'sending order', order
             Meteor.call 'calc_user_stats', target._id, ->
-            Meteor.call 'calc_user_stats', transfer._author_id, ->
+            Meteor.call 'calc_user_stats', order._author_id, ->
     
-            Docs.update transfer_id,
+            Docs.update order_id,
                 $set:
                     submitted:true
                     published:true

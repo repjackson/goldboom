@@ -1,24 +1,24 @@
-template(name='transfers')
+template(name='orders')
     .ui.stackable.padded.grid 
         .sixteen.wide.column
             .ui.inline.header 
                 +i name='exchange'
-                |#{artist_docs.count} transfers
+                |#{artist_docs.count} orders
             if current_search 
                 i.large.red.circular.link.remove.icon.clear
             .ui.large.input 
-                input.transfer_search(type='text' placeholder='search...' value=current_search)
+                input.order_search(type='text' placeholder='search...' value=current_search)
         .four.wide.column.scrolling
             if currentUser
                 .ui.header your points #{currentUser.points}
-                a.ui.big.icon.button.new_transfer
+                a.ui.big.icon.button.new_order
                     i.big.green.plus.icon
             +i name='tags'
-            each picked_transfers_tags
+            each picked_orders_tags
                 button.ui.blue.compact.circular.button.unpick_tag(tabindex='0')
                     //- i.remove.icon
                     | #{this}
-            each transfers_tag_results
+            each orders_tag_results
                 button.ui.circular.compact.black.button.pick_tag(tabindex="0" class=result_class title=count)
                     |#{name}
                     // small #{count}
@@ -32,9 +32,10 @@ template(name='transfers')
                 +sort_direction_toggle
                 // +sort_key_toggle
                 +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-                +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                +session_set key='sort_key' value='amount' label='amount' icon='hashtag'
                 +session_set key='sort_key' value='views' label='views' icon='eye'
-                +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
+                +session_set key='sort_key' value='_author_username' label='user' icon='user-male'
+                // +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
                 // +session_set key='limit' value=10
                 // +session_set key='limit' value=25
                 // +session_set key='limit' value=100
@@ -44,22 +45,21 @@ template(name='transfers')
                     .ui.stackable.cards.scrolling.padding
                         if one_result
                             .ui.one.cards
-                                each transfer_docs 
-                                    +transfer_card
+                                each order_docs 
+                                    +order_card
                         else
                             .ui.cards
-                                each transfer_docs 
-                                    +transfer_card
+                                each order_docs 
+                                    +order_card
                 else
                     .ui.large.divided.list 
-                        each transfer_docs 
-                            +transfer_item
+                        each order_docs 
+                            +order_item
             else 
                 .ui.center.aligned.basic.segment
                     i.massive.yin.yang.loading.grey.icon
 
-
-template(name='transfer_card')
+template(name='order_card')
     .card
         .content
             span(title='recipient')
@@ -75,9 +75,9 @@ template(name='transfer_card')
             span.smallscroll
                 |!{description}
             .ui.label #{_when}
-            a.ui.icon.button.zoomer(href="/transfer/#{_id}")
+            a.ui.icon.button.zoomer(href="/order/#{_id}")
                 i.right.large.chevron.icon
-template(name='transfer_item')
+template(name='order_item')
     .item
         .content
             span(title='recipient')
@@ -92,14 +92,19 @@ template(name='transfer_item')
                 |#{_author_username}
             span.smallscroll
                 |!{description}
-            a.ui.icon.button.zoomer(href="/transfer/#{_id}")
+            a.ui.icon.button.zoomer(href="/order/#{_id}")
                 i.right.large.chevron.icon
 
-template(name='transfer_view')
+template(name='order_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.row 
                 .five.wide.column
+                    a.ui.big.button.fly_up(href="/orders")
+                        i.chevron.left.icon
+                        +i name='order-history'
+                        |orders
+                        
                     a(href="/user/#{_author.username}/points") 
                         img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.large.center.aligned.header.pointer.zoom
@@ -108,7 +113,7 @@ template(name='transfer_view')
                         |#{amount}pts
                     if currentUser.admin_mode
                         +remove_button
-                        a.ui.icon.button(href="/transfer/#{_id}/edit")
+                        a.ui.icon.button(href="/order/#{_id}/edit")
                             i.pencil.icon
                         +print_this
                     .f14
@@ -134,50 +139,55 @@ template(name='transfer_view')
                             |#{_target.name}
                                 
 
-template(name='transfer_edit')
+template(name='order_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
                 .eight.wide.column
-                    .ui.segment
-                        .ui.inline.grey.header sender
-                        .ui.inline.header
-                            img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{_author.name}
-                    .ui.segment.alpha
-                        +single_user_edit key='target' label='recipient' icon='donate' 
-                    // +boolean_edit key='has_date' label='has date' icon='calendar' 
-                    // if has_date
-                    +date_edit key='date' label='date'    
-                    // +boolean_edit key='has_time' label='has time' icon='clock' 
-                    // if has_time
-                    +time_edit key='time' label='time'    
-                    +array_edit key='tags' label='tags' icon='tags' 
-                    +array_edit key='location_tags' label='location tags' icon='marker' 
-                    button.ui.red.button.cancel_transfer
+                    .ui.header editing order
+                    +key_value_edit key='order_type' value='rental' label='rental'
+                    +key_value_edit key='order_type' value='product' label='product'
+                    +key_value_edit key='order_type' value='transfer' label='transfer'
+                    button.ui.red.button.cancel_order
                         i.large.remove.icon
                         |cancel
-                .eight.wide.column
                     +html_edit key='description' label='description'
                     +image_edit key='image_id' label='image' icon='image'
                     .ui.big.header #{amount}pts
-                    .ui.big.input
-                        input.point_amount(type='number' value=amount min='1' max=point_max)
-                    +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=20
-                    +key_value_edit key='amount' value=50
-                    .spacer
-                    .ui.center.aligned.basic.segment
-                        if can_submit
-                            .ui.green.huge.circular.button.submit
-                                i.big.send.icon
-                                |send
-                        else 
-                            .ui.green.huge.circular.disabled.button
-                                i.send.big.icon
-                                |send
+                .eight.wide.column
+                    if is order_type 'transfer'
+                        .ui.big.input
+                            input.point_amount(type='number' value=amount min='1' max=point_max)
+                        +key_value_edit key='amount' value=1
+                        +key_value_edit key='amount' value=5
+                        +key_value_edit key='amount' value=10
+                        +key_value_edit key='amount' value=20
+                        +key_value_edit key='amount' value=50
+                        .ui.segment
+                            .ui.inline.grey.header sender
+                            .ui.inline.header
+                                img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                |#{_author.name}
+                        .ui.segment.alpha
+                            +single_user_edit key='target' label='recipient' icon='donate' 
+                        // +boolean_edit key='has_date' label='has date' icon='calendar' 
+                        // if has_date
+                        +date_edit key='date' label='date'    
+                        // +boolean_edit key='has_time' label='has time' icon='clock' 
+                        // if has_time
+                        +time_edit key='time' label='time'    
+                        +array_edit key='tags' label='tags' icon='tags' 
+                        +array_edit key='location_tags' label='location tags' icon='marker' 
+                        .spacer
+                        .ui.center.aligned.basic.segment
+                            if can_submit
+                                .ui.green.huge.circular.button.submit
+                                    i.big.send.icon
+                                    |send
+                            else 
+                                .ui.green.huge.circular.disabled.button
+                                    i.send.big.icon
+                                    |send
                                 
                                     
 
@@ -197,7 +207,7 @@ template(name='user_points')
         |points in
     .ui.selection.animated.link.list
         each points_in_docs
-            a.item(href="/transfer/#{_id}/")
+            a.item(href="/order/#{_id}/")
                 .ui.inline.header #{body} 
                 |#{amount}pts
                 |#{_when}
@@ -209,7 +219,7 @@ template(name='user_points')
         |points out
     .ui.selection.animated.link.list
         each points_out_docs
-            a.item(href="/transfer/#{_id}/")
+            a.item(href="/order/#{_id}/")
                 .ui.inline.header #{body} 
                 |#{amount}pts
                 |#{_when}
