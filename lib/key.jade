@@ -2,10 +2,10 @@ template(name='keys')
     .ui.stackable.padded.grid
         .four.wide.column
             .ui.inline.header 
-                +i name='bedroom'
+                +i name='key'
                 |keys
-            .ui.icon.compact.button.add_key
-                i.plus.large.icon
+            if currentUser 
+                +add_button key='key'
             .ui.icon.input 
                 i.hashtag.icon
                 input.search_key_number(type='text' placeholder='number')

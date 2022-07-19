@@ -1,14 +1,13 @@
 template(name='services')
     .ui.stackable.padded.grid 
-        .sixteen.wide.column
+        .four.wide.column.scrolling
             .ui.inline.header 
-                +i name='exchange'
-                |#{artist_docs.count} services
+                +i name='service'
+                |#{service_docs.count} services
             if current_search 
                 i.large.red.circular.link.remove.icon.clear
             .ui.large.input 
                 input.service_search(type='text' placeholder='search...' value=current_search)
-        .four.wide.column.scrolling
             .ui.header your points #{currentUser.points}
             a.ui.big.icon.button.new_service
                 i.big.green.plus.icon

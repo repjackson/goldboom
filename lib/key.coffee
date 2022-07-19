@@ -12,15 +12,6 @@ if Meteor.isClient
     Template.key_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
             
-            
-    Template.keys.events
-        'click .add_key': ->
-            new_id = 
-                Docs.insert 
-                    model:'key'
-            Router.go "/key/#{new_id}/edit"
-            
-            
     Template.keys.helpers
         key_docs: ->
             Docs.find 

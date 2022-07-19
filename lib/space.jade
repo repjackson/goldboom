@@ -51,9 +51,7 @@ template(name='space_card')
         .content 
             .ui.inline.header #{address}
             // .ui.inline.header ##{space_number}
-            .ui.large.image.label
-                +i name='building'
-                |##{building_number}
+            +bu
             if space_residents
                 +i name='groups'
                 each _residents 
@@ -69,19 +67,20 @@ template(name='space_item')
             img.ui.tiny.inline.image(src="{{c.url image_id }}")
         .ui.inline.header #{address}
         // .ui.inline.header ##{space_number}
-        .ui.large.image.label
-            +i name='building'
-            |##{building_number}
+        +bu
         if doc_residents
             .ui.large.label
                 +i name='groups'
                 each doc_residents 
                     |#{username}
                     // +user_info
-        if for_rent 
-            .ui.basic.label
-                +i name='clock' 
-                |for rent
+        +rent_label
+        
+template(name='rent_label')
+    if for_rent 
+        .ui.basic.label
+            +i name='clock' 
+            |for rent
 
 template(name='space_view')
     with current_doc
@@ -116,9 +115,7 @@ template(name='space_view')
                 +array_view key='tags' label='tags' icon='tags'
             .column
                 if can_edit 
-                    a.ui.large.compact.button(href="/space/#{_id}/edit")
-                        i.large.pencil.icon
-                        |edit
+                    +edit_button
                 +viewing_info
             .column
                 +doc_residents

@@ -81,9 +81,7 @@ template(name='rental_card')
             // .ui.inline.header ##{rental_number}
             i.marker.icon 
             |#{location}
-            .ui.large.image.label
-                +i name='building'
-                |##{building_number}
+            +bu
             if available 
                 .ui.green.label
                     .ui.big.checkmark.icon
@@ -106,9 +104,7 @@ template(name='rental_item')
             .ui.big.red.label 
                 i.large.cancel.icon 
                 |unavailable
-        .ui.large.image.label
-            +i name='building'
-            |##{building_number}
+        +bu
         if rental_residents
             .ui.large.label
                 +i name='groups'
@@ -128,28 +124,22 @@ template(name='rental_view')
                     i.large.left.chevron.icon
                     +i name='garage'
                     |rentals
-                a.ui.large.compact.button(href="/building/#{building_number}")
-                    i.large.left.chevron.icon
-                    +i name='building'
-                    |#{building_number}
-                a.ui.large.compact.disabled.button(href="/building/#{building_number}/unit/#{unit_number}")
-                    i.large.left.chevron.icon
-                    +i name='room'
-                    |unit #{unit_number}
+                +building_nav_button
+                +unit_nav_button
                 .ui.header
                     // i.home.icon 
                     +i name='garage'
                     small viewing
                     strong rental
-                    if available
-                        .ui.green.big.label
-                            i.big.clock.icon
-                            |available
-                    else 
-                        .ui.big.red.label
-                            i.big.cancel.icon
-                            |unavailable
                     |#{title}
+                if available
+                    .ui.green.big.label
+                        i.big.clock.icon
+                        |available
+                else 
+                    .ui.big.red.label
+                        i.big.cancel.icon
+                        |unavailable
                 +image_view key='image_id' label='image'
                 +image_view key='image_id2' label='image 2'
                 +text_view key='address' label='address' icon='marker'
