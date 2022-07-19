@@ -151,55 +151,56 @@ template(name='nav_item')
 
        
 template(name='footer')
-    .ui.fluid.segment.stackable.grid.alpha
-        .two.column.row
-            .column
-                // .ui.accordion
-                //     .title.zoomer
-                //         .ui.small.inline.header 
-                //             |goldrun is community supported and will never sell your info
-                //         // i.dropdown.grey.icon
-                //     .content
-                //         img.ui.image(src="{{c.url 'dao_venmo'}}")
-                // +music
-                if currentUser
-                    with currentUser
-                        +boolean_edit key='admin_mode' label='admin mode' icon='shield'
-                        
-                if currentUser.admin_mode
+    if currentUser
+        .ui.fluid.segment.stackable.grid.alpha
+            .two.column.row
+                .column
+                    // .ui.accordion
+                    //     .title.zoomer
+                    //         .ui.small.inline.header 
+                    //             |goldrun is community supported and will never sell your info
+                    //         // i.dropdown.grey.icon
+                    //     .content
+                    //         img.ui.image(src="{{c.url 'dao_venmo'}}")
+                    // +music
+                    if currentUser
+                        with currentUser
+                            +boolean_edit key='admin_mode' label='admin mode' icon='shield'
+                            
+                    if currentUser.admin_mode
+                        .ui.inline.header 
+                            i.blog.icon
+                            | #{all_docs.count}
+                            |docs
+                        each all_docs 
+                            .ui.image.label 
+                                img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                                |#{title}
+                                // +model_label
+                                |[#{model}]
+                                |#{building_number}
+                                +print_this
+                                |#{when}
+                // if currentUser.admin_mode
+                .column
+                    +footer_chat
                     .ui.inline.header 
-                        i.blog.icon
-                        | #{all_docs.count}
-                        |docs
-                    each all_docs 
-                        .ui.image.label 
-                            img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                            |#{title}
-                            // +model_label
-                            |[#{model}]
-                            |#{building_number}
-                            +print_this
-                            |#{when}
-            // if currentUser.admin_mode
-            .column
-                +footer_chat
-                .ui.inline.header 
-                    i.chess.icon
-                    |#{result_docs.count}
-                    |results
-                each result_docs 
-                    .ui.label #{name}: #{count} [#{model}]
-                .ui.inline.header 
-                    i.users.icon
-                    |#{all_users.count}
-                    |users
-                each all_users
-                    a.ui.image.label.zoomer(href="/user/#{username}") 
-                        if image_id
-                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{username}
-                        
-                    +print_this
+                        i.chess.icon
+                        |#{result_docs.count}
+                        |results
+                    each result_docs 
+                        .ui.label #{name}: #{count} [#{model}]
+                    .ui.inline.header 
+                        i.users.icon
+                        |#{all_users.count}
+                        |users
+                    each all_users
+                        a.ui.image.label.zoomer(href="/user/#{username}") 
+                            if image_id
+                                img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                            |#{username}
+                            
+                        +print_this
 
 
 template(name='my_latest_activity')
