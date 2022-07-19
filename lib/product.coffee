@@ -73,26 +73,7 @@ if Meteor.isClient
         'click .pick_product_tag': ->
             picked_tags.push @valueOf()
             Router.go "/products"
-            $('body').toast(
-                message: "searching #{@valueOf()}"
-                showIcon: 'search'
-                # showProgress: 'bottom'
-                class: 'info'
-                # displayTime: 'auto',
-                position: "bottom right"
-            )
             
-            Meteor.call 'call_product', @valueOf(), ->
-                $('body').toast(
-                    message: "searched #{@valueOf()}"
-                    showIcon: 'search'
-                    # showProgress: 'bottom'
-                    class: 'success'
-                    # displayTime: 'auto',
-                    position: "bottom right"
-                )
-        'click .get_details': ->
-            Meteor.call 'product_details', @_id, ->
             
             
 if Meteor.isClient
@@ -156,9 +137,6 @@ if Meteor.isClient
             
             
     Template.products.helpers
-        product_docs: ->
-            Docs.find 
-                model:'product'
         product_docs: ->
             Docs.find {
                 model:'product'
@@ -225,67 +203,6 @@ if Meteor.isClient
             if e.which is 13
                 Meteor.call 'search_menu', Session.get('menu_search'), ->
 
-            
-            
-if Meteor.isServer
-    Meteor.methods 
-        product_details: (doc_id)->
-            doc = Docs.findOne doc_id
-            console.log 'getting product details', doc
-            # HTTP.get "https://api.spoonacular.com/food/products/#{doc.id}/&apiKey=e52f2f2ca01a448e944d94194e904775",(err,res)=>
-            HTTP.get "https://api.spoonacular.com/food/products/#{doc.id}/?apiKey=e52f2f2ca01a448e944d94194e904775",(err,res)=>
-                console.log res
-                Docs.update doc_id, 
-                    $set:
-                        details:res.data
-                        
-                
-        search_menu: (search)->
-            # console.log 'calling'
-            # HTTP.get "https://api.spoonacular.com/mealplanner/generate?apiKey=e52f2f2ca01a448e944d94194e904775&timeFrame=day&targetCalories=#{calories}",(err,res)=>
-            HTTP.get "https://api.spoonacular.com/food/menuItems/search?apiKey=e52f2f2ca01a448e944d94194e904775&query=#{search}",(err,res)=>
-                console.log res.data
-                # console.log res.data.products
-        call_product: (search)->
-            # console.log 'calling'
-            # HTTP.get "https://api.spoonacular.com/mealplanner/generate?apiKey=e52f2f2ca01a448e944d94194e904775&timeFrame=day&targetCalories=#{calories}",(err,res)=>
-            HTTP.get "https://api.spoonacular.com/food/products/search?apiKey=e52f2f2ca01a448e944d94194e904775&query=#{search}",(err,res)=>
-                console.log res.data
-                console.log res.data.products
-                for result in res.data.products
-                    console.log result.name
-                    # if result.name is 'products'
-                    products = res.data.products
-                    # products = _.where(res.data.products, {name:'products'})
-                    for product in products
-                        console.log product
-                        found_product = 
-                            Docs.findOne 
-                                model:'product'
-                                source:'spoonacular'
-                                id:product.id
-                        if found_product
-                            Docs.update found_product._id, 
-                                $inc:hits:1
-                                $addToSet:
-                                    tags:search
-                        unless found_product
-                            new_id = Docs.insert 
-                                model:'product'
-                                id:product.id
-                                source:'spoonacular'
-                                title:product.title
-                                tags:[search]
-                                image:product.image
-                                imageType:product.imageType
-                                # type:product.type
-                                # relevance:product.relevance
-                                # content:product.content
-                            Meteor.call 'product_details', new_id, ->
-
-                    # products = res.data.searchResults
-                    
-                    # console.log response.data.searchResults.results
             
             
 if Meteor.isServer
