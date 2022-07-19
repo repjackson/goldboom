@@ -5,10 +5,8 @@ template(name='admin')
                 .ui.inline.header 
                     +i name='user-shield'
                     |admin
-                +call_method name='calculate_model_doc_count'
-                a.ui.large.button(href='/users')
-                    i.users.icon
-                    |all users
+                // +call_method name='calculate_model_doc_count'
+                +link_button route='staff' icon='user-shield' label='staff'
         .two.column.row
             .column
                 .ui.header 
@@ -75,6 +73,15 @@ template(name='admin_wiki')
     .ui.link.bulleted.list
         each wiki
             a.item(href="/m/wiki/#{_id}/view") #{title}
+
+
+template(name='link_button')
+    a.ui.large.button(href="/#{route}")
+        if icon
+            +i name=icon
+        if label 
+            |#{label}
+
 
 
 template(name='admin_tasks')

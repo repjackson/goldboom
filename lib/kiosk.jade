@@ -1,7 +1,12 @@
 template(name='kiosk_container')
     with kiosk_doc
+        .ui.button.set_home
+            |home
         +Template.dynamic template=kiosk_view
-
+    else 
+        .ui.segment 
+            .ui.button.make
+                |make
 
 
 template(name='kiosk_settings')

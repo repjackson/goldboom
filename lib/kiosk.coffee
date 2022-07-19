@@ -1,9 +1,11 @@
 if Meteor.isClient
+    Router.route '/kiosk', -> @render 'kiosk_container', ->
+    
     Template.kiosk_settings.onCreated ->
-        @autorun -> Meteor.subscribe 'kiosk_document'
+        @autorun -> Meteor.subscribe 'kiosk_document', ->
 
     Template.kiosk_container.onCreated ->
-        @autorun -> Meteor.subscribe 'kiosk_document'
+        @autorun -> Meteor.subscribe 'kiosk_document', ->
 
     Template.kiosk_settings.onRendered ->
         # Meteor.setTimeout ->
@@ -45,6 +47,15 @@ if Meteor.isClient
                 model:'kiosk'
             kiosk_doc.kiosk_view
 
+    Template.kiosk_container.events 
+        'click .make': ->
+            Docs.insert 
+                model:'kiosk'
+        'click .set_home': ->
+            found = Docs.findOne
+                model:'kiosk'
+            Docs.update found._id, 
+                $set:kiosk_view:'settings'
     Template.kiosk_container.helpers
         kiosk_doc: ->
             Docs.findOne

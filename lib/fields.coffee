@@ -116,6 +116,34 @@ if Meteor.isClient
                 Docs.update parent._id,
                     $set:"#{@key}":val
     
+        
+    Template.document_view.onCreated ->
+        @autorun => Meteor.subscribe 'document_by_slug', @data.key
+    Template.document_view.onRendered ->
+        Meteor.setTimeout ->
+            $('.accordion').accordion()
+        , 1000
+    Template.document_view.helpers
+        referenced_document: ->
+            Docs.findOne
+                model:'document'
+                slug:@key
+    
+    
+    Template.document_edit.onCreated ->
+        @autorun => Meteor.subscribe 'document_by_slug', @data.key
+    Template.document_edit.onRendered ->
+        Meteor.setTimeout ->
+            $('.accordion').accordion()
+        , 1000
+    Template.document_edit.helpers
+        referenced_document: ->
+            Docs.findOne
+                model:'document'
+                slug:@key
+    
+    
+    
     
     
     Template.color_edit.events
