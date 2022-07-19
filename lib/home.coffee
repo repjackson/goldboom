@@ -29,6 +29,9 @@ if Meteor.isClient
                 $set:
                     active:false
                     checkout_timestamp:Date.now()
+            Meteor.users.update @resident_user_id,
+                $set:
+                    checked_in:false
     Template.healthclub_rentals.helpers
         rental_item_docs: ->
             Docs.find 

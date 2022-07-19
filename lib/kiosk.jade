@@ -13,10 +13,10 @@ template(name='healthclub')
         .one.column.row
             .center.aligned.column
                 .ui.segment.alpha
-                    .ui.inline.header 
+                    .ui.massive.header 
                         +i name='dumbbell'
                         |healthclub check in
-                    .ui.massive.icon.input.lookup_user
+                    .ui.massive.icon.fluid.input.lookup_user
                         i.search.icon
                         input.search_user(type='text' placeholder='search user...')
                     each checkedout_user_docs 

@@ -70,6 +70,9 @@ if Meteor.isClient
                 active:true
                 resident_user_id:@_id
                 resident_username:@username
+            Meteor.users.update @_id,
+                $set:
+                    checked_in:true
             Session.set('current_search_user',null)
             $('.search_user').val('')
         'keyup .search_user': _.throttle((e,t)->
@@ -94,6 +97,7 @@ if Meteor.isClient
     Template.healthclub.helpers
         checkedout_user_docs: ->
             match = {}
+            match.checked_in= $ne:true
             # if Session.get('current_search_user').length > 0
             #     match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
             Meteor.users.find match
