@@ -123,7 +123,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
 
 if Meteor.isServer
-    Meteor.publish 'checkedout_users_from_search', (username_search)->
+    Meteor.publish 'checkedout_users_from_search', (username_search=null)->
         match = {}
         # match.checkedin = $ne:true
         if username_search and username_search.length > 0

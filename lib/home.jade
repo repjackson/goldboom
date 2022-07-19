@@ -79,7 +79,7 @@ template(name='active_checkins')
     .ui.header 
         +i name='clock'
         |active checkins
-    .ui.large.list
+    .ui.big.divided.list
         each active_checkin_docs 
             .item(href="/checkin/#{_id}" title=resident_user_id)
                 a.ui.large.label.fly_down(href="/user/#{resident_username}") 

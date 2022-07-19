@@ -94,8 +94,8 @@ if Meteor.isClient
     Template.healthclub.helpers
         checkedout_user_docs: ->
             match = {}
-            if Session.get('current_search_user').length > 0
-                match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
+            # if Session.get('current_search_user').length > 0
+            #     match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
             Meteor.users.find match
 
 
