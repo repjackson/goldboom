@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Template.event_layout.onCreated ->
+    Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'author_by_doc_id', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'author_by_doc_slug', Router.current().params.doc_slug
         @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
@@ -40,16 +40,16 @@ if Meteor.isClient
         #                 )
         # )
     
-    Template.event_layout.onRendered ->
+    Template.event_view.onRendered ->
         Docs.update Router.current().params.doc_id, 
             $inc: views: 1
 
-    Template.event_layout.helpers 
+    Template.event_view.helpers 
         can_buy: ->
             now = Date.now()
             
 
-    Template.event_layout.events
+    Template.event_view.events
         'click .buy_for_points': (e,t)->
             val = parseInt $('.point_input').val()
             Session.set('point_paying',val)
@@ -150,10 +150,6 @@ if Meteor.isClient
                     # )
             )
 
-
-
-
-    
     Template.attendance.events
         'click .mark_maybe': ->
             event = Docs.findOne Router.current().params.doc_id
@@ -189,7 +185,7 @@ if Meteor.isClient
         'click .mark_maybe': -> Meteor.call 'mark_maybe', @_id, ->
         'click .mark_not': -> Meteor.call 'mark_not', @_id, ->
         'click .mark_going': -> Meteor.call 'mark_going', @_id, ->
-    Template.event_layout.helpers
+    Template.event_view.helpers
         tickets_left: ->
             ticket_count = 
                 Docs.find({ 
@@ -259,21 +255,13 @@ if Meteor.isClient
         ), name:'events'
 
     Router.route '/event/:doc_id/', (->
-        @layout 'event_layout'
-        @render 'event_dashboard'
-        ), name:'event_home'
+        @layout 'layout'
+        @render 'event_view'
+        ), name:'event_view'
     Router.route '/event/:doc_id/edit', (->
         @layout 'layout'
         @render 'event_edit'
         ), name:'event_edit'
-    Router.route '/event/:doc_id/:section', (->
-        @layout 'event_layout'
-        @render 'event_section'
-        ), name:'event_section'
-    Router.route '/event/:doc_id/checkins', (->
-        @layout 'event_layout'
-        @render 'doc_checkins'
-        ), name:'doc_checkins'
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event', ->
             
@@ -312,7 +300,7 @@ if Meteor.isClient
             
     Template.event_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.event_layout.onCreated ->
+    Template.event_view.onCreated ->
         # @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->

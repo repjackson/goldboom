@@ -30,7 +30,7 @@ template(name='home')
                             |check in as #{currentUser.username}
         .two.column.row
             .column       
-                +rental_checkins
+                +healthclub_rentals
             .column       
                 +active_checkins
             .column       
@@ -54,10 +54,10 @@ template(name='home')
                 +readings
                 
                 
-template(name='rental_checkins')
+template(name='healthclub_rentals')
     .ui.header 
         +i name='basketball'
-        |rental checkins
+        |healthclub rentals
     each rental_item_docs
         .ui.segment
             img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)

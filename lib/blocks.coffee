@@ -9,8 +9,8 @@ if Meteor.isClient
             Router.go "/m/#{@model}"
         
         
-    Template.add_doc_button.events 
-        'click .add_doc': ->
+    Template.add_button.events 
+        'click .add': ->
             new_id = 
                 Docs.insert 
                     model:@model

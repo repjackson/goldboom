@@ -75,68 +75,69 @@ template(name='nav')
                     strong #{currentUser.username}
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
-    .ui.attached.small.inverted.menu.hscroll.secnav
-        a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
-            // i.large.exchange.icon
-            +i name='shopping-cart'
-            span.mobile.hidden products
-        a.icon.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
-            // i.large.exchange.icon
-            +i name='campfire'
-            span.mobile.hidden groups
-        a.item.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
-            +i name='checkmark'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden checkins
-        a.item.zoomer.fly_right.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
-            +i name='key'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden keys
-        a.item.zoomer.fly_right.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
-            +i name='rent'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden rentals
-        a.item.zoomer.fly_right.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
-            +i name='calendar'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden events
-        a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
-            +i name='garage'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden parking spaces
-        a.item.zoomer.fly_right.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
-            +i name='order-history'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden orders
-        a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
-            // i.large.exchange.icon
-            +i name='service-bell'
-            span.mobile.hidden services
-        a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
-            +i name='groups'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden people
-        a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
-            +i name='water'
-            // i.large.users.icon
-            // if currentUser.show_labels
-            span.mobile.hidden readings
-        a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
-            +i name='news'
-            .mobile.hidden posts
-        a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
-            +i name='tasks'
-            .mobile.hidden tasks
-            // i.large.users.icon
-            // if currentUser.show_labels
-            // span.mobile.hidden tasks
+    if is_connected
+        .ui.attached.small.inverted.borderless.menu.hscroll.secnav
+            a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
+                // i.large.exchange.icon
+                +i name='shopping-cart'
+                span.mobile.hidden products
+            a.icon.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
+                // i.large.exchange.icon
+                +i name='campfire'
+                span.mobile.hidden groups
+            a.item.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
+                +i name='checkmark'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden checkins
+            a.item.zoomer.fly_right.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
+                +i name='key'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden keys
+            a.item.zoomer.fly_right.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
+                +i name='rent'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden rentals
+            a.item.zoomer.fly_right.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+                +i name='calendar'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden events
+            a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
+                +i name='garage'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden parking spaces
+            a.item.zoomer.fly_right.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
+                +i name='order-history'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden orders
+            a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
+                // i.large.exchange.icon
+                +i name='service-bell'
+                span.mobile.hidden services
+            a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
+                +i name='groups'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden people
+            a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
+                +i name='water'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden readings
+            a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
+                +i name='news'
+                .mobile.hidden posts
+            a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
+                +i name='tasks'
+                .mobile.hidden tasks
+                // i.large.users.icon
+                // if currentUser.show_labels
+                // span.mobile.hidden tasks
 
 
 

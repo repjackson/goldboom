@@ -12,8 +12,14 @@ if Meteor.isClient
                 active:true
             }, 
                 sort:_timestamp:-1
-    Template.rental_checkins.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'rental', ->
+    Template.healthclub_rentals.onCreated ->
+        @autorun => Meteor.subscribe 'healthclub_rentals', ->
+if Meteor.isServer 
+    Meteor.publish 'healthclub_rentals', ->
+        Docs.find 
+            model:'rental'
+            healthclub:true
+if Meteor.isClient 
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
@@ -23,11 +29,11 @@ if Meteor.isClient
                 $set:
                     active:false
                     checkout_timestamp:Date.now()
-    Template.rental_checkins.helpers
+    Template.healthclub_rentals.helpers
         rental_item_docs: ->
             Docs.find 
                 model:'rental'
-    Template.rental_checkins.events
+    Template.healthclub_rentals.events
         'click .checkout_rental': ->
             new_id =
                 Docs.insert 

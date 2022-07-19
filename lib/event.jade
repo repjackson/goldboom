@@ -6,6 +6,8 @@ template(name='events')
                 +i name='calendar'
                 |{{comma event_count}}
                 |events
+            if currentUser 
+                +add_button model='event'
             each picked_event_tags
                 +unpick_event_tag
             .ui.large.icon.input
@@ -49,57 +51,77 @@ template(name='recent_checkins')
         a.item(href="/event/#{_id}") #{_when} #{_author_username} #{body}
 
                     
-template(name='event_layout')
-    div(class=darkmode_class)
-        // unless currentUser.darkmode
-        +nav
-        .ui.bottom.attached.pushable.segment.scrollin.fullheight(class=darkmode_class)
-            // img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
-            // +topbar
-            // +leftbar
-            +rightbar
-            .scrolling
-                with current_doc
-                    if background_image_id
-                        img.ui.image.checkin_banner(src="{{c.url background_image_id height=1000 crop='crop'}}")
-                    else 
-                        img.ui.image.checkin_banner(src="{{c.url image_id height=1000 crop='crop'}}")
-                    .ui.stackable.padded.grid
-                        .sixteen.wide.column
-                            a.ui.circular.icon.button.fly_left(href="/events" title="back to events")
-                                i.chevron.left.icon
-                                +i name='calendar'
-                                |events
-                            .ui.large.inline.header 
-                                //- small viewing
-                                | #{title}
-                            if can_edit
-                                a.ui.button(href="/event/#{_id}/edit")
-                                    i.pencil.icon
-                                    |edit
-                            +event_nav_item section='dashboard' icon='dashboard'
-                            if has_posts
-                                +event_nav_item section='posts' icon='news'
-                            if has_events
-                                +event_nav_item section='events' icon='calendar'
-                            if has_membership
-                                +event_nav_item section='membership' icon='events'
-                            if has_tasks
-                                +event_nav_item section='tasks' icon='tasks'
-                            +event_nav_item section='related' icon='fork'
-                            if has_products
-                                +event_nav_item section='products' icon='shopping-cart'
-                            a.ui.compact.button.zoomer(href="/event/#{current_doc._id}/checkins")
-                                +i name='checkmark'
-                                |checkins
-                        .five.wide.column
-                            +event_sidebar
-                            
-                        .eleven.wide.column.scrolling
-                            div.scrolling
-                                +yield
-    +footer
-    
+template(name='event_view')
+    with current_doc
+        if background_image_id
+            img.ui.image.checkin_banner(src="{{c.url background_image_id height=1000 crop='crop'}}")
+        else 
+            img.ui.image.checkin_banner(src="{{c.url image_id height=1000 crop='crop'}}")
+        .ui.stackable.padded.grid
+            .sixteen.wide.column
+                a.ui.circular.icon.button.fly_left(href="/events" title="back to events")
+                    i.chevron.left.icon
+                    +i name='calendar'
+                    |events
+                .ui.large.inline.header 
+                    //- small viewing
+                    | #{title}
+                if can_edit
+                    +edit_button
+            .five.wide.column
+                +event_sidebar
+                
+            .eleven.wide.column.scrolling
+                +doc_checkins
+                +event_tasks
+                +event_members_small
+                +event_posts
+                .ui.one.column.grid 
+                    .column
+                        if youtube_id
+                            +youtube_view key='youtube_id'
+                        .ui.segment.alpha.scrolling
+                            |!{content}
+                        div
+                    .column
+                        +voting_full
+                        div
+                        if nsfw
+                            .ui.red.large.label
+                                +i name='18-plus'
+                                |nsfw
+                        +event_stats
+                        +follow_button
+                        +tips
+                        if has_price
+                            +post_orders
+                        div
+                        +current_viewers
+                    .column
+                        if link
+                            a.ui.circular.button(href=link target='_window')
+                                i.external.icon
+                                |#{link}
+                            // .spacer
+                        // div
+                        if address
+                            a.ui.compact.circular.button(href=address_link target='_window')
+                                i.marker.icon
+                                |#{address}
+                        if in_dev 
+                            i.circular.link.large.refresh.icon.refresh_event_stats
+                    .column
+                        .ui.header
+                            +i name='rss'
+                            |activity
+                        .ui.list 
+                            each event_log_docs 
+                                .item 
+                                    |#{body} 
+                                    +when
+                                    +author_info
+                    if has_shop
+                        +event_products
     
 template(name='event_segment')
     .ui.header event id: #{event_id}
@@ -198,57 +220,6 @@ template(name='event_nav_item')
         +i name=icon
         |#{section}
             
-template(name='event_dashboard')
-    +doc_checkins
-    +event_tasks
-    +event_members_small
-    +event_posts
-    .ui.one.column.grid 
-        .column
-            if youtube_id
-                +youtube_view key='youtube_id'
-            .ui.segment.alpha.scrolling
-                |!{content}
-            div
-        .column
-            +voting_full
-            div
-            if nsfw
-                .ui.red.large.label
-                    +i name='18-plus'
-                    |nsfw
-            +event_stats
-            +follow_button
-            +tips
-            if has_price
-                +post_orders
-            div
-            +current_viewers
-        .column
-            if link
-                a.ui.circular.button(href=link target='_window')
-                    i.external.icon
-                    |#{link}
-                // .spacer
-            // div
-            if address
-                a.ui.compact.circular.button(href=address_link target='_window')
-                    i.marker.icon
-                    |#{address}
-            if in_dev 
-                i.circular.link.large.refresh.icon.refresh_event_stats
-        .column
-            .ui.header
-                +i name='rss'
-                |activity
-            .ui.list 
-                each event_log_docs 
-                    .item 
-                        |#{body} 
-                        +when
-                        +author_info
-        if has_shop
-            +event_products
                 
 template(name='event_tasks')
     .ui.inline.header 
