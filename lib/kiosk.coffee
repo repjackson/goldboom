@@ -1,5 +1,9 @@
 if Meteor.isClient
-    Router.route '/kiosk', -> @render 'kiosk_container', ->
+    Router.route '/kiosk', (->
+        @layout 'mlayout'
+        @render 'kiosk_container'
+        ), name:'kiosk_container'
+    
     
     Template.kiosk_settings.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->

@@ -1,7 +1,6 @@
 template(name='kiosk_container')
     with kiosk_doc
-        .ui.button.set_home
-            |home
+        // .ui.header template #{kiosk_view}
         +Template.dynamic template=kiosk_view
     else 
         .ui.segment 
@@ -56,6 +55,7 @@ template(name='kiosk_away')
         .ui.hidden.divider
         .ui.hidden.divider
         .ui.hidden.divider
+        .ui.header away from the desk
         +document_view key='frontdesk_status' 
     //- .ui.header We're away from the desk for 5 minutes
 

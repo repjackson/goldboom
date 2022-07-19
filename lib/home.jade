@@ -1,3 +1,18 @@
+template(name='healthclub')
+    .ui.stackable.padded.grid
+        .one.column.row
+            .center.aligned.column
+                .ui.inline.header 
+                    +i name='dumbbell'
+                    |healthclub check in
+                .ui.massive.icon.input.lookup_user
+                    i.search.icon
+                    input.search_user(type='text' placeholder='search user...')
+                each checkedout_user_docs 
+                    a.ui.big.image.label.pick_user 
+                        img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        |#{username}
+                        |#{building_number}: ##{unit_number}
 template(name='home')
     .ui.stackable.padded.grid
         .one.column.row
