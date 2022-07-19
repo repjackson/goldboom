@@ -5,11 +5,13 @@ if Meteor.isClient
         ), name:'kiosk_container'
     
     
+    Template.kiosk_container.onCreated ->
+        @autorun -> Meteor.subscribe 'kiosk_document', ->
     Template.kiosk_settings.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
 
-    Template.kiosk_container.onCreated ->
-        @autorun -> Meteor.subscribe 'kiosk_document', ->
+    Template.healthclub.onCreated ->
+        @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
 
     Template.kiosk_settings.onRendered ->
         # Meteor.setTimeout ->
@@ -60,6 +62,27 @@ if Meteor.isClient
                 model:'kiosk'
             Docs.update found._id, 
                 $set:kiosk_view:'settings'
+    Template.healthclub.events 
+        'click .pick_user': ->
+            console.log @
+            Docs.insert 
+                model:'checkin'
+                active:true
+                resident_user_id:@_id
+                resident_username:@username
+            Session.set('current_search_user',null)
+            $('.search_user').val('')
+        'keyup .search_user': _.throttle((e,t)->
+            search_user = $('.search_user').val().trim().toLowerCase()
+            # if search_user.length > 1
+            #     Session.set('current_search_user', search_user)
+            Session.set('current_search_user', search_user)
+            console.log Session.get('current_search_user')
+            # picked_tags.push search_user
+            # # $( "p" ).blur();
+        , 500)
+    
+                
     Template.kiosk_container.helpers
         kiosk_doc: ->
             Docs.findOne
@@ -68,6 +91,12 @@ if Meteor.isClient
             kiosk_doc = Docs.findOne
                 model:'kiosk'
             kiosk_doc.kiosk_view
+    Template.healthclub.helpers
+        checkedout_user_docs: ->
+            match = {}
+            if Session.get('current_search_user').length > 0
+                match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
+            Meteor.users.find match
 
 
     Template.healthclub_session.onCreated ->
