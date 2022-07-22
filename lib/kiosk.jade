@@ -16,7 +16,27 @@ template(name='healthclub')
                     .ui.massive.header 
                         +i name='dumbbell'
                         |healthclub check in
-                    .ui.massive.icon.fluid.input.lookup_user
+                    .ui.inline.header
+                        +i name='building'
+                        |building
+                    each building_docs 
+                        .ui.large.button.pick_building
+                            |#{building_number}
+                    div
+                    .ui.inline.header
+                        +i name='room'
+                        |units
+                    each unit_docs 
+                        .ui.large.button.pick_unit
+                            |#{unit_number}
+                    // .ui.massive.icon.input
+                    //     i.large.building.icon
+                    //     input.building_number(type='text' placeholder='building #...')
+                    // .ui.massive.icon.input  
+                    //     i.icon
+                    //         +i name='room'
+                    //     input.unit_number(type='text' placeholder='unit #...')
+                    .ui.massive.icon.input.lookup_user
                         i.search.icon
                         input.search_user(type='text' placeholder='search user...')
                     each checkedout_user_docs 
@@ -28,7 +48,7 @@ template(name='healthclub')
                                 |#{username}
                             if building_number
                                 |#{building_number}: ##{unit_number}
-                    +active_checkins
+                    // +active_checkins
 
 template(name='kiosk_settings')
     .ui.header 

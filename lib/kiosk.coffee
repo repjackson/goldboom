@@ -6,6 +6,8 @@ if Meteor.isClient
     
     
     Template.kiosk_container.onCreated ->
+        @autorun -> Meteor.subscribe 'model_docs','building', ->
+        @autorun -> Meteor.subscribe 'model_docs','unit', ->
         # @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
     Template.kiosk_settings.onCreated ->
@@ -115,6 +117,12 @@ if Meteor.isClient
                 model:'kiosk'
             kiosk_doc.kiosk_view
     Template.healthclub.helpers
+        building_docs: ->
+            Docs.find 
+                model:'building'
+        unit_docs: ->
+            Docs.find 
+                model:'unit'
         checkedout_user_docs: ->
             match = {}
             match.checked_in= $ne:true
