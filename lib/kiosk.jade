@@ -13,14 +13,14 @@ template(name='healthclub')
         .one.column.row
             .center.aligned.column
                 .ui.segment.alpha
-                    .ui.massive.header 
-                        +i name='dumbbell'
+                    .ui.big.header 
+                        +i name='front-desk'
                         |healthclub check in
                     .ui.header
                         +i name='building'
                         |building
                     each building_docs 
-                        .ui.massive.button.pick_building(class=building_button_class)
+                        .ui.compact.button.pick_building(class=building_button_class)
                             if image_id
                                 img.ui.tiny.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             .ui.header 
@@ -28,35 +28,40 @@ template(name='healthclub')
                                 |#{building_number}
                     // div
                     if selected_building
+                        .ui.hidden.divider
                         .ui.inline.header
                             +i name='room'
                             |units
+                        .ui.large.icon.input  
+                            i.large.plus.icon
+                            input.unit_number(type='text' placeholder='add unit #...')
+                        div
                         each unit_docs 
-                            .ui.large.button.pick_unit
+                            .ui.button.pick_unit(class=building_button_class)
                                 img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 .ui.header #{unit_number}
                     // .ui.massive.icon.input
                     //     i.large.building.icon
                     //     input.building_number(type='text' placeholder='building #...')
-                    // .ui.massive.icon.input  
-                    //     i.icon
-                    //         +i name='room'
-                    //     input.unit_number(type='text' placeholder='unit #...')
                     // .ui.massive.icon.input.lookup_user
                     //     i.search.icon
                     //     input.search_user(type='text' placeholder='search user...')
-                    .ui.header 
-                        +i name='groups'
-                        |residents
-                    each checkedout_user_docs 
-                        a.ui.massive.image.label.pick_user 
-                            img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            if first_name
-                                |#{first_name} #{last_name}
-                            else 
-                                |#{username}
-                            if building_number
-                                |#{building_number}: ##{unit_number}
+                    if selected_unit
+                        .ui.header 
+                            +i name='groups'
+                            |residents
+                        .ui.big.icon.input
+                            i.user.add.large.icon
+                            input(type='text' placeholder='add user...')
+                        each checkedout_user_docs 
+                            a.ui.massive.image.label.pick_user 
+                                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                if first_name
+                                    |#{first_name} #{last_name}
+                                else 
+                                    |#{username}
+                                if building_number
+                                    |#{building_number}: ##{unit_number}
                     // +active_checkins
                     if currentUser.admin_mode
                         +footer

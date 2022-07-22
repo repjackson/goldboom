@@ -85,6 +85,8 @@ if Meteor.isClient
                 $set:
                     checked_in:true
             Session.set('current_search_user',null)
+            Session.set('current_building_number',null)
+            Session.set('current_unit_number',null)
             $('.search_user').val('')
             $('body').toast({
                 title: "checked in"
@@ -112,6 +114,15 @@ if Meteor.isClient
             # picked_tags.push search_user
             # # $( "p" ).blur();
         , 500)
+        'keyup .unit_number': _.throttle((e,t)->
+            search_user = $('.search_user').val().trim().toLowerCase()
+            # if search_user.length > 1
+            #     Session.set('current_search_user', search_user)
+            Session.set('current_search_user', search_user)
+            console.log Session.get('current_search_user')
+            # picked_tags.push search_user
+            # # $( "p" ).blur();
+        , 500)
     
     Template.kiosk_container.helpers
         kiosk_doc: ->
@@ -124,8 +135,8 @@ if Meteor.isClient
     Template.healthclub.helpers
         selected_building: -> Session.get('current_building_number')
         selected_unit: -> Session.get('current_unit_number')
-        building_button_class: ->
-            if Session.equals('current_building_number',@building_number) then 'active inverted massive' else 'big'
+        building_button_class: -> if Session.equals('current_building_number',@building_number) then 'active inverted massive' else 'big'
+        unit_button_class: -> if Session.equals('current_unit_number',@unit_number) then 'active inverted massive' else 'big'
         building_docs: ->
             if Session.get('current_building_number')
                 Docs.find 
