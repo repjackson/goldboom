@@ -6,7 +6,7 @@ if Meteor.isClient
     
     
     Template.kiosk_container.onCreated ->
-        @autorun -> Meteor.subscribe 'all_users', ->
+        # @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
     Template.kiosk_settings.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
@@ -76,6 +76,25 @@ if Meteor.isClient
                     checked_in:true
             Session.set('current_search_user',null)
             $('.search_user').val('')
+            $('body').toast({
+                title: "checked in"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'checkmark'
+                showProgress:'bottom'
+                position:'bottom center'
+                className:
+                    toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+            
+            
+            
         'keyup .search_user': _.throttle((e,t)->
             search_user = $('.search_user').val().trim().toLowerCase()
             # if search_user.length > 1
@@ -99,7 +118,7 @@ if Meteor.isClient
         checkedout_user_docs: ->
             match = {}
             match.checked_in= $ne:true
-            # if Session.get('current_search_user').length > 0
+            # if Session.get('current_search_user').length > 1
             #     match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
             Meteor.users.find match
 
