@@ -57,6 +57,7 @@ template(name='healthclub')
                         // .ui.big.icon.input
                         //     i.user.add.large.icon
                         //     input(type='text' placeholder='add user...')
+                        div
                         each checkedout_user_docs 
                             a.ui.massive.image.label.pick_user 
                                 img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)

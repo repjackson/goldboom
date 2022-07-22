@@ -179,12 +179,20 @@ if Meteor.isClient
                     model:'building'
                     building_number:Session.get('current_building_number')
             else 
-                Docs.find 
+                Docs.find {
                     model:'building'
+                }, 
+                    sort:building_number:1
         unit_docs: ->
-            Docs.find 
-                model:'unit'
-                building_number:Session.get('current_building_number')
+            if Session.get('current_unit_number')
+                Docs.find 
+                    model:'unit'
+                    building_number:Session.get('current_building_number')
+                    unit_number:Session.get('current_unit_number')
+            else 
+                Docs.find 
+                    model:'unit'
+                    building_number:Session.get('current_building_number')
         checkedout_user_docs: ->
             match = {}
             # match.checked_in = $ne:true

@@ -39,6 +39,7 @@ template(name='buildings')
 template(name='building_item')
     a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+        .ui.inline.header #{building_letter}:
         .ui.inline.header ##{building_number}
         .ui.inline.header 
             +i name='room'
@@ -72,6 +73,7 @@ template(name='building_card')
     a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
         img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .content
+            .ui.header #{building_letter}:
             .ui.header ##{building_number}
             .ui.inline.header 
                 +i name='room'
