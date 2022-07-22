@@ -19,30 +19,39 @@ template(name='healthclub')
                         |healthclub check in
                     unless selected_building
                         .ui.inverted.big.header
-                            +i name='building'
+                            +i name='apartment'
                             |pick building
+                    if selected_building
+                        .ui.inverted.big.header
+                            +i name='apartment'
+                            |building
                     each building_docs 
-                        .ui.compact.button.pick_building(class=building_button_class)
+                        .ui.compact.button.pick_building.zoomer(class=building_button_class)
                             if image_id
-                                img.ui.tiny.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            .ui.header 
+                                img.ui.tiny.inline.image.rounded.zoomer(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            .ui.inline.header.zoomer
                                 strong #{building_letter}
+                                // +i name='apartment'
                                 if building_number
                                     |#{building_number}
                     // div
                     if selected_building
                         .ui.hidden.divider
-                        .ui.inverted.big.header
-                            +i name='room'
-                            |pick or add unit
-                        div
-                        .ui.big.icon.input  
-                            i.large.plus.icon
-                            input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
+                        unless selected_unit
+                            .ui.inverted.big.header
+                                +i name='room'
+                                |pick or add unit
+                            div
+                            
+                            .ui.big.icon.input  
+                                i.large.plus.icon
+                                input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
                         each unit_docs 
-                            .ui.button.pick_unit(class=unit_button_class)
-                                img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                .ui.header #{unit_number}
+                            .ui.button.pick_unit.zoomer(class=unit_button_class)
+                                // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                .ui.header.zoomer
+                                    // +i name='room'
+                                    |##{unit_number}
                     // .ui.massive.icon.input
                     //     i.large.building.icon
                     //     input.building_number(type='text' placeholder='building #...')
@@ -53,7 +62,7 @@ template(name='healthclub')
                         .spacer
                         .ui.inline.inverted.big.header 
                             +i name='groups'
-                            |pick resident
+                            |pick or add resident
                         .ui.big.button.add_new_user
                             i.big.user.add.icon
                             |add resident
@@ -62,8 +71,9 @@ template(name='healthclub')
                         //     input(type='text' placeholder='add user...')
                         div
                         each checkedout_user_docs 
-                            a.ui.massive.image.label.pick_user 
-                                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            a.ui.massive.image.label.pick_user
+                                if image_id
+                                    img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 if first_name
                                     |#{first_name} #{last_name}
                                 else 
