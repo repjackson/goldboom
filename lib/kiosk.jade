@@ -20,10 +20,14 @@ template(name='healthclub')
                         i.search.icon
                         input.search_user(type='text' placeholder='search user...')
                     each checkedout_user_docs 
-                        a.ui.big.image.label.pick_user 
+                        a.ui.massive.image.label.pick_user 
                             img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{username}
-                            |#{building_number}: ##{unit_number}
+                            if first_name
+                                |#{first_name} #{last_name}
+                            else 
+                                |#{username}
+                            if building_number
+                                |#{building_number}: ##{unit_number}
                     +active_checkins
 
 template(name='kiosk_settings')

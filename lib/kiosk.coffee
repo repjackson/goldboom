@@ -6,6 +6,7 @@ if Meteor.isClient
     
     
     Template.kiosk_container.onCreated ->
+        @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
     Template.kiosk_settings.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
