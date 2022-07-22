@@ -64,8 +64,10 @@ if Meteor.isClient
         'click .pick_building': (e,t)->
             if Session.equals('current_building_number', @building_number)
                 Session.set('current_building_number', null)
+                Session.set('current_unit_number',null)
             else 
                 Session.set('current_building_number', @building_number)
+                Session.set('current_unit_number',null)
             $(e.currentTarget).closest('.button').transition('bounce', 1000)
         'click .pick_unit': (e,t)->
             if Session.equals('current_unit_number', @unit_number)
@@ -73,6 +75,38 @@ if Meteor.isClient
             else 
                 Session.set('current_unit_number', @unit_number)
             $(e.currentTarget).closest('.button').transition('bounce', 1000)
+        'click .add_new_user':->
+            new_username = prompt('username')
+            splitted = new_username.split(' ')
+            formatted = new_username.split(' ').join('_').toLowerCase()
+            console.log formatted
+            Meteor.call 'add_user', formatted, (err,res)->
+                console.log res
+                # new_user = Meteor.users.findOne res
+                Meteor.users.update res,
+                    $set:
+                        building_number:parseInt(Session.get('current_building_number'))
+                        unit_number:parseInt(Session.get('current_unit_number'))
+                        first_name:splitted[0]
+                        last_name:splitted[1]
+                        roles:['resident']
+                # Router.go "/user/#{formatted}"
+                $('body').toast({
+                    title: "user created"
+                    # message: 'Please see desk staff for key.'
+                    class : 'success'
+                    icon:'user'
+                    position:'bottom right'
+                    # className:
+                    #     toast: 'ui massive message'
+                    # displayTime: 5000
+                    transition:
+                      showMethod   : 'zoom',
+                      showDuration : 250,
+                      hideMethod   : 'fade',
+                      hideDuration : 250
+                    })
+            
 
         'click .pick_user': ->
             console.log @
@@ -114,14 +148,16 @@ if Meteor.isClient
             # picked_tags.push search_user
             # # $( "p" ).blur();
         , 500)
-        'keyup .unit_number': _.throttle((e,t)->
-            search_user = $('.search_user').val().trim().toLowerCase()
+        'keyup .add_unit_number': _.throttle((e,t)->
+            new_unit_number = $('.add_unit_number').val()
             # if search_user.length > 1
             #     Session.set('current_search_user', search_user)
-            Session.set('current_search_user', search_user)
-            console.log Session.get('current_search_user')
-            # picked_tags.push search_user
-            # # $( "p" ).blur();
+            if e.which is 13
+                Docs.insert 
+                    model:'unit'
+                    building_number:parseInt(Session.get('current_building_number'))
+                    unit_number:new_unit_number
+                Session.set('current_unit_number', new_unit_number)
         , 500)
     
     Template.kiosk_container.helpers
