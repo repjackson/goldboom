@@ -28,10 +28,6 @@ if Meteor.isClient
             Docs.update kiosk_doc._id,
                 $set:kiosk_view:@value
 
-
-
-
-
     Template.kiosk_settings.events
         'click .create_kiosk': (e,t)->
             Docs.insert
@@ -46,7 +42,6 @@ if Meteor.isClient
             if kiosk
                 if confirm "delete  #{kiosk._id}?"
                     Docs.remove kiosk._id
-
     Template.kiosk_settings.helpers
         kiosk_doc: ->
             Docs.findOne
@@ -66,6 +61,19 @@ if Meteor.isClient
             Docs.update found._id, 
                 $set:kiosk_view:'settings'
     Template.healthclub.events 
+        'click .pick_building': (e,t)->
+            if Session.equals('current_building_number', @building_number)
+                Session.set('current_building_number', null)
+            else 
+                Session.set('current_building_number', @building_number)
+            $(e.currentTarget).closest('.button').transition('bounce', 1000)
+        'click .pick_unit': (e,t)->
+            if Session.equals('current_unit_number', @unit_number)
+                Session.set('current_unit_number', null)
+            else 
+                Session.set('current_unit_number', @unit_number)
+            $(e.currentTarget).closest('.button').transition('bounce', 1000)
+
         'click .pick_user': ->
             console.log @
             Docs.insert 
@@ -95,8 +103,6 @@ if Meteor.isClient
                   hideDuration : 250
                 })
             
-            
-            
         'keyup .search_user': _.throttle((e,t)->
             search_user = $('.search_user').val().trim().toLowerCase()
             # if search_user.length > 1
@@ -107,7 +113,6 @@ if Meteor.isClient
             # # $( "p" ).blur();
         , 500)
     
-                
     Template.kiosk_container.helpers
         kiosk_doc: ->
             Docs.findOne
@@ -117,15 +122,22 @@ if Meteor.isClient
                 model:'kiosk'
             kiosk_doc.kiosk_view
     Template.healthclub.helpers
+        selected_building: -> Session.get('current_building_number')
+        selected_unit: -> Session.get('current_unit_number')
+        building_button_class: ->
+            if Session.equals('current_building_number',@building_number) then 'active inverted massive' else 'big'
         building_docs: ->
             Docs.find 
                 model:'building'
         unit_docs: ->
             Docs.find 
                 model:'unit'
+                building_number:Session.get('current_building_number')
         checkedout_user_docs: ->
             match = {}
-            match.checked_in= $ne:true
+            # match.checked_in = $ne:true
+            match.building_number = parseInt(Session.get('current_building_number'))
+            match.unit_number = parseInt(Session.get('current_unit_number'))
             # if Session.get('current_search_user').length > 1
             #     match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
             Meteor.users.find match

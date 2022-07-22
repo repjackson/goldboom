@@ -20,15 +20,18 @@ template(name='healthclub')
                         +i name='building'
                         |building
                     each building_docs 
-                        .ui.large.button.pick_building
-                            |#{building_number}
+                        .ui.massive.button.pick_building(class=building_button_class)
+                            .ui.header 
+                                strong #{building_letter}
+                                |#{building_number}
                     div
-                    .ui.inline.header
-                        +i name='room'
-                        |units
-                    each unit_docs 
-                        .ui.large.button.pick_unit
-                            |#{unit_number}
+                    if selected_building
+                        .ui.inline.header
+                            +i name='room'
+                            |units
+                        each unit_docs 
+                            .ui.large.button.pick_unit
+                                .ui.header #{unit_number}
                     // .ui.massive.icon.input
                     //     i.large.building.icon
                     //     input.building_number(type='text' placeholder='building #...')
@@ -36,9 +39,12 @@ template(name='healthclub')
                     //     i.icon
                     //         +i name='room'
                     //     input.unit_number(type='text' placeholder='unit #...')
-                    .ui.massive.icon.input.lookup_user
-                        i.search.icon
-                        input.search_user(type='text' placeholder='search user...')
+                    // .ui.massive.icon.input.lookup_user
+                    //     i.search.icon
+                    //     input.search_user(type='text' placeholder='search user...')
+                    .ui.header 
+                        +i name='groups'
+                        |residents
                     each checkedout_user_docs 
                         a.ui.massive.image.label.pick_user 
                             img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
@@ -49,7 +55,8 @@ template(name='healthclub')
                             if building_number
                                 |#{building_number}: ##{unit_number}
                     // +active_checkins
-
+                    if currentUser.admin_mode
+                        +footer
 template(name='kiosk_settings')
     .ui.header 
         +i name='self-service-kiosk' classes='ui mini image'

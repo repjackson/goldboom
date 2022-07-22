@@ -642,7 +642,7 @@ if Meteor.isClient
     Template.boolean_edit.helpers
         boolean_toggle_class: ->
             parent = Template.parentData()
-            console.log parent["#{@key}"] 
+            # console.log parent["#{@key}"] 
             if parent["#{@key}"] then 'active big blue' else 'compact'
     
     

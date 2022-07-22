@@ -143,9 +143,6 @@ template(name='nav')
                 // if currentUser.show_labels
                 // span.mobile.hidden tasks
 
-
-
-
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)
         +i name=icon
@@ -203,6 +200,7 @@ template(name='footer')
                             if image_id
                                 img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                             |#{username}
+                            |#{building_number}: #{unit_number}
                             
                         +print_this
 
