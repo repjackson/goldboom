@@ -17,26 +17,28 @@ template(name='healthclub')
                     .ui.big.inverted.header 
                         +i name='front-desk'
                         |healthclub check in
-                    .ui.inverted.header
-                        +i name='building'
-                        |building
+                    unless selected_building
+                        .ui.inverted.big.header
+                            +i name='building'
+                            |pick building
                     each building_docs 
                         .ui.compact.button.pick_building(class=building_button_class)
                             if image_id
                                 img.ui.tiny.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             .ui.header 
                                 strong #{building_letter}
-                                |#{building_number}
+                                if building_number
+                                    |#{building_number}
                     // div
                     if selected_building
                         .ui.hidden.divider
-                        .ui.inline.inverted.header
+                        .ui.inverted.big.header
                             +i name='room'
-                            |units
-                        .ui.large.icon.input  
-                            i.large.plus.icon
-                            input.add_unit_number(type='number' min='100' max='399' placeholder='add unit #...')
+                            |pick or add unit
                         div
+                        .ui.big.icon.input  
+                            i.large.plus.icon
+                            input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
                         each unit_docs 
                             .ui.button.pick_unit(class=unit_button_class)
                                 img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
@@ -49,11 +51,12 @@ template(name='healthclub')
                     //     input.search_user(type='text' placeholder='search user...')
                     if selected_unit
                         .spacer
-                        .ui.inline.inverted.header 
+                        .ui.inline.inverted.big.header 
                             +i name='groups'
-                            |residents
-                        .ui.big.compact.icon.button.add_new_user
+                            |pick resident
+                        .ui.big.button.add_new_user
                             i.big.user.add.icon
+                            |add resident
                         // .ui.big.icon.input
                         //     i.user.add.large.icon
                         //     input(type='text' placeholder='add user...')
@@ -65,8 +68,8 @@ template(name='healthclub')
                                     |#{first_name} #{last_name}
                                 else 
                                     |#{username}
-                                if building_number
-                                    |#{building_number}: ##{unit_number}
+                                // if building_number
+                                //     |#{building_number}: ##{unit_number}
                     // +active_checkins
                     if currentUser.admin_mode
                         +footer

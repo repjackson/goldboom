@@ -83,7 +83,9 @@ template(name='active_checkins')
         each active_checkin_docs 
             .item(href="/checkin/#{_id}" title=resident_user_id)
                 a.ui.large.label.fly_down(href="/user/#{resident_username}") 
-                    strong #{_resident.username}
+                    strong #{_resident.first_name}
+                    strong #{_resident.last_name}
+                    small #{_resident.username}
                     small #{_resident.building_number}: ##{_resident.unit_number}
                 | #{_when}
                 .ui.compact.button.checkout 

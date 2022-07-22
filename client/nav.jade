@@ -19,6 +19,12 @@ template(name='nav')
                 // i.large.exchange.icon
                 +i name='apartment'
                 span.mobile.hidden buildings
+            a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
+                +i name='groups'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden people
+                
             a.icon.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
                 +i name='foul'
@@ -123,11 +129,6 @@ template(name='nav')
                 // i.large.exchange.icon
                 +i name='service-bell'
                 span.mobile.hidden services
-            a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
-                +i name='groups'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden people
             a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
                 +i name='water'
                 // i.large.users.icon

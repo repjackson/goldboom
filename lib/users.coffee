@@ -261,7 +261,6 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'user_tags', (
         picked_tags
-        picked_porn_tags
         )->
         # user = Meteor.users.findOne @userId
         # current_herd = user.profile.current_herd
@@ -272,7 +271,6 @@ if Meteor.isServer
         # picked_tags.push current_herd
         if picked_tags.length > 0
             match.tags = $all: picked_tags
-        if picked_porn_tags.length > 0 then match['reddit_data.subreddit.over_18'] = $all:picked_porn_tags 
             
         count = Meteor.users.find(match).count()
         cloud = Meteor.users.aggregate [
@@ -293,22 +291,39 @@ if Meteor.isServer
                 count: tag.count
                 model:'user_tag'
                 index: i
-        location_cloud = Meteor.users.aggregate [
+        building_cloud = Meteor.users.aggregate [
             { $match: match }
-            { $project: location_tags: 1 }
-            { $unwind: "$location_tags" }
-            { $group: _id: '$location_tags', count: $sum: 1 }
+            { $project: building_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$building_number', count: $sum: 1 }
             { $match: _id: $nin: picked_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
             { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
-        location_cloud.forEach (tag, i) ->
+        building_cloud.forEach (tag, i) ->
             self.added 'results', Random.id(),
                 name: tag.name
                 count: tag.count
-                model:'location_tag'
+                model:'building_tag'
+                index: i
+        unit_cloud = Meteor.users.aggregate [
+            { $match: match }
+            { $project: unit_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$unit_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        unit_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'building_tag'
                 index: i
 
         self.ready()

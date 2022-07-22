@@ -51,9 +51,7 @@ template(name='unit_card')
         .content 
             .ui.inline.header #{address}
             // .ui.inline.header ##{unit_number}
-            .ui.large.image.label
-                +i name='building'
-                |##{building_number}
+            +bu
             if unit_residents
                 +i name='groups'
                 each unit_residents 

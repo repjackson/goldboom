@@ -76,7 +76,7 @@ if Meteor.isClient
                 Session.set('current_unit_number', @unit_number)
             $(e.currentTarget).closest('.button').transition('bounce', 1000)
         'click .add_new_user':->
-            new_username = prompt('username')
+            new_username = prompt('first and last name')
             splitted = new_username.split(' ')
             formatted = new_username.split(' ').join('_').toLowerCase()
             console.log formatted
