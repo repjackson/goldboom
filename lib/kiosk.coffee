@@ -171,8 +171,8 @@ if Meteor.isClient
     Template.healthclub.helpers
         selected_building: -> Session.get('current_building_number')
         selected_unit: -> Session.get('current_unit_number')
-        building_button_class: -> if Session.equals('current_building_number',@building_number) then 'active inverted massive' else 'big'
-        unit_button_class: -> if Session.equals('current_unit_number',@unit_number) then 'active inverted massive' else 'big'
+        building_button_class: -> if Session.equals('current_building_number',@building_number) then 'active massive' else 'big'
+        unit_button_class: -> if Session.equals('current_unit_number',@unit_number) then 'active massive' else 'big'
         building_docs: ->
             if Session.get('current_building_number')
                 Docs.find 

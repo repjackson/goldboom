@@ -12,11 +12,12 @@ template(name='healthclub')
     .ui.stackable.padded.grid
         .one.column.row
             .center.aligned.column
-                .ui.segment.alpha
-                    .ui.big.header 
+                // .ui.segment.alpha
+                .div
+                    .ui.big.inverted.header 
                         +i name='front-desk'
                         |healthclub check in
-                    .ui.header
+                    .ui.inverted.header
                         +i name='building'
                         |building
                     each building_docs 
@@ -29,7 +30,7 @@ template(name='healthclub')
                     // div
                     if selected_building
                         .ui.hidden.divider
-                        .ui.inline.header
+                        .ui.inline.inverted.header
                             +i name='room'
                             |units
                         .ui.large.icon.input  
@@ -37,7 +38,7 @@ template(name='healthclub')
                             input.add_unit_number(type='number' min='100' max='399' placeholder='add unit #...')
                         div
                         each unit_docs 
-                            .ui.button.pick_unit(class=building_button_class)
+                            .ui.button.pick_unit(class=unit_button_class)
                                 img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 .ui.header #{unit_number}
                     // .ui.massive.icon.input
@@ -48,10 +49,10 @@ template(name='healthclub')
                     //     input.search_user(type='text' placeholder='search user...')
                     if selected_unit
                         .spacer
-                        .ui.inline.header 
+                        .ui.inline.inverted.header 
                             +i name='groups'
                             |residents
-                        .ui.button.add_new_user
+                        .ui.big.compact.icon.button.add_new_user
                             i.big.user.add.icon
                         // .ui.big.icon.input
                         //     i.user.add.large.icon
@@ -69,7 +70,7 @@ template(name='healthclub')
                     if currentUser.admin_mode
                         +footer
 template(name='kiosk_settings')
-    .ui.header 
+    .ui.inverted.header 
         +i name='self-service-kiosk' classes='ui mini image'
         |kiosk view
     .ui.padded.grid
@@ -115,7 +116,7 @@ template(name='kiosk_away')
         .ui.hidden.divider
         .ui.hidden.divider
         .ui.hidden.divider
-        .ui.header away from the desk
+        .ui.inverted.header away from the desk
         +document_view key='frontdesk_status' 
     //- .ui.header We're away from the desk for 5 minutes
 
