@@ -127,8 +127,13 @@ if Meteor.isClient
         building_button_class: ->
             if Session.equals('current_building_number',@building_number) then 'active inverted massive' else 'big'
         building_docs: ->
-            Docs.find 
-                model:'building'
+            if Session.get('current_building_number')
+                Docs.find 
+                    model:'building'
+                    building_number:Session.get('current_building_number')
+            else 
+                Docs.find 
+                    model:'building'
         unit_docs: ->
             Docs.find 
                 model:'unit'

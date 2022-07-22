@@ -16,21 +16,24 @@ template(name='healthclub')
                     .ui.massive.header 
                         +i name='dumbbell'
                         |healthclub check in
-                    .ui.inline.header
+                    .ui.header
                         +i name='building'
                         |building
                     each building_docs 
                         .ui.massive.button.pick_building(class=building_button_class)
+                            if image_id
+                                img.ui.tiny.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             .ui.header 
                                 strong #{building_letter}
                                 |#{building_number}
-                    div
+                    // div
                     if selected_building
                         .ui.inline.header
                             +i name='room'
                             |units
                         each unit_docs 
                             .ui.large.button.pick_unit
+                                img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 .ui.header #{unit_number}
                     // .ui.massive.icon.input
                     //     i.large.building.icon
