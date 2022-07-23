@@ -17,7 +17,9 @@ body {
 .fullheight {
     height-min: 800px !important;
 }
-
+.bigger {
+    zoom: 200% !important;
+}
 
 .pulse {
   animation: pulse-animation 2s infinite;
@@ -670,7 +672,7 @@ embed {
     margin:2px !important;
     opacity:.9 !important;
     /*font-family: 'Ubuntu', sans-serif !important;*/
-    border-radius: 15px !important; 
+    /*border-radius: 15px !important; */
 }
 
 .disabled, .disabled.segment, .disabled.label{

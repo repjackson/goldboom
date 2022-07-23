@@ -26,14 +26,13 @@ template(name='healthclub')
                             +i name='apartment'
                             |building
                     each building_docs 
-                        .ui.compact.button.pick_building.zoomer(class=building_button_class)
+                        .ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
                             if image_id
-                                img.ui.tiny.inline.image.rounded.zoomer(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            .ui.inline.header.zoomer
-                                strong #{building_letter}
-                                // +i name='apartment'
-                                if building_number
-                                    |#{building_number}
+                                img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            strong #{building_letter}
+                            // +i name='apartment'
+                            if building_number
+                                |#{building_number}
                     // div
                     if selected_building
                         .ui.hidden.divider
