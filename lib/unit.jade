@@ -72,9 +72,7 @@ template(name='unit_item')
             img.ui.small.inline.rounded.image.zoomer(src="{{c.url image_id }}")
         .ui.inline.header.zoomer #{address}
         // .ui.inline.header ##{unit_number}
-        .ui.large.image.label
-            +i name='building'
-            |##{building_number}
+        +bu
         if unit_residents
             .ui.large.label
                 +i name='groups'

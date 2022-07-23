@@ -19,6 +19,10 @@ template(name='nav')
                 // i.large.exchange.icon
                 +i name='apartment'
                 span.mobile.hidden buildings
+            a.icon.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
+                // i.large.exchange.icon
+                +i name='room'
+                span.mobile.hidden units
             a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
                 +i name='groups'
                 // i.large.users.icon
@@ -29,10 +33,6 @@ template(name='nav')
                 // i.large.exchange.icon
                 +i name='foul'
                 span.mobile.hidden violations
-            a.icon.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
-                // i.large.exchange.icon
-                +i name='room'
-                span.mobile.hidden units
             a.zoomer.item.fly_right(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
                 +i name='kindle'
