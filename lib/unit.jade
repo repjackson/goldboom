@@ -7,11 +7,14 @@ template(name='units')
             .ui.icon.compact.button.add_unit
                 i.plus.large.icon
             .ui.icon.input 
-                i.hashtag.icon
-                input.search_unit_number(type='text' placeholder='number')
+                i.cubes.icon
+                input.search_unit_number(type='number' placeholder='unit # filter')
             .ui.icon.input 
                 i.building.icon
-                input.search_building_number(type='text' placeholder='building')
+                input.search_building_number(type='number' placeholder='building # filter')
+            .ui.button.clear_filters
+                i.cancel.icon
+                |clear
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             +search_input key='address'

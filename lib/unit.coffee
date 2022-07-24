@@ -11,6 +11,8 @@ Router.route '/unit/:doc_id', (->
 
 if Meteor.isClient
     Template.units.onCreated ->
+        Session.setDefault('unit_number_filter',null)
+        Session.setDefault('building_number_filter',null)
         @autorun => Meteor.subscribe 'model_docs', 'unit', ->
     Template.unit_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
@@ -31,6 +33,21 @@ if Meteor.isClient
 
 
     Template.units.events
+        'keyup .search_unit_number': ->
+            val = $('.search_unit_number').val()
+            console.log val
+            Session.set('unit_number_filter',val)
+        'keyup .search_building_number': ->
+            val = $('.search_building_number').val()
+            console.log val
+            Session.set('building_number_filter',val)
+            
+        'click .clear_filters': ->
+            Session.set('unit_number_filter',null)
+            Session.set('building_number_filter',null)
+            val = $('.search_building_number').val(null)
+            val = $('.search_unit_number').val(null)
+        
         'click .add_unit': ->
             new_id = 
                 Docs.insert 
@@ -40,9 +57,13 @@ if Meteor.isClient
             
     Template.units.helpers
         unit_docs: ->
-            Docs.find {
-                model:'unit'
-            },
+            match = {model:'unit'}
+            if Session.get('unit_number_filter')
+                match.unit_number = {$regex:"#{Session.get('unit_number_filter')}", $options: 'i'}
+            if Session.get('building_number_filter')
+                match.building_number = {$regex:"#{Session.get('building_number_filter')}", $options: 'i'}
+
+            Docs.find match,
                 sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
                 
                 
