@@ -204,7 +204,7 @@ if Meteor.isClient
 
 
     Template.healthclub_session.onCreated ->
-        @autorun => Meteor.subscribe 'current_poll'
+        # @autorun => Meteor.subscribe 'current_poll'
         @autorun => Meteor.subscribe 'doc', Session.get('new_guest_id')
         @autorun => Meteor.subscribe 'checkin_guests',Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'resident_from_healthclub_session', Router.current().params.doc_id

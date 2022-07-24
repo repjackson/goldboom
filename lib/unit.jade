@@ -40,12 +40,12 @@ template(name='units')
                             each unit_docs
                                 +unit_card
                 else
-                    // .ui.divided.selection.animated.lis
-                    each unit_docs
-                        +unit_item
+                    .ui.divided.selection.animated.list
+                        each unit_docs
+                            +unit_item
             
 template(name='unit_card')
-    a.ui.card.fly_right(href="/building/#{building_number}/unit/#{unit_number}") 
+    a.ui.card.fly_right(href="/unit/#{_id}") 
         if image_id
             img.ui.image(src="{{c.url image_id }}")
         .content 
@@ -66,8 +66,8 @@ template(name='unit_card')
                     |for rent
                     
 template(name='unit_item')
-    div
-    a.ui.segment.alpha.fly_right.zoomer(href="building/#{building_number}/unit/#{unit_number}") 
+    // a.ui.item.fly_right.zoomer(href="building/#{building_number}/unit/#{unit_number}") 
+    a.ui.item.fly_right.zoomer(href="/unit/#{_id}") 
         if image_id
             img.ui.small.inline.rounded.image.zoomer(src="{{c.url image_id }}")
         .ui.inline.header.zoomer #{address}
@@ -75,7 +75,7 @@ template(name='unit_item')
         +bu
         if unit_residents
             .ui.large.label
-                +i name='groups'
+                i.user.icon
                 each unit_residents 
                     |#{username}
                     // +user_info
@@ -87,6 +87,7 @@ template(name='unit_item')
             .ui.basic.label
                 +i name='clock' 
                 |for rent
+        |#{_when}
 
 template(name='unit_view')
     with current_unit

@@ -16,6 +16,7 @@ template(name='buildings')
             // +sort_key_toggle
             // +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
             +session_set key='sort_key' value='building_number' label='building #' icon='apartment'
+            +session_set key='sort_key' value='building_letter' label='letter' icon='a'
             // +session_set key='sort_key' value='views' label='views' icon='eye'
             // +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
             // +session_set key='limit' value=10
@@ -37,37 +38,39 @@ template(name='buildings')
                             +building_item
 
 template(name='building_item')
-    a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
+    // a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
+    a.ui.item.zoomer.fly_right(class=building_item_class href="/building/#{building_number}")
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .ui.inline.header #{building_letter}:
         .ui.inline.header ##{building_number}
         .ui.inline.header 
-            +i name='room'
+            i.cubes.icon
             |units
         each units 
             .ui.label ##{unit_number}
         .ui.inline.small.grey.header 
-            +iios name='groups'
+            i.users.icon
             |residents
         each units 
             .ui.label ##{unit_number}
         .ui.inline.small.grey.header 
-            +iios name='rent'
+            i.money.icon
             |owners
         each units 
             .ui.label ##{unit_number}
         .ui.inline.small.grey.header 
-            +iios name='foul'
+            i.alert.icon
             |violations
         each units 
             .ui.label ##{unit_number}
-        .ui.inline.small.grey.header 
-            +iios name='chat'
-            |comments
         each units 
             .ui.label ##{unit_number}
         each location_tags 
             .ui.basic.label #{this}
+        if can_edit 
+            +edit_button
+        a.ui.icon.button(href="/building/#{building_number}" title='view')
+            i.chevron.right.large.icon
 
 template(name='building_card')
     a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
