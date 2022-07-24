@@ -9,8 +9,8 @@ template(name='buildings')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             // +search_input key='title'
-            +session_icon_button key='view_mode' value='grid' icon='th' 
-            +session_icon_button key='view_mode' value='list' icon='list'
+            // +session_icon_button key='view_mode' value='grid' icon='th' 
+            // +session_icon_button key='view_mode' value='list' icon='list'
             
             +sort_direction_toggle
             // +sort_key_toggle
@@ -23,71 +23,58 @@ template(name='buildings')
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
             if subs_ready
-                if session_is 'view_mode' 'grid'
-                    if one_result
-                        .ui.stackable.centered.one.cards
-                            each building_docs
-                                +building_card
-                    else
-                        .ui.stackable.centered.centered.cards
-                            each building_docs
-                                +building_card
-                else
-                    .ui.divided.selection.animated.list
-                        each building_docs
-                            +building_item
+                // if session_is 'view_mode' 'grid'
+                //     if one_result
+                //         .ui.stackable.centered.one.cards
+                //             each building_docs
+                //                 +building_card
+                //     else
+                //         .ui.stackable.centered.centered.cards
+                //             each building_docs
+                //                 +building_card
+                // else
+                .ui.divided.selection.animated.list
+                    each building_docs
+                        +building_item
 
 template(name='building_item')
     // a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
-    a.ui.item.zoomer.fly_right(class=building_item_class href="/building/#{building_number}")
+    a.ui.item.zoomer.fly_right(class=building_item_class href="/building/#{_id}")
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .ui.inline.header #{building_letter}:
         .ui.inline.header ##{building_number}
-        .ui.inline.header 
-            i.cubes.icon
-            |units
-        each units 
-            .ui.label ##{unit_number}
-        .ui.inline.small.grey.header 
-            i.users.icon
-            |residents
-        each units 
-            .ui.label ##{unit_number}
-        .ui.inline.small.grey.header 
-            i.money.icon
-            |owners
-        each units 
-            .ui.label ##{unit_number}
-        .ui.inline.small.grey.header 
-            i.alert.icon
-            |violations
-        each units 
-            .ui.label ##{unit_number}
-        each units 
-            .ui.label ##{unit_number}
+        // .ui.inline.header 
+        //     i.cubes.icon
+        //     |units
+        // each units 
+        //     .ui.label ##{unit_number}
+        // .ui.inline.small.grey.header 
+        //     i.users.icon
+        //     |residents
+        // each units 
+        //     .ui.label ##{unit_number}
+        // .ui.inline.small.grey.header 
+        //     i.money.icon
+        //     |owners
+        // each units 
+        //     .ui.label ##{unit_number}
+        // .ui.inline.small.grey.header 
+        //     i.alert.icon
+        //     |violations
+        // each units 
+        //     .ui.label ##{unit_number}
+        // each units 
+        //     .ui.label ##{unit_number}
         each location_tags 
             .ui.basic.label #{this}
         if can_edit 
             +edit_button
-        a.ui.icon.button(href="/building/#{building_number}" title='view')
+        // a.ui.icon.button(href="/building/#{building_number}" title='view')
+        a.ui.icon.button(href="/building/#{_id}" title='view')
             i.chevron.right.large.icon
 
-template(name='building_card')
-    a.ui.card.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
-        img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-        .content
-            .ui.header #{building_letter}:
-            .ui.header ##{building_number}
-            .ui.inline.header 
-                +i name='room'
-                |units
-            each units 
-                .ui.label ##{unit_number}
-            each location_tags 
-                .ui.basic.label #{this}
-
 template(name='building_view')
-    with current_building
+    with current_doc
         .ui.stackable.padded.three.column.grid
             .column
                 a.ui.big.button(href="/buildings")
@@ -232,6 +219,6 @@ template(name='building_edit')
                 +html_edit key='notes' 
                 
             .column
-                a.ui.big.fluid.green.button.fly_down(href="/building/#{building_number}")
+                a.ui.big.fluid.green.button.fly_down(href="/building/#{_id}")
                     i.checkmark.big.icon
                     |save
