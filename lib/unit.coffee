@@ -95,7 +95,6 @@ if Meteor.isClient
                     building_number:unit.building_number
                     unit_number:unit.unit_number
 
-
     Template.unit_permits.helpers
         permits: ->
             unit =
@@ -105,7 +104,6 @@ if Meteor.isClient
                 Docs.find
                     model: 'parking_permit'
                     address_number:unit.building_number
-
 
     Template.unit_view.helpers
         unit: ->
@@ -120,6 +118,15 @@ if Meteor.isClient
                 # unit_slug:Router.current().params.unit_code
 
     Template.unit_view.events
+        'click .goto_building': ->
+            found = 
+                Docs.findOne 
+                    model:'building'
+                    building_number:@building_number
+            if found 
+                Router.go "/building/#{found._id}"
+            else 
+                console.log 'no building'
         'keyup .unit_number': (e,t)->
             if e.which is 13
                 unit_number = parseInt $('.unit_number').val().trim()
@@ -160,43 +167,6 @@ if Meteor.isClient
                     owner_username:Router.current().params.username
             else
                 alert 'wrong code'
-
-
-
-
-
-
-
-
-
-
-    Template.unit_card.onCreated ->
-        @autorun => Meteor.subscribe 'unit_residents', @data._id
-        @autorun => Meteor.subscribe 'unit_owners', @data._id
-        @autorun => Meteor.subscribe 'unit_permits', @data._id
-        # @autorun => Meteor.subscribe 'unit_units', Router.current().params.unit_code
-
-    Template.unit_card.helpers
-        owners: ->
-            Meteor.users.find
-                roles:$in:['owner']
-                building_number:@building_number
-                unit_number:@unit_number
-
-        residents: ->
-            Meteor.users.find
-                roles:$in:['resident','owner']
-                owner:$ne:true
-                building_number:@building_number
-                unit_number:@unit_number
-
-        permits: ->
-            Docs.find
-                model: 'parking_permit'
-                address_number:@building_number
-
-
-
 
 
 

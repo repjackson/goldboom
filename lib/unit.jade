@@ -31,43 +31,21 @@ template(name='units')
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
-
-            if subs_ready
-                if session_is 'view_mode' 'grid'
-                    if one_result
-                        .ui.stackable.centered.one.cards
-                            each unit_docs
-                                +unit_card
-                    else
-                        .ui.stackable.centered.centered.cards
-                            each unit_docs
-                                +unit_card
-                else
+            .scrolling
+                if subs_ready
                     .ui.divided.selection.animated.list
                         each unit_docs
                             +unit_item
+                else 
+                    i.massive.loading.yin.yang.icon
             
-template(name='unit_card')
-    a.ui.card.fly_right(href="/unit/#{_id}") 
-        if image_id
-            img.ui.image(src="{{c.url image_id }}")
-        .content 
-            .ui.inline.header #{address}
-            // .ui.inline.header ##{unit_number}
-            +bu
-            if unit_residents
-                +i name='groups'
-                each unit_residents 
-                    +user_info
-            if for_sale 
-                .ui.basic.label
-                    +i name='money' 
-                    |for sale
-            if for_rent 
-                .ui.basic.label
-                    +i name='clock' 
-                    |for rent
-                    
+template(name='bu')
+    .ui.large.label 
+        i.building.icon
+        |##{building_number}
+    .ui.large.label unit ##{unit_number}
+    
+            
 template(name='unit_item')
     // a.ui.item.fly_right.zoomer(href="building/#{building_number}/unit/#{unit_number}") 
     a.ui.item.fly_right.zoomer(href="/unit/#{_id}") 
@@ -107,7 +85,7 @@ template(name='unit_view')
                     |unit
                     |#{unit_number}
             .five.wide.column
-                a.ui.big.button.fly_down(href="/building/#{building_number}")
+                .ui.big.button.fly_down.goto_building
                     i.large.up.chevron.icon
                     +i name='building'
                     |#{building_number}

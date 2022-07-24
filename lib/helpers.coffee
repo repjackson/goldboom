@@ -109,9 +109,15 @@ if Meteor.isClient
         Docs.findOne @parent_id
         # Template.parentData()
     Template.registerHelper 'current_time', () -> moment().format("h:mm a")
-    Template.registerHelper 'subs_ready', () -> 
-        Template.instance().subscriptionsReady()
     
+    Template.registerHelper 'id_from_building_number', () -> 
+        found = 
+            Docs.findOne 
+                model:'building'
+                building_number:@building_number
+        if found 
+            console.log 'found', found
+            found._id
     Template.registerHelper 'is_connected', () -> Meteor.status().connected
     
     Template.registerHelper 'sorting_up', () ->
