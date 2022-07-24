@@ -29,10 +29,10 @@ template(name='nav')
                 // if currentUser.show_labels
                 span.mobile.hidden people
                 
-            a.icon.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
-                // i.large.exchange.icon
-                +i name='foul'
-                span.mobile.hidden violations
+            // a.icon.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
+            //     // i.large.exchange.icon
+            //     +i name='foul'
+            //     span.mobile.hidden violations
             a.zoomer.item.fly_right(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
                 +i name='kindle'
@@ -68,11 +68,11 @@ template(name='nav')
                     +i name='internal'
                     span.mobile.hidden login
             if currentUser
-                a.item(href="/inbox" class="{{isActiveRoute 'inbox'}}" title='inbox')
-                    +i name='inbox'
-                    if unread_count
-                        strong #{unread_count}
-                // if currentUser.points 
+                // a.item(href="/inbox" class="{{isActiveRoute 'inbox'}}" title='inbox')
+                //     +i name='inbox'
+                //     if unread_count
+                //         strong #{unread_count}
+                // // if currentUser.points 
                 //     a.item(href="/user/#{currentUser.username}/points" class="{{isActiveRoute 'user_points'}}" title='points')
                 //         +i name='coins'
                 //         |#{points}pts

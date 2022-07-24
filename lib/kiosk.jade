@@ -1,11 +1,13 @@
 template(name='kiosk_container')
+    unless subs_ready
+        i.massive.refresh.loading.icon
     with kiosk_doc
         // .ui.header template #{kiosk_view}
         +Template.dynamic template=kiosk_view
-    else 
-        .ui.segment 
-            .ui.button.make
-                |make
+    // else 
+    //     .ui.segment 
+    //         .ui.button.make
+    //             |make
 
 
 template(name='healthclub')
@@ -14,15 +16,15 @@ template(name='healthclub')
             .center.aligned.column
                 // .ui.segment.alpha
                 .div
-                    a.ui.big.inverted.header(href="/" title='go home')
+                    a.ui.big.header(href="/" title='go home')
                         +i name='front-desk'
                         |healthclub check in
                     unless selected_building
-                        .ui.inverted.big.header
+                        .ui.big.header
                             +i name='apartment'
                             |pick building
                     if selected_building
-                        .ui.inverted.big.header
+                        .ui.big.header
                             +i name='apartment'
                             |building
                     each building_docs 
@@ -37,7 +39,7 @@ template(name='healthclub')
                     if selected_building
                         .ui.hidden.divider
                         unless selected_unit
-                            .ui.inverted.big.header
+                            .ui.big.header
                                 +i name='room'
                                 |pick/add unit
                             div
@@ -58,7 +60,7 @@ template(name='healthclub')
                     //     input.search_user(type='text' placeholder='search user...')
                     if selected_unit
                         .spacer
-                        .ui.inline.inverted.big.header 
+                        .ui.inline.big.header 
                             +i name='groups'
                             |pick/add resident
                         .ui.big.button.add_new_user
@@ -82,7 +84,7 @@ template(name='healthclub')
                     if currentUser.admin_mode
                         +footer
 template(name='kiosk_settings')
-    .ui.inverted.header 
+    .ui.header 
         +i name='self-service-kiosk' classes='ui mini image'
         |kiosk view
     .ui.padded.grid

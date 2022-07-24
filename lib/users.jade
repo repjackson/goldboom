@@ -8,8 +8,8 @@ template(name='users')
                 |users
             if currentUser.admin
                 +add_user_button
-            if currentUser
-                +session_boolean_toggle key='view_friends' label='friends' icon='friends'
+            // if currentUser
+            //     +session_boolean_toggle key='view_friends' label='friends' icon='friends'
             +i name='apartment'
             if picked_user_buildings
                 #clear_buildings.ui.primary.icon.compact.button
