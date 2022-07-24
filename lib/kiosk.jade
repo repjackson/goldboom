@@ -18,7 +18,7 @@ template(name='healthclub')
                 .div
                     a.ui.big.header(href="/" title='go home')
                         +i name='front-desk'
-                        |2959 Shadow Creek healthclub check in
+                        |2959 shadow creek health club check in
                     unless selected_building
                         .ui.big.header
                             +i name='apartment'
@@ -47,8 +47,12 @@ template(name='healthclub')
                             .ui.massive.icon.input  
                                 i.large.plus.icon
                                 input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
+                        if selected_unit
+                            .ui.big.header
+                                +i name='room'
+                                | unit
                         each unit_docs 
-                            .ui.bigger.compact.button.pick_unit.zoomer(class=unit_button_class)
+                            .ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
                                 // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 // +i name='room'
                                 |##{unit_number}

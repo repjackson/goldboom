@@ -106,10 +106,10 @@ if Meteor.isClient
                     address_number:unit.building_number
 
     Template.unit_view.helpers
-        unit: ->
-            Docs.findOne
-                model:'unit'
-                slug: Router.current().params.unit_code
+        # unit: ->
+        #     Docs.findOne
+        #         model:'unit'
+        #         slug: Router.current().params.unit_code
 
         units: ->
             Docs.find {
@@ -127,17 +127,17 @@ if Meteor.isClient
                 Router.go "/building/#{found._id}"
             else 
                 console.log 'no building'
-        'keyup .unit_number': (e,t)->
-            if e.which is 13
-                unit_number = parseInt $('.unit_number').val().trim()
-                unit_number = parseInt $('.unit_number').val()
-                unit_label = $('.unit_label').val().trim()
-                unit = Docs.findOne model:'unit'
-                Docs.insert
-                    model:'unit'
-                    unit_number:unit_number
-                    unit_number:unit.unit_number
-                    unit_code:unit.slug
+        # 'keyup .unit_number': (e,t)->
+        #     if e.which is 13
+        #         unit_number = parseInt($('.unit_number').val())
+        #         unit_number = parseInt($('.unit_number').val())
+        #         unit_label = $('.unit_label').val().trim()
+        #         unit = Docs.findOne model:'unit'
+        #         Docs.insert
+        #             model:'unit'
+        #             unit_number:unit_number
+        #             unit_number:unit.unit_number
+        #             unit_code:unit.slug
 
 
 
