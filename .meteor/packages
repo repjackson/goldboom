@@ -30,10 +30,6 @@ mquandalle:jade
 underscore@1.0.10
 coffeescript
 tmeasday:publish-counts
-mdg:geolocation
-reywood:publish-composite
 multiply:iron-router-progress
-ecmascript
-modules
 shell-server
 flowkey:hotkeys

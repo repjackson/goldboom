@@ -217,8 +217,9 @@ template(name='building_edit')
                 div
                 +text_edit key='address' label='address' 
                 +html_edit key='notes' 
-                
             .column
                 a.ui.big.fluid.green.button.fly_down(href="/building/#{_id}")
                     i.checkmark.big.icon
                     |save
+                if in_dev 
+                    +delete_button

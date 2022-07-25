@@ -75,9 +75,11 @@ template(name='healthclub')
                         //     input(type='text' placeholder='add user...')
                         div
                         each checkedout_user_docs 
-                            a.ui.bigger.image.label.pick_user
+                            a.ui.bigger.image.massive.label.pick_user
                                 if image_id
                                     img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                else 
+                                    i.large.user.icon
                                 if first_name
                                     |#{first_name} #{last_name}
                                 else 

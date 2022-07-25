@@ -130,7 +130,7 @@ if Meteor.isClient
                 showProgress:'bottom'
                 position:'bottom center'
                 className:
-                    toast: 'ui massive message'
+                    toast: 'ui massive inverted green message'
                 # displayTime: 5000
                 transition:
                   showMethod   : 'zoom',
@@ -452,19 +452,19 @@ if Meteor.isServer
                 Meteor.users.update user._id,
                     $set:global_rank:global_rank
 
-    publishComposite 'healthclub_session', (doc_id)->
-        {
-            find: ->
-                Docs.find doc_id
-            children: [
-                { find: (doc) ->
-                    Meteor.users.find
-                        _id: doc.user_id
-                    }
-                { find: (doc) ->
-                    Docs.find
-                        model: 'guest'
-                        _id:doc.guest_ids
-                    }
-                ]
-        }
+    # publishComposite 'healthclub_session', (doc_id)->
+    #     {
+    #         find: ->
+    #             Docs.find doc_id
+    #         children: [
+    #             { find: (doc) ->
+    #                 Meteor.users.find
+    #                     _id: doc.user_id
+    #                 }
+    #             { find: (doc) ->
+    #                 Docs.find
+    #                     model: 'guest'
+    #                     _id:doc.guest_ids
+    #                 }
+    #             ]
+    #     }
