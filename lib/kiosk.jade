@@ -19,11 +19,11 @@ template(name='healthclub')
                     a.ui.big.header(href="/" title='go home')
                         +i name='front-desk'
                         |2959 shadow creek health club check in
-                    unless selected_building
+                    unless kiosk_doc.current_building_number
                         .ui.big.header
                             +i name='apartment'
                             |pick building
-                    if selected_building
+                    if kiosk_doc.current_building_number
                         .ui.big.header
                             +i name='apartment'
                             |building
@@ -36,18 +36,17 @@ template(name='healthclub')
                             if building_number
                                 |#{building_number}
                     // div
-                    if selected_building
+                    if kiosk_doc.current_building_number
                         .ui.hidden.divider
-                        unless selected_unit
+                        unless kiosk_doc.current_unit_number
                             .ui.big.header
                                 +i name='room'
                                 |pick/add unit
                             div
-                            
                             .ui.massive.icon.input  
                                 i.large.plus.icon
                                 input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
-                        if selected_unit
+                        if kiosk_doc.current_unit_number
                             .ui.big.header
                                 +i name='room'
                                 | unit
@@ -62,7 +61,7 @@ template(name='healthclub')
                     // .ui.massive.icon.input.lookup_user
                     //     i.search.icon
                     //     input.search_user(type='text' placeholder='search user...')
-                    if selected_unit
+                    if kiosk_doc.current_unit_number
                         .spacer
                         .ui.inline.big.header 
                             +i name='groups'
@@ -136,7 +135,7 @@ template(name='kiosk_away')
         .ui.hidden.divider
         .ui.hidden.divider
         .ui.hidden.divider
-        .ui.inverted.header away from the desk
+        .ui.massive.header away from the desk
         +document_view key='frontdesk_status' 
     //- .ui.header We're away from the desk for 5 minutes
 

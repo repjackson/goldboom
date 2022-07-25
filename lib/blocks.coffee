@@ -803,7 +803,7 @@ if Meteor.isClient
                     Docs.remove @_id
                 , 1000
                 # if @doc.redirect
-                Router.go "/#{@model}/"
+                Router.go "/#{@model}s/"
 
     Template.remove_icon.events
         'click .remove_doc': (e,t)->

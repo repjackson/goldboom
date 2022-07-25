@@ -1,17 +1,10 @@
 if Meteor.isClient
     Router.route '/users', -> @render 'users'
-    @picked_porn_tags = new ReactiveArray []
     Template.user_item.onCreated ->
         @autorun => Meteor.subscribe 'user_groups_small', @data.username, -> 
         
         
         
-    Template.user_view.onCreated ->
-        @autorun => @subscribe 'user_by_name', Router.current().params.name, ->
-    Template.user_view.helpers
-        current_user: ->
-            Docs.findOne 
-                model:'user'
     Template.users.onCreated ->
         @autorun => Meteor.subscribe 'user_counter', ->
     Template.users.onCreated ->
@@ -34,67 +27,6 @@ if Meteor.isClient
             ->
         # @autorun => Meteor.subscribe 'user_tags', picked_user_tags.array(), ->
      
-    Template.user_card.events
-        'click .calc_stats': ->
-            Meteor.call 'calc_user_stats', @reddit_data.name, ->
-            
-            # unless @details 
-            #     Meteor.call 'user_details', @_id, ->
-            #         console.log 'pulled user details'
-
-        'click .flat_user_tag': ->
-            # picked_user_tags.clear()
-            picked_user_tags.push @valueOf()
-            Meteor.call 'search_users', picked_user_tags.array(),true, ->
-            
-            $('body').toast({
-                title: "browsing #{@valueOf()}"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'hashtag'
-                # showProgress:'bottom'
-                position:'bottom right'
-                # className:
-                #     toast: 'ui massive message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
-    Template.user_view.onCreated ->
-        @autorun => @subscribe 'user_posts', Router.current().params.name, ->
-    Template.user_view.helpers
-        user_post_docs: ->
-            Docs.find
-                model:'reddit'
-    Template.user_view.events
-        'click .calc_user_stats': ->
-            Meteor.call 'calc_user_stats', Router.current().params.name, ->
-        'click .get_user_posts': ->
-            Meteor.call 'get_user_posts', Router.current().params.name, ->
-        'click .pick_flat_tag': ->
-            picked_user_tags.clear()
-            picked_user_tags.push @valueOf()
-            Meteor.call 'search_users', picked_user_tags.array(),true, ->
-            Router.go "/users"
-            $('body').toast({
-                title: "browsing #{@valueOf()}"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'hashtag'
-                # showProgress:'bottom'
-                position:'bottom right'
-                # className:
-                #     toast: 'ui massive message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
      
             
 if Meteor.isServer 

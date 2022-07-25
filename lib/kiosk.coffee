@@ -110,6 +110,8 @@ if Meteor.isClient
 
         'click .pick_user': ->
             console.log @
+            kiosk = Docs.findOne model:'kiosk'
+            
             Docs.insert 
                 model:'checkin'
                 active:true
@@ -118,9 +120,17 @@ if Meteor.isClient
             Meteor.users.update @_id,
                 $set:
                     checked_in:true
-            Session.set('current_search_user',null)
-            Session.set('current_building_number',null)
-            Session.set('current_unit_number',null)
+                    
+            Docs.update kiosk._id, 
+                $set:
+                    current_search_user:null
+                    current_building_number:null
+                    current_unit_number:null
+                    
+            # Session.set('current_search_user',null)
+            
+            # Session.set('current_building_number',null)
+            # Session.set('current_unit_number',null)
             $('.search_user').val('')
             $('body').toast({
                 title: "checked in"
@@ -128,9 +138,9 @@ if Meteor.isClient
                 class : 'success'
                 showIcon:'checkmark'
                 showProgress:'bottom'
-                position:'bottom center'
+                position:'top center'
                 className:
-                    toast: 'ui massive inverted green message'
+                    toast: 'ui massive green message'
                 # displayTime: 5000
                 transition:
                   showMethod   : 'zoom',
@@ -140,15 +150,20 @@ if Meteor.isClient
                 })
             
         'keyup .search_user': _.throttle((e,t)->
+            kiosk = Docs.findOne model:'kiosk'
             search_user = $('.search_user').val().trim().toLowerCase()
             # if search_user.length > 1
             #     Session.set('current_search_user', search_user)
-            Session.set('current_search_user', search_user)
-            console.log Session.get('current_search_user')
+            Docs.update kiosk._id, 
+                $set:
+                    current_search_user:search_user
+            # Session.set('current_search_user', search_user)
+            # console.log Session.get('current_search_user')
             # picked_tags.push search_user
             # # $( "p" ).blur();
         , 500)
         'keyup .add_unit_number': _.throttle((e,t)->
+            kiosk = Docs.findOne model:'kiosk'
             new_unit_number = $('.add_unit_number').val()
             # if search_user.length > 1
             #     Session.set('current_search_user', search_user)
@@ -157,7 +172,10 @@ if Meteor.isClient
                     model:'unit'
                     building_number:parseInt(Session.get('current_building_number'))
                     unit_number:new_unit_number
-                Session.set('current_unit_number', new_unit_number)
+                Docs.update kiosk._id,
+                    $set:
+                        current_unit_number:new_unit_number
+                # Session.set('current_unit_number', new_unit_number)
         , 500)
     
     Template.kiosk_container.helpers
@@ -169,30 +187,35 @@ if Meteor.isClient
                 model:'kiosk'
             kiosk_doc.kiosk_view
     Template.healthclub.helpers
-        selected_building: -> Session.get('current_building_number')
-        selected_unit: -> Session.get('current_unit_number')
-        building_button_class: -> if Session.equals('current_building_number',@building_number) then 'active massive' else 'big'
-        unit_button_class: -> if Session.equals('current_unit_number',@unit_number) then 'active massive' else 'big'
+        kiosk_doc: -> Docs.findOne model:'kiosk'
+        # selected_building: -> Session.get('current_building_number')
+        # selected_unit: -> Session.get('current_unit_number')
+        building_button_class: -> 
+            if Session.equals('current_building_number',@building_number) then 'active massive' else 'big'
+        unit_button_class: -> 
+            if Session.equals('current_unit_number',@unit_number) then 'active massive' else 'big'
         building_docs: ->
-            if Session.get('current_building_number')
+            kiosk_doc = Docs.findOne model:'kiosk'
+            if kiosk_doc.current_building_number
                 Docs.find 
                     model:'building'
-                    building_number:Session.get('current_building_number')
+                    building_number:kiosk_doc.current_building_number
             else 
                 Docs.find {
                     model:'building'
                 }, 
                     sort:building_number:1
         unit_docs: ->
+            kiosk_doc = Docs.findOne model:'kiosk'
             if Session.get('current_unit_number')
                 Docs.find 
                     model:'unit'
-                    building_number:Session.get('current_building_number')
-                    unit_number:Session.get('current_unit_number')
+                    building_number:kiosk_doc.current_building_number
+                    unit_number:kiosk_doc.current_unit_number
             else 
                 Docs.find 
                     model:'unit'
-                    building_number:Session.get('current_building_number')
+                    building_number:kiosk_doc.current_building_number
         checkedout_user_docs: ->
             match = {}
             # match.checked_in = $ne:true
@@ -356,8 +379,6 @@ if Meteor.isClient
                 model:'vote'
                 upvoter_ids: $nin:[healthclub_session_document.user_id]
                 downvoter_ids: $nin:[healthclub_session_document.user_id]
-
-
 
         timer_engaged: ->
             Session.get 'timer_engaged'
