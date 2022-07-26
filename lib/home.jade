@@ -7,6 +7,7 @@ template(name='home')
                     |healthclub check in
                 if currentUser.admin_mode
                     +add_user_button
+                    +call_method name='convert_units'
                 unless currentUser
                     .ui.massive.icon.input.lookup_user
                         i.search.icon

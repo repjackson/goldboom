@@ -8,7 +8,10 @@ if Meteor.isClient
             Session.set('model',@model)
             Router.go "/m/#{@model}"
         
-        
+    Template.call_method.events 
+        'click .call': ->
+            Meteor.call @name, ->
+                console.log 'called'
     Template.add_button.events 
         'click .add': ->
             new_id = 
