@@ -326,9 +326,10 @@ template(name='checkin_view')
 
 template(name='checkin_edit')         
     with current_doc
-        .ui.padded.one.column.centered.grid
+        .ui.padded.one.column.center.aligned.grid
             .column
                 with _resident
+                    .ui.massive.header #{first_name} #{last_name}
                     +image_edit key='image_id'
                 .ui.header building: #{building_number}
                 .ui.header unit: #{unit_number}

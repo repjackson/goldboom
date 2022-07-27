@@ -29,22 +29,38 @@ if Meteor.isClient
         'click .submit_checkin': ->
             resident = 
                 Meteor.users.findOne @resident_user_id
-            $('body').toast({
+                
+            Swal.fire({
                 title: "#{resident.first_name} #{resident.last_name} checked in"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'checkmark'
-                showProgress:'bottom'
-                position:'top center'
-                className:
-                    toast: 'ui massive green fluid message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
+                # text: "point bounty will be held "
+                icon: 'success'
+                timer:5000
+                timerProgressBar:true
+                showClass: {popup: 'animate__animated animate__fadeInDown'}
+                hideClass: {popup: 'animate__animated animate__fadeOutUp'}
+                showConfirmButton:false
+                # confirmButtonText: 'publish'
+                # confirmButtonColor: 'green'
+                # showCancelButton: true
+                # cancelButtonText: 'cancel'
+                # reverseButtons: true
+            })
+            # $('body').toast({
+            #     title: "#{resident.first_name} #{resident.last_name} checked in"
+            #     # message: 'Please see desk staff for key.'
+            #     class : 'success'
+            #     showIcon:'checkmark'
+            #     showProgress:'bottom'
+            #     position:'top center'
+            #     className:
+            #         toast: 'ui massive green fluid icon message'
+            #     # displayTime: 5000
+            #     transition:
+            #       showMethod   : 'zoom',
+            #       showDuration : 250,
+            #       hideMethod   : 'fade',
+            #       hideDuration : 250
+            #     })
 
     Template.checkins.events
         'click .add_checkin': ->

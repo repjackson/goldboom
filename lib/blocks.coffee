@@ -1058,7 +1058,7 @@ if Meteor.isClient
         'click .set_key_value': (e)->
             # console.log 'hi'
             parent = Template.parentData()
-            console.log parent, @key, @value
+            # console.log parent, @key, @value
             user = Meteor.users.findOne username:Router.current().params.username
             if Docs.findOne Router.current().params.doc_id
                 Docs.update parent._id,
