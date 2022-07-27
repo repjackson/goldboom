@@ -80,7 +80,7 @@ if Meteor.isClient
                     $unset:
                         current_unit_number:1
                     )
-            $(e.currentTarget).closest('.label').transition('pulse', 1000)
+            $(e.currentTarget).closest('.label').transition('jiggle', 1000)
         'click .pick_unit': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number is @unit_number
@@ -95,7 +95,7 @@ if Meteor.isClient
                     $set:
                         current_unit_number:@unit_number
                     )
-            $(e.currentTarget).closest('.label').transition('pulse', 1000)
+            $(e.currentTarget).closest('.label').transition('jiggle', 1000)
         'click .add_new_user':->
             kiosk = Docs.findOne model:'kiosk'
             new_username = prompt('first and last name')

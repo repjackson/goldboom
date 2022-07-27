@@ -32,8 +32,9 @@ template(name='home')
         .two.column.row
             .column       
                 +healthclub_rentals
-            .column       
-                +active_checkins
+            if currentUser
+                .column     
+                    +active_checkins
             .column       
                 .ui.header 
                     +i name='info'

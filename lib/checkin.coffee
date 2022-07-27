@@ -138,8 +138,10 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'resident_by_id', (doc_id)->
+        
         doc = Docs.findOne doc_id
-        Meteor.users.find doc.resident_user_id
+        if doc
+            Meteor.users.find doc.resident_user_id
         
     Meteor.publish 'checkin', (checkin_code)->
         Docs.find

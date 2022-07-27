@@ -4,7 +4,6 @@
 @picked_timestamp_tags = new ReactiveArray []
 
 
-Router.route '/add', -> @render 'add'
 
 Tracker.autorun ->
     current = Router.current()

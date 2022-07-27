@@ -330,18 +330,29 @@ template(name='checkin_edit')
             .column
                 with _resident
                     .ui.massive.header #{first_name} #{last_name}
-                    +image_edit key='image_id'
-                .ui.header building: #{building_number}
-                .ui.header unit: #{unit_number}
+                    // +image_edit key='image_id' label='profile image'
+                .ui.big.label 
+                    +i name='apartment'
+                    |building ##{building_number}
+                .ui.big.label
+                    +i name='room'
+                    |unit ##{unit_number}
                 // +text_edit key='email' label='Email' direct=true
-                .ui.header guests
-                
-                .ui.header purpose (optional)
-                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='bigger'
-                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='bigger'
-                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='bigger'
-                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='bigger'
-                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='bigger'
+                .ui.header 
+                    +i name='get-along'
+                    |guests
+                .ui.big.button.add_guest
+                    i.plus.icon 
+                    |add guest
+                each resident_guests 
+                    .ui.big.button.pick_guest 
+                        |#{first_name} #{last_name}
+                // .ui.header purpose (optional)
+                // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='bigger'
+                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='bigger'
+                // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='bigger'
+                // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='bigger'
+                // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='bigger'
                 .ui.hidden.divider
                 a.ui.big.fluid.green.circular.button.submit_checkin(href="/kiosk")
                     i.checkmark.big.icon

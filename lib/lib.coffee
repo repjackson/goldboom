@@ -21,32 +21,20 @@ force_loggedin =  ()->
 #   # only: ['admin']
 #   # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
 #   except: [
-#     'food'
+      
+#     'kiosk'
 #     'register'
-#     'users'
-#     'services'
-#     'service_view'
-#     'products'
-#     'product_view'
-#     'posts'
-#     'post_view'
-#     'home'
 #     'forgot_password'
 #     'reset_password'
-#     'user_orders'
-#     'user_food'
-#     'user_finance'
-#     'user_dashboard'
 #     'verify-email'
-#     'food_view'
+#     'login'
 #   ]
 # });
 
 
 
-Router.route '*', -> @render 'food'
+Router.route '*', -> @render 'home'
 
-Router.route '/user/:username/m/:type', -> @render 'user_layout', 'user_section'
 Router.route '/forgot_password', -> @render 'forgot_password'
 
 # Router.route "/food/:food_id", -> @render 'food_doc'
@@ -84,9 +72,9 @@ Docs.before.insert (userId, doc)->
                 doc._author_id = Meteor.userId()
                 doc._author_username = Meteor.user().username
     doc.app = 'goldrun'
-    doc.points = 0
-    doc.downvoters = []
-    doc.upvoters = []
+    # doc.points = 0
+    # doc.downvoters = []
+    # doc.upvoters = []
     return
 
 if Meteor.isClient

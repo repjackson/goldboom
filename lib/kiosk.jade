@@ -33,7 +33,7 @@ template(name='healthclub')
                                 img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             strong #{building_letter}
                             // +i name='apartment'
-                            if building_number
+                            unless is building_number 1
                                 |#{building_number}
                     // div
                     if kiosk_doc.current_building_number
