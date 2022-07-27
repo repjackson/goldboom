@@ -103,14 +103,14 @@ if Meteor.isServer
 
 
 
-Docs.after.insert (userId, doc)->
-    console.log doc.tags
-    return
+# Docs.after.insert (userId, doc)->
+#     console.log doc.tags
+#     return
 
-Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
-    doc.tag_count = doc.tags?.length
-    # Meteor.call 'generate_authored_cloud'
-), fetchPrevious: true
+# Docs.after.update ((userId, doc, fieldNames, modifier, options) ->
+#     doc.tag_count = doc.tags?.length
+#     # Meteor.call 'generate_authored_cloud'
+# ), fetchPrevious: true
 
 
 Meteor.users.helpers
@@ -140,7 +140,9 @@ Meteor.users.helpers
     #     @_id in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
 Docs.helpers
     _author: -> Meteor.users.findOne @_author_id
-
+    # Template.registerHelper '_resident', () -> 
+    _resident: ->
+        Meteor.users.findOne @resident_user_id
     _when: -> moment(@_timestamp).fromNow()
     three_tags: -> if @tags then @tags[..2]
     five_tags: -> if @tags then @tags[..4]

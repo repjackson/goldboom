@@ -1,6 +1,11 @@
 Router.route '/checkins', -> @render 'checkins'
 Router.route '/checkin/:doc_id', -> @render 'checkin_view'
-Router.route '/checkin/:doc_id/edit', -> @render 'checkin_edit'
+Router.route '/checkin/:doc_id/edit', (-> 
+    @layout 'mlayout'
+    @render 'checkin_edit'
+    ), name:'checkin_edit'
+
+    
 Router.route '/staff', -> @render 'staff'
 Router.route '/frontdesk', -> @render 'frontdesk'
 # Router.route '/healthclub', -> @render 'healthclub'
@@ -14,7 +19,32 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
             
+
+    Template.checkin_edit.events
+        'click .cancel_checkin': ->
+            Docs.remove @_id 
+            Router.go "/kiosk"
+        'click .submit_checkin': ->
+            resident = 
+                Meteor.users.findOne @resident_user_id
+            $('body').toast({
+                title: "#{resident.first_name} #{resident.last_name} checked in"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'checkmark'
+                showProgress:'bottom'
+                position:'top center'
+                className:
+                    toast: 'ui massive green fluid message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
 
     Template.checkins.events
         'click .add_checkin': ->
@@ -60,13 +90,13 @@ if Meteor.isClient
 
 
 
-    Template.checkin_card.onCreated ->
+    Template.checkin_item.onCreated ->
         @autorun => Meteor.subscribe 'checkin_residents', @data._id
         @autorun => Meteor.subscribe 'checkin_owners', @data._id
         @autorun => Meteor.subscribe 'checkin_permits', @data._id
         # @autorun => Meteor.subscribe 'checkin_checkins', Router.current().params.checkin_code
 
-    Template.checkin_card.helpers
+    Template.checkin_item.helpers
         owners: ->
             Meteor.users.find
                 roles:$in:['owner']
@@ -91,6 +121,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'resident_by_id', (doc_id)->
+        doc = Docs.findOne doc_id
+        Meteor.users.find doc.resident_user_id
+        
     Meteor.publish 'checkin', (checkin_code)->
         Docs.find
             model:'checkin'
@@ -157,6 +191,7 @@ if Meteor.isClient
                     $inc:
                         checkins_without_email_verification:-1
                         checkins_without_gov_id:-1
+            $(e.currentTarget).closest('.grid').transition('fly_left')
 
 
             Router.go "/checkin"
@@ -473,13 +508,13 @@ if Meteor.isClient
 
 
 
-    # Template.checkin_card.onCreated ->
+    # Template.checkin_item.onCreated ->
     #     @autorun => Meteor.subscribe 'doc_by_id', Session.get('new_guest_id')
     #     @autorun => Meteor.subscribe 'checkin_guests'
     #     # @autorun => Meteor.subscribe 'rules_signed_username', @data.username
     #
     #
-    # Template.checkin_card.helpers
+    # Template.checkin_item.helpers
     #     rules_signed: ->
     #         Docs.findOne
     #             model:'rules_and_regs_signing'
@@ -489,7 +524,7 @@ if Meteor.isClient
     #
     #     new_guest_doc: -> Docs.findOne Session.get('new_guest_id')
     #     user: -> Meteor.users.findOne @valueOf()
-    #     checkin_card_class: ->
+    #     checkin_item_class: ->
     #         unless @rules_signed then 'red_flagged'
     #         else unless @email_verified then 'yellow_flagged'
     #         else ""
@@ -507,7 +542,7 @@ if Meteor.isClient
     #             true
     #         # unless @rules_signed then true else false
     #
-    # Template.checkin_card.events
+    # Template.checkin_item.events
     #     'click .sign_rules': ->
     #         new_id = Docs.insert
     #             model:'rules_and_regs_signing'
@@ -595,7 +630,7 @@ if Meteor.isClient
     #
     #
     #
-    # Template.checkin_card.onCreated ->
+    # Template.checkin_item.onCreated ->
     #     @autorun => Meteor.subscribe 'user_from_id', @data
 
 

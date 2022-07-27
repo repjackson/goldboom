@@ -135,13 +135,15 @@ if Meteor.isClient
             console.log @
             kiosk = Docs.findOne model:'kiosk'
             
-            Docs.insert 
-                model:'checkin'
-                active:true
-                resident_user_id:@_id
-                resident_username:@username
-                building_number:kiosk.current_building_number
-                building_number:kiosk.current_unit_number
+            new_id = 
+                Docs.insert 
+                    model:'checkin'
+                    active:true
+                    resident_user_id:@_id
+                    resident_username:@username
+                    building_number:kiosk.current_building_number
+                    unit_number:kiosk.current_unit_number
+            
             Meteor.users.update @_id,
                 $set:
                     checked_in:true
@@ -151,27 +153,28 @@ if Meteor.isClient
                     current_building_number:null
                     current_unit_number:null
                     
+            Router.go "/checkin/#{new_id}/edit"
             # Session.set('current_search_user',null)
             
             # Session.set('current_building_number',null)
             # Session.set('current_unit_number',null)
             $('.search_user').val('')
-            $('body').toast({
-                title: "#{@first_name} #{@last_name} checked in"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'checkmark'
-                showProgress:'bottom'
-                position:'top center'
-                className:
-                    toast: 'ui massive green fluid message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
+            # $('body').toast({
+            #     title: "#{@first_name} #{@last_name} checked in"
+            #     # message: 'Please see desk staff for key.'
+            #     class : 'success'
+            #     showIcon:'checkmark'
+            #     showProgress:'bottom'
+            #     position:'top center'
+            #     className:
+            #         toast: 'ui massive green fluid message'
+            #     # displayTime: 5000
+            #     transition:
+            #       showMethod   : 'zoom',
+            #       showDuration : 250,
+            #       hideMethod   : 'fade',
+            #       hideDuration : 250
+            #     })
             
         'keyup .search_user': _.throttle((e,t)->
             kiosk = Docs.findOne model:'kiosk'

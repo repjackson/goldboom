@@ -92,8 +92,8 @@ if Meteor.isClient
     Template.registerHelper 'hostname', () -> 
         window.location.hostname
     
-    Template.registerHelper '_resident', () -> 
-        Meteor.users.findOne @resident_user_id
+    # Template.registerHelper '_resident', () -> 
+    #     Meteor.users.findOne @resident_user_id
         
         
     Template.registerHelper 'string', () -> 

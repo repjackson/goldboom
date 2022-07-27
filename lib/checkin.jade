@@ -143,26 +143,20 @@ template(name='checkins')
                 |checkins
             .ui.icon.button.add_checkin
                 i.plus.icon
-            .ui.cards
+            .ui.large.selection.animated.list
                 each checkin_docs
-                    +checkin_card
+                    +checkin_item
                     
                     
                     
-template(name='checkin_card')
-    a.ui.card(href="/checkin/#{_id}") 
+template(name='checkin_item')
+    a.ui.item(href="/checkin/#{_id}") 
         .content 
             .ui.big.label  
                 |#{_when}
             .ui.big.label  
                 |#{resident_first_name} #{resident_last_name}
-            .ui.big.label 
-                +i name='building'
-                |#
-                strong #{building_number}
-            .ui.big.label 
-                +i name='room'
-                |##{unit_number}
+            +bu
             .ui.big.label 
                 small author:
                 |#{_author_username}
@@ -175,8 +169,6 @@ template(name='checkin_card')
             a.fly_right(href="/resident/#{resident_id}")
                 .ui.inline.header
                     |#{resident_first_name} #{resident_last_name}
-            .ui.small.header #{when}
-            |#{author_username}
             with session_resident
                 if address
                     div
@@ -334,14 +326,26 @@ template(name='checkin_view')
 
 template(name='checkin_edit')         
     with current_doc
-        .ui.padded.two.column.centered.grid
+        .ui.padded.one.column.centered.grid
             .column
-                +image_edit key='image_id'
-                +number_edit key='checkin_number' label='checkin number' direct=true
-                +number_edit key='building_number' label='building number' direct=true
-                +text_edit key='address' label='address' direct=true
+                with _resident
+                    +image_edit key='image_id'
+                .ui.header building: #{building_number}
+                .ui.header unit: #{unit_number}
                 // +text_edit key='email' label='Email' direct=true
-            .column
-                a.ui.big.fluid.green.button(href="/resident/#{_id}")
-                    i.checkmark.icon
-                    |save
+                .ui.header guests
+                
+                .ui.header purpose (optional)
+                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='bigger'
+                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='bigger'
+                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='bigger'
+                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='bigger'
+                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='bigger'
+                .ui.hidden.divider
+                a.ui.big.fluid.green.circular.button.submit_checkin(href="/kiosk")
+                    i.checkmark.big.icon
+                    .ui.inline.inverted.header checkin
+                .ui.hidden.divider
+                .ui.basic.red.circular.fluid.button.cancel_checkin
+                    i.large.cancel.icon
+                    |cancel
