@@ -1,69 +1,72 @@
 template(name='users')
     .ui.padded.stackable.grid
-        .four.wide.column
-            .ui.inline.header
-                // i.large.users.icon
-                |#{user_docs.count}
-                +i name='groups'
-                |users
-            if currentUser.admin
-                +add_user_button
-            // if currentUser
-            //     +session_boolean_toggle key='view_friends' label='friends' icon='friends'
-            +i name='apartment'
-            if picked_user_buildings
-                #clear_buildings.ui.primary.icon.compact.button
-                    i.remove.icon
-                each picked_user_buildings
-                    .unselect_building.ui.primary.compact.button
-                        strong #{this}
-            each all_buildings
-                .ui.compact.button.select_building(class=cloud_tag_class) 
-                    strong #{name}
-            if picked_user_tags
-                // #clear_tags.ui.primary.icon.compact.button
-                //     i.remove.icon
-                each picked_user_tags
-                    .unpick_user_tag.ui.primary.compact.button
-                        strong #{this}
-            .ui.large.icon.input
-                i.search.icon
-                input.user_search(type='text' placeholder='search users...' value=current_user_search)
-            i.large.tags.icon
-            each all_user_tags
-                .ui.compact.button.pick_user_tag(class=cloud_tag_class) 
-                    strong #{name}
-            .ui.inline.header  
-                // i.big.building.icon
+        if currentUser
+            .four.wide.column
+                .ui.inline.header
+                    // i.large.users.icon
+                    |#{user_docs.count}
+                    +i name='groups'
+                    |users
+                if currentUser.admin
+                    +add_user_button
+                // if currentUser
+                //     +session_boolean_toggle key='view_friends' label='friends' icon='friends'
                 +i name='apartment'
-                |building
-            each building_tags 
-                .ui.large.label #{name}
-            div
-        .twelve.wide.column
-            +session_icon_button key='view_mode' value='grid' icon='th' 
-            +session_icon_button key='view_mode' value='list' icon='list'
-            +sort_direction_toggle
-            +session_set key='sort_key' value='createdAt' label='joined' icon='clock'
-            +session_set key='sort_key' value='views' icon='eye'
-            +session_set key='sort_key' value='first_name' icon='header'
-            +session_set key='sort_key' value='last_name' icon='header'
-            +session_set key='sort_key' value='building_number' label='building' icon='apartment'
-            +session_set key='sort_key' value='unit_number' label='unit' icon='room'
-            // +session_set key='view_limit' value=1
-            // +session_set key='view_limit' value=10 label='10'
-            // +session_set key='view_limit' value=20 label='20'
-            // +session_set key='view_limit' value=50 label='30'
-
-            .scrolling
-                if user_docs.count
-                    .ui.divided.selection.animated.list
-                        each user_docs
-                            +user_item
-                else 
-                    i.massive.yin.yang.loading.grey.icon
-                    // +loading_segment
-
+                if picked_user_buildings
+                    #clear_buildings.ui.primary.icon.compact.button
+                        i.remove.icon
+                    each picked_user_buildings
+                        .unselect_building.ui.primary.compact.button
+                            strong #{this}
+                each all_buildings
+                    .ui.compact.button.select_building(class=cloud_tag_class) 
+                        strong #{name}
+                if picked_user_tags
+                    // #clear_tags.ui.primary.icon.compact.button
+                    //     i.remove.icon
+                    each picked_user_tags
+                        .unpick_user_tag.ui.primary.compact.button
+                            strong #{this}
+                .ui.large.icon.input
+                    i.search.icon
+                    input.user_search(type='text' placeholder='search users...' value=current_user_search)
+                i.large.tags.icon
+                each all_user_tags
+                    .ui.compact.button.pick_user_tag(class=cloud_tag_class) 
+                        strong #{name}
+                .ui.inline.header  
+                    // i.big.building.icon
+                    +i name='apartment'
+                    |building
+                each building_tags 
+                    .ui.large.label #{name}
+                div
+            .twelve.wide.column
+                +session_icon_button key='view_mode' value='grid' icon='th' 
+                +session_icon_button key='view_mode' value='list' icon='list'
+                +sort_direction_toggle
+                +session_set key='sort_key' value='createdAt' label='joined' icon='clock'
+                +session_set key='sort_key' value='views' icon='eye'
+                +session_set key='sort_key' value='first_name' icon='header'
+                +session_set key='sort_key' value='last_name' icon='header'
+                +session_set key='sort_key' value='building_number' label='building' icon='apartment'
+                +session_set key='sort_key' value='unit_number' label='unit' icon='room'
+                // +session_set key='view_limit' value=1
+                // +session_set key='view_limit' value=10 label='10'
+                // +session_set key='view_limit' value=20 label='20'
+                // +session_set key='view_limit' value=50 label='30'
+    
+                .scrolling
+                    if user_docs.count
+                        .ui.divided.selection.animated.list
+                            each user_docs
+                                +user_item
+                    else 
+                        i.massive.yin.yang.loading.grey.icon
+                        // +loading_segment
+        else 
+            .ui.sixteen.wide.center.aligned.column
+                +login
 
 template(name='add_user_button')
     .ui.icon.button.add_user
