@@ -25,6 +25,13 @@ if Meteor.isClient
             
 
     Template.checkin_edit.helpers 
+        guest_class: ->
+            doc = Docs.findOne Router.current().params.doc_id
+            
+            if doc.guest_ids and @_id in doc.guest_ids
+                'big blue'
+            else 
+                ''
         kiosk: ->
             Docs.findOne model:'kiosk'
             
@@ -32,6 +39,18 @@ if Meteor.isClient
             Docs.find 
                 model:'guest'
     Template.checkin_edit.events
+        'click .pick_guest': ->
+            doc = Docs.findOne Router.current().params.doc_id
+            if doc.guest_ids and @_id in doc.guest_ids
+                Docs.update Router.current().params.doc_id, 
+                    $pull:
+                        guest_ids: @_id
+                        guest_names:@name
+            else
+                Docs.update Router.current().params.doc_id, 
+                    $addToSet:
+                        guest_ids: @_id
+                        guest_names:@name
         'click .add_guest': ->
             kiosk = Docs.findOne model:'kiosk'
             name = prompt 'first and last name'

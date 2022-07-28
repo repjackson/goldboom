@@ -337,7 +337,7 @@ template(name='checkin_edit')
                     i.plus.icon 
                     |add guest
                 each resident_guests 
-                    .ui.big.button.pick_guest 
+                    .ui.big.button.pick_guest(class=guest_class)
                         |#{name}
                 // .ui.header purpose (optional)
                 // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='bigger'
