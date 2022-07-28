@@ -18,7 +18,7 @@ if Meteor.isClient
             Session.get('dummy')
             , ->
         @autorun => Meteor.subscribe 'users_pub', 
-            Session.get('current_search')
+            Session.get('user_search')
             picked_user_tags.array()
             Session.get('view_friends')
             Session.get('sort_key')
@@ -45,20 +45,20 @@ if Meteor.isServer
         if username_search
             match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find(match,{ 
-            limit:20, 
+            # limit:20, 
             sort:
                 "#{sort_key}":sort_direction
-            fields:
-                username:1
-                image_id:1
-                tags:1
-                points:1
-                credit:1
-                first_name:1
-                last_name:1
-                group_memberships:1
-                createdAt:1
-                profile_views:1
+            # fields:
+            #     username:1
+            #     image_id:1
+            #     tags:1
+            #     points:1
+            #     credit:1
+            #     first_name:1
+            #     last_name:1
+            #     group_memberships:1
+            #     createdAt:1
+            #     profile_views:1
         })
             
 if Meteor.isClient
@@ -107,12 +107,12 @@ if Meteor.isClient
         #         Session.set 'username_search',username_search
         'keyup .user_search': (e,t)->
             val = $('.user_search').val().trim().toLowerCase()
-            if val.length > 2
-                # Session.set('user_search',val)
-                if e.which is 13
-                    # picked_user_tags.clear()
-                    picked_user_tags.push val
-                    $('.user_search').val('')
+            Session.set('user_search',val)
+            # if val.length > 2
+            #     # if e.which is 13
+            #     #     # picked_user_tags.clear()
+            #     #     picked_user_tags.push val
+            #     #     $('.user_search').val('')
             
             
             
@@ -175,9 +175,10 @@ if Meteor.isClient
                 # roles:$in:['resident','owner']
             ,
                 # limit:Session.get('limit')
-                limit:42
+                # limit:42
                 sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
             )
+        current_user_search: -> Session.get('current_user_search')
         # users: ->
         #     username_search = Session.get('username_search')
         #     Meteor.users.find({

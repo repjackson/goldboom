@@ -18,11 +18,29 @@ if Meteor.isClient
     Template.checkin_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'kiosk', ->
+        @autorun => Meteor.subscribe 'guest_by_checkin_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
             
 
+    Template.checkin_edit.helpers 
+        kiosk: ->
+            Docs.findOne model:'kiosk'
+            
+        resident_guests: ->
+            Docs.find 
+                model:'guest'
     Template.checkin_edit.events
+        'click .add_guest': ->
+            kiosk = Docs.findOne model:'kiosk'
+            name = prompt 'first and last name'
+            new_id = 
+                Docs.insert 
+                    name:name
+                    model:'guest'
+                    resident_user_id:@resident_user_id
+            
         'click .cancel_checkin': ->
             Docs.remove @_id 
             Router.go "/kiosk"
@@ -137,6 +155,11 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'guest_by_checkin_id', (checkin_id)->
+        checkin = Docs.findOne checkin_id  
+        Docs.find
+            model:'guest'
+            resident_user_id:checkin.resident_user_id
     Meteor.publish 'resident_by_id', (doc_id)->
         
         doc = Docs.findOne doc_id
@@ -686,12 +709,12 @@ if Meteor.isClient
             
 
 
-    Template.session_card.onCreated ->
+    Template.session_item.onCreated ->
         # @autorun => Meteor.subscribe 'user_by_username', @data.resident_username
         console.log @
         @autorun => Meteor.subscribe 'doc_by_id', Session.get('session_resident_id')
         @autorun => Meteor.subscribe 'session_guests', @data
-    Template.session_card.helpers
+    Template.session_item.helpers
         icon_class: ->
             switch @session_type
                 when 'checkin' then 'treadmill'
@@ -712,7 +735,7 @@ if Meteor.isClient
             Docs.find
                 _id:$in:@guest_ids
 
-    Template.session_card.events
+    Template.session_item.events
         'click .sign_out': (e,t)->
             # resident = Meteor.users.findOne
             #     username:@resident_username

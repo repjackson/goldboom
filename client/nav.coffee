@@ -51,7 +51,7 @@ Template.nav_item.events
 Template.nav.onCreated ->
     Session.setDefault 'limit', 20
     @autorun -> Meteor.subscribe 'me', ->
-    @autorun -> Meteor.subscribe 'all_users_min', ->
+    # @autorun -> Meteor.subscribe 'all_users_min', ->
     # @autorun -> Meteor.subscribe 'model_docs','group', ->
     @autorun -> Meteor.subscribe 'unread_logs', ->
 

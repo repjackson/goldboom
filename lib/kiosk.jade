@@ -16,7 +16,11 @@ template(name='healthclub')
             .center.aligned.column
                 // .ui.segment.alpha
                 .div
-                    a.ui.big.header(href="/" title='go home')
+                    if currentUser
+                        a.ui.big.header(href="/" title='go home')
+                            i.chevron.left.icon
+                            +i name='home'
+                    .ui.big.header
                         +i name='front-desk'
                         |2959 shadow creek health club check in
                     unless kiosk_doc.current_building_number

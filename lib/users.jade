@@ -1,10 +1,10 @@
 template(name='users')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
+        .four.wide.column
             .ui.inline.header
                 // i.large.users.icon
+                |#{user_docs.count}
                 +i name='groups'
-                |#{redditor_count}
                 |users
             if currentUser.admin
                 +add_user_button
@@ -28,12 +28,11 @@ template(name='users')
                         strong #{this}
             .ui.large.icon.input
                 i.search.icon
-                input.user_search(type='text' placeholder='search users...' value=current_search)
+                input.user_search(type='text' placeholder='search users...' value=current_user_search)
             i.large.tags.icon
             each all_user_tags
                 .ui.compact.button.pick_user_tag(class=cloud_tag_class) 
                     strong #{name}
-        .four.wide.column
             .ui.inline.header  
                 // i.big.building.icon
                 +i name='apartment'
@@ -41,24 +40,29 @@ template(name='users')
             each building_tags 
                 .ui.large.label #{name}
             div
+        .twelve.wide.column
             +session_icon_button key='view_mode' value='grid' icon='th' 
             +session_icon_button key='view_mode' value='list' icon='list'
             +sort_direction_toggle
             +session_set key='sort_key' value='createdAt' label='joined' icon='clock'
             +session_set key='sort_key' value='views' icon='eye'
-        .twelve.wide.column
+            +session_set key='sort_key' value='first_name' icon='header'
+            +session_set key='sort_key' value='last_name' icon='header'
+            +session_set key='sort_key' value='building_number' label='building' icon='apartment'
+            +session_set key='sort_key' value='unit_number' label='unit' icon='room'
             // +session_set key='view_limit' value=1
             // +session_set key='view_limit' value=10 label='10'
             // +session_set key='view_limit' value=20 label='20'
             // +session_set key='view_limit' value=50 label='30'
 
-            .scrollin.alpha
-                if subs_ready
+            .scrolling
+                if user_docs.count
                     .ui.divided.selection.animated.list
                         each user_docs
                             +user_item
                 else 
-                    +loading_segment
+                    i.massive.yin.yang.loading.grey.icon
+                    // +loading_segment
 
 
 template(name='add_user_button')
@@ -84,7 +88,7 @@ template(name='join')
         |{{from_now createdAt}}
             
 template(name='user_item')
-    a.item.fly_left.zoomers(href="/user/#{username}")
+    a.item.fly_left(href="/user/#{username}")
         .content
             img.ui.tiny.inline.rounded.image(class=currentUser.invert_class src="{{c.url image_id }}")    
             // unless avatar_image_id
@@ -94,8 +98,9 @@ template(name='user_item')
             small @#{username}
             if points
                 .ui.inline.header(style="color:#{current_user.theme_color};") #{points}p
-            +building_label
-            +unit_label
+            // +building_label
+            // +unit_label
+            +bu
             // if one_ratio
             //     .ui.label(style="color:#{current_user.theme_color};" title='one ratio') {{to_percent one_ratio}}%
             // if flow_volume

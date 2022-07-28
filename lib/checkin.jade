@@ -1,7 +1,7 @@
 // template(name='kiosk_container')
 //     with kiosk_doc
 //         +Template.dynamic template=kiosk_view
-
+template(name='session_item')
 // template(name='staff')
 //     .ui.stackable.padded.grid
 //         .row
@@ -51,7 +51,6 @@ template(name='checkin_input')
 
 
 
-template(name='session_card')
 template(name='checkin')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'grfront' width=1000 height=1000 crop='crop'}}")
     .ui.grid.header-wrapper
@@ -170,23 +169,16 @@ template(name='checkin_item')
                 .ui.inline.header
                     |#{resident_first_name} #{resident_last_name}
             with session_resident
-                if address
-                    div
-                    +i name='marker' classes='ui avatar image'
-                    |#{address}
-                div
-                    +i name='building' classes='ui avatar image'
-                    |#{building_number}
-                div
-                    +i name='home' classes='ui avatar image'
-                    | #{unit_number}
+                +i name='marker' classes='ui avatar image'
+                |#{address}
+                +bu
                 //- +number_edit key='checkins_without_gov_id' label='alter checkins without gov id' direct=true
                 //- +number_edit key='checkins_without_email_verification' label='alter checkins without email verification' direct=true
                 //- +number_view key='unit_number' label='unit #' direct=true
                 //- +text_view key='building_code' label='building code' direct=true
-                +lease_expiration_check
+                // +lease_expiration_check
                 //- +rules_and_regs_check
-                +user_check_steps 
+                // +user_check_steps 
                 if active_violations
                     .ui.big.red.label active violations
                 if staff_notes
@@ -346,7 +338,7 @@ template(name='checkin_edit')
                     |add guest
                 each resident_guests 
                     .ui.big.button.pick_guest 
-                        |#{first_name} #{last_name}
+                        |#{name}
                 // .ui.header purpose (optional)
                 // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='bigger'
                 // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='bigger'

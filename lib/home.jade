@@ -47,13 +47,11 @@ template(name='home')
                     |phone: (303) 545-1787
             // .column
                 // +latest_activity
-            .column
-                +latest_checkins
+            if currentUser
+                .column
+                    +latest_checkins
             // .column
             //     +map_view
-        .one.column.row
-            .column
-                +readings
         .one.column.row
             .column
                 +staff
@@ -69,14 +67,6 @@ template(name='healthclub_rentals')
             .ui.button.checkout_rental
                 i.big.checkmark.icon
                 |checkout
-template(name='water_readings')
-    a.ui.large.compact.button.zoomer.fly_right(href="/readings") 
-        +i name='pool'
-        |water readings
-    .ui.large.list 
-        .item indoor hottub
-        .item outdoor hottub
-        .item pool
         
                 
 template(name='active_checkins')

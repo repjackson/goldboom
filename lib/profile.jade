@@ -115,8 +115,8 @@ template(name='profile')
                             +user_models key='violation' icon='foul'
                         .column
                             +user_models key='permit' icon='id-card'
-                        .column
-                            +comments
+                        // .column
+                        //     +comments
                         .column
                             +user_inbox
                         .column
@@ -270,20 +270,6 @@ template(name='when')
                  
     
                  
-template(name='user_products')  
-    .ui.dividing.header 
-        +i name='shop'
-        |#{current_user.username}'s products
-    .ui.selection.link.animated.list
-        each user_product_docs 
-            a.item.fly_right(href="/doc/#{_id}")
-                img.ui.tiny.inline.image(src="{{c.url image_id height=200 width=200 background='white' crop='pad'}}")
-                .ui.inline.header #{title}
-                .ui.label
-                    |#{_when}
-                .ui.label
-                    |#{points}pts
-                 
                  
 template(name='user_comments')   
     .ui.header 
@@ -299,61 +285,6 @@ template(name='user_comments')
     +comments
                  
                  
-                     
-                    
-template(name='user_social')
-    .ui.inline.header 
-        +i name='friends'
-        |social
-    if refered_user_docs.count
-        span(title='refered users')
-            +i name='omnichannel'
-            each refered_user_docs
-                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 background='white' crop='pad'}}" title=title)
-    .ui.two.column.stackable.grid
-        .column
-            +friend_button
-            .ui.header friended
-            .ui.selection.link.animated.list
-                each user_friended
-                    +user_info
-            .ui.header friended by
-            .ui.selection.link.animated.list
-                each user_friended_by
-                    +user_info
-        .column
-            .ui.header following
-            .ui.header followed by
-            .ui.header comments
-            +user_following
-        .column
-            .ui.inline.header refered by
-            with refered_by_user
-                +user_info
-            div
-            .ui.inline.header 
-                +i name='omnichannel'
-                |refered
-            each refered_user_docs
-                +user_info
-   
-template(name='user_friends')
-            
-template(name='user_following')
-    +follow_button
-    .ui.header 
-        +i name='renew-subscription'
-        |following
-    .ui.selection.link.animated.list
-        each following_users
-            +user_info
-    .ui.header 
-        |followed by
-    .ui.selection.link.animated.list
-        each followed_by_users
-            +user_info
-  
-            
 template(name='send_message_button')
     .ui.button.send_message
         +i name='envelope'
@@ -402,7 +333,7 @@ template(name='account')
                     div
                     +text_edit key='last_name' label='last name' icon='user'
                     div
-                    +text_edit key='last_name' label='last name' icon='user'
+                    +text_edit key='display_name' label='display name' icon='user'
                     div
                     +number_edit key='building_number' label='building number' icon='apartment'
                     div
