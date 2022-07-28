@@ -18,17 +18,19 @@ template(name='healthclub')
                 .div
                     if currentUser
                         a.ui.big.header(href="/" title='go home')
-                            i.chevron.left.icon
-                            +i name='home'
-                    .ui.big.header
-                        +i name='front-desk'
-                        |2959 shadow creek health club check in
+                            // i.chevron.left.icon
+                            i.home.icon
+                            // +i name='home'
+                    .ui.big.inline.header
+                        // +i name='front-desk'
+                        // |2959 shadow creek health club check in
+                        | check in
                     unless kiosk_doc.current_building_number
-                        .ui.big.header
+                        .ui.big.inline.header
                             +i name='apartment'
-                            |pick building
+                            // |pick building
                     if kiosk_doc.current_building_number
-                        .ui.big.header
+                        .ui.big.inline.header
                             +i name='apartment'
                             |building
                     each building_docs 

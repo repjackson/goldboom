@@ -333,11 +333,12 @@ template(name='checkin_edit')
                 .ui.header 
                     +i name='get-along'
                     |guests
-                .ui.big.button.add_guest
+                .ui.big.button.add_guest.bigger
                     i.plus.icon 
                     |add guest
                 each resident_guests 
-                    .ui.big.button.pick_guest(class=guest_class)
+                    .ui.big.button.bigger.pick_guest(class=guest_class)
+                        i.large.user.icon
                         |#{name}
                 // .ui.header purpose (optional)
                 // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='bigger'

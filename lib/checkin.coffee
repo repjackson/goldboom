@@ -242,7 +242,7 @@ if Meteor.isClient
 
 
     Template.checkin.events
-        'click .cancel_checkin': ->
+        'click .cancel_checkin': (e)->
             session_document = Docs.findOne Router.current().params.doc_id
             if session_document
                 Docs.remove session_document._id
