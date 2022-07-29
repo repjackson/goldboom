@@ -32,9 +32,25 @@ if Meteor.isClient
     # Template.kiosk_settings.onCreated ->
     #     @autorun -> Meteor.subscribe 'kiosk_document', ->
 
-    Template.healthclub.onCreated ->
-        @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
-
+    Template.resident_picker.onCreated ->
+        # @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
+        @autorun => Meteor.subscribe 'kiosk_residents', ->
+if Meteor.isServer 
+    Meteor.publish 'kiosk_residents', ->
+        if Meteor.isDevelopment
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+                    dev:true
+        else 
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+        # if kiosk.current_building_number
+        Meteor.users.find
+            building_number:kiosk.current_building_number
+            unit_number:kiosk.current_unit_number
+if Meteor.isClient
     Template.kiosk_settings.onRendered ->
         # Meteor.setTimeout ->
         #     $('.button').popup()
@@ -120,40 +136,67 @@ if Meteor.isClient
                         current_unit_number:@unit_number
                     )
             # $(e.currentTarget).closest('.label').transition('shake', 500)
-        'click .add_new_user':->
-            kiosk = Docs.findOne model:'kiosk'
-            new_username = prompt('first and last name')
-            splitted = new_username.split(' ')
-            formatted = new_username.split(' ').join('_').toLowerCase()
-            console.log formatted
-            Meteor.call 'add_user', formatted, (err,res)->
-                console.log res
-                # new_user = Meteor.users.findOne res
-                Meteor.users.update res,
-                    $set:
-                        building_number:parseInt(kiosk.current_building_number)
-                        unit_number:parseInt(kiosk.current_unit_number)
-                        first_name:splitted[0]
-                        last_name:splitted[1]
-                        roles:['resident']
-                        verified:false
-                # Router.go "/user/#{formatted}"
-                $('body').toast({
-                    title: "user created"
-                    # message: 'Please see desk staff for key.'
-                    class : 'success'
-                    icon:'user'
-                    position:'bottom right'
-                    # className:
-                    #     toast: 'ui massive message'
-                    # displayTime: 5000
-                    transition:
-                      showMethod   : 'zoom',
-                      showDuration : 250,
-                      hideMethod   : 'fade',
-                      hideDuration : 250
-                    })
-            
+    Template.resident_picker.events
+        'keyup .new_resident_name':(e)->
+            if e.which is 13
+                kiosk = Docs.findOne model:'kiosk'
+                # new_username = prompt('first and last name')
+                new_username = $('.new_resident_name').val()
+                splitted = new_username.split(' ')
+                formatted = new_username.split(' ').join('_').toLowerCase()
+                console.log formatted
+                Meteor.call 'add_user', formatted, (err,res)->
+                    if err 
+                        alert err.reason
+                    else 
+                        console.log res
+                        # new_user = Meteor.users.findOne res
+                        
+                        Meteor.users.update res,
+                            $set:
+                                building_number:parseInt(kiosk.current_building_number)
+                                unit_number:parseInt(kiosk.current_unit_number)
+                                first_name:splitted[0]
+                                last_name:splitted[1]
+                                roles:['resident']
+                                verified:false
+                        # Router.go "/user/#{formatted}"
+                        new_id = 
+                            Docs.insert 
+                                model:'checkin'
+                                active:true
+                                resident_user_id:res
+                                resident_username:formatted
+                                building_number:kiosk.current_building_number
+                                unit_number:kiosk.current_unit_number
+                        
+                        Meteor.users.update res._id,
+                            $set:
+                                checked_in:true
+                        Docs.update kiosk._id, 
+                            $set:
+                                current_search_user:null
+                                current_building_number:null
+                                current_unit_number:null
+                                
+                        Router.go "/checkin/#{new_id}/edit"
+                        
+                        $('body').toast({
+                            title: "#{splitted[0]} added"
+                            # message: 'Please see desk staff for key.'
+                            class : 'success'
+                            icon:'user plus'
+                            position:'bottom right'
+                            # className:
+                            #     toast: 'ui massive message'
+                            # displayTime: 5000
+                            transition:
+                              showMethod   : 'zoom',
+                              showDuration : 250,
+                              hideMethod   : 'fade',
+                              hideDuration : 250
+                            })
+                
 
         'click .pick_user': ->
             console.log @
@@ -200,19 +243,19 @@ if Meteor.isClient
             #       hideDuration : 250
             #     })
             
-        'keyup .search_user': _.throttle((e,t)->
-            kiosk = Docs.findOne model:'kiosk'
-            search_user = $('.search_user').val().trim().toLowerCase()
-            # if search_user.length > 1
-            #     Session.set('current_search_user', search_user)
-            Docs.update kiosk._id, 
-                $set:
-                    current_search_user:search_user
-            # Session.set('current_search_user', search_user)
-            # console.log Session.get('current_search_user')
-            # picked_tags.push search_user
-            # # $( "p" ).blur();
-        , 500)
+        # 'keyup .search_user': _.throttle((e,t)->
+        #     kiosk = Docs.findOne model:'kiosk'
+        #     search_user = $('.search_user').val().trim().toLowerCase()
+        #     # if search_user.length > 1
+        #     #     Session.set('current_search_user', search_user)
+        #     Docs.update kiosk._id, 
+        #         $set:
+        #             current_search_user:search_user
+        #     # Session.set('current_search_user', search_user)
+        #     # console.log Session.get('current_search_user')
+        #     # picked_tags.push search_user
+        #     # # $( "p" ).blur();
+        # , 500)
         # 'keyup .add_unit_number': _.throttle((e,t)->
         #     kiosk = Docs.findOne model:'kiosk'
         #     new_unit_number = parseInt($('.add_unit_number').val())
