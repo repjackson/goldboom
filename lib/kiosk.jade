@@ -47,7 +47,7 @@ template(name='healthclub')
                     if kiosk_doc.current_building_number
                         .ui.hidden.divider
                         unless kiosk_doc.current_unit_number
-                            .ui.big.header
+                            .ui.big.inline.header
                                 +i name='room'
                                 |select unit
                             // div
@@ -56,7 +56,7 @@ template(name='healthclub')
                             //     |add new unit
                             // if kiosk_doc.adding_unit
                         if kiosk_doc.current_unit_number
-                            .ui.big.header
+                            .ui.big.inline.header
                                 +i name='room'
                                 | unit
                         each unit_docs 
@@ -64,13 +64,14 @@ template(name='healthclub')
                                 // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 // +i name='room'
                                 |##{unit_number}
-                        .ui.horizontal.divider or
-                        .ui.inline.header 
-                            i.plus.icon
-                            |type new unit number:
-                        .ui.massive.icon.fluid.input  
-                            i.large.plus.icon
-                            input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
+                        unless kiosk_doc.current_unit_number
+                            .ui.horizontal.divider or
+                            .ui.inline.header 
+                                i.plus.icon
+                                |type new unit number:
+                            .ui.massive.icon.fluid.input  
+                                i.large.plus.icon
+                                input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
                     // .ui.massive.icon.input
                     //     i.large.building.icon
                     //     input.building_number(type='text' placeholder='building #...')
