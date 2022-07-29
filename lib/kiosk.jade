@@ -69,7 +69,7 @@ template(name='resident_picker')
     //     |add resident
     div
     each checkedout_user_docs 
-        a.ui.bigger.image.massive.black.basic.label.pick_user
+        a.ui.bigger.image.massive.black.basic.label.pick_user.zoomer
             if image_id
                 img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             else 
@@ -80,9 +80,9 @@ template(name='resident_picker')
                 |#{username}
             // if building_number
             //     |#{building_number}: ##{unit_number}
-    // .spacer
+    .ui.horizontal.divider OR
     .ui.center.aligned.massive.header 
-        |OR add new resident (first and last name)
+        |add new resident (first and last name)
     .ui.massive.fluid.icon.active.input
         i.user.add.large.icon
         input.new_resident_name(type='text' placeholder='first and last name...')

@@ -138,7 +138,7 @@ if Meteor.isClient
             # $(e.currentTarget).closest('.label').transition('shake', 500)
     Template.resident_picker.events
         'keyup .new_resident_name':(e)->
-            if e.which is 13
+            if e.which in [13,9]
                 kiosk = Docs.findOne model:'kiosk'
                 # new_username = prompt('first and last name')
                 new_username = $('.new_resident_name').val()
