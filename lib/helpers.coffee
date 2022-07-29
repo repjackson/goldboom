@@ -230,7 +230,6 @@ if Meteor.isClient
     #     found
     
     
-    Template.registerHelper 'in_dev', () -> Meteor.isDevelopment
     
     Template.registerHelper 'calculated_size', (metric) ->
         # console.log metric
@@ -655,7 +654,6 @@ if Meteor.isClient
             _.sortBy parent["#{@key}"], 'number'
     
     
-    Template.registerHelper 'in_dev', () -> Meteor.isDevelopment
     
     Template.registerHelper 'calculated_size', (metric) ->
         # console.log metric

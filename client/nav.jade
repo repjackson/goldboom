@@ -169,20 +169,20 @@ template(name='footer')
                         with currentUser
                             +boolean_edit key='admin_mode' label='admin mode' icon='shield'
                             
-                    if currentUser.admin_mode
-                        .ui.inline.header 
-                            i.blog.icon
-                            | #{all_docs.count}
-                            |docs
-                        each all_docs 
-                            .ui.image.label 
-                                img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                                |#{title}
-                                // +model_label
-                                |[#{model}]
-                                |#{building_number}
-                                +print_this
-                                |#{when}
+                    // if currentUser.admin_mode
+                    .ui.inline.header 
+                        i.blog.icon
+                        | #{all_docs.count}
+                        |docs
+                    each all_docs 
+                        .ui.image.label 
+                            img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                            |#{title}
+                            // +model_label
+                            |[#{model}]
+                            |#{building_number}
+                            +print_this
+                            |#{when}
                 // if currentUser.admin_mode
                 .column
                     +footer_chat

@@ -10,8 +10,8 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'model_docs','unit', ->
         # @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
-    Template.kiosk_settings.onCreated ->
-        @autorun -> Meteor.subscribe 'kiosk_document', ->
+    # Template.kiosk_settings.onCreated ->
+    #     @autorun -> Meteor.subscribe 'kiosk_document', ->
 
     Template.healthclub.onCreated ->
         @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
@@ -53,8 +53,13 @@ if Meteor.isClient
 
     Template.kiosk_container.events 
         'click .make': ->
-            Docs.insert 
-                model:'kiosk'
+            if Meteor.isDevelopment
+                Docs.insert 
+                    model:'kiosk'
+                    dev:true
+            else 
+                Docs.insert 
+                    model:'kiosk'
         'click .set_home': ->
             found = Docs.findOne
                 model:'kiosk'
@@ -189,22 +194,57 @@ if Meteor.isClient
             # picked_tags.push search_user
             # # $( "p" ).blur();
         , 500)
-        'keyup .add_unit_number': _.throttle((e,t)->
+        # 'keyup .add_unit_number': _.throttle((e,t)->
+        #     kiosk = Docs.findOne model:'kiosk'
+        #     new_unit_number = parseInt($('.add_unit_number').val())
+        #     # if search_user.length > 1
+        #     #     Session.set('current_search_user', search_user)
+        #     if e.which is 13
+        #         Docs.insert 
+        #             model:'unit'
+        #             building_number:parseInt(kiosk.current_building_number)
+        #             unit_number:new_unit_number
+        #         Docs.update kiosk._id,
+        #             $set:
+        #                 current_unit_number:new_unit_number
+        #         # Session.set('current_unit_number', new_unit_number)
+        # , 500)
+        # 'click .add_new_unit': (e)->
+        #     kiosk = Docs.findOne model:'kiosk'
+        #     Docs.update kiosk._id,
+        #         $set:
+        #             adding_unit:true
+        #     $('.add_unit_number').focus()
+        #     # val = Swal.fire({
+        #     #     title: 'Input email address',
+        #     #     input: 'number',
+        #     #     inputLabel: 'Your email address',
+        #     #     inputPlaceholder: 'Enter your email address'
+        #     # })
+        #     # if val
+        #     #     Swal.fire("Entered email: #{val}")
+        #     # `const { value: email } = await Swal.fire({
+        #     #   title: 'Input email address',
+        #     #   input: 'email',
+        #     #   inputLabel: 'Your email address',
+        #     #   inputPlaceholder: 'Enter your email address'
+        #     # })`
+        #     # if email
+        #     #     Swal.fire("Entered email: #{email}")
+        'keyup .add_unit_number': (e)->
             kiosk = Docs.findOne model:'kiosk'
-            new_unit_number = parseInt($('.add_unit_number').val())
-            # if search_user.length > 1
-            #     Session.set('current_search_user', search_user)
-            if e.which is 13
+            val = parseInt($('.add_unit_number').val())
+            console.log val
+            if val.toString().length is 3
                 Docs.insert 
                     model:'unit'
                     building_number:parseInt(kiosk.current_building_number)
-                    unit_number:new_unit_number
+                    unit_number:val
                 Docs.update kiosk._id,
                     $set:
-                        current_unit_number:new_unit_number
-                # Session.set('current_unit_number', new_unit_number)
-        , 500)
-    
+                        current_unit_number:val
+
+
     Template.kiosk_container.helpers
         kiosk_doc: ->
             Docs.findOne
@@ -214,7 +254,8 @@ if Meteor.isClient
                 model:'kiosk'
             kiosk_doc.kiosk_view
     Template.healthclub.helpers
-        kiosk_doc: -> Docs.findOne model:'kiosk'
+        kiosk_doc: -> 
+            Docs.findOne model:'kiosk'
         # selected_building: -> Session.get('current_building_number')
         # selected_unit: -> Session.get('current_unit_number')
         building_button_class: -> 
@@ -464,8 +505,14 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'kiosk_document', ()->
-        Docs.find
-            model:'kiosk'
+        if Meteor.isDevelopment
+            Docs.find
+                model:'kiosk'
+                dev:true
+        else         
+            Docs.find
+                model:'kiosk'
+            
 
     Meteor.methods
         convert_units: ->
