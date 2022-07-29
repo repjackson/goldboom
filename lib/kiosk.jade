@@ -23,20 +23,20 @@ template(name='healthclub')
                             // i.chevron.left.icon
                             i.home.icon
                             // +i name='home'
-                    .ui.big.inline.header
-                        // +i name='front-desk'
-                        // |2959 shadow creek health club check in
-                        | pick building
+                    // .ui.big.inline.header
+                    //     // +i name='front-desk'
+                    //     // |2959 shadow creek health club check in
+                    //     | pick building
                     unless kiosk_doc.current_building_number
                         .ui.big.inline.header
                             +i name='apartment'
-                            // |pick building
+                            |pick building
                     if kiosk_doc.current_building_number
                         .ui.big.inline.header
                             +i name='apartment'
                             |building
                     each building_docs 
-                        .ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
+                        a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
                             if image_id
                                 img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             strong #{building_letter}
@@ -102,18 +102,20 @@ template(name='unit_picker')
             +i name='room'
             | unit
     each unit_docs 
-        .ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
+        a.ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
             // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             // +i name='room'
             |##{unit_number}
     unless kiosk_doc.current_unit_number
-        .ui.horizontal.divider or
-        .ui.inline.header 
-            i.plus.icon
-            |type new unit number:
-        .ui.massive.icon.fluid.input  
+        // .ui.horizontal.divider or
+        .spacer
+        // .ui.inline.header 
+        //     i.plus.icon
+        //     strong OR
+        //     |type new unit number:
+        .ui.massive.icon.fluid.active.input  
             i.large.plus.icon
-            input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
+            input.add_unit_number(type='number' min='100' max='399' placeholder='OR add new unit number')
 
                         
                         

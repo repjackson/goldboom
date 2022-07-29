@@ -273,6 +273,9 @@ if Meteor.isClient
             kiosk_doc = Docs.findOne
                 model:'kiosk'
             kiosk_doc.kiosk_view
+    Template.unit_picker.helpers
+        kiosk_doc: -> 
+            Docs.findOne model:'kiosk'
     Template.healthclub.helpers
         kiosk_doc: -> 
             Docs.findOne model:'kiosk'
@@ -280,7 +283,7 @@ if Meteor.isClient
         # selected_unit: -> Session.get('current_unit_number')
         building_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_building_number is @building_number then 'active massive' else 'big'
+            if kiosk.current_building_number is @building_number then 'black massive' else 'big black basic'
         building_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number
@@ -295,7 +298,7 @@ if Meteor.isClient
     Template.unit_picker.helpers
         unit_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_unit_number is @unit_number then 'active massive' else 'big'
+            if kiosk.current_unit_number is @unit_number then 'black circular massive' else 'big basic circular black'
         unit_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number
