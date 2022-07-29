@@ -285,16 +285,16 @@ template(name='user_notes')
 
             
             
-template(name='user_checkins')
-    .ui.segment.alpha
-        .ui.inline.center.aligned.header 
-            +i name='fitness'
-            |health club check ins
-        if is_staff
-            +checkin_button
-        .ui.list.smallscroll
-            each healthclub_checkins
-                .item #{when}
+// template(name='user_checkins')
+//     .ui.segment.alpha
+//         .ui.inline.center.aligned.header 
+//             +i name='fitness'
+//             |health club check ins
+//         if is_staff
+//             +checkin_button
+//         .ui.list.smallscroll
+//             each healthclub_checkins
+//                 .item #{when}
             
             
             

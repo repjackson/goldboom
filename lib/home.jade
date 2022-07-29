@@ -1,6 +1,6 @@
 template(name='home')
     .ui.stackable.padded.grid
-        .one.column.row
+        .two.column.row
             .center.aligned.column
                 .ui.inline.header 
                     +i name='dumbbell'
@@ -29,7 +29,6 @@ template(name='home')
                             +i name='internal'
                             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |check in as #{currentUser.username}
-        .two.column.row
             .column       
                 +healthclub_rentals
             if currentUser

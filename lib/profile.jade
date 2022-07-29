@@ -84,7 +84,7 @@ template(name='profile')
                     //     +profile_nav_item section='food' icon='food'
                     //     +profile_nav_item section='voting' icon='facebook-like'
                 
-                    .ui.three.column.stackable.grid
+                    .ui.two.column.stackable.grid
                         .column
                             if status 
                                 .ui.label(title='status')
@@ -101,16 +101,13 @@ template(name='profile')
                         //     +membership_status
                         .column
                             +user_unit
-                            .ui.segment.alpha 
-                                |orders
                         .column
-                            +user_models key='guest' icon='check-in-desk'
-                        .column
-                            +user_models key='post' icon='news'
+                            +user_models key='guest' icon='friends'
                         .column
                             +user_models key='space' icon='garage'
                         .column
-                            +user_models key='checkin' icon='checkmark'
+                            +user_checkins
+                            // +user_models key='checkin' icon='checkmark'
                         .column
                             +user_models key='violation' icon='foul'
                         .column
@@ -127,10 +124,21 @@ template(name='profile')
                             +profile_stats
          
          
+template(name='user_checkins')
+    .ui.header 
+        +i name='checkmark'
+        |checkins 
+    .ui.list 
+        each user_checkin_docs 
+            .item #{_when}
+                +bu
+         
+         
 template(name='user_models')
     .ui.segment.alpha
         a.ui.header.zoomer(href="/#{key}s")
             +i name=icon
+            |#{user_model_docs.count}
             |#{key}s
         .ui.large.selection.animated.list 
             each user_model_docs 

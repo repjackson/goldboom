@@ -2,7 +2,7 @@ template(name='nav')
     // #topnav.topnav.ui.attached.borderless.big.four.item.menu.hscroll(class=darkmode_class)
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
-    #topnav.topnav.ui.attached.borderless.large.inverted.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.large.inverted.brown.menu.hscroll
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.icon.zoomer
@@ -82,64 +82,67 @@ template(name='nav')
                     strong #{currentUser.username}
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
-    // if is_connected
-    //     .ui.attached.small.borderless.nine.item.menu.hscroll.secnav
-    //         // a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
-    //         //     // i.large.exchange.icon
-    //         //     +i name='shopping-cart'
-    //         //     span.mobile.hidden products
-    //         a.icon.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
-    //             // i.large.exchange.icon
-    //             +i name='campfire'
-    //             span.mobile.hidden groups
-    //         a.item.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
-    //             +i name='checkmark'
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             span.mobile.hidden checkins
-    //         a.item.zoomer.fly_right.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
-    //             +i name='key'
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             span.mobile.hidden keys
-    //         a.item.zoomer.fly_right.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
-    //             +i name='rent'
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             span.mobile.hidden rentals
-    //         a.item.zoomer.fly_right.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
-    //             +i name='calendar'
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             span.mobile.hidden events
-    //         a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
-    //             +i name='garage'
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             span.mobile.hidden parking
-    //         // a.item.zoomer.fly_right.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
-    //         //     +i name='order-history'
-    //         //     // i.large.users.icon
-    //         //     // if currentUser.show_labels
-    //         //     span.mobile.hidden orders
-    //         // a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
-    //         //     // i.large.exchange.icon
-    //         //     +i name='service-bell'
-    //         //     span.mobile.hidden services
-    //         a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
-    //             +i name='water'
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             span.mobile.hidden readings
-    //         a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
-    //             +i name='news'
-    //             .mobile.hidden posts
-    //         a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
-    //             +i name='tasks'
-    //             .mobile.hidden tasks
-    //             // i.large.users.icon
-    //             // if currentUser.show_labels
-    //             // span.mobile.hidden tasks
+    if is_connected
+        .ui.attached.small.borderless.five.item.inverted.brown.menu.hscroll.secnav
+            // a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
+            //     // i.large.exchange.icon
+            //     +i name='shopping-cart'
+            //     span.mobile.hidden products
+            // a.icon.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
+            //     // i.large.exchange.icon
+            //     +i name='campfire'
+            //     span.mobile.hidden groups
+            a.item.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
+                +i name='checkmark'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden checkins
+            a.item.zoomer.fly_right.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
+                +i name='key'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden keys
+            a.item.zoomer.fly_right.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
+                +i name='rent'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden rentals
+            // a.item.zoomer.fly_right.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+            //     +i name='calendar'
+            //     // i.large.users.icon
+            //     // if currentUser.show_labels
+            //     span.mobile.hidden events
+            // a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
+            //     +i name='garage'
+            //     // i.large.users.icon
+            //     // if currentUser.show_labels
+            //     span.mobile.hidden parking
+            // a.item.zoomer.fly_right.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
+            //     +i name='order-history'
+            //     // i.large.users.icon
+            //     // if currentUser.show_labels
+            //     span.mobile.hidden orders
+            // a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
+            //     // i.large.exchange.icon
+            //     +i name='service-bell'
+            //     span.mobile.hidden services
+            a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
+                +i name='water'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden readings
+            // a.item.zoomer.fly_right.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
+            //     +i name='news'
+            //     .mobile.hidden posts
+            a.item.zoomer.fly_right.clear_search(href="/guests" class="{{isActiveRoute 'guests'}}" title='guests')
+                +i name='friends'
+                .mobile.hidden guests
+            // a.item.zoomer.fly_right.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
+            //     +i name='tasks'
+            //     .mobile.hidden tasks
+                // i.large.users.icon
+                // if currentUser.show_labels
+                // span.mobile.hidden tasks
 
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)

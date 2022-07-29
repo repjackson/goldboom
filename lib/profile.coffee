@@ -47,8 +47,24 @@ if Meteor.isClient
                 
             
     
+    Template.user_checkins.onCreated ->
+        @autorun => @subscribe 'user_checkins', Router.current().params.username, ->
+    Template.user_checkins.helpers 
+        user_checkin_docs: ->
+            Docs.find
+                model:'checkin'
+                resident_username:Router.current().params.username
     Template.profile.onCreated ->
+        Meteor.call 'calc_user_stats', Router.current().params.username, ->
         # Meteor.call 'calc_user_points', Router.current().params.username, ->
+if Meteor.isServer 
+    Meteor.publish 'user_checkins', (username)->
+        user = Meteor.users.findOne username:username
+        if user 
+            Docs.find 
+                model:'checkin'
+                resident_user_id:user._id
+if Meteor.isClient
     Template.profile.onRendered ->
         document.title = "profile";
         Meteor.call 'increment_profile_view', Router.current().params.username, ->

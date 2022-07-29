@@ -14,7 +14,7 @@ Router.route '/frontdesk', -> @render 'frontdesk'
 
 if Meteor.isClient
     Template.checkins.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'checkin', ->
+        @autorun => Meteor.subscribe 'model_docs', 'checkin', 42, ->
     Template.checkin_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
