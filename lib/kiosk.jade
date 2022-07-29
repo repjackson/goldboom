@@ -61,18 +61,15 @@ template(name='healthclub')
          
 template(name='resident_picker')
     .spacer
-    .ui.inline.big.header 
+    .ui.inline.massive.header 
         +i name='groups'
-        |pick/add resident
-    .ui.big.button.add_new_user
-        i.big.user.add.icon
-        |add resident
-    // .ui.big.icon.input
-    //     i.user.add.large.icon
-    //     input(type='text' placeholder='add user...')
+        |select resident
+    // .ui.big.button.add_new_user
+    //     i.big.user.add.icon
+    //     |add resident
     div
     each checkedout_user_docs 
-        a.ui.bigger.image.massive.label.pick_user
+        a.ui.bigger.image.massive.black.basic.label.pick_user
             if image_id
                 img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             else 
@@ -83,6 +80,12 @@ template(name='resident_picker')
                 |#{username}
             // if building_number
             //     |#{building_number}: ##{unit_number}
+    // .spacer
+    .ui.center.aligned.massive.header 
+        |OR add new resident 
+    .ui.massive.fluid.icon.active.input
+        i.user.add.large.icon
+        input(type='text' placeholder='first and last name...')
 
          
                         
