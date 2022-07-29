@@ -45,33 +45,7 @@ template(name='healthclub')
                                 |#{building_number}
                     // div
                     if kiosk_doc.current_building_number
-                        .ui.hidden.divider
-                        unless kiosk_doc.current_unit_number
-                            .ui.big.inline.header
-                                +i name='room'
-                                |select unit
-                            // div
-                            // .ui.button.add_new_unit
-                            //     i.large.plus.icon
-                            //     |add new unit
-                            // if kiosk_doc.adding_unit
-                        if kiosk_doc.current_unit_number
-                            .ui.big.inline.header
-                                +i name='room'
-                                | unit
-                        each unit_docs 
-                            .ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
-                                // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                // +i name='room'
-                                |##{unit_number}
-                        unless kiosk_doc.current_unit_number
-                            .ui.horizontal.divider or
-                            .ui.inline.header 
-                                i.plus.icon
-                                |type new unit number:
-                            .ui.massive.icon.fluid.input  
-                                i.large.plus.icon
-                                input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
+                        +unit_picker
                     // .ui.massive.icon.input
                     //     i.large.building.icon
                     //     input.building_number(type='text' placeholder='building #...')
@@ -79,32 +53,70 @@ template(name='healthclub')
                     //     i.search.icon
                     //     input.search_user(type='text' placeholder='search user...')
                     if kiosk_doc.current_unit_number
-                        .spacer
-                        .ui.inline.big.header 
-                            +i name='groups'
-                            |pick/add resident
-                        .ui.big.button.add_new_user
-                            i.big.user.add.icon
-                            |add resident
-                        // .ui.big.icon.input
-                        //     i.user.add.large.icon
-                        //     input(type='text' placeholder='add user...')
-                        div
-                        each checkedout_user_docs 
-                            a.ui.bigger.image.massive.label.pick_user
-                                if image_id
-                                    img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                else 
-                                    i.large.user.icon
-                                if first_name
-                                    |#{first_name} #{last_name}
-                                else 
-                                    |#{username}
-                                // if building_number
-                                //     |#{building_number}: ##{unit_number}
+                        +resident_picker
                     // +active_checkins
                     if currentUser.admin_mode
                         +footer
+         
+         
+template(name='resident_picker')
+    .spacer
+    .ui.inline.big.header 
+        +i name='groups'
+        |pick/add resident
+    .ui.big.button.add_new_user
+        i.big.user.add.icon
+        |add resident
+    // .ui.big.icon.input
+    //     i.user.add.large.icon
+    //     input(type='text' placeholder='add user...')
+    div
+    each checkedout_user_docs 
+        a.ui.bigger.image.massive.label.pick_user
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            else 
+                i.large.user.icon
+            if first_name
+                |#{first_name} #{last_name}
+            else 
+                |#{username}
+            // if building_number
+            //     |#{building_number}: ##{unit_number}
+
+         
+                        
+template(name='unit_picker')
+    .ui.hidden.divider
+    unless kiosk_doc.current_unit_number
+        .ui.big.inline.header
+            +i name='room'
+            |select unit
+        // div
+        // .ui.button.add_new_unit
+        //     i.large.plus.icon
+        //     |add new unit
+        // if kiosk_doc.adding_unit
+    if kiosk_doc.current_unit_number
+        .ui.big.inline.header
+            +i name='room'
+            | unit
+    each unit_docs 
+        .ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
+            // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            // +i name='room'
+            |##{unit_number}
+    unless kiosk_doc.current_unit_number
+        .ui.horizontal.divider or
+        .ui.inline.header 
+            i.plus.icon
+            |type new unit number:
+        .ui.massive.icon.fluid.input  
+            i.large.plus.icon
+            input.add_unit_number(type='number' min='100' max='399' placeholder='#...')
+
+                        
+                        
 template(name='kiosk_settings')
     .ui.header 
         +i name='self-service-kiosk' classes='ui mini image'

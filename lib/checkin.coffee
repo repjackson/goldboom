@@ -71,7 +71,7 @@ if Meteor.isClient
                 title: "#{resident.first_name} #{resident.last_name} checked in"
                 # text: "point bounty will be held "
                 icon: 'success'
-                timer:5000
+                timer:4000
                 timerProgressBar:true
                 showClass: {popup: 'animate__animated animate__fadeInDown'}
                 hideClass: {popup: 'animate__animated animate__fadeOutUp'}

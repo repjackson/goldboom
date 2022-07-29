@@ -6,13 +6,13 @@ Router.route '/building/:doc_id/edit', -> @render 'building_edit'
 
 if Meteor.isClient
     Template.buildings.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'building', ->
+        @autorun => Meteor.subscribe 'model_docs', 'building', 100, ->
     Template.building_view.onCreated ->
         # @autorun => Meteor.subscribe 'building', Router.current().params.building_number, ->
         # @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number, ->
         # @autorun => Meteor.subscribe 'building_by_number', Router.current().params.building_number, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'unit', ->
+        @autorun => Meteor.subscribe 'model_docs', 'unit', 100, ->
     Template.building_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number

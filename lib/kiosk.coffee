@@ -7,9 +7,28 @@ if Meteor.isClient
     
     Template.kiosk_container.onCreated ->
         @autorun -> Meteor.subscribe 'model_docs','building', ->
-        @autorun -> Meteor.subscribe 'model_docs','unit', ->
+        # @autorun -> Meteor.subscribe 'kiosk_buildings', ->
+            
         # @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
+    Template.unit_picker.onCreated ->
+        @autorun -> Meteor.subscribe 'kiosk_units', ->
+if Meteor.isServer 
+    Meteor.publish 'kiosk_units', ->
+        if Meteor.isDevelopment
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+                    dev:true
+        else 
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+        # if kiosk.current_building_number
+        Docs.find
+            model:'unit'
+            building_number:kiosk.current_building_number
+if Meteor.isClient
     # Template.kiosk_settings.onCreated ->
     #     @autorun -> Meteor.subscribe 'kiosk_document', ->
 
@@ -231,6 +250,7 @@ if Meteor.isClient
         #     # })`
         #     # if email
         #     #     Swal.fire("Entered email: #{email}")
+    Template.unit_picker.events
         'keyup .add_unit_number': (e)->
             kiosk = Docs.findOne model:'kiosk'
             val = parseInt($('.add_unit_number').val())
@@ -261,9 +281,6 @@ if Meteor.isClient
         building_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number is @building_number then 'active massive' else 'big'
-        unit_button_class: -> 
-            kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_unit_number is @unit_number then 'active massive' else 'big'
         building_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number
@@ -275,6 +292,10 @@ if Meteor.isClient
                     model:'building'
                 }, 
                     sort:building_number:1
+    Template.unit_picker.helpers
+        unit_button_class: -> 
+            kiosk = Docs.findOne model:'kiosk'
+            if kiosk.current_unit_number is @unit_number then 'active massive' else 'big'
         unit_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number
@@ -288,6 +309,7 @@ if Meteor.isClient
                     model:'unit'
                     building_number:kiosk.current_building_number
                 }, sort:unit_number:1
+    Template.resident_picker.helpers
         checkedout_user_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             match = {}
