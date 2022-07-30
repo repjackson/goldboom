@@ -110,9 +110,9 @@ if Meteor.isClient
             
     Template.checkins.helpers
         checkin_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'checkin'
-                
+            }, limit:20
                 
                 
 
