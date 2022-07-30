@@ -83,7 +83,7 @@ template(name='nav')
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
     if is_connected
-        .ui.attached.small.borderless.five.item.inverted.brown.menu.hscroll.secnav
+        .ui.attached.small.borderless.six.item.inverted.brown.menu.hscroll.secnav
             // a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
             //     // i.large.exchange.icon
             //     +i name='shopping-cart'
@@ -112,11 +112,11 @@ template(name='nav')
             //     // i.large.users.icon
             //     // if currentUser.show_labels
             //     span.mobile.hidden events
-            // a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
-            //     +i name='garage'
-            //     // i.large.users.icon
-            //     // if currentUser.show_labels
-            //     span.mobile.hidden parking
+            a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
+                +i name='garage'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden parking
             // a.item.zoomer.fly_right.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
             //     +i name='order-history'
             //     // i.large.users.icon
