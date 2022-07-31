@@ -14,7 +14,100 @@ Router.route '/frontdesk', -> @render 'frontdesk'
 
 if Meteor.isClient
     Template.checkins.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'checkin', 42, ->
+        @autorun => Meteor.subscribe 'checkin_tags', 
+            picked_buildings.array()
+            picked_units.array()
+            # picked_residents.array()
+            ->
+        @autorun => Meteor.subscribe 'checkin_docs', 
+            picked_buildings.array()
+            picked_units.array()
+            # picked_residents.array()
+            ->
+
+
+if Meteor.isServer
+    Meteor.publish 'checkin_docs', (
+        picked_tags=[]
+        )->
+        match = {model:'checkin'}
+        if picked_tags.length > 0 then match.tags = $all:picked_tags
+
+        Docs.find match
+    Meteor.publish 'checkin_tags', (
+        picked_buildings
+        picked_units
+        picked_residents
+        picked_tags
+        )->
+        # user = Meteor.users.findOne @userId
+        # current_herd = user.profile.current_herd
+    
+        self = @
+        match = {model:'checkin'}
+    
+        # picked_tags.push current_herd
+        if picked_tags.length > 0
+            match.tags = $all: picked_tags
+            
+        count = Docs.find(match).count()
+        # cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: tags: 1 }
+        #     { $unwind: "$tags" }
+        #     { $group: _id: '$tags', count: $sum: 1 }
+        #     { $match: _id: $nin: picked_tags }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: count }
+        #     { $limit: 20 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # cloud.forEach (tag, i) ->
+    
+        #     self.added 'results', Random.id(),
+        #         name: tag.name
+        #         count: tag.count
+        #         model:'user_tag'
+        #         index: i
+        building_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: building_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$building_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        building_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'building_tag'
+                index: i
+        unit_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: unit_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$unit_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        unit_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'unit_tag'
+                index: i
+
+        self.ready()
+
+if Meteor.isClient
+        # @autorun => Meteor.subscribe 'model_docs', 'checkin', 42, ->
     Template.checkin_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->

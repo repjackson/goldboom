@@ -11,7 +11,7 @@ if Meteor.isClient
             picked_tags.array()
             
     Template.tasks.onCreated ->
-        @autorun => @subscribe 'model_docs', 'task', ->
+        # @autorun => @subscribe 'model_docs', 'task', ->
         @autorun => @subscribe 'tasks',
             picked_tags.array()
             # Session.get('dummy')

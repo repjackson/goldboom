@@ -12,35 +12,9 @@ template(name='users')
                 // if currentUser
                 //     +session_boolean_toggle key='view_friends' label='friends' icon='friends'
                 div
-                +i name='apartment'
-                .ui.inline.header buildings
-                if picked_user_buildings
-                    #clear_buildings.ui.primary.icon.compact.button
-                        i.remove.icon
-                    each picked_user_buildings
-                        .unselect_building.ui.primary.compact.button
-                            strong #{this}
-                each building_results
-                    .ui.compact.button.select_building(class=cloud_tag_class) 
-                        strong #{name}
-                // if picked_user_tags
-                //     // #clear_tags.ui.primary.icon.compact.button
-                //     //     i.remove.icon
-                //     each picked_user_tags
-                //         .unpick_user_tag.ui.primary.compact.button
-                //             strong #{this}
+                +building_facet
                 div
-                +i name='room'
-                .ui.inline.header units
-                if picked_user_units
-                    #clear_units.ui.primary.icon.compact.button
-                        i.remove.icon
-                    each picked_user_units
-                        .unselect_unit.ui.primary.compact.button
-                            strong #{this}
-                each unit_results
-                    .ui.compact.button.select_unit(class=cloud_tag_class) 
-                        strong #{name}
+                +unit_facet
                 // if picked_user_tags
                 //     // #clear_tags.ui.primary.icon.compact.button
                 //     //     i.remove.icon
@@ -56,8 +30,8 @@ template(name='users')
                 //         strong #{name}
                 div
             .twelve.wide.column
-                +session_icon_button key='view_mode' value='grid' icon='th' 
-                +session_icon_button key='view_mode' value='list' icon='list'
+                // +session_icon_button key='view_mode' value='grid' icon='th' 
+                // +session_icon_button key='view_mode' value='list' icon='list'
                 +sort_direction_toggle
                 +session_set key='sort_key' value='createdAt' label='joined' icon='clock'
                 +session_set key='sort_key' value='views' icon='eye'
@@ -81,6 +55,11 @@ template(name='users')
         else 
             .ui.sixteen.wide.center.aligned.column
                 +login
+
+
+
+
+
 
 template(name='add_user_button')
     .ui.icon.button.add_user

@@ -6,13 +6,92 @@ Router.route '/violation/:doc_id/edit', -> @render 'violation_edit'
 
 if Meteor.isClient
     Template.violations.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'violation', ->
+        @autorun => Meteor.subscribe 'violations', 
+            picked_buildings.array()
+            picked_units.array()
+            # picked_residents.array()
+            ->
     Template.violation_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.violation_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+          
+          
+if Meteor.isServer
+    Meteor.publish 'violations', (
+        model='post'
+        picked_buildings
+        picked_units
+        picked_residents
+        picked_tags
+        )->
+        # user = Meteor.users.findOne @userId
+        # current_herd = user.profile.current_herd
+    
+        self = @
+        match = {model:model}
+    
+        # picked_tags.push current_herd
+        if picked_tags.length > 0
+            match.tags = $all: picked_tags
             
-            
+        count = Docs.find(match).count()
+        # cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: tags: 1 }
+        #     { $unwind: "$tags" }
+        #     { $group: _id: '$tags', count: $sum: 1 }
+        #     { $match: _id: $nin: picked_tags }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: count }
+        #     { $limit: 20 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # cloud.forEach (tag, i) ->
+    
+        #     self.added 'results', Random.id(),
+        #         name: tag.name
+        #         count: tag.count
+        #         model:'user_tag'
+        #         index: i
+        building_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: building_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$building_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        building_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'building_tag'
+                index: i
+        unit_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: unit_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$unit_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        unit_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'unit_tag'
+                index: i
+
+        self.ready()
+
+if Meteor.isClient
     Template.violation_owners.onCreated ->
         @autorun => Meteor.subscribe 'violation_owners', Router.current().params.doc_id
     Template.violation_permits.onCreated ->

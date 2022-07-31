@@ -6,6 +6,35 @@ template(name='current_viewers')
         +user_info
 
 
+template(name='building_facet')
+    +i name='apartment'
+    .ui.inline.header buildings
+    if picked_user_buildings
+        #clear_buildings.ui.primary.icon.compact.button
+            i.remove.icon
+        each picked_user_buildings
+            .unselect_building.ui.primary.compact.button
+                strong #{this}
+    each building_results
+        .ui.compact.button.select_building(class=cloud_tag_class) 
+            strong #{name}
+
+
+template(name='unit_facet')
+    +i name='room'
+    .ui.inline.header units
+    if picked_user_units
+        #clear_units.ui.primary.icon.compact.button
+            i.remove.icon
+        each picked_user_units
+            .unselect_unit.ui.primary.compact.button
+                strong #{this}
+    each unit_results
+        .ui.compact.button.select_unit(class=cloud_tag_class) 
+            strong #{name}
+
+
+
 template(name='call_method')
     .ui.button.call
         |call #{name}

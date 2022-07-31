@@ -19,8 +19,46 @@ if Meteor.isClient
                     model:@model
                     published:false
             Router.go "/#{@model}/#{new_id}/edit"
+       
+    Template.building_facet.onCreated ->
+        @autorun => Meteor.subscribe 'building_results', 
             
             
+if Meteor.isServer 
+    Meteor.publish 'building_facet', (
+        picked_buildings
+        )->
+        # user = Meteor.users.findOne @userId
+        # current_herd = user.profile.current_herd
+    
+        self = @
+        match = {}
+    
+        # picked_tags.push current_herd
+        if picked_tags.length > 0
+            match.tags = $all: picked_tags
+            
+        count = Meteor.users.find(match).count()
+
+        building_cloud = Meteor.users.aggregate [
+            { $match: match }
+            { $project: building_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$building_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        building_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'building_tag'
+                index: i
+
+if Meteor.isClient      
     Template.publish_button.events 
         'click .publish': ->
             Swal.fire({

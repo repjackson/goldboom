@@ -264,11 +264,11 @@ Meteor.publish 'facet_sub', (
 
 
 
-Meteor.publish 'model_docs', (model, limit=50)->
+Meteor.publish 'model_docs', (model, limit=100)->
     Docs.find {
         model:model
     }, 
-        # limit:limit
+        limit:limit
         sort:
             _timestamp:-1
             

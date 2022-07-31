@@ -20,13 +20,13 @@ if Meteor.isClient
                 
     Template.user_key.onCreated ->
         @autorun => Meteor.subscribe 'user_key', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'key_key_access'
+        @autorun => Meteor.subscribe 'model_docs', 'key_access'
     Template.user_key.helpers
         key: -> Docs.findOne model:'key'
         viewing_code: -> Session.get 'viewing_code'
         access_log: ->
             Docs.find {
-                model:'key_key_access'
+                model:'key_access'
                 key_id:Docs.findOne(model:'key')._id
             }, sort:_timestamp:-1
     Template.user_key.events
@@ -38,7 +38,7 @@ if Meteor.isClient
                     Session.set 'viewing_code', false
                 , 5000
                 new_id = Docs.insert
-                    model:'key_key_access'
+                    model:'key_access'
                     key_id:Docs.findOne(model:'key')._id
                     owner_user_id:Meteor.users.findOne username:Router.current().params.username
                     owner_username:Router.current().params.username
