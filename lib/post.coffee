@@ -13,7 +13,6 @@ if Meteor.isClient
         @autorun => @subscribe 'post_tag_results',
             picked_tags.array()
             
-    Template.doc_results.onCreated ->
         @autorun => @subscribe 'doc_results',
             picked_tags.array()
             # Session.get('dummy')
@@ -99,17 +98,6 @@ if Meteor.isClient
     
             $('#search').val('')
             Session.set('current_search', null)
-    
-    Template.post_card.helpers
-        five_cleaned_tags: ->
-            # console.log picked_tags.array()
-            # console.log @tags[..5] not in picked_tags.array()
-            # console.log _.without(@tags[..5],picked_tags.array())
-            if picked_tags.array().length
-                _.difference(@tags[..10],picked_tags.array())
-            #     @tags[..5] not in picked_tags.array()
-            else 
-                @tags[..5]
     Template.flat_tag_picker.events
         'click .remove_tag': ->
             # console.log @
@@ -122,73 +110,6 @@ if Meteor.isClient
         'click .pick_flat_tag': -> 
             picked_tags.push @valueOf()
             Session.set('full_doc_id', null)
-    
-            Session.set('loading',true)
-    Template.post_card_big.events
-        'click .minimize': ->
-            Session.set('full_doc_id', null)
-    Template.post_card.helpers
-        upvote_class:->
-            if Meteor.user()
-                if @upvoter_ids and Meteor.userId() in @upvoter_ids
-                    'large'
-                else 
-                    'outline'
-        downvote_class:->
-            if Meteor.user()
-                if @downvoter_ids and Meteor.userId() in @downvoter_ids
-                    'large'
-                else 
-                    'outline'
-    Template.post_card.events
-        'click .vote_up': ->
-            if Meteor.user()
-                Docs.update @_id,
-                    $inc:
-                        points:1
-                        user_points:1
-                    $addToSet:
-                        upvoter_ids:Meteor.userId()
-                        upvoter_usernames:Meteor.user().username
-                    $pull:
-                        downvoter_ids:Meteor.userId()
-                        downvoter_usernames:Meteor.user().username
-            else 
-                Docs.update @_id,
-                    $inc:
-                        points:1
-                        anon_points:1
-            Session.set('dummy', !Session.get('dummy'))
-
-            
-        'click .vote_down': ->
-            if Meteor.user()
-                Docs.update @_id,
-                    $inc:
-                        points:-1
-                        user_points:-1
-                    $addToSet:
-                        downvoter_ids:Meteor.userId()
-                        downvoter_usernames:Meteor.user().username
-                    $pull:
-                        upvoter_ids:Meteor.userId()
-                        upvoter_usernames:Meteor.user().username
-                        
-            else 
-                Docs.update @_id,
-                    $inc:
-                        points:1
-                        anon_points:1
-            Session.set('dummy', !Session.get('dummy'))
-
-        'click .expand': ->
-            Session.set('full_doc_id', @_id)
-            Session.set('dummy', !Session.get('dummy'))
-    
-        'click .pick_flat_tag': (e)-> 
-            picked_tags.push @valueOf()
-            Session.set('full_doc_id', null)
-            $(e.currentTarget).closest('.pick_flat_tag').transition('fly up', 500)
     
             Session.set('loading',true)
     Template.unpick_tag.events
@@ -244,19 +165,6 @@ if Meteor.isClient
         'click .print_me': (e,t)->
             console.log @
             
-    Template.post_card.helpers
-        unescaped: -> 
-            txt = document.createElement("textarea")
-            txt.innerHTML = @rd.selftext_html
-            return txt.value
-    
-            # html.unescape(@rd.selftext_html)
-        unescaped_content: -> 
-            txt = document.createElement("textarea")
-            txt.innerHTML = @rd.media_embed.content
-            return txt.value
-    
-            # html.unescape(@rd.selftext_html)
     Template.post_view.events 
         'click .get_comments':->
             console.log @
@@ -454,38 +362,6 @@ if Meteor.isClient
         #
         
         
-    Template.user_post.onCreated ->
-        if Meteor.user()
-            username = Meteor.user().username
-        else 
-            username = null
-        @autorun => Meteor.subscribe 'overlap', 
-            Router.current().params.username, 
-            username, 
-            picked_tags.array(),
-    Template.user_post.helpers
-        mined_counter: -> Counts.get('mined_counter') 
-        overlap_tags: ->
-            Results.find 
-                model:'overlap_tag'
-
-    Template.doc_results.helpers
-        doc_results: ->
-            current_docs = Docs.find()
-            # if Session.get('selected_doc_id') in current_docs.fetch()
-            # console.log current_docs.fetch()
-            # Docs.findOne Session.get('selected_doc_id')
-            doc_count = Docs.find().count()
-            # if doc_count is 1
-            Docs.find({model:'post'}, 
-                limit:20
-                sort:
-                    points:-1
-                    ups:-1
-                    # "#{Session.get('sort_key')}":Session.get('sort_direction')
-            )
-    
-
 
   
 if Meteor.isServer 

@@ -59,6 +59,7 @@ if Meteor.isClient
                     name:name
                     model:'guest'
                     resident_user_id:@resident_user_id
+                    resident_username:@resident_username
             
         'click .cancel_checkin': ->
             Docs.remove @_id 

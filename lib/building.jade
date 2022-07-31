@@ -43,30 +43,26 @@ template(name='building_item')
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .ui.inline.header #{building_letter}:
         .ui.inline.header ##{building_number}
-        // .ui.inline.header 
-        //     i.cubes.icon
-        //     |units
-        // each units 
+        .ui.inline.header 
+            i.cubes.icon
+            |units
+        each units 
+            .ui.label ##{unit_number}
+        .ui.inline.small.grey.header 
+            i.users.icon
+            |residents
+        each units 
+            .ui.label ##{unit_number}
+        .ui.inline.small.grey.header 
+            i.money.icon
+            |owners
+        // each doc_owners 
         //     .ui.label ##{unit_number}
-        // .ui.inline.small.grey.header 
-        //     i.users.icon
-        //     |residents
-        // each units 
+        .ui.inline.small.grey.header 
+            i.alert.icon
+            |violations
+        // each doc_violations 
         //     .ui.label ##{unit_number}
-        // .ui.inline.small.grey.header 
-        //     i.money.icon
-        //     |owners
-        // each units 
-        //     .ui.label ##{unit_number}
-        // .ui.inline.small.grey.header 
-        //     i.alert.icon
-        //     |violations
-        // each units 
-        //     .ui.label ##{unit_number}
-        // each units 
-        //     .ui.label ##{unit_number}
-        each location_tags 
-            .ui.basic.label #{this}
         if can_edit 
             +edit_button
         // a.ui.icon.button(href="/building/#{building_number}" title='view')

@@ -2,7 +2,7 @@ body {
     /* font-family: 'Raleway', sans-serif !important; */
     /* font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
-    font-family: 'Ubuntu', sans-serif !important;
+    /*font-family: 'Ubuntu', sans-serif !important;*/
     /* font-size: 110% !important; */
     /*line-height: 200% !important;*/
     transition: all 1s !important;
@@ -18,7 +18,7 @@ body {
     height-min: 800px !important;
 }
 .bigger {
-    zoom: 190% !important;
+    zoom: 180% !important;
 }
 
 .pulse {
