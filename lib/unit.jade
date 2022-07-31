@@ -39,11 +39,6 @@ template(name='units')
                 else 
                     i.massive.loading.yin.yang.icon
             
-template(name='bu')
-    .ui.large.label 
-        i.building.icon
-        |##{building_number}
-    .ui.large.label unit ##{unit_number}
     
             
 template(name='unit_item')
@@ -134,8 +129,6 @@ template(name='unit_view')
                     +unit_permits
 
            
-template(name='viewing_info')
-    .ui.header #{views} views
             
 template(name='unit_edit')         
     with current_doc
