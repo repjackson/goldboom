@@ -11,35 +11,49 @@ template(name='users')
                     +add_user_button
                 // if currentUser
                 //     +session_boolean_toggle key='view_friends' label='friends' icon='friends'
+                div
                 +i name='apartment'
+                .ui.inline.header buildings
                 if picked_user_buildings
                     #clear_buildings.ui.primary.icon.compact.button
                         i.remove.icon
                     each picked_user_buildings
                         .unselect_building.ui.primary.compact.button
                             strong #{this}
-                each all_buildings
+                each building_results
                     .ui.compact.button.select_building(class=cloud_tag_class) 
                         strong #{name}
-                if picked_user_tags
-                    // #clear_tags.ui.primary.icon.compact.button
-                    //     i.remove.icon
-                    each picked_user_tags
-                        .unpick_user_tag.ui.primary.compact.button
+                // if picked_user_tags
+                //     // #clear_tags.ui.primary.icon.compact.button
+                //     //     i.remove.icon
+                //     each picked_user_tags
+                //         .unpick_user_tag.ui.primary.compact.button
+                //             strong #{this}
+                div
+                +i name='room'
+                .ui.inline.header units
+                if picked_user_units
+                    #clear_units.ui.primary.icon.compact.button
+                        i.remove.icon
+                    each picked_user_units
+                        .unselect_unit.ui.primary.compact.button
                             strong #{this}
+                each unit_results
+                    .ui.compact.button.select_unit(class=cloud_tag_class) 
+                        strong #{name}
+                // if picked_user_tags
+                //     // #clear_tags.ui.primary.icon.compact.button
+                //     //     i.remove.icon
+                //     each picked_user_tags
+                //         .unpick_user_tag.ui.primary.compact.button
+                //             strong #{this}
                 .ui.large.icon.input
                     i.search.icon
                     input.user_search(type='text' placeholder='search users...' value=current_user_search)
-                i.large.tags.icon
-                each all_user_tags
-                    .ui.compact.button.pick_user_tag(class=cloud_tag_class) 
-                        strong #{name}
-                .ui.inline.header  
-                    // i.big.building.icon
-                    +i name='apartment'
-                    |building
-                each building_tags 
-                    .ui.large.label #{name}
+                // i.large.tags.icon
+                // each all_user_tags
+                //     .ui.compact.button.pick_user_tag(class=cloud_tag_class) 
+                //         strong #{name}
                 div
             .twelve.wide.column
                 +session_icon_button key='view_mode' value='grid' icon='th' 

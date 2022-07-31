@@ -2,6 +2,8 @@
 @picked_user_tags = new ReactiveArray []
 @picked_location_tags = new ReactiveArray []
 @picked_timestamp_tags = new ReactiveArray []
+@picked_buildings = new ReactiveArray []
+@picked_units = new ReactiveArray []
 
 
 

@@ -19,8 +19,9 @@ if Meteor.isClient
             , ->
         @autorun => Meteor.subscribe 'users_pub', 
             Session.get('user_search')
-            picked_user_tags.array()
-            Session.get('view_friends')
+            picked_buildings.array()
+            picked_units.array()
+            # picked_user_tags.array()
             Session.get('sort_key')
             Session.get('sort_direction')
             Session.get('limit')
@@ -32,16 +33,18 @@ if Meteor.isClient
 if Meteor.isServer 
     Meteor.publish 'users_pub', (
         username_search, 
-        picked_user_tags=[], 
-        view_friends=false
+        picked_buildings=[], 
+        picked_units=[], 
+        # picked_user_tags=[], 
+        # view_friends=false
         sort_key='points'
         sort_direction=-1
         limit=50
     )->
         match = {}
-        if view_friends
-            match._id = $in: Meteor.user().friend_ids
-        if picked_user_tags.length > 0 then match.tags = $all:picked_user_tags 
+        # if view_friends
+        #     match._id = $in: Meteor.user().friend_ids
+        if picked_buildings.length > 0 then match.building_number = $all:picked_buildings 
         if username_search
             match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find(match,{ 
@@ -150,8 +153,10 @@ if Meteor.isClient
 
             
     Template.users.helpers
+        building_results: -> Results.find({model:'building_tag'})
+        unit_results: -> Results.find({model:'unit_tag'})
         user_count: ->  Counts.get('user_counter')
-        toggle_friends_class: -> if Session.get('view_friends',true) then 'blue large' else ''
+        # toggle_friends_class: -> if Session.get('view_friends',true) then 'blue large' else ''
         picked_user_tags: -> picked_user_tags.array()
         all_user_tags: -> Results.find model:'user_tag'
         
@@ -199,31 +204,31 @@ if Meteor.isServer
         # current_herd = user.profile.current_herd
     
         self = @
-        match = {model:'user'}
+        match = {}
     
         # picked_tags.push current_herd
         if picked_tags.length > 0
             match.tags = $all: picked_tags
             
         count = Meteor.users.find(match).count()
-        cloud = Meteor.users.aggregate [
-            { $match: match }
-            { $project: tags: 1 }
-            { $unwind: "$tags" }
-            { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: picked_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 20 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        cloud.forEach (tag, i) ->
+        # cloud = Meteor.users.aggregate [
+        #     { $match: match }
+        #     { $project: tags: 1 }
+        #     { $unwind: "$tags" }
+        #     { $group: _id: '$tags', count: $sum: 1 }
+        #     { $match: _id: $nin: picked_tags }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: count }
+        #     { $limit: 20 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # cloud.forEach (tag, i) ->
     
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'user_tag'
-                index: i
+        #     self.added 'results', Random.id(),
+        #         name: tag.name
+        #         count: tag.count
+        #         model:'user_tag'
+        #         index: i
         building_cloud = Meteor.users.aggregate [
             { $match: match }
             { $project: building_number: 1 }
@@ -256,7 +261,7 @@ if Meteor.isServer
             self.added 'results', Random.id(),
                 name: tag.name
                 count: tag.count
-                model:'building_tag'
+                model:'unit_tag'
                 index: i
 
         self.ready()
