@@ -33,7 +33,10 @@ if Meteor.isServer
         match = {model:'checkin'}
         if picked_tags.length > 0 then match.tags = $all:picked_tags
 
-        Docs.find match
+        Docs.find match,
+            limit:20
+            sort:
+                _timestamp:-1
     Meteor.publish 'checkin_tags', (
         picked_buildings
         picked_units
