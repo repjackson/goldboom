@@ -2,7 +2,7 @@ template(name='nav')
     // #topnav.topnav.ui.attached.borderless.big.four.item.menu.hscroll(class=darkmode_class)
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
-    #topnav.topnav.ui.attached.borderless.large.inverted.black.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.large.black.menu.hscroll
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.icon.zoomer
@@ -83,7 +83,7 @@ template(name='nav')
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
     if is_connected
-        .ui.attached.small.borderless.inverted.menu.hscroll.secnav
+        .ui.attached.small.borderless.menu.hscroll.secnav
             a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
                 // i.large.exchange.icon
                 +i name='shopping-cart'

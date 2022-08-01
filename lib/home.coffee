@@ -19,10 +19,18 @@ if Meteor.isServer
         Docs.find 
             model:'rental'
             healthclub:true
+    Meteor.publish 'home_guests', ->
+        Docs.find {
+            model:'guest'
+        }, limit:20
+    
 if Meteor.isClient 
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
+        @autorun => Meteor.subscribe 'home_guests', ->
         @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
+    
+    
     Template.active_checkins.events
         'click .checkout': ->
             Docs.update @_id,
@@ -99,6 +107,12 @@ if Meteor.isClient
             else 
                 Router.go '/login'
                 
+    Template.guest_block.helpers
+        guest_docs: ->
+            Docs.find {
+                model:'guest'
+            }, 
+                sort:_timestamp:-1
     Template.home.helpers
         checkedout_user_docs: ->
             match = {}

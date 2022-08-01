@@ -30,6 +30,8 @@ template(name='home')
                             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |check in as #{currentUser.username}
             .column       
+                +guest_block
+            .column       
                 +healthclub_rentals
             if currentUser
                 .column     
@@ -54,6 +56,16 @@ template(name='home')
         .one.column.row
             .column
                 +staff
+                
+                
+                
+template(name='guest_block')
+    .ui.header 
+        +i name='friends'
+        |guests
+    .ui.selection.animated.list
+        each guest_docs
+            a.item(href="/guest/#{_id}") #{name} #{resident_name} #{_when}
                 
 template(name='healthclub_rentals')
     .ui.header 
