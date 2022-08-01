@@ -15,8 +15,8 @@ template(name='spaces')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             +search_input key='address'
-            +session_icon_button key='view_mode' value='grid' icon='th' 
-            +session_icon_button key='view_mode' value='list' icon='list'
+            // +session_icon_button key='view_mode' value='grid' icon='th' 
+            // +session_icon_button key='view_mode' value='list' icon='list'
             
             +sort_direction_toggle
             // +sort_key_toggle
@@ -29,38 +29,11 @@ template(name='spaces')
             // +session_set key='limit' value=100
 
             if subs_ready
-                if session_is 'view_mode' 'grid'
-                    if one_result
-                        .ui.stackable.centered.one.cards
-                            each space_docs
-                                +space_card
-                    else
-                        .ui.stackable.centered.centered.cards
-                            each space_docs
-                                +space_card
-                else
-                    .ui.divided.selection.animated.list
-                        each space_docs
-                            +space_item
+                .ui.divided.selection.animated.list
+                    each space_docs
+                        +space_item
             
             
-template(name='space_card')
-    a.ui.card.fly_right(href="/space/#{_id}") 
-        if image_id
-            img.ui.image(src="{{c.url image_id }}")
-        .content 
-            .ui.inline.header #{address}
-            // .ui.inline.header ##{space_number}
-            +bu
-            if space_residents
-                +i name='groups'
-                each _residents 
-                    +user_info
-            if for_rent 
-                .ui.basic.label
-                    +i name='clock' 
-                    |for rent
-                    
 template(name='space_item')
     a.ui.item.fly_right(href="/space/#{_id}") 
         if image_id

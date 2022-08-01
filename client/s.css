@@ -1230,7 +1230,7 @@ h1.ui.header{
     height: 0px;
 }
 .secnav {
-    border-radius: 0 0 15px 15px  !important;
+    /*border-radius: 0 0 15px 15px  !important;*/
 }
 .secnav::-webkit-scrollbar {
     display: none;

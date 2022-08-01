@@ -1,10 +1,9 @@
 Router.route '/readings',-> @render 'readings'
-# Router.route '/readings/lower', -> @render 'lower_hot_tub_readings'
+# Router.route '/readings/lower', -> @render 'hot_tub_readings'
 # Router.route '/readings/upper', -> @render 'upper_hot_tub_readings'
 # Router.route '/readings/pool', -> @render 'pool_readings'
 Router.route '/pool_reading/edit/:doc_id', -> @render 'edit_pool_reading'
-Router.route '/lower_hot_tub_reading/edit/:doc_id', -> @render 'edit_lower_hot_tub_reading'
-Router.route '/upper_hot_tub_reading/edit/:doc_id', -> @render 'edit_upper_hot_tub_reading'
+Router.route '/hot_tub_reading/edit/:doc_id', -> @render 'edit_hot_tub_reading'
 
 
 if Meteor.isClient
@@ -16,33 +15,24 @@ if Meteor.isClient
     Template.readings.onCreated ->
         @autorun -> Meteor.subscribe('users_by_role','staff')
 
-        @autorun -> Meteor.subscribe('lower_hot_tub_readings')
+        @autorun -> Meteor.subscribe('hot_tub_readings')
         @autorun -> Meteor.subscribe('upper_hot_tub_readings')
         @autorun -> Meteor.subscribe('pool_readings')
-    Template.lower_hot_tub_readings.onCreated ->
-        @autorun -> Meteor.subscribe('lower_hot_tub_readings')
-    Template.upper_hot_tub_readings.onCreated ->
-        @autorun -> Meteor.subscribe('upper_hot_tub_readings')
+    Template.hot_tub_readings.onCreated ->
+        @autorun -> Meteor.subscribe('hot_tub_readings')
     Template.pool_readings.onCreated ->
         @autorun -> Meteor.subscribe('pool_readings')
     Template.edit_pool_reading.onCreated ->
         @autorun -> Meteor.subscribe('doc', Router.current().params.doc_id)
-    Template.edit_lower_hot_tub_reading.onCreated ->
-        @autorun -> Meteor.subscribe('doc', Router.current().params.doc_id)
-    Template.edit_upper_hot_tub_reading.onCreated ->
+    Template.edit_hot_tub_reading.onCreated ->
         @autorun -> Meteor.subscribe('doc', Router.current().params.doc_id)
 
-    Template.lower_hot_tub_readings.helpers
-        lower_hot_tub_readings: ->
+    Template.hot_tub_readings.helpers
+        hot_tub_readings: ->
             Docs.find {
-                model:'lower_hot_tub_reading'
+                model:'hot_tub_reading'
             }, sort:_timestamp:-1
 
-    Template.upper_hot_tub_readings.helpers
-        upper_hot_tub_readings: ->
-            Docs.find {
-                model:'upper_hot_tub_reading'
-            }, sort:_timestamp:-1
 
     Template.pool_readings.helpers
         pool_readings: ->
@@ -59,10 +49,10 @@ if Meteor.isClient
             id = Docs.insert
                 model: 'upper_hot_tub_reading'
             Router.go "/upper_hot_tub_reading/edit/#{id}"
-        'click #add_lower_hot_tub_reading': ->
+        'click #add_hot_tub_reading': ->
             id = Docs.insert
-                model: 'lower_hot_tub_reading'
-            Router.go "/lower_hot_tub_reading/edit/#{id}"
+                model: 'hot_tub_reading'
+            Router.go "/hot_tub_reading/edit/#{id}"
 
 
 
@@ -220,10 +210,10 @@ if Meteor.isServer
             sort:
                 _timestamp: -1
 
-    Meteor.publish 'lower_hot_tub_readings', ()->
+    Meteor.publish 'hot_tub_readings', ()->
         self = @
         match = {}
-        Docs.find {model:'lower_hot_tub_reading'},
+        Docs.find {model:'hot_tub_reading'},
             limit: 10
             sort:
                 _timestamp: -1

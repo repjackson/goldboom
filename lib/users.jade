@@ -94,23 +94,8 @@ template(name='user_item')
             small @#{username}
             if points
                 .ui.inline.header(style="color:#{current_user.theme_color};") #{points}p
-            // +building_label
-            // +unit_label
             +bu
-            // if one_ratio
-            //     .ui.label(style="color:#{current_user.theme_color};" title='one ratio') {{to_percent one_ratio}}%
-            // if flow_volume
-            //     .ui.label(style="color:#{current_user.theme_color};" title='flow volume') #{flow_volume}
-            // if debit_tags
-            //     div
-            //     i.gift.icon(title='gifted tags')
-            //     each debit_tags
-            //         .ui.small.label #{title}
-            // if credit_tags
-            //     div
-            //     i.chevron.down.icon(title='received gift tags')
-            //     each credit_tags
-            //         .ui.small.label #{title}
+            |joined {{long_date createdAt}}
             if tags 
                 each five_tags 
                     .ui.large.label #{this}

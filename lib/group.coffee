@@ -23,9 +23,6 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.group_section.helpers
-        section_template: -> "group_#{Router.current().params.section}"
-
 
     Template.group_members_small.onCreated ->
         @autorun => Meteor.subscribe 'group_memberships', Router.current().params.doc_id, ->

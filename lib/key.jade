@@ -29,19 +29,9 @@ template(name='keys')
             // +session_set key='limit' value=100
 
             if subs_ready
-                if session_is 'view_mode' 'grid'
-                    if one_result
-                        .ui.stackable.centered.one.cards
-                            each key_docs
-                                +key_card
-                    else
-                        .ui.stackable.centered.centered.cards
-                            each key_docs
-                                +key_card
-                else
-                    .ui.divided.selection.animated.list
-                        each key_docs
-                            +key_item
+                .ui.divided.selection.animated.list
+                    each key_docs
+                        +key_item
             
             
 template(name='key_card')

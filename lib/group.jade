@@ -83,78 +83,55 @@ template(name='group_view')
                     .ui.large.inline.header 
                         //- small viewing
                         | #{title}
-                    +group_nav_item section='dashboard' icon='dashboard'
-                    if has_posts
-                        +group_nav_item section='posts' icon='news'
-                    if has_events
-                        +group_nav_item section='events' icon='calendar'
-                    if has_membership
-                        +group_nav_item section='membership' icon='groups'
-                    +group_nav_item section='related' icon='fork'
-                    if has_products
-                        +group_nav_item section='products' icon='shopping-cart'
-                    
-                    +group_nav_item section='checkins' icon='checkmark'
                 .five.wide.column
-                    +group_sidebar
+                    if image_id 
+                        img.ui.rounded.centered.large.image(src="{{c.url image_id width=800 crop='scale'}}")
+                    if image_id2
+                        img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
+                
+                    if can_edit
+                        a.ui.button(href="/group/#{_id}/edit")
+                            i.pencil.icon
+                            |edit
+                    if youtube_id 
+                        span(title='has youtube video')
+                            +i name='youtube'
+                    if tone 
+                        +tone
+                    +publish_info
+                    if link 
+                        a.ui.big.compact.button.zoomer(href=link target='_window' title=link)
+                            i.external.icon
+                            |link
+                            // |#{hostname}
+                    i.big.eye.icon(title="#{read_user_ids.length} viewers") 
+                    each read_user_ids
+                        +user_avatar
+                    +comments
+                    +author_segment
+                    .ui.inline.header                                
+                        |#{tags.length}
+                        +i name='tags'
+                    span.flat_tags
+                        each tags 
+                            a.ui.label.pick_flat_tag.zoomer(title='browse tag') #{this}
+                    +message_author_button
+                    +group_widget
+                    div
+                    +voting_full
+                    div
+                    if nsfw
+                        .ui.red.large.label
+                            +i name='18-plus'
+                            |nsfw
+                    +favorites
+                    +viewing_info
                     
                 .eleven.wide.column.scrollin
                     div
                     +group_dashboard
     +footer
     
-template(name='group_sidebar')
-    if image_id 
-        img.ui.rounded.centered.large.image(src="{{c.url image_id width=800 crop='scale'}}")
-    if image_id2
-        img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
-
-    if can_edit
-        a.ui.button(href="/group/#{_id}/edit")
-            i.pencil.icon
-            |edit
-    if youtube_id 
-        span(title='has youtube video')
-            +i name='youtube'
-    if tone 
-        +tone
-    +publish_info
-    if facebook_link 
-        a.zoomer(href=facebook_link target='_window' title='visit facebook page')
-            +i name='facebook'
-    if instagram_link
-        a.zoomer(href=instagram_link target='_window' title='visit instagram page')
-            +i name='instagram'
-    if twitter_link
-        a.zoomer(href=twitter_link target='_window' title='visit twitter page')
-            +i name='twitter'
-    if link 
-        a.ui.big.compact.button.zoomer(href=link target='_window' title=link)
-            i.external.icon
-            |link
-            // |#{hostname}
-    i.big.eye.icon(title="#{read_user_ids.length} viewers") 
-    each read_user_ids
-        +user_avatar
-    +comments
-    +author_segment
-    .ui.inline.header                                
-        |#{tags.length}
-        +i name='tags'
-    span.flat_tags
-        each tags 
-            a.ui.label.pick_flat_tag.zoomer(title='browse tag') #{this}
-    +message_author_button
-    +group_widget
-    div
-    +voting_full
-    div
-    if nsfw
-        .ui.red.large.label
-            +i name='18-plus'
-            |nsfw
-    +favorites
-    +viewing_info
         
 template(name='group_membership')
     .ui.header 

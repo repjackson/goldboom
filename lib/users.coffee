@@ -6,13 +6,13 @@ if Meteor.isClient
         
         
     Template.users.onCreated ->
+        Session.setDefault('sort_key', 'createdAt')
         @autorun => Meteor.subscribe 'user_counter', ->
     Template.users.onCreated ->
         Session.set('view_friends', false)
         # @autorun -> Meteor.subscribe('users')
         Session.setDefault 'limit', 42
         Session.setDefault 'sort_key', 'points'
-        Session.setDefault('view_mode','grid')
         @autorun => Meteor.subscribe 'user_tags', 
             picked_user_tags.array()
             Session.get('dummy')

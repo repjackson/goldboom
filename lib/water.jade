@@ -9,8 +9,7 @@ template(name='readings')
                 +i name='user-shield'
                 |staff
             div
-            +lower_hot_tub_readings
-            +upper_hot_tub_readings
+            +hot_tub_readings
             +pool_readings
 
 
@@ -29,26 +28,11 @@ template(name='edit_pool_reading')
                     i.big.checkmark.icon
                 +delete_reading_button
             
-template(name='edit_upper_hot_tub_reading')
-    with current_doc
-        .ui.container
-            h1.ui.header edit upper hot tub reading
-            .ui.small.header keep 6 tabs of bromine in filter system at all times.  if a tab has dissolved to less than half its original size, replace.
-            .ui.form
-                +ph
-                +chlorine
-                +temperature
-                +textarea_edit key='notes' direct=true
-                a.ui.green.fluid.large.button(href='/readings')
-                    i.big.checkmark.icon
-                +delete_reading_button
             
-            
-            
-template(name='edit_lower_hot_tub_reading')
+template(name='edit_hot_tub_reading')
     with current_doc
         .ui.text.container
-            h1.ui.header edit lower hot tub reading
+            h1.ui.header edit hot tub reading
             .ui.form
                 +indoor_chlorine
                 +indoor_ph
@@ -61,13 +45,13 @@ template(name='edit_lower_hot_tub_reading')
             
             
             
-template(name='lower_hot_tub_readings')    
+template(name='hot_tub_readings')    
     //- a.ui.big.button(href='/readings/lower' class="{{isActivePath '/readings/lower'}}") 
     .ui.inline.header
         +icolor name='jacuzzi' 
-        |lower hot tub readings
+        |hot tub readings
     if currentUser
-        #add_lower_hot_tub_reading.ui.big.icon.button
+        #add_hot_tub_reading.ui.big.icon.button
             i.green.plus.icon
     table.ui.striped.very.large.table
         thead
@@ -80,7 +64,7 @@ template(name='lower_hot_tub_readings')
                 th when
                 th actions
         tbody
-            each lower_hot_tub_readings
+            each hot_tub_readings
                 tr
                     td #{ph} 
                     td #{chlorine}
@@ -94,43 +78,6 @@ template(name='lower_hot_tub_readings')
                         | #{when}
                     td 
                         a.ui.large.icon.button(href="/lower_hot_tub_reading/edit/#{_id}")
-                            i.pencil.icon
-
-            
-template(name='upper_hot_tub_readings')   
-    //- a.ui.big.button(href='/readings/upper' class="{{isActivePath '/readings/upper'}}")
-    .ui.inline.header
-        +icolor name='jacuzzi'
-        | upper hot tub readings
-    if currentUser
-        #add_upper_hot_tub_reading.ui.big.icon.button
-            i.green.plus.icon
-    .ui.small.header keep 6 tabs of bromine in filter system at all times.  if a tab has dissolved to less than half its original size, replace.
-    table.ui.striped.very.large.table
-        thead
-            tr
-                th ph
-                th chlorine
-                th temp
-                th notes
-                th staff
-                th when
-                th actions
-        tbody
-            each upper_hot_tub_readings
-                tr
-                    td #{ph} 
-                    td #{chlorine}
-                    td #{temperature}
-                    td #{notes}
-                        .ui.large.label #{chlorine_message}
-                        .ui.large.label #{ph_message}
-                    td 
-                        +author_info
-                    td 
-                        | #{when}
-                    td 
-                        a.ui.large.icon.button(href="/upper_hot_tub_reading/edit/#{_id}")
                             i.pencil.icon
 
             
