@@ -125,9 +125,9 @@ if Meteor.isClient
             doc = Docs.findOne Router.current().params.doc_id
             
             if doc.guest_ids and @_id in doc.guest_ids
-                'big blue'
+                'big blue circular'
             else 
-                ''
+                'circular basic big'
         kiosk: ->
             Docs.findOne model:'kiosk'
             
@@ -147,15 +147,30 @@ if Meteor.isClient
                     $addToSet:
                         guest_ids: @_id
                         guest_names:@name
-        'click .add_guest': ->
+        # 'click .add_guest': ->
+        #     kiosk = Docs.findOne model:'kiosk'
+        #     name = prompt 'first and last name'
+        #     new_id = 
+        #         Docs.insert 
+        #             name:name
+        #             model:'guest'
+        #             resident_user_id:@resident_user_id
+        #             resident_username:@resident_username
+        'keyup .add_guest': (e)->
             kiosk = Docs.findOne model:'kiosk'
-            name = prompt 'first and last name'
-            new_id = 
-                Docs.insert 
-                    name:name
-                    model:'guest'
-                    resident_user_id:@resident_user_id
-                    resident_username:@resident_username
+            val = $('.add_guest').val()
+            console.log val
+            if e.which is 13
+                new_id = 
+                    Docs.insert 
+                        name:val
+                        model:'guest'
+                        resident_user_id:@resident_user_id
+                        resident_username:@resident_username
+                        building_number:@building_number
+                        unit_number:@unit_number
+                $('.add_guest').val('')
+            
             
         'click .cancel_checkin': ->
             Docs.remove @_id 

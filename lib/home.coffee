@@ -22,7 +22,9 @@ if Meteor.isServer
     Meteor.publish 'home_guests', ->
         Docs.find {
             model:'guest'
-        }, limit:20
+        }, 
+            limit:20
+            sort:_timestamp:-1
     
 if Meteor.isClient 
     Template.home.onCreated ->
