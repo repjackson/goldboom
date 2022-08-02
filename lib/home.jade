@@ -1,34 +1,34 @@
 template(name='home')
     .ui.stackable.padded.grid
         .two.column.row
-            .center.aligned.column
-                .ui.inline.header 
-                    +i name='dumbbell'
-                    |healthclub check in
-                if currentUser.admin_mode
-                    +add_user_button
-                    +call_method name='convert_units'
-                unless currentUser
-                    .ui.massive.icon.input.lookup_user
-                        i.search.icon
-                        input.search_user(type='text' placeholder='search user...')
-                    each checkedout_user_docs 
-                        a.ui.big.image.label.pick_user 
-                            img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{username}
-                            |#{building_number}: ##{unit_number}
-                if currentUser 
-                    if currentUser.checkedin 
-                        .ui.header currently checked in
-                        .ui.big.button.checkout
-                            +i name='exit'
-                            img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |check out as #{currentUser.username}
-                    else 
-                        .ui.big.button.checkin 
-                            +i name='internal'
-                            img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |check in as #{currentUser.username}
+            // .center.aligned.column
+            //     .ui.inline.header 
+            //         +i name='dumbbell'
+            //         |healthclub check in
+            //     if currentUser.admin_mode
+            //         +add_user_button
+            //         +call_method name='convert_units'
+            //     unless currentUser
+            //         .ui.massive.icon.input.lookup_user
+            //             i.search.icon
+            //             input.search_user(type='text' placeholder='search user...')
+            //         each checkedout_user_docs 
+            //             a.ui.big.image.label.pick_user 
+            //                 img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            //                 |#{username}
+            //                 |#{building_number}: ##{unit_number}
+            //     if currentUser 
+            //         if currentUser.checkedin 
+            //             .ui.header currently checked in
+            //             .ui.big.button.checkout
+            //                 +i name='exit'
+            //                 img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            //                 |check out as #{currentUser.username}
+            //         else 
+            //             .ui.big.button.checkin 
+            //                 +i name='internal'
+            //                 img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            //                 |check in as #{currentUser.username}
             .column       
                 +guest_block
             .column       
@@ -53,9 +53,9 @@ template(name='home')
                     +latest_checkins
             // .column
             //     +map_view
-        .one.column.row
-            .column
-                +staff
+        // .one.column.row
+        //     .column
+        //         +staff
                 
                 
                 
@@ -63,9 +63,12 @@ template(name='guest_block')
     .ui.header 
         +i name='friends'
         |guests
-    .ui.selection.animated.list
+    .ui.selection.animated.big.list.smallscroll
         each guest_docs
-            a.item(href="/guest/#{_id}") #{name} #{resident_name} #{_when}
+            .item #{name} #{_resident.username} #{_when}
+                +print_this
+                a.ui.circular.icon.button(href="/guest/#{_id}")
+                    i.chevron.right.large.icon
                 
 template(name='healthclub_rentals')
     .ui.header 

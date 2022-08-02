@@ -28,9 +28,17 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'home_guests', ->
-        @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
+        @autorun => Meteor.subscribe 'user_min', Session.get('current_search_user'), ->
     
+if Meteor.isServer
+    Meteor.publish 'user_min', ->
+        Meteor.users.find {},
+            fields:
+                username:1
+                first_name:1
+                last_name:1
     
+if Meteor.isClient
     Template.active_checkins.events
         'click .checkout': ->
             Docs.update @_id,

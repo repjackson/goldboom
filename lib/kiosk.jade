@@ -1,4 +1,5 @@
 template(name='kiosk_container')
+    
     unless subs_ready
         i.massive.refresh.loading.icon
     with kiosk_doc
@@ -56,11 +57,18 @@ template(name='checkin_edit')
 
 
 template(name='healthclub')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .one.column.row
             .center.aligned.column
                 // .ui.segment.alpha
-                .div
+                // .spacer
+                .ui.big.inline.header 
+                    i.grey.mail.icon
+                    |maintenance@boomprop.com
+                .ui.big.inline.header 
+                    i.grey.phone.icon
+                    |303.402.6900
+                .spacer
                     if currentUser
                         a.ui.big.header(href="/" title='go home')
                             // i.chevron.left.icon

@@ -44,26 +44,7 @@ template(name='guest_item')
         .ui.inline.header #{name}
         +when
         +bu
-        // .ui.inline.header 
-        //     i.cubes.icon
-        //     |units
-        // each units 
-        //     .ui.label ##{unit_number}
-        // .ui.inline.small.grey.header 
-        //     i.users.icon
-        //     |residents
-        // each units 
-        //     .ui.label ##{unit_number}
-        // .ui.inline.small.grey.header 
-        //     i.money.icon
-        //     |owners
-        // each units 
-        //     .ui.label ##{unit_number}
-        // .ui.inline.small.grey.header 
-        //     i.alert.icon
-        //     |violations
-        // each units 
-        //     .ui.label ##{unit_number}
+        +verified_label
         // each units 
         //     .ui.label ##{unit_number}
         each location_tags 
@@ -73,6 +54,18 @@ template(name='guest_item')
         // a.ui.icon.button(href="/guest/#{guest_number}" title='view')
         a.ui.icon.button(href="/guest/#{_id}" title='view')
             i.chevron.right.large.icon
+
+template(name='verified_label')
+    if verified 
+        .ui.big.label
+            +i name='id-verified'
+            |verified
+    else
+        .ui.big.label
+            +i name='id-not-verified'
+            |unverified
+    
+
 
 template(name='guest_view')
     with current_doc
@@ -88,6 +81,8 @@ template(name='guest_view')
                     +i name='friends'
                     |guest
                     |#{name}
+                +verified_label
+
                 if can_edit 
                     a.ui.icon.large.compact.button(href="/guest/#{_id}/edit" title='edit')
                         i.large.pencil.icon
