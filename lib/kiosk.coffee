@@ -298,14 +298,24 @@ if Meteor.isClient
             kiosk = Docs.findOne model:'kiosk'
             val = parseInt($('.add_unit_number').val())
             console.log val
-            if val.toString().length is 3
-                Docs.insert 
-                    model:'unit'
-                    building_number:parseInt(kiosk.current_building_number)
-                    unit_number:val
-                Docs.update kiosk._id,
-                    $set:
-                        current_unit_number:val
+            if kiosk.current_building_number is 1
+                if val.toString().length is 4
+                    Docs.insert 
+                        model:'unit'
+                        building_number:parseInt(kiosk.current_building_number)
+                        unit_number:val
+                    Docs.update kiosk._id,
+                        $set:
+                            current_unit_number:val
+            else 
+                if val.toString().length is 3
+                    Docs.insert 
+                        model:'unit'
+                        building_number:parseInt(kiosk.current_building_number)
+                        unit_number:val
+                    Docs.update kiosk._id,
+                        $set:
+                            current_unit_number:val
 
 
     Template.kiosk_container.helpers
