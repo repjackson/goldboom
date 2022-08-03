@@ -42,13 +42,13 @@ body {
 /*@media (prefers-color-scheme: dark) {*/
 /*}*/
 
-/*html.dark-mode {*/
-/*    filter: invert(100%);*/
-/*}*/
+html.dark-mode {
+    filter: invert(100%);
+}
 
-/*html.dark-mode img {*/
-/*    filter: invert(100%);*/
-/*}*/
+html.dark-mode img {
+    filter: invert(100%);
+}
 
 
 .fullheight {
@@ -478,7 +478,7 @@ body {
 }
 
 .invert{
-    /*filter: invert(.9) !important; */
+    filter: invert(.9) !important; 
     /*background-color:black !important; */
      /*height: 100%; */
  } 
@@ -726,13 +726,13 @@ embed {
     color: white !important;
     /* transform: translate(0, 4px); */
 }
-.button.red {
+/*.button.red {*/
     /* background-color: rgba(200, 200, 200, 1) !important; */
     /* box-shadow: 0 1px 1px 1px rgba(50, 50, 100, 0.1) !important; */
-    background-color: darkred !important;
-    color: white !important;
+/*    background-color: darkred !important;*/
+/*    color: white !important;*/
     /* transform: translate(0, 4px); */
-}
+/*}*/
 .button.teal {
     /* background-color: rgba(200, 200, 200, 1) !important; */
     /* box-shadow: 0 1px 1px 1px rgba(50, 50, 100, 0.1) !important; */

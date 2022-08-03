@@ -26,7 +26,6 @@ template(name='healthclub')
                     // i.grey.mail.icon
                     |maintenance@boomprop.com
                 .ui.big.inline.header 
-                    i.grey.phone.icon
                     |303.402.6900
                 .spacer
                 if currentUser
@@ -51,7 +50,7 @@ template(name='healthclub')
                     a.ui.bigger.circular.label.pick_building.zoomer(class=building_button_class)
                         // if image_id
                         //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        | #{building_letter}
+                        | {{lowered building_letter}}
                         // +i name='apartment'
                         unless is building_number 1
                             |#{building_number}

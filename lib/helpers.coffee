@@ -68,6 +68,7 @@ if Meteor.isClient
     	callback : ()-> Router.go "/events"
     })
     
+    Template.registerHelper 'lowered', (string) -> string.toLowerCase() 
     Template.registerHelper 'upper', (string) -> 
         string.charAt(0).toUpperCase() + string.slice(1)
         # input.toUpperCase()
