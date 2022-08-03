@@ -4,27 +4,29 @@ template(name='checkin_edit')
             .column
                 with _resident
                     .ui.massive.inline.header #{first_name} #{last_name}
-                    .ui.big.basic.label 
+                    .ui.big.basic.circular.label 
                         +i name='apartment'
                         |building ##{building_number}
-                    .ui.big.basic.label
+                    .ui.big.basic.circular.label
                         +i name='room'
                         |unit ##{unit_number}
-                    +image_edit key='image_id' label='profile image'
                     if verified 
-                        .ui.big.label 
+                        .ui.large.basic.circular.label 
                             +i name='id-verified'
                             |id verified
                     else 
-                        .ui.big.label 
+                        .ui.large.basic.circular.label 
                             +i name='id-not-verified'
                             |id unverified
-                    if verified 
-                        .ui.big.label 
-                            +i name='id-verified'
-                    else 
-                        .ui.big.label 
-                            +i name='id-not-verified'
+                    +image_edit key='image_id' label='profile image'
+                    // if email_verified 
+                    //     .ui.big.label 
+                    //         +i name='id-verified'
+                    //         |email verified
+                    // else 
+                    //     .ui.big.label 
+                    //         +i name='id-not-verified'
+                    //         |email unverified
                 // +text_edit key='email' label='Email' direct=true
                 .ui.header 
                     +i name='get-along'
