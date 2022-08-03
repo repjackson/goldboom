@@ -18,6 +18,10 @@ template(name='checkin_edit')
                         .ui.large.basic.circular.label 
                             +i name='id-not-verified'
                             |id unverified
+                    a.ui.massive.fluid.green.circular.button.submit_checkin(href="/kiosk")
+                        i.checkmark.big.icon
+                        .ui.inline.inverted.header check in
+                    .ui.hidden.divider
                     +image_edit key='image_id' label='profile image'
                     // if email_verified 
                     //     .ui.big.label 
@@ -39,9 +43,9 @@ template(name='checkin_edit')
                     .ui.big.button.bigger.pick_guest(class=guest_class)
                         i.large.user.icon
                         |#{name}
-                .ui.massive.icon.fluid.active.input  
+                .ui.big.icon.fluid.active.input  
                     i.large.user.plus.icon
-                    input.add_guest(type='text' placeholder='OR add new guest name')
+                    input.add_guest(type='text' placeholder='new guest name')
                 .ui.header purpose (optional)
                 +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='massive circular'
                 +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='massive circular'
@@ -49,13 +53,10 @@ template(name='checkin_edit')
                 +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive circular'
                 +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='massive circular'
                 +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='garden' cl='massive circular'
+                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive circular'
                 .ui.hidden.divider
-                a.ui.massive.fluid.green.circular.button.submit_checkin(href="/kiosk")
-                    i.checkmark.big.icon
-                    .ui.inline.inverted.header check in
-                .ui.hidden.divider
-                .ui.basic.red.circular.fluid.button.cancel_checkin
-                    i.large.cancel.icon
+                .ui.basic.red.circular.fluid.big.compact.button.cancel_checkin
+                    i.big.ban.icon
                     |cancel
 
 

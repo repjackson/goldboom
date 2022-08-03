@@ -233,7 +233,7 @@ Meteor.methods
     
     
     
-    Meteor.methods
+Meteor.methods
     add_facet_filter: (delta_id, key, filter)->
         if key is '_keys'
             new_facet_ob = {

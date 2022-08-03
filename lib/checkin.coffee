@@ -172,15 +172,19 @@ if Meteor.isClient
                 $('.add_guest').val('')
             
             
-        'click .cancel_checkin': ->
+        'click .cancel_checkin': (e)->
             Docs.remove @_id 
-            Router.go "/kiosk"
+            $(e.currentTarget).closest('.grid').transition('fly left',1000)
+            Meteor.setTimeout ->
+                Router.go "/kiosk"
+            , 1000
         'click .submit_checkin': ->
             resident = 
                 Meteor.users.findOne @resident_user_id
                 
             Swal.fire({
-                title: "thanks, #{resident.first_name}, you're checked in"
+                # title: "thanks, #{resident.}, you're checked in"
+                title: "checked in"
                 # text: "point bounty will be held "
                 icon: 'success'
                 timer:4000
@@ -355,19 +359,19 @@ if Meteor.isClient
 
 
     Template.checkin.events
-        'click .cancel_checkin': (e)->
-            session_document = Docs.findOne Router.current().params.doc_id
-            if session_document
-                Docs.remove session_document._id
-            if session_document and session_document.user_id
-                Meteor.users.update session_document.user_id,
-                    $inc:
-                        checkins_without_email_verification:-1
-                        checkins_without_gov_id:-1
-            $(e.currentTarget).closest('.grid').transition('fly_left')
+        # 'click .cancel_checkin': (e)->
+        #     session_document = Docs.findOne Router.current().params.doc_id
+        #     if session_document
+        #         Docs.remove session_document._id
+        #     if session_document and session_document.user_id
+        #         Meteor.users.update session_document.user_id,
+        #             $inc:
+        #                 checkins_without_email_verification:-1
+        #                 checkins_without_gov_id:-1
+        #     $(e.currentTarget).closest('.grid').transition('fly_left')
 
 
-            Router.go "/checkin"
+        #     Router.go "/checkin"
 
         # 'click .recheck_photo': ->
         #     session_document = Docs.findOne Router.current().params.doc_id

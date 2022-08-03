@@ -68,7 +68,13 @@ if Meteor.isClient
     	callback : ()-> Router.go "/events"
     })
     
+    Template.registerHelper 'upper', (string) -> 
+        string.charAt(0).toUpperCase() + string.slice(1)
+        # input.toUpperCase()
     Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
+    Template.registerHelper 'last_initial', (input) -> 
+        if @last_name
+            @last_name[..0].toUpperCase()+'...'
 
     
     Template.registerHelper 'active_term_class', () ->

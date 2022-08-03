@@ -6,10 +6,10 @@ template(name='kiosk_container')
         // .ui.header template #{kiosk_view}
         // +Template.dynamic template=kiosk_view
         +healthclub
-    else 
-        .ui.segment 
-            .ui.button.make
-                |make
+    // else 
+    //     .ui.segment 
+    //         .ui.button.make
+    //             |make
     // +footer
 
 
@@ -21,53 +21,55 @@ template(name='healthclub')
             .center.aligned.column
                 // .ui.segment.alpha
                 // .spacer
+                img.ui.tiny.inline.image(src="/emailqr.png")
                 .ui.big.inline.header 
-                    i.grey.mail.icon
+                    // i.grey.mail.icon
                     |maintenance@boomprop.com
                 .ui.big.inline.header 
                     i.grey.phone.icon
                     |303.402.6900
                 .spacer
-                    if currentUser
-                        a.ui.big.header(href="/" title='go home')
-                            // i.chevron.left.icon
-                            i.home.icon
-                            // +i name='home'
-                    // .ui.big.inline.header
-                    //     // +i name='front-desk'
-                    //     // |2959 shadow creek health club check in
-                    //     | pick building
-                    unless kiosk_doc.current_building_number
-                        .ui.big.inline.header
-                            +i name='apartment'
-                            |pick building
-                    if kiosk_doc.current_building_number
-                        .ui.big.inline.header
-                            +i name='apartment'
-                            |building
-                    each building_docs 
-                        // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
-                        a.ui.bigger.circular.label.pick_building.zoomer(class=building_button_class)
-                            // if image_id
-                            //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            strong #{building_letter}
-                            // +i name='apartment'
-                            unless is building_number 1
-                                |#{building_number}
-                    // div
-                    if kiosk_doc.current_building_number
-                        +unit_picker
-                    // .ui.massive.icon.input
-                    //     i.large.building.icon
-                    //     input.building_number(type='text' placeholder='building #...')
-                    // .ui.massive.icon.input.lookup_user
-                    //     i.search.icon
-                    //     input.search_user(type='text' placeholder='search user...')
-                    if kiosk_doc.current_unit_number
-                        +resident_picker
-                    // +active_checkins
-                    if currentUser.admin_mode
-                        +footer
+                if currentUser
+                    a.ui.big.header(href="/" title='go home')
+                        // i.chevron.left.icon
+                        i.home.icon
+                        // +i name='home'
+                // .ui.big.inline.header
+                //     // +i name='front-desk'
+                //     // |2959 shadow creek health club check in
+                //     | pick building
+                unless kiosk_doc.current_building_number
+                    .ui.big.inline.header
+                        +i name='apartment'
+                        |pick building
+                if kiosk_doc.current_building_number
+                    .ui.big.inline.header
+                        +i name='apartment'
+                        |building
+                each building_docs 
+                    // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
+                    a.ui.bigger.circular.label.pick_building.zoomer(class=building_button_class)
+                        // if image_id
+                        //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        | #{building_letter}
+                        // +i name='apartment'
+                        unless is building_number 1
+                            |#{building_number}
+                // div
+                if kiosk_doc.current_building_number
+                    +unit_picker
+                // .ui.massive.icon.input
+                //     i.large.building.icon
+                //     input.building_number(type='text' placeholder='building #...')
+                // .ui.massive.icon.input.lookup_user
+                //     i.search.icon
+                //     input.search_user(type='text' placeholder='search user...')
+                if kiosk_doc.current_unit_number
+                    +resident_picker
+                // +active_checkins
+                if currentUser.admin_mode
+                    +footer
+                
          
          
 template(name='resident_picker')
@@ -75,19 +77,19 @@ template(name='resident_picker')
     if checkedout_user_docs.count
         .ui.inline.massive.header 
             +i name='groups'
-            |select resident
+            |pick resident
         // .ui.big.button.add_new_user
         //     i.big.user.add.icon
         //     |add resident
         div
         each checkedout_user_docs 
-            a.ui.bigger.image.massive.black.basic.label.pick_user.zoomer
+            a.ui.bigger.image.massive.black.basic.circular.label.pick_user.zoomer.fly_right
                 if image_id
                     img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 else 
                     i.large.user.icon
                 if first_name
-                    |#{first_name} #{last_name}
+                    |{{upper first_name}} #{last_initial}
                 else 
                     |#{username}
                 // if building_number
@@ -95,7 +97,7 @@ template(name='resident_picker')
         .ui.horizontal.divider OR
     .ui.center.aligned.massive.header 
         i.user.plus.icon
-        |add new resident (first and last name)
+        |add resident
     .ui.massive.fluid.icon.active.input
         i.user.add.large.icon
         input.new_resident_name(type='text' placeholder='first and last name...')
@@ -107,7 +109,7 @@ template(name='unit_picker')
     unless kiosk_doc.current_unit_number
         .ui.big.inline.header
             +i name='room'
-            |select unit #
+            |pick unit
         // div
         // .ui.button.add_new_unit
         //     i.large.plus.icon

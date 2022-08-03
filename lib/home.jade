@@ -95,8 +95,7 @@ template(name='active_checkins')
                 a.ui.large.label.fly_down(href="/user/#{resident_username}") 
                     strong #{_resident.first_name}
                     strong #{_resident.last_name}
-                    small #{_resident.username}
-                    small #{_resident.building_number}: ##{_resident.unit_number}
+                +bu
                 | #{_when}
                 .ui.compact.button.checkout 
                     i.sign.out.red.icon

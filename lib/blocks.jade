@@ -19,6 +19,19 @@ template(name='building_facet')
         .ui.compact.button.select_building(class=cloud_tag_class) 
             strong #{name}
 
+template(name='bu')
+    +building_label
+    +unit_label
+
+template(name='building_label')
+    .ui.circular.basic.large.image.label.inline
+        +i name='building'
+        |#{building_number}
+template(name='unit_label')
+    .ui.circular.basic.large.image.label.inline
+        +i name='room'
+        |#{unit_number}
+
 
 template(name='unit_facet')
     +i name='room'
