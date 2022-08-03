@@ -18,7 +18,10 @@ body {
     height-min: 800px !important;
 }
 .bigger {
-    zoom: 180% !important;
+    zoom: 200% !important;
+}
+.bigger1 {
+    zoom: 150% !important;
 }
 
 .pulse {

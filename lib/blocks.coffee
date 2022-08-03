@@ -846,7 +846,7 @@ if Meteor.isClient
             # parent = Template.parentData()
             # console.log parent
             # if parent["#{@key}"] is @value then 'active' else ''
-            if parent["#{@key}"] is @value then "big blue" else ""
+            if parent["#{@key}"] is @value then "massive blue" else "basic"
         
         is_selected: ->
             console.log @key, @value
@@ -868,14 +868,14 @@ if Meteor.isClient
                     $set: "#{@key}": @value
             $(e.currentTarget).closest('.button').transition('pulse',500)
 
-            $('body').toast(
-                showIcon: 'checkmark'
-                message: "#{@key} set to #{@value}"
-                # showProgress: 'bottom'
-                class: 'success'
-                displayTime: 'auto',
-                position: "bottom right"
-            )
+            # $('body').toast(
+            #     showIcon: 'checkmark'
+            #     message: "#{@key} set to #{@value}"
+            #     # showProgress: 'bottom'
+            #     class: 'success'
+            #     displayTime: 'auto',
+            #     position: "bottom right"
+            # )
 
 if Meteor.isClient
     Template.flat_tag_selector.onCreated ->
