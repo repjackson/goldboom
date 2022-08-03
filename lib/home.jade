@@ -29,13 +29,13 @@ template(name='home')
             //                 +i name='internal'
             //                 img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             //                 |check in as #{currentUser.username}
+            if currentUser
+                .column     
+                    +active_checkins
             .column       
                 +guest_block
             .column       
                 +healthclub_rentals
-            if currentUser
-                .column     
-                    +active_checkins
             .column       
                 .ui.header 
                     +i name='info'
@@ -46,16 +46,16 @@ template(name='home')
                 a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
                     +i name='phone'
                     |phone: (303) 545-1787
-            // .column
-                // +latest_activity
+            .column
+                +latest_activity
             if currentUser
                 .column
                     +latest_checkins
             // .column
             //     +map_view
-        // .one.column.row
-        //     .column
-        //         +staff
+        .one.column.row
+            .column
+                +staff
                 
                 
                 
