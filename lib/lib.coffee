@@ -11,11 +11,11 @@ Router.configure
     loadingTemplate: 'splash'
     trackPageView: false
 
-force_loggedin =  ()->
-    if !Meteor.userId()
-        @render 'login'
-    else
-        @next()
+# force_loggedin =  ()->
+#     if !Meteor.userId()
+#         @render 'login'
+#     else
+#         @next()
 
 # Router.onBeforeAction(force_loggedin, {
 #   # only: ['admin']
