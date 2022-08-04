@@ -64,7 +64,7 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
-                +text_edit key='notes'
+                +text_edit key='notes' inline=true label='notes/feedback' icon=chat
                 .ui.hidden.divider
                 a.ui.massive.fluid.basic.green.icon.button.submit_checkin.z(href="/kiosk")
                     i.checkmark.big.icon
