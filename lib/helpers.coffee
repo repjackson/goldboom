@@ -75,7 +75,7 @@ if Meteor.isClient
     Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
     Template.registerHelper 'last_initial', (input) -> 
         if @last_name
-            @last_name[..0].toUpperCase()+'...'
+            @last_name[..0].toUpperCase()+'.'
 
     
     Template.registerHelper 'active_term_class', () ->

@@ -16,7 +16,7 @@ template(name='kiosk_container')
 
 
 template(name='healthclub')
-    .ui.stackable.padded.grid
+    .ui.stackable.padded.grid.z
         .one.column.row
             .center.aligned.column
                 // .ui.segment.alpha
@@ -28,7 +28,7 @@ template(name='healthclub')
                 .ui.big.inline.header 
                     |303.402.6900
                 .spacer
-                if currentUser
+                if currentUser.admin_mode
                     a.ui.big.header(href="/" title='go home')
                         // i.chevron.left.icon
                         i.home.icon
@@ -37,20 +37,23 @@ template(name='healthclub')
                 //     // +i name='front-desk'
                 //     // |2959 shadow creek health club check in
                 //     | pick building
-                unless kiosk_doc.current_building_number
-                    .ui.big.inline.header
-                        +i name='apartment'
-                        |pick building
-                if kiosk_doc.current_building_number
-                    .ui.big.inline.header
-                        +i name='apartment'
-                        |building
+                // unless kiosk_doc.current_building_number
+                //     .ui.big.inline.header
+                //         +i name='apartment'
+                        // |pick building
+                // if kiosk_doc.current_building_number
+                //     .ui.big.inline.header
+                //         +i name='apartment'
+                //         // |building
+                i.building.grey.massive.icon
                 each building_docs 
                     // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
-                    a.ui.bigger.circular.label.pick_building.zoomer(class=building_button_class)
+                    a.ui.bigger.label.pick_building.zoomer(class=building_button_class)
                         // if image_id
+                        // i.building.grey.icon
                         //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         | {{lowered building_letter}}
+                        // i.big.building.icon
                         // +i name='apartment'
                         unless is building_number 1
                             |#{building_number}
@@ -72,17 +75,17 @@ template(name='healthclub')
          
          
 template(name='resident_picker')
-    .spacer
+    // .spacer
     if checkedout_user_docs.count
-        .ui.inline.massive.header 
-            +i name='groups'
-            |pick resident
+        // .ui.inline.massive.header 
+        //     +i name='groups'
+            // |pick resident
         // .ui.big.button.add_new_user
         //     i.big.user.add.icon
         //     |add resident
         div
         each checkedout_user_docs 
-            a.ui.bigger.image.massive.black.basic.circular.label.pick_user.zoomer.fly_right
+            a.ui.bigger.image.massive.black.basic.label.pick_user.zoomer.fly_right
                 if image_id
                     img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 else 
@@ -93,35 +96,36 @@ template(name='resident_picker')
                     |#{username}
                 // if building_number
                 //     |#{building_number}: ##{unit_number}
-        .ui.horizontal.divider OR
-    .ui.center.aligned.massive.header 
-        i.user.plus.icon
-        |add resident
+        // .ui.horizontal.divider OR
+    // .ui.center.aligned.massive.header 
+    //     i.user.plus.icon
+    //     |add resident
     .ui.massive.fluid.icon.active.input
         i.user.add.large.icon
-        input.new_resident_name(type='text' placeholder='first and last name...')
+        input.new_resident_name(type='text' placeholder='add resident...')
 
          
                         
 template(name='unit_picker')
-    .ui.hidden.divider
-    unless kiosk_doc.current_unit_number
-        .ui.big.inline.header
-            +i name='room'
-            |pick unit
-        // div
-        // .ui.button.add_new_unit
-        //     i.large.plus.icon
-        //     |add new unit
-        // if kiosk_doc.adding_unit
-    if kiosk_doc.current_unit_number
-        .ui.big.inline.header
-            +i name='room'
-            | unit
+    // .ui.hidden.divider
+    // unless kiosk_doc.current_unit_number
+    //     .ui.big.inline.header
+    //         +i name='room'
+    //         // |pick unit
+    //     // div
+    //     // .ui.button.add_new_unit
+    //     //     i.large.plus.icon
+    //     //     |add new unit
+    //     // if kiosk_doc.adding_unit
+    // if kiosk_doc.current_unit_number
+    //     .ui.big.inline.header
+    //         +i name='room'
+    //         | unit
     each unit_docs 
         a.ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
             // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             // +i name='room'
+            i.cubes.icon
             |#{unit_number}
     unless kiosk_doc.current_unit_number
         // .ui.horizontal.divider or
@@ -205,7 +209,7 @@ template(name='healthclub_session')
                         i.big.left.chevron.icon
                     if user.kiosk_photo
                         with user
-                            +image_view key='kiosk_photo' label='photo' direct=true classes='small circular shadowed'
+                            +image_view key='kiosk_photo' label='photo' direct=true classes='small shadowed'
                     else
                         //- h1.ui.header click below to add photo
                         //- .ui.header (switch camera to front)

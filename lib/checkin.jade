@@ -1,25 +1,27 @@
 template(name='checkin_edit')         
     with current_doc
-        .ui.padded.one.column.center.aligned.grid
+        .ui.padded.one.column.center.aligned.grid.z
             .column
                 with _resident
-                    .ui.massive.inline.header #{first_name} #{last_name}
-                    .ui.big.basic.circular.label 
-                        +i name='apartment'
-                        |building ##{building_number}
-                    .ui.big.basic.circular.label
-                        +i name='room'
-                        |unit ##{unit_number}
-                    if verified 
-                        .ui.large.basic.circular.label 
-                            +i name='id-verified'
-                            |id verified
-                    else 
-                        .ui.large.basic.circular.label 
-                            +i name='id-not-verified'
-                            |id unverified
-                    .ui.hidden.divider
-                    +image_edit key='image_id' label='profile image'
+                    .ui.massive.inline.header #{first_name} #{last_initial}
+                    .ui.massive.basic.label 
+                        // +i name='apartment'
+                        i.large.building.icon
+                        |#{building_number}
+                    .ui.massive.basic.label
+                        // +i name='room'
+                        i.large.cubes.icon
+                        |#{unit_number}
+                    // if verified 
+                    //     .ui.large.basic.label 
+                    //         +i name='id-verified'
+                    //         |id verified
+                    // else 
+                    //     .ui.large.basic.label 
+                    //         +i name='id-not-verified'
+                    //         |id unverified
+                    // .ui.hidden.divider
+                    // +image_edit key='image_id' label='profile image'
                     // if email_verified 
                     //     .ui.big.label 
                     //         +i name='id-verified'
@@ -29,10 +31,11 @@ template(name='checkin_edit')
                     //         +i name='id-not-verified'
                     //         |email unverified
                 // +text_edit key='email' label='Email' direct=true
-                .ui.header 
-                    +i name='get-along'
+                .ui.inline.header 
+                    // +i name='groups'
+                    i.large.users.icon
                     |guests
-                    small (max 8/month, 3/visit)
+                    // small (max 8/month, 3/visit)
 
                 // .ui.big.button.add_guest.bigger
                 //     i.plus.icon 
@@ -41,27 +44,27 @@ template(name='checkin_edit')
                     .ui.big.button.pick_guest(class=guest_class)
                         i.large.user.icon
                         |#{name}
-                .ui.big.icon.fluid.active.input  
+                .ui.massive.icon.active.input  
                     i.large.user.plus.icon
                     input.add_guest(type='text' placeholder='new guest name')
-                .ui.header
-                    |purpose
-                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='garden' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive circular'
-                +key_value_edit key='checkin_purpose' value='other' label='other' icon='where-to-quest' cl='massive circular'
+                // .ui.inline.header
+                //     |purpose (optional)
+                // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='massive'
+                // // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='garden' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='other' label='other' icon='where-to-quest' cl='massive'
                 .ui.hidden.divider
-                a.ui.massive.fluid.green.circular.button.submit_checkin(href="/kiosk")
-                    i.checkmark.big.icon
-                    .ui.inline.inverted.header complete check in
+                a.ui.massive.fluid.basic.button.submit_checkin(href="/kiosk")
+                    i.checkmark.big.green.icon
+                    // .ui.inline.inverted.header complete check in
                 .ui.hidden.divider
-                .ui.basic.red.circular.fluid.large.compact.button.cancel_checkin
+                .ui.basic.fluid.large.compact.button.cancel_checkin
                     i.big.ban.icon
-                    |cancel
+                    // |cancel
 
 
 
@@ -130,7 +133,7 @@ template(name='checkin')
                         i.left.chevron.icon
                         +i name='user-shield' classes='ui avatar image'
                         |staff
-                img.ui.circular.centered.small.inline.image.shadowed(src="{{c.url 'gold_run_logo' }}")
+                img.ui.centered.small.inline.image.shadowed(src="{{c.url 'gold_run_logo' }}")
         .row
             .sixteen.wide.column
                 .row
@@ -325,13 +328,13 @@ template(name='checkin_view')
                         |cancel
                     if current_resident.kiosk_photo
                         with current_resident
-                            +image_view key='kiosk_photo' label='photo' direct=true classes='medium circular shadowed'
+                            +image_view key='kiosk_photo' label='photo' direct=true classes='medium shadowed'
                     else
                         //- h1.ui.header Please click below to add photo
                         //- .ui.header (switch camera to front)
                         with current_resident
                             +image_edit key='kiosk_photo' label=' ' direct=true
-                    //- img.ui.medium.circular.image(src="{{c.url user.image_id width=500 height=500 gravity='face' crop='fill'}}")
+                    //- img.ui.medium.image(src="{{c.url user.image_id width=500 height=500 gravity='face' crop='fill'}}")
                     //- .meta @#{user.username}
                     //- +camera
                     with current_doc
