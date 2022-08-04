@@ -2,40 +2,40 @@ template(name='nav')
     // #topnav.topnav.ui.attached.borderless.big.four.item.menu.hscroll(class=darkmode_class)
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
-    #topnav.topnav.ui.attached.borderless.large.black.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.big.black.menu.hscroll
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
-            //     i.large.bars.grey.icon.zoomer
+            //     i.large.bars.grey.zoomer
             a.header.item.zoomer(href="/" title='home')
-                +i name='one-ring'
+                +i name='circle outline'
                 // if currentUser.show_labels
                 span.mobile.hidden gold run
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
             //     +i name='line-chart'
-            a.icon.zoomer.item.fly_right(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
+            a.zoomer.item.fly_right(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
                 // i.large.exchange.icon
-                +i name='apartment'
+                +i name='building'
                 span.mobile.hidden buildings
-            a.icon.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
+            a.zoomer.item.fly_right(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                 // i.large.exchange.icon
-                +i name='room'
+                +i name='cube'
                 span.mobile.hidden units
             a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
-                +i name='groups'
+                +i name='users'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden people
                 
-            a.icon.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
+            a.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
-                +i name='foul'
+                +i name='exclamation'
                 span.mobile.hidden violations
             a.zoomer.item.fly_right(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
-                +i name='kindle'
+                +i name='tablet'
                 i.external.icon
                 span.mobile.hidden kiosk
-            // a.icon.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
+            // a.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
             //     .mobile.hidden healthclub
@@ -54,14 +54,14 @@ template(name='nav')
                 i.spinner.big.loading.icon
                 +i name='disconnected'
                 |reconnect
-                i.large.circular.refresh.link.icon.zoomer.reconnect(title='reconnect now')
+                i.large.circular.refresh.link.zoomer.reconnect(title='reconnect now')
         .right.menu
             unless currentUser
                 a.item(href="/register" title='register')
                     +i name='plus'
                     span.mobilehidden register            
                 a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
-                    // i.sign.in.large.green.icon.zoomer
+                    // i.sign.in.large.green.zoomer
                     +i name='internal'
                     span.mobile.hidden login
             if currentUser
@@ -83,14 +83,14 @@ template(name='nav')
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
     if is_connected
-        .ui.attached.small.borderless.menu.hscroll.secnav
-            a.icon.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
+        .ui.attached.borderless.menu.hscroll.secnav
+            a.zoomer.item.fly_right(href="/products" class="{{isActiveRoute 'products'}}" title='products')
                 // i.large.exchange.icon
-                +i name='shopping-cart'
+                +i name='cart'
                 span.mobile.hidden products
-            a.icon.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
+            a.zoomer.item.fly_right(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
                 // i.large.exchange.icon
-                +i name='campfire'
+                +i name='users'
                 span.mobile.hidden groups
             a.item.zoomer.fly_right.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
                 +i name='checkmark'
@@ -103,7 +103,7 @@ template(name='nav')
                 // if currentUser.show_labels
                 span.mobile.hidden keys
             a.item.zoomer.fly_right.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
-                +i name='rent'
+                +i name='clock'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden rentals
@@ -113,18 +113,18 @@ template(name='nav')
                 // if currentUser.show_labels
                 span.mobile.hidden events
             a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
-                +i name='garage'
+                +i name='car'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden parking
             a.item.zoomer.fly_right.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
-                +i name='order-history'
+                +i name='history'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden orders
-            a.icon.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
+            a.zoomer.item.fly_right(href="/services" class="{{isActiveRoute 'services'}}" title='services')
                 // i.large.exchange.icon
-                +i name='service-bell'
+                +i name='bell'
                 span.mobile.hidden services
             a.item.zoomer.fly_right.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
                 +i name='water'
