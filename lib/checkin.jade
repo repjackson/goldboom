@@ -50,14 +50,14 @@ template(name='checkin_edit')
                     input.add_guest(type='text' placeholder='add...')
                 // .ui.inline.header
                 //     |purpose (optional)
-                // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='massive'
-                // // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='garden' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='other' label='other' icon='where-to-quest' cl='massive'
+                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='gym' cl='massive'
+                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='massive'
+                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='water' cl='massive'
+                // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
+                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='massive'
+                +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='plant' cl='massive'
+                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
+                +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
                 .ui.hidden.divider
                 a.ui.massive.fluid.basic.green.button.submit_checkin.z(href="/kiosk")
                     i.checkmark.big.icon
