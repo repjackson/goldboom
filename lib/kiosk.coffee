@@ -111,7 +111,7 @@ if Meteor.isClient
                     )
                 # Session.set('current_building_number', null)
                 # Session.set('current_unit_number',null)
-                $(e.currentTarget).closest('.label').transition('shake', 500)
+                # $(e.currentTarget).closest('.label').transition('shake', 500)
             else 
                 # Session.set('current_building_number', @building_number)
                 # Session.set('current_unit_number',null)
@@ -121,7 +121,7 @@ if Meteor.isClient
                     $unset:
                         current_unit_number:1
                     )
-                $(e.currentTarget).closest('.label').transition('jiggle', 500)
+                # $(e.currentTarget).closest('.label').transition('jiggle', 500)
         'click .pick_unit': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number is @unit_number
@@ -130,14 +130,14 @@ if Meteor.isClient
                     $set:
                         current_unit_number:null
                 )
-                $(e.currentTarget).closest('.label').transition('shake', 500)
+                # $(e.currentTarget).closest('.label').transition('shake', 500)
             else 
                 # Session.set('current_unit_number', @unit_number)
                 Docs.update(kiosk._id, 
                     $set:
                         current_unit_number:@unit_number
                     )
-                $(e.currentTarget).closest('.label').transition('jiggle', 500)
+                # $(e.currentTarget).closest('.label').transition('jiggle', 500)
     Template.resident_picker.events
         'keyup .new_resident_name':(e)->
             if e.which in [13,9]
@@ -355,7 +355,7 @@ if Meteor.isClient
     Template.unit_picker.helpers
         unit_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_unit_number is @unit_number then 'black circular massive' else 'big basic circular black'
+            if kiosk.current_unit_number is @unit_number then 'black massive' else 'big basic black'
         unit_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number

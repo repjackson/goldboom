@@ -676,7 +676,7 @@ embed {
     /* -webkit-border-radius: 5px !important; */
     /* -moz-border-radius: 5px !important; */
     margin:2px !important;
-    opacity:.9 !important;
+    /*opacity:.9 !important;*/
     /*font-family: 'Ubuntu', sans-serif !important;*/
     /*border-radius: 15px !important; */
 }
