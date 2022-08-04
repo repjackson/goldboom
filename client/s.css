@@ -140,7 +140,7 @@ html.dark-mode img {
     background-color:#32CD32 !important;
 }
 .green.button {
-    background-color:#016936 !important;
+    /*background-color:#016936 !important;*/
 }
 .teal.button {
     background-color: #008080 !important;
@@ -163,9 +163,9 @@ html.dark-mode img {
 .grey.button {
     background-color: #A0A0A0 !important;
 }
-.black.button {
-    background-color:#000000 !important;
-}
+/*.black.button {*/
+/*    background-color:#000000 !important;*/
+/*}*/
 
 
 
@@ -722,13 +722,13 @@ embed {
     /*color: white !important;*/
     transform: translate(0, 4px) !important; 
 }
-.button.green {
+/*.button.green {*/
     /* background-color: rgba(200, 200, 200, 1) !important; */
     /* box-shadow: 0 1px 1px 1px rgba(50, 50, 100, 0.1) !important; */
-    background-color: darkgreen !important;
-    color: white !important;
+/*    background-color: darkgreen !important;*/
+/*    color: white !important;*/
     /* transform: translate(0, 4px); */
-}
+/*}*/
 /*.button.red {*/
     /* background-color: rgba(200, 200, 200, 1) !important; */
     /* box-shadow: 0 1px 1px 1px rgba(50, 50, 100, 0.1) !important; */

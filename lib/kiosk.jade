@@ -121,11 +121,11 @@ template(name='unit_picker')
     //     .ui.big.inline.header
     //         +i name='room'
     //         | unit
+    i.cubes.massive.grey.icon
     each unit_docs 
         a.ui.bigger.massive.label.pick_unit.zoomer(class=unit_button_class)
             // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             // +i name='room'
-            i.cubes.icon
             |#{unit_number}
     unless kiosk_doc.current_unit_number
         // .ui.horizontal.divider or
@@ -134,9 +134,9 @@ template(name='unit_picker')
         //     i.plus.icon
         //     strong OR
         //     |type new unit number:
-        .ui.massive.icon.fluid.active.input  
+        .ui.massive.icon.fluid.active.inverted.input  
             i.large.plus.icon
-            input.add_unit_number(type='number' min='100' max='399' placeholder='OR add new unit number')
+            input.add_unit_number(type='number' min='100' max='399' placeholder='new unit #')
 
                         
                         

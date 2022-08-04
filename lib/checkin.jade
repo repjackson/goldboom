@@ -31,6 +31,7 @@ template(name='checkin_edit')
                     //         +i name='id-not-verified'
                     //         |email unverified
                 // +text_edit key='email' label='Email' direct=true
+                div
                 .ui.inline.header 
                     // +i name='groups'
                     i.large.users.icon
@@ -46,7 +47,7 @@ template(name='checkin_edit')
                         |#{name}
                 .ui.massive.icon.active.input  
                     i.large.user.plus.icon
-                    input.add_guest(type='text' placeholder='new guest name')
+                    input.add_guest(type='text' placeholder='new guest')
                 // .ui.inline.header
                 //     |purpose (optional)
                 // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='massive'
@@ -58,8 +59,8 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='where-to-quest' cl='massive'
                 .ui.hidden.divider
-                a.ui.massive.fluid.basic.button.submit_checkin(href="/kiosk")
-                    i.checkmark.big.green.icon
+                a.ui.massive.fluid.basic.green.button.submit_checkin.z(href="/kiosk")
+                    i.checkmark.big.icon
                     // .ui.inline.inverted.header complete check in
                 .ui.hidden.divider
                 .ui.basic.fluid.large.compact.button.cancel_checkin
