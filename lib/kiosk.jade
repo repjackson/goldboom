@@ -48,12 +48,12 @@ template(name='healthclub')
                 i.building.grey.massive.icon
                 each building_docs 
                     // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
-                    a.ui.bigger.label.pick_building.zoomer(class=building_button_class)
+                    a.ui.bigger.basic.label.pick_building.zoomer(class=building_button_class)
                         // if image_id
                         // i.building.grey.icon
                         //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        // | {{lowered building_letter}}
-                        | {{building_letter}}
+                        | {{lowered building_letter}}
+                        // | {{building_letter}}
                         // i.big.building.icon
                         // +i name='apartment'
                         unless is building_number 1
@@ -92,7 +92,7 @@ template(name='resident_picker')
                 else 
                     i.large.user.icon
                 if first_name
-                    |{{upper first_name}} #{last_initial}
+                    |{{first_initial}} #{last_initial}
                 else 
                     |#{username}
                 // if building_number

@@ -184,10 +184,10 @@ if Meteor.isClient
                 
             Swal.fire({
                 # title: "thanks, #{resident.}, you're checked in"
-                title: "checked in"
+                # title: "checked in"
                 # text: "point bounty will be held "
                 icon: 'success'
-                timer:3000
+                timer:2000
                 # background: 'green'
                 timerProgressBar:true
                 showClass: {popup: 'animate__animated animate__fadeInDown'}

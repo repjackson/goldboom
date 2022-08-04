@@ -73,6 +73,9 @@ if Meteor.isClient
         string.charAt(0).toUpperCase() + string.slice(1)
         # input.toUpperCase()
     Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
+    Template.registerHelper 'first_initial', (input) -> 
+        if @first_name
+            @first_name[..0].toUpperCase()+'.'
     Template.registerHelper 'last_initial', (input) -> 
         if @last_name
             @last_name[..0].toUpperCase()+'.'

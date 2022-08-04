@@ -3,15 +3,15 @@ template(name='checkin_edit')
         .ui.padded.one.column.center.aligned.grid.z
             .column
                 with _resident
-                    .ui.massive.inline.header #{first_name} #{last_initial}
-                    .ui.massive.basic.label 
-                        // +i name='apartment'
-                        i.large.building.icon
-                        |#{building_number}
-                    .ui.massive.basic.label
-                        // +i name='room'
-                        i.large.cube.icon
-                        |#{unit_number}
+                    .ui.massive.inline.header #{first_initial} #{last_initial}
+                    // .ui.massive.basic.label 
+                    //     // +i name='apartment'
+                    //     i.large.building.icon
+                    //     |#{building_number}
+                    // .ui.massive.basic.label
+                    //     // +i name='room'
+                    //     i.large.cube.icon
+                    //     |#{unit_number}
                     // if verified 
                     //     .ui.large.basic.label 
                     //         +i name='id-verified'
@@ -47,7 +47,7 @@ template(name='checkin_edit')
                         |#{name}
                 .ui.massive.icon.active.input  
                     i.large.plus.icon
-                    input.add_guest(type='text' placeholder='...')
+                    input.add_guest(type='text' placeholder='add...')
                 // .ui.inline.header
                 //     |purpose (optional)
                 // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='massive'
