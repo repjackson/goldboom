@@ -5,6 +5,9 @@ if Meteor.isClient
         ), name:'kiosk_container'
     
     
+    Template.water_small.onCreated ->
+        @autorun -> Meteor.subscribe 'latest_model_doc','pool_reading', ->
+        @autorun -> Meteor.subscribe 'latest_model_doc','hot_tub_reading', ->
     Template.kiosk_container.onCreated ->
         @autorun -> Meteor.subscribe 'model_docs','building', ->
         # @autorun -> Meteor.subscribe 'kiosk_buildings', ->
@@ -14,6 +17,12 @@ if Meteor.isClient
     Template.unit_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_units', ->
 if Meteor.isServer 
+    Meteor.publish 'latest_model_doc', (model)->
+        Docs.find {
+            model:model
+        }, 
+            limit:1
+            sort:_timestamp:-1
     Meteor.publish 'kiosk_units', ->
         if Meteor.isDevelopment
             kiosk = 
@@ -333,6 +342,13 @@ if Meteor.isClient
     Template.unit_picker.helpers
         kiosk_doc: -> 
             Docs.findOne model:'kiosk'
+    Template.water_small.helpers
+        latest_pool_reading: ->
+            Docs.findOne
+                model:'pool_reading'
+        latest_hot_tub_reading: ->
+            Docs.findOne
+                model:'hot_tub_reading'
     Template.healthclub.helpers
         kiosk_doc: -> 
             Docs.findOne model:'kiosk'

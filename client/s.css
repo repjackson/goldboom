@@ -18,7 +18,7 @@ body {
     height-min: 800px !important;
 }
 .bigger {
-    zoom: 250% !important;
+    zoom: 150% !important;
 }
 .z {
     zoom: 150% !important;
@@ -127,42 +127,42 @@ html.dark-mode img {
   width: 1px !important;
 }
 
-.red.button {
+/*.red.button {*/
     /*background-color:#DB2828 !important;*/
-}
-.orange.button {
-    background-color:#FE9A76 !important;
-}
-.yellow.button {
-    background-color:#FFD700 !important;
-}
-.olive.button {
-    background-color:#32CD32 !important;
-}
-.green.button {
+/*}*/
+/*.orange.button {*/
+/*    background-color:#FE9A76 !important;*/
+/*}*/
+/*.yellow.button {*/
+/*    background-color:#FFD700 !important;*/
+/*}*/
+/*.olive.button {*/
+/*    background-color:#32CD32 !important;*/
+/*}*/
+/*.green.button {*/
     /*background-color:#016936 !important;*/
-}
-.teal.button {
-    background-color: #008080 !important;
-}
-.blue.button , .blue.segment{
-    background-color: #0E6EB8 !important;
-}
-.violet.button {
-    background-color:#EE82EE !important;
-}
-.purple.button {
-    background-color:#B413EC !important;
-}
-.pink.button {
-    background-color: #FF1493 !important;
-}
-.brown.button {
-    background-color:#A52A2A !important;
-}
-.grey.button {
-    background-color: #A0A0A0 !important;
-}
+/*}*/
+/*.teal.button {*/
+/*    background-color: #008080 !important;*/
+/*}*/
+/*.blue.button , .blue.segment{*/
+/*    background-color: #0E6EB8 !important;*/
+/*}*/
+/*.violet.button {*/
+/*    background-color:#EE82EE !important;*/
+/*}*/
+/*.purple.button {*/
+/*    background-color:#B413EC !important;*/
+/*}*/
+/*.pink.button {*/
+/*    background-color: #FF1493 !important;*/
+/*}*/
+/*.brown.button {*/
+/*    background-color:#A52A2A !important;*/
+/*}*/
+/*.grey.button {*/
+/*    background-color: #A0A0A0 !important;*/
+/*}*/
 /*.black.button {*/
 /*    background-color:#000000 !important;*/
 /*}*/
@@ -217,7 +217,7 @@ html.dark-mode img {
 }
 
 .rounded {
-    /*border-radius: 15px !important; */
+    border-radius: 15px !important; 
 }
 
 .spacer{
@@ -410,7 +410,7 @@ html.dark-mode img {
 .accordion {
     /*border-radius: 15px !important; */
     /* opacity: .8 !important; */
-    background-color: rgba(255,255,255, 0.3) !important;
+    /*background-color: rgba(255,255,255, 0.3) !important;*/
     padding:5px !important;
 }
 
@@ -464,7 +464,7 @@ html.dark-mode img {
     /*color: black !important;*/
     /*background-color: darkgrey !important; */
     /*box-shadow: inset 5px 5px 10px #333 !important; */
-    transition: all .5s ease !important;
+    transition: all 1s ease !important;
     transform: translate(0, 4px) !important; 
     
     /*border-radius: 15px !important;*/
@@ -678,7 +678,7 @@ embed {
     margin:2px !important;
     /*opacity:.9 !important;*/
     /*font-family: 'Ubuntu', sans-serif !important;*/
-    /*border-radius: 15px !important; */
+    border-radius: 20px !important; 
 }
 
 .disabled, .disabled.segment, .disabled.label{

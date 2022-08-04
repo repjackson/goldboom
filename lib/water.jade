@@ -17,7 +17,7 @@ template(name='edit_pool_reading')
     with current_doc
         .ui.container
             .ui.inline.center.aligned.header
-                +icolor name='swimming' classes='ui avatar image'
+                +i name='swimming' classes='ui avatar image'
                 |edit pool reading
             .ui.form
                 +pool_ph
@@ -48,7 +48,7 @@ template(name='edit_hot_tub_reading')
 template(name='hot_tub_readings')    
     //- a.ui.big.button(href='/readings/lower' class="{{isActivePath '/readings/lower'}}") 
     .ui.inline.header
-        +icolor name='jacuzzi' 
+        +i name='jacuzzi' 
         |hot tub readings
     if currentUser
         #add_hot_tub_reading.ui.big.icon.button
@@ -85,7 +85,7 @@ template(name='hot_tub_readings')
 template(name='pool_readings') 
     //- a.ui.big.button(href='/readings/pool' class="{{isActivePath '/readings/pool'}}")
     .ui.inline.header 
-        +icolor name='swimming'
+        +i name='swimming'
         |pool readings
     if currentUser
         #add_pool_reading.ui.big.icon.button

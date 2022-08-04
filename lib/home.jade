@@ -82,14 +82,14 @@ template(name='healthclub_rentals')
             .ui.inline.header #{title}
             .ui.button.checkout_rental
                 i.big.checkmark.icon
-                |checkout
+                // |checkout
         
                 
 template(name='active_checkins')
     .ui.header 
         +i name='clock'
         |active checkins
-    .ui.big.divided.list
+    .ui.big.divided.animated.selection.list
         each active_checkin_docs 
             .item(href="/checkin/#{_id}" title=resident_user_id)
                 a.ui.large.label.fly_down(href="/user/#{resident_username}") 
@@ -99,7 +99,7 @@ template(name='active_checkins')
                 | #{_when}
                 .ui.compact.button.checkout 
                     i.sign.out.red.icon
-                    |checkout
+                    // |checkout
                 // |#{string}
                 
 template(name='latest_activity')

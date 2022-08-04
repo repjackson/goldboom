@@ -66,15 +66,27 @@ template(name='healthclub')
                 if currentUser.admin_mode
                     +footer
                 unless current_building_number
+                    +water_small
                     .ui.big.inline.header 
                         // i.grey.mail.icon
                         |maintenance@boomprop.com
-                    .ui.big.inline.header 
+                    .ui.big.header 
                         |303.402.6900
                     img.ui.small.inline.image(src="/emailqr.png")
                     // .spacer
                 
          
+         
+template(name='water_small')
+    with latest_pool_reading
+        .ui.header pool 
+            small #{temperature}deg #{ph}ph #{chlorine}chlorine
+            |#{_when}
+    with latest_hot_tub_reading
+        .ui.header 
+            |hot tub
+            small #{temperature}deg #{ph}ph #{chlorine}chlorine
+            |#{_when}
          
 template(name='resident_picker')
     // .spacer
