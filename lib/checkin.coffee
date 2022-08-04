@@ -358,94 +358,94 @@ if Meteor.isClient
         # , 4000
 
 
-    Template.checkin.events
-        # 'click .cancel_checkin': (e)->
-        #     session_document = Docs.findOne Router.current().params.doc_id
-        #     if session_document
-        #         Docs.remove session_document._id
-        #     if session_document and session_document.user_id
-        #         Meteor.users.update session_document.user_id,
-        #             $inc:
-        #                 checkins_without_email_verification:-1
-        #                 checkins_without_gov_id:-1
-        #     $(e.currentTarget).closest('.grid').transition('fly_left')
+    # Template.checkin.events
+    #     # 'click .cancel_checkin': (e)->
+    #     #     session_document = Docs.findOne Router.current().params.doc_id
+    #     #     if session_document
+    #     #         Docs.remove session_document._id
+    #     #     if session_document and session_document.user_id
+    #     #         Meteor.users.update session_document.user_id,
+    #     #             $inc:
+    #     #                 checkins_without_email_verification:-1
+    #     #                 checkins_without_gov_id:-1
+    #     #     $(e.currentTarget).closest('.grid').transition('fly_left')
 
 
-        #     Router.go "/checkin"
+    #     #     Router.go "/checkin"
 
-        # 'click .recheck_photo': ->
-        #     session_document = Docs.findOne Router.current().params.doc_id
-        #     if session_document and session_document.user_id
-        #         user = Meteor.users.findOne session_document.user_id
-        #         Meteor.call 'image_check', user
-        #         Meteor.call 'staff_government_id_check', user
-        #
-        #
-        #
-        # 'click .recheck': ->
-        #     console.log @
-        #     Meteor.call 'run_user_checks', @
-        #     Meteor.call 'member_waiver_signed', @
-        #     Meteor.call 'rules_and_regulations_signed', @
+    #     # 'click .recheck_photo': ->
+    #     #     session_document = Docs.findOne Router.current().params.doc_id
+    #     #     if session_document and session_document.user_id
+    #     #         user = Meteor.users.findOne session_document.user_id
+    #     #         Meteor.call 'image_check', user
+    #     #         Meteor.call 'staff_government_id_check', user
+    #     #
+    #     #
+    #     #
+    #     # 'click .recheck': ->
+    #     #     console.log @
+    #     #     Meteor.call 'run_user_checks', @
+    #     #     Meteor.call 'member_waiver_signed', @
+    #     #     Meteor.call 'rules_and_regulations_signed', @
 
-        'click .add_guest': ->
-            # console.log @
-            session_document = Docs.findOne Router.current().params.doc_id
-            new_guest_id =
-                Docs.insert
-                    model:'guest'
-                    session_id: session_document._id
-                    resident_id: session_document.user_id
-                    resident: session_document.resident_username
-            # Session.set 'displaying_profile', null
-            #
-            Router.go "/add_guest/#{new_guest_id}"
+    #     'click .add_guest': ->
+    #         # console.log @
+    #         session_document = Docs.findOne Router.current().params.doc_id
+    #         new_guest_id =
+    #             Docs.insert
+    #                 model:'guest'
+    #                 session_id: session_document._id
+    #                 resident_id: session_document.user_id
+    #                 resident: session_document.resident_username
+    #         # Session.set 'displaying_profile', null
+    #         #
+    #         Router.go "/add_guest/#{new_guest_id}"
 
-        'click .sign_rules': ->
-            session_document = Docs.findOne Router.current().params.doc_id
-            new_id = Docs.insert
-                model:'rules_and_regs_signing'
-                session_id: session_document._id
-                resident_id: session_document.user_id
-                resident: session_document.resident_username
-            Router.go "/sign_rules/#{new_id}/#{session_document.resident_username}"
-            # Session.set 'displaying_profile',null
+    #     'click .sign_rules': ->
+    #         session_document = Docs.findOne Router.current().params.doc_id
+    #         new_id = Docs.insert
+    #             model:'rules_and_regs_signing'
+    #             session_id: session_document._id
+    #             resident_id: session_document.user_id
+    #             resident: session_document.resident_username
+    #         Router.go "/sign_rules/#{new_id}/#{session_document.resident_username}"
+    #         # Session.set 'displaying_profile',null
 
 
-        'click .sign_guidelines': ->
-            session_document = Docs.findOne Router.current().params.doc_id
-            new_id = Docs.insert
-                model:'member_guidelines_signing'
-                session_id: session_document._id
-                resident_id: session_document.user_id
-                resident: session_document.resident_username
-            Router.go "/sign_guidelines/#{new_id}/#{session_document.resident_username}"
-            # Session.set 'displaying_profile',null
+    #     'click .sign_guidelines': ->
+    #         session_document = Docs.findOne Router.current().params.doc_id
+    #         new_id = Docs.insert
+    #             model:'member_guidelines_signing'
+    #             session_id: session_document._id
+    #             resident_id: session_document.user_id
+    #             resident: session_document.resident_username
+    #         Router.go "/sign_guidelines/#{new_id}/#{session_document.resident_username}"
+    #         # Session.set 'displaying_profile',null
 
-        'click .add_recent_guest': ->
-            current_session = Docs.findOne
-                model:'checkin'
-                current:true
-            Docs.update current_session._id,
-                $addToSet:guest_ids:@_id
+    #     'click .add_recent_guest': ->
+    #         current_session = Docs.findOne
+    #             model:'checkin'
+    #             current:true
+    #         Docs.update current_session._id,
+    #             $addToSet:guest_ids:@_id
 
-        'click .remove_guest': ->
-            current_session = Docs.findOne
-                model:'checkin'
-                current:true
-            # console.log current_session
-            Docs.update current_session._id,
-                $pull:guest_ids:@_id
+    #     'click .remove_guest': ->
+    #         current_session = Docs.findOne
+    #             model:'checkin'
+    #             current:true
+    #         # console.log current_session
+    #         Docs.update current_session._id,
+    #             $pull:guest_ids:@_id
 
-        'click .toggle_adding_guest': ->
-            Session.set 'adding_guest', true
-            Session.set 'timer_engaged', false
+    #     'click .toggle_adding_guest': ->
+    #         Session.set 'adding_guest', true
+    #         Session.set 'timer_engaged', false
 
-        'click .submit_checkin': (e,t)->
-            Meteor.call 'submit_checkin'
+    #     'click .submit_checkin': (e,t)->
+    #         Meteor.call 'submit_checkin'
 
-        'click .cancel_auto_checkin': (e,t)->
-            Session.set 'timer_engaged',false
+    #     'click .cancel_auto_checkin': (e,t)->
+    #         Session.set 'timer_engaged',false
 
     Template.checkin.helpers
         timer_engaged: ->

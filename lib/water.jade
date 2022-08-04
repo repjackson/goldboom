@@ -1,6 +1,6 @@
 template(name='readings')
     .ui.padded.grid 
-        .sixteen.wide.column
+        .eight.wide.column
             .ui.inline.header 
                 +i name='water'
                 |water readings
@@ -10,6 +10,7 @@ template(name='readings')
                 |staff
             div
             +hot_tub_readings
+        .eight.wide.column
             +pool_readings
 
 
@@ -64,7 +65,7 @@ template(name='hot_tub_readings')
                 .ui.large.label #{chlorine_message}
                 +author_info
                 | #{when}
-                a.ui.large.icon.button(href="/hot_tub_reading/edit/#{_id}")
+                a.ui.large.icon.button.inline(href="/hot_tub_reading/edit/#{_id}")
                     i.pencil.icon
 
             

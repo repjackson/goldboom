@@ -53,7 +53,10 @@ template(name='healthclub')
                             |#{building_number}
                 // div
                 if kiosk_doc.current_building_number
-                    +unit_picker
+                    if is kiosk_doc.current_building_number 2959
+                        +hc_rental
+                    else 
+                        +unit_picker
                 // .ui.massive.icon.input
                 //     i.large.building.icon
                 //     input.building_number(type='text' placeholder='building #...')
@@ -70,22 +73,31 @@ template(name='healthclub')
                     .ui.big.inline.header 
                         // i.grey.mail.icon
                         |maintenance@boomprop.com
+                    img.ui.tiny.inline.image(src="/emailqr.png")
                     .ui.big.header 
                         |303.402.6900
-                    img.ui.small.inline.image(src="/emailqr.png")
                     // .spacer
                 
          
+template(name='hc_rental')
+    .ui.header 
+        |vendors
+    
+    .ui.header
+        |rentals
+    .ui.list 
+        each rental_item 
+            .item #{title}
          
 template(name='water_small')
     with latest_pool_reading
         .ui.header pool 
-            small #{temperature}deg #{ph}ph #{chlorine}chlorine
+            small #{temperature}deg #{ph}ph #{chlorine}chl
             |#{_when}
     with latest_hot_tub_reading
         .ui.header 
             |hot tub
-            small #{temperature}deg #{ph}ph #{chlorine}chlorine
+            small #{temperature}deg #{ph}ph #{chlorine}chl
             |#{_when}
          
 template(name='resident_picker')

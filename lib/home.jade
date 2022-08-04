@@ -32,8 +32,8 @@ template(name='home')
             if currentUser
                 .column     
                     +active_checkins
-            .column       
-                +guest_block
+                .column       
+                    +guest_block
             .column       
                 +healthclub_rentals
             .column       
@@ -100,7 +100,8 @@ template(name='active_checkins')
                 .ui.compact.button.checkout 
                     i.sign.out.red.icon
                     // |checkout
-                // |#{string}
+                
+                .ui.label #{notes}
                 
 template(name='latest_activity')
     .ui.header 
