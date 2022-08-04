@@ -178,6 +178,16 @@ if Meteor.isClient
             Meteor.setTimeout ->
                 Router.go "/kiosk"
             , 1000
+        'click .add_note': (e)->
+            new_id = 
+                Docs.insert 
+                    model:'post'
+                    building_number:@building_number
+                    unit_number:@unit_number
+            $(e.currentTarget).closest('.grid').transition('fly left',1000)
+            Meteor.setTimeout ->
+                Router.go "/post/#{new_id}/edit"
+            , 1000
         'click .submit_checkin': ->
             resident = 
                 Meteor.users.findOne @resident_user_id

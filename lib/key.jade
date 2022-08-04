@@ -38,9 +38,7 @@ template(name='keys')
             
 template(name='key_item')
     a.ui.item.fly_right(href="/key/#{_id}") 
-        if image_id
-            img.ui.tiny.inline.image(src="{{c.url image_id }}")
-        .ui.inline.header #{address}
+        // .ui.inline.header #{address}
         // .ui.inline.header ##{key_number}
         if key_residents
             .ui.large.label
@@ -54,6 +52,9 @@ template(name='key_item')
         else
             .ui.green.label 
                 |checked in
+        if currentUser.admin_mode
+            .ui.big.label #{keytag_number}
+                
         +bu                    
 
 template(name='key_view')
@@ -75,6 +76,8 @@ template(name='key_view')
                 // +text_view key='address' label='address' icon='marker'
                 +number_view key='unit_number' label='unit number' icon='room'
                 +number_view key='building_number' label='building number' icon='apartment'
+                if currentUser.admin_mode
+                    .ui.big.label #{keytag_number}
             .column
                 if can_edit 
                     a.ui.large.compact.button(href="/key/#{_id}/edit")
@@ -110,7 +113,10 @@ template(name='key_edit')
                 .ui.header editing key ##{building_number} ##{unit_number}
                 // +text_edit key='address' label='address' icon='marker'
                 +number_edit key='unit_number' label='unit number' icon='cube'
+                div
                 +number_edit key='building_number' label='building number' icon='building'
+                div
+                +number_edit key='keytag_number' label='key tag number' icon='key'
             .column
                 a.ui.big.fluid.icon.green.button(href="/key/#{_id}")
                     i.checkmark.big.icon

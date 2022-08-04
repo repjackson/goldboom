@@ -24,9 +24,10 @@ if Meteor.isClient
         @render 'post_view'
         ), name:'post_view'
     Router.route '/post/:doc_id/edit', (->
-        @layout 'layout'
+        @layout 'mlayout'
         @render 'post_edit'
         ), name:'post_edit'
+        
     Router.route '/posts', (->
         @layout 'layout'
         @render 'posts'
@@ -40,6 +41,29 @@ if Meteor.isClient
 
     Template.post_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+    Template.post_edit.events
+        'click .submit_post': ->
+            Docs.update @_id,
+                submitted:true
+            Router.go "/kiosk"
+            Swal.fire({
+                title: "thanks for your feedback"
+                # title: "checked in"
+                # text: "point bounty will be held "
+                icon: 'success'
+                timer:2000
+                # background: 'green'
+                timerProgressBar:true
+                showClass: {popup: 'animate__animated animate__fadeInDown'}
+                hideClass: {popup: 'animate__animated animate__fadeOutUp'}
+                showConfirmButton:false
+                # confirmButtonText: 'publish'
+                # confirmButtonColor: 'green'
+                # showCancelButton: true
+                # cancelButtonText: 'cancel'
+                # reverseButtons: true
+            })
+
     Template.post_edit.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.post_view.onRendered ->

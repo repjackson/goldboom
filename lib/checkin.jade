@@ -64,21 +64,25 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
-                +text_edit key='notes' inline=true label='notes/feedback' icon=chat
                 .ui.hidden.divider
                 a.ui.massive.fluid.basic.green.icon.button.submit_checkin.z(href="/kiosk")
                     i.checkmark.big.icon
                     | check in
                 .ui.hidden.divider
-                .ui.inline.header maintenance
-                .ui.button 
-                    i.plus.icon 
-                    |request
+                .ui.inline.header notes
+                .ui.icon.button.add_note
+                    i.plus.large.icon
+                .spacer
+                .ui.inline.header maintenance requests
+                .ui.icon.disabled.button.add_request
+                    i.plus.large.icon 
                 each resident_unit_tasks
                     .item #{title}
                 div
+                .spacer
                 .ui.inline.header key checkouts
-                .ui.button checkout
+                .ui.icon.disabled.button.new_key_checkout
+                    i.large.plus.icon
 
 
 

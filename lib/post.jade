@@ -220,6 +220,25 @@ template(name='post_view')
 template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid 
+            .sixteen.wide.column
+                .ui.fluid.button.cancel_note
+                    i.chevron.left.icon 
+                    |cancel
+                if in_dev 
+                    +print_this
+                .ui.inline.header 
+                    +i name='pencil'
+                    |editing note
+                +bu
+                .bigger
+                    +textarea_edit key='content'
+                
+                a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post
+                    i.checkmark.big.icon
+                    |submit
+template(name='post_edit2')
+    with current_doc
+        .ui.stackable.padded.grid 
             .ten.wide.column
                 if in_dev 
                     +print_this
