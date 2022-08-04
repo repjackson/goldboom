@@ -6,7 +6,7 @@ template(name='readings')
                 |water readings
             a.ui.button.fly_right(href="/staff")
                 i.chevron.left.icon
-                +i name='user-shield'
+                +i name='shield'
                 |staff
             div
             +hot_tub_readings
@@ -53,32 +53,19 @@ template(name='hot_tub_readings')
     if currentUser
         #add_hot_tub_reading.ui.big.icon.button
             i.green.plus.icon
-    table.ui.striped.very.large.table
-        thead
-            tr
-                th ph
-                th chlorine
-                th temp
-                th notes
-                th staff
-                th when
-                th actions
-        tbody
-            each hot_tub_readings
-                tr
-                    td #{ph} 
-                    td #{chlorine}
-                    td #{temperature}
-                    td #{notes}
-                        .ui.large.label #{ph_message}
-                        .ui.large.label #{chlorine_message}
-                    td 
-                        +author_info
-                    td 
-                        | #{when}
-                    td 
-                        a.ui.large.icon.button(href="/lower_hot_tub_reading/edit/#{_id}")
-                            i.pencil.icon
+    .ui.divided.selection.animated.list
+        each hot_tub_readings
+            .item
+                .ui.basic.label #{ph}ph
+                .ui.basic.label #{chlorine}cl
+                .ui.basic.label #{temperature}deg
+                | #{notes}
+                .ui.large.label #{ph_message}
+                .ui.large.label #{chlorine_message}
+                +author_info
+                | #{when}
+                a.ui.large.icon.button(href="/hot_tub_reading/edit/#{_id}")
+                    i.pencil.icon
 
             
             
@@ -90,32 +77,19 @@ template(name='pool_readings')
     if currentUser
         #add_pool_reading.ui.big.icon.button
             i.green.plus.icon 
-    table.ui.striped.very.large.table
-        thead
-            tr
-                th ph
-                th chlorine
-                th temp
-                th notes
-                th staff
-                th when
-                th actions
-        tbody
-            each pool_readings
-                tr
-                    td #{ph} 
-                    td #{chlorine}
-                    td #{temperature}
-                    td #{notes}  
-                        .ui.large.label #{ph_message}
-                        .ui.large.label #{chlorine_message}
-                    td 
-                        +author_info
-                    td 
-                        | #{when}
-                    td 
-                        a.ui.large.icon.button(href="/pool_reading/edit/#{_id}")
-                            i.pencil.icon
+    .ui.divided.selection.animated.list
+        each pool_readings
+            .item
+                .ui.basic.label #{ph}ph
+                .ui.basic.label #{chlorine}cl
+                .ui.basic.label #{temperature}deg
+                | #{notes}  
+                .ui.large.label #{ph_message}
+                .ui.large.label #{chlorine_message}
+                +author_info
+                | #{when}
+                a.ui.large.icon.button(href="/pool_reading/edit/#{_id}")
+                    i.pencil.icon
 
             
 template(name='ph')            
