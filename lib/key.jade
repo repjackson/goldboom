@@ -7,18 +7,15 @@ template(name='keys')
                     |keys
                 if currentUser 
                     +add_button model='key'
-                .ui.icon.input 
+                .ui.icon.fluid.input 
                     i.hashtag.icon
                     input.search_key_number(type='text' placeholder='number')
-                .ui.icon.input 
+                .ui.icon.fluid.input 
                     i.building.icon
                     input.search_building_number(type='text' placeholder='building')
             .twelve.wide.column
                 .ui.inline.header(title='result count') #{result_docs.count}
                 +search_input key='address'
-                +session_icon_button key='view_mode' value='grid' icon='th' 
-                +session_icon_button key='view_mode' value='list' icon='list'
-                
                 +sort_direction_toggle
                 // +sort_key_toggle
                 +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
@@ -92,18 +89,20 @@ template(name='key_view')
             
             
 template(name='building_nav_button')
-    if building_number
-        a.ui.big.button.fly_down(href="/building/#{building_number}")
-            i.large.left.chevron.icon
-            +i name='building'
-            |##{building_number}
+    if building_number  
+        with building_doc
+            a.ui.big.button.fly_down(href="/building/#{_id}")
+                i.large.left.chevron.icon
+                +i name='building'
+                |##{building_number}
 
 template(name='unit_nav_button')
     if unit_number
-        a.ui.big.button(href="/building/#{building_number}/unit/#{unit_number}")
-            i.large.left.chevron.icon
-            +i name='room'
-            |##{unit_number}
+        with unit_doc
+            a.ui.big.button(href="/unit/#{_id}")
+                i.large.left.chevron.icon
+                +i name='room'
+                |##{unit_number}
 
             
 template(name='key_edit')         

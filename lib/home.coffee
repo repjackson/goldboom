@@ -39,7 +39,7 @@ if Meteor.isClient
     Template.latest_requests.onCreated ->
         @autorun => Meteor.subscribe 'latest_requests', ->
     Template.latest_requests.helpers 
-        latest_request_docs: ->
+        kiosk_task_docs: ->
             Docs.find {
                 model:'task'
             }, 
@@ -48,6 +48,12 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
+    Meteor.publish 'latest_requests', ->
+        Docs.find {
+            model:'task'
+        },
+            sort:_timestamp:-1
+            limit:20
     Meteor.publish 'latest_notes', ->
         Docs.find {
             model:'post'

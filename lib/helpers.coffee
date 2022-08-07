@@ -72,6 +72,14 @@ if Meteor.isClient
     Template.registerHelper 'upper', (string) -> 
         string.charAt(0).toUpperCase() + string.slice(1)
         # input.toUpperCase()
+    Template.registerHelper 'building_doc', (input) -> 
+        Docs.findOne 
+            model:'building'
+            building_number:@building_number
+    Template.registerHelper 'unit_doc', (input) -> 
+        Docs.findOne 
+            model:'unit'
+            unit_number:@unit_number
     Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
     Template.registerHelper 'first_initial', (input) -> 
         if @first_name

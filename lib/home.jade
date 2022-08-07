@@ -80,13 +80,10 @@ template(name='latest_requests')
     .ui.header 
         +i name='wrench'
         |latest requests
-    each rental_item_docs
+    each kiosk_task_docs
         .ui.segment
             img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             .ui.inline.header #{title}
-            .ui.button.checkout_rental
-                i.big.checkmark.icon
-                // |checkout
 template(name='latest_notes')
     .medscroll
         .ui.header 

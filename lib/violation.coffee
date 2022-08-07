@@ -226,13 +226,13 @@ if Meteor.isClient
 
 
 
-    Template.violation_card.onCreated ->
+    Template.violation_item.onCreated ->
         @autorun => Meteor.subscribe 'violation_residents', @data._id
         @autorun => Meteor.subscribe 'violation_owners', @data._id
         @autorun => Meteor.subscribe 'violation_permits', @data._id
         # @autorun => Meteor.subscribe 'violation_violations', Router.current().params.violation_code
 
-    Template.violation_card.helpers
+    Template.violation_item.helpers
         owners: ->
             Meteor.users.find
                 roles:$in:['owner']

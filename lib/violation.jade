@@ -15,58 +15,22 @@ template(name='violations')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             +search_input key='address'
-            +session_icon_button key='view_mode' value='grid' icon='th' 
-            +session_icon_button key='view_mode' value='list' icon='list'
-            
             +sort_direction_toggle
             // +sort_key_toggle
             +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-            +session_set key='sort_key' value='points' label='points' icon='hashtag'
+            +session_set key='sort_key' value='building_number' label='building #' icon='hashtag'
+            +session_set key='sort_key' value='building_number' label='building #' icon='hashtag'
             +session_set key='sort_key' value='views' label='views' icon='eye'
-            +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
 
             if subs_ready
-                if session_is 'view_mode' 'grid'
-                    if one_result
-                        .ui.stackable.centered.one.cards
-                            each violation_docs
-                                +violation_card
-                    else
-                        .ui.stackable.centered.centered.cards
-                            each violation_docs
-                                +violation_card
-                else
-                    .ui.divided.selection.animated.list
-                        each violation_docs
-                            +violation_item
+                .ui.divided.selection.animated.list
+                    each violation_docs
+                        +violation_item
             
             
-template(name='violation_card')
-    a.ui.card.fly_right(href="/violation/#{_id}") 
-        if image_id
-            img.ui.image(src="{{c.url image_id }}")
-        .content 
-            .ui.inline.header #{address}
-            // .ui.inline.header ##{violation_number}
-            .ui.large.image.label
-                +i name='building'
-                |##{building_number}
-            if violation_residents
-                +i name='groups'
-                each violation_residents 
-                    +user_info
-            if for_sale 
-                .ui.basic.label
-                    +i name='money' 
-                    |for sale
-            if for_rent 
-                .ui.basic.label
-                    +i name='clock' 
-                    |for rent
-                    
 template(name='violation_item')
     a.ui.item.fly_right(href="/violation/#{_id}") 
         if image_id
