@@ -142,51 +142,54 @@ template(name='order_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .eight.wide.column
-                    .ui.header editing order
-                    +key_value_edit key='order_type' value='rental' label='rental'
-                    +key_value_edit key='order_type' value='product' label='product'
-                    +key_value_edit key='order_type' value='transfer' label='transfer'
-                    button.ui.red.button.cancel_order
+                .sixteen.wide.column
+                    button.ui.red.basic.fluid.button.cancel_order(href="/kiosk")
+                        i.chevron.left.icon
                         i.large.remove.icon
                         |cancel
-                    +html_edit key='description' label='description'
-                    +image_edit key='image_id' label='image' icon='image'
-                    .ui.big.header #{amount}pts
-                .eight.wide.column
-                    if is order_type 'transfer'
-                        .ui.big.input
-                            input.point_amount(type='number' value=amount min='1' max=point_max)
-                        +key_value_edit key='amount' value=1
-                        +key_value_edit key='amount' value=5
-                        +key_value_edit key='amount' value=10
-                        +key_value_edit key='amount' value=20
-                        +key_value_edit key='amount' value=50
+                    .ui.header editing rental order
+                    // +key_value_edit key='order_type' value='rental' label='rental'
+                    // +key_value_edit key='order_type' value='product' label='product'
+                    // +key_value_edit key='order_type' value='transfer' label='transfer'
+                    // .ui.big.header #{amount}pts
+                    each rental_items 
                         .ui.segment
-                            .ui.inline.grey.header sender
-                            .ui.inline.header
-                                img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                |#{_author.name}
-                        .ui.segment.alpha
-                            +single_user_edit key='target' label='recipient' icon='donate' 
-                        // +boolean_edit key='has_date' label='has date' icon='calendar' 
-                        // if has_date
-                        +date_edit key='date' label='date'    
-                        // +boolean_edit key='has_time' label='has time' icon='clock' 
-                        // if has_time
-                        +time_edit key='time' label='time'    
-                        +array_edit key='tags' label='tags' icon='tags' 
-                        +array_edit key='location_tags' label='location tags' icon='marker' 
-                        .spacer
-                        .ui.center.aligned.basic.segment
-                            if can_submit
-                                .ui.green.huge.circular.button.submit
-                                    i.big.send.icon
-                                    |send
-                            else 
-                                .ui.green.huge.circular.disabled.button
-                                    i.send.big.icon
-                                    |send
+                            img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}")
+                            .content
+                                |#{title}
+                    // if is order_type 'transfer'
+                    //     .ui.big.input
+                    //         input.point_amount(type='number' value=amount min='1' max=point_max)
+                    //     +key_value_edit key='amount' value=1
+                    //     +key_value_edit key='amount' value=5
+                    //     +key_value_edit key='amount' value=10
+                    //     +key_value_edit key='amount' value=20
+                    //     +key_value_edit key='amount' value=50
+                    //     .ui.segment
+                    //         .ui.inline.grey.header sender
+                    //         .ui.inline.header
+                    //             img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    //             |#{_author.name}
+                    //     .ui.segment.alpha
+                    //         +single_user_edit key='target' label='recipient' icon='donate' 
+                    //     // +boolean_edit key='has_date' label='has date' icon='calendar' 
+                    //     // if has_date
+                    //     +date_edit key='date' label='date'    
+                    //     // +boolean_edit key='has_time' label='has time' icon='clock' 
+                    //     // if has_time
+                    //     +time_edit key='time' label='time'    
+                    //     +array_edit key='tags' label='tags' icon='tags' 
+                    //     +array_edit key='location_tags' label='location tags' icon='marker' 
+                    //     .spacer
+                    //     .ui.center.aligned.basic.segment
+                    //         if can_submit
+                    //             .ui.green.huge.circular.button.submit
+                    //                 i.big.send.icon
+                    //                 |send
+                    //         else 
+                    //             .ui.green.huge.circular.disabled.button
+                    //                 i.send.big.icon
+                    //                 |send
                                 
                                     
 

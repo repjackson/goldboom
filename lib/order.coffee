@@ -25,7 +25,7 @@ if Meteor.isClient
         @render 'order_view'
         ), name:'order_view'
     Router.route '/order/:doc_id/edit', (->
-        @layout 'layout'
+        @layout 'mlayout'
         @render 'order_edit'
         ), name:'order_edit'
     Router.route '/orders', (->
@@ -119,18 +119,6 @@ if Meteor.isClient
             $('#search').val('')
             Session.set('current_search', null)
     
-    Template.order_card.helpers
-        five_cleaned_tags: ->
-            # console.log picked_tags.array()
-            # console.log @tags[..5] not in picked_tags.array()
-            # console.log _.without(@tags[..5],picked_tags.array())
-            if picked_tags.array().length
-                _.difference(@tags[..10],picked_tags.array())
-            #     @tags[..5] not in picked_tags.array()
-            else 
-                @tags[..5]
-
-
 if Meteor.isClient
     Template.order_view.onCreated ->
         @autorun => Meteor.subscribe 'product_from_order_id', Router.current().params.doc_id, ->
@@ -160,6 +148,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'target_from_order_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'model_docs', 'rental', ->
 
     Template.order_view.helpers
         _target: ->
@@ -169,6 +158,9 @@ if Meteor.isClient
                     _id: order.target_id
 
     Template.order_edit.helpers
+        rental_items: ->
+            Docs.find 
+                model:'rental'
         # terms: ->
         #     Terms.find()
         suggestions: ->
