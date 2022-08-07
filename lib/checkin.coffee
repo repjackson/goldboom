@@ -122,6 +122,19 @@ if Meteor.isClient
             
 
     Template.checkin_edit.helpers 
+        resident_notes:->
+            Docs.find 
+                model:'post'
+        resident_unit_tasks:->
+            Docs.find 
+                model:'task'
+        unit_key_checkouts:->
+            Docs.find 
+                model:'key_checkout'
+        resident_rental_docs:->
+            Docs.find 
+                model:'order'
+                
         guest_class: ->
             doc = Docs.findOne Router.current().params.doc_id
             
@@ -340,7 +353,9 @@ if Meteor.isServer
     Meteor.publish 'docs_by_checkin_id', (checkin_id)->
         checkin = Docs.findOne checkin_id  
         Docs.find
-            resident_user_id:checkin.resident_user_id
+            building_number:checkin.building_number
+            unit_numeber:checkin.unit_numeber
+            # resident_user_id:checkin.resident_user_id
     Meteor.publish 'guest_by_checkin_id', (checkin_id)->
         checkin = Docs.findOne checkin_id  
         Docs.find

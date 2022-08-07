@@ -8,23 +8,23 @@ template(name='checkin_edit')
                 .ui.hidden.divider
                 with _resident
                     .ui.massive.inline.header #{first_initial} #{last_initial}
-                    // .ui.massive.basic.label 
-                    //     // +i name='apartment'
-                    //     i.large.building.icon
-                    //     |#{building_number}
-                    // .ui.massive.basic.label
-                    //     // +i name='room'
-                    //     i.large.cube.icon
-                    //     |#{unit_number}
-                    // if verified 
-                    //     .ui.large.basic.label 
-                    //         +i name='id-verified'
-                    //         |id verified
-                    // else 
-                    //     .ui.large.basic.label 
-                    //         +i name='id-not-verified'
-                    //         |id unverified
-                    // .ui.hidden.divider
+                    .ui.large.basic.label.inline 
+                        // +i name='apartment'
+                        i.large.building.icon
+                        |#{building_number}
+                    .ui.large.basic.label.inline
+                        // +i name='room'
+                        i.large.cube.icon
+                        |#{unit_number}
+                    if verified 
+                        .ui.large.basic.label 
+                            +i name='id badge green'
+                            |id verified
+                    else 
+                        .ui.large.basic.label 
+                            +i name='remove'
+                            |id unverified
+                    .ui.hidden.divider
                     // +image_edit key='image_id' label='profile image'
                     // if email_verified 
                     //     .ui.big.label 
@@ -49,7 +49,7 @@ template(name='checkin_edit')
                     .ui.big.button.pick_guest(class=guest_class)
                         i.large.user.icon
                         |#{name}
-                .ui.big.icon.active.input  
+                .ui.large.icon.active.input  
                     i.large.plus.icon
                     input.add_guest(type='text' placeholder='add guest...')
                 // .ui.inline.header
@@ -69,24 +69,42 @@ template(name='checkin_edit')
                     i.checkmark.big.icon
                     | check in
                 .ui.hidden.divider
-                .ui.inline.header notes
-                .ui.icon.button.add_note
+                .ui.inline.small.header 
+                    i.chat.outline.icon
+                    |#{resident_notes.count} notes
+                .ui.icon.circular.compact.large.button.add_note
                     i.plus.large.icon
+                .ui.list 
+                    each resident_notes
+                        .item !{content}
+                            |#{_when}
                 .spacer
-                .ui.inline.header maintenance requests
-                .ui.icon.button.add_task
+                .ui.inline.small.header
+                    i.wrench.icon
+                    |#{resident_unit_tasks.count}
+                    |maintenance requests
+                .ui.icon.circular.compact.large.button.add_task
                     i.plus.large.icon 
-                each resident_unit_tasks
-                    .item #{title}
-                div
+                .ui.list 
+                    each resident_unit_tasks
+                        .item !{content} !{description}
+                            small #{_when}
+                div         
                 .spacer
-                .ui.inline.header key checkouts
-                .ui.icon.button.new_key_checkout
+                .ui.inline.small.header 
+                    i.key.icon
+                    |#{unit_key_checkouts.count}
+                    |key checkouts
+                .ui.icon.circular.compact.large.button.new_key_checkout
                     i.large.plus.icon
+                each unit_key_checkouts
+                    .item #{_when}
                 div
                 .spacer
-                .ui.inline.header rentals
-                .ui.icon.button.new_rental
+                .ui.inline.small.header 
+                    i.clock.icon
+                    |rentals
+                .ui.icon.circular.compact.large.button.new_rental
                     i.large.plus.icon
                 each resident_rental_docs
                     .item #{_when}
