@@ -67,7 +67,7 @@ template(name='guest_block')
     .ui.header 
         +i name='friends'
         |guests
-    .ui.selection.animated.big.list.smallscroll
+    .ui.selection.animated.big.list.medscroll
         each guest_docs
             .item #{name} #{_resident.username} #{_when}
                 +bu
@@ -88,15 +88,23 @@ template(name='latest_requests')
                 i.big.checkmark.icon
                 // |checkout
 template(name='latest_notes')
-    .ui.header 
-        +i name='chat'
-        |#{latest_note_docs.count} latest notes
-    each latest_note_docs
-        .ui.segment
-            if image_id
-                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            .ui.inline.header #{title}
-            +bu
+    .medscroll
+        .ui.header 
+            +i name='chat'
+            |#{latest_note_docs.count} latest notes
+        each latest_note_docs
+            .ui.segment
+                if image_id
+                    img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                .ui.inline.header !{content}
+                +bu
+                +print_this
+                +view_button 
+            
+template(name='view_button')
+    .ui.icon.button.fly_right(href="/#{model}/#{_id}")
+        i.large.chevron.right.icon
+            
 template(name='latest_rentals')
     .ui.header 
         +i name='basketball'
@@ -114,23 +122,24 @@ template(name='active_checkins')
     .ui.header 
         +i name='clock'
         |#{active_checkin_docs.count} active checkins
-    .ui.big.divided.animated.selection.list.smallscroll
+    .ui.large.divided.animated.selection.list.medscroll
         each active_checkin_docs 
             .item(href="/checkin/#{_id}" title=resident_user_id)
-                a.ui.large.label.fly_down(href="/user/#{resident_username}") 
-                    strong #{_resident.first_name}
-                    strong #{_resident.last_name}
-                +bu
-                | #{_when}
-                .ui.compact.icon.button.checkout 
-                    i.sign.out.red.icon
-                    // |checkout
-                
+                .content
+                    a.ui.big.label.fly_down.zoomer(href="/user/#{resident_username}") 
+                        strong #{_resident.first_name}
+                        strong #{_resident.last_name}
+                    +bu
+                    | #{_when}
+                    .ui.compact.icon.button.checkout(title='sign out')
+                        i.sign.out.red.icon
+                        // |checkout
+                    
 template(name='latest_activity')
     .ui.header 
         +i name='clock'
         |latest activty 
-    .ui.large.list.smallscroll
+    .ui.large.list.medscroll
         each activity_docs 
             a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
                 small #{_when} by #{_author_username}
@@ -140,7 +149,7 @@ template(name='latest_checkins')
         .ui.header 
             +i name='history'
             |latest checkins 
-        .ui.selection.divided.list.smallscroll
+        .ui.selection.divided.list.medscroll
             each latest_checkin_docs 
                 // a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
                 .item

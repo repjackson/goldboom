@@ -18,7 +18,7 @@ body {
     height-min: 800px !important;
 }
 .bigger {
-    zoom: 150% !important;
+    zoom: 140% !important;
 }
 .z {
     zoom: 150% !important;
@@ -1174,7 +1174,7 @@ h1.ui.header{
 	/*padding-left: 1em;*/
 }
 
-.mediumscroll{
+.medscroll{
 	overflow-y:scroll;
 	overflow-x:hidden;
 	max-height:600px;

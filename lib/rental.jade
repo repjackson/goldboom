@@ -2,7 +2,7 @@ template(name='rentals')
     .ui.stackable.padded.grid
         .four.wide.column
             .ui.inline.header 
-                +i name='garage'
+                +i name='clock'
                 |rentals
             if currentUser
                 .ui.icon.compact.button.add_rental
@@ -16,9 +16,6 @@ template(name='rentals')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             +search_input key='address'
-            +session_icon_button key='view_mode' value='grid' icon='th' 
-            +session_icon_button key='view_mode' value='list' icon='list'
-            
             +sort_direction_toggle
             // +sort_key_toggle
             +session_set key='sort_key' value='price' label='price' icon='money'
@@ -34,19 +31,9 @@ template(name='rentals')
                     +i name='bicycle'
                     |items 
                 if subs_ready
-                    if session_is 'view_mode' 'grid'
-                        if one_result
-                            .ui.stackable.centered.one.cards
-                                each rental_docs
-                                    +rental_card
-                        else
-                            .ui.stackable.centered.centered.cards
-                                each rental_docs
-                                    +rental_card
-                    else
-                        .ui.divided.selection.animated.list
-                            each rental_docs
-                                +rental_item
+                    .ui.divided.selection.animated.list
+                        each rental_docs
+                            +rental_item
             .ui.segment.alpha
                 .ui.header 
                     +i name='garage'
@@ -72,21 +59,6 @@ template(name='rentals')
                         
             
             
-template(name='rental_card')
-    a.ui.card.fly_right(href="/rental/#{_id}") 
-        if image_id
-            img.ui.image(src="{{c.url image_id }}")
-        .content 
-            .ui.inline.header #{title}
-            // .ui.inline.header ##{rental_number}
-            i.marker.icon 
-            |#{location}
-            +bu
-            if available 
-                .ui.green.label
-                    .ui.big.checkmark.icon
-                    |available
-                    
 template(name='rental_item')
     a.ui.item.fly_right(href="/rental/#{_id}") 
         if image_id

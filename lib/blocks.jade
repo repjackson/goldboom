@@ -24,12 +24,13 @@ template(name='bu')
     +unit_label
 
 template(name='building_label')
-    .ui.circular.basic.large.image.label.inline
+    .ui.circular.basic.large.label.inline
         +i name='building'
         |#{building_number}
 template(name='unit_label')
-    .ui.circular.basic.large.image.label.inline
-        +i name='room'
+    .ui.circular.basic.large.label.inline
+        // +i name='room'
+        i.large.cube.icon
         |#{unit_number}
 
 
@@ -689,12 +690,6 @@ template(name='voting_full')
 //         each downvoter_ids
 //             +user_info
 
-
-
-template(name='view_button')
-    a.ui.icon.compact.button.view(title='view' href="/m/#{model}/#{_id}/view")
-        //- i.right.chevron.large.icon
-        +i name='chevron right' cl='ui mini inline image'
 
 
 template(name='delete_button')

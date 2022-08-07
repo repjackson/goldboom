@@ -74,15 +74,22 @@ template(name='checkin_edit')
                     i.plus.large.icon
                 .spacer
                 .ui.inline.header maintenance requests
-                .ui.icon.disabled.button.add_request
+                .ui.icon.button.add_task
                     i.plus.large.icon 
                 each resident_unit_tasks
                     .item #{title}
                 div
                 .spacer
                 .ui.inline.header key checkouts
-                .ui.icon.disabled.button.new_key_checkout
+                .ui.icon.button.new_key_checkout
                     i.large.plus.icon
+                div
+                .spacer
+                .ui.inline.header rentals
+                .ui.icon.button.new_rental
+                    i.large.plus.icon
+                each resident_rental_docs
+                    .item #{_when}
 
 
 

@@ -23,7 +23,7 @@ if Meteor.isClient
         @render 'task_view'
         ), name:'task_view'
     Router.route '/task/:doc_id/edit', (->
-        @layout 'layout'
+        @layout 'mlayout'
         @render 'task_edit'
         ), name:'task_edit'
     Router.route '/tasks', (->
@@ -35,6 +35,34 @@ if Meteor.isClient
             
     Template.task_edit.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+    Template.task_edit.events
+        'click .submit_task': ->
+            Docs.update @_id,
+                submitted:true
+                published:true
+                published_timestamp:Date.now()
+                published_user_id:Meteor.userId()
+                published_username:Meteor.user().username
+                
+            Router.go "/kiosk"
+            Swal.fire({
+                title: "thanks for your submission"
+                # title: "checked in"
+                # text: "point bounty will be held "
+                icon: 'success'
+                timer:2000
+                # background: 'green'
+                timerProgressBar:true
+                showClass: {popup: 'animate__animated animate__fadeInDown'}
+                hideClass: {popup: 'animate__animated animate__fadeOutUp'}
+                showConfirmButton:false
+                # confirmButtonText: 'publish'
+                # confirmButtonColor: 'green'
+                # showCancelButton: true
+                # cancelButtonText: 'cancel'
+                # reverseButtons: true
+            })
+
     Template.save_and_publish_button.events
         'click .save_and_publish': ->
             Docs.update @_id, 

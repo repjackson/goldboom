@@ -205,62 +205,66 @@ template(name='task_edit')
             .row 
                 .eight.wide.column
                     .ui.inline.header editing task
-                    if published
-                        a.ui.green.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
-                            i.save.large.icon
-                            |save
-                        |published {{long_date published_timestamp}} {{from_now published_timestamp}}
-                        a.ui.yellow.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
-                            i.undo.large.icon
-                            |unpublish
-                    else 
-                        +save_and_publish_button
-                    +text_edit key='title' label='title'
-                    .ui.segment
-                        .ui.inline.grey.header author
-                        .ui.inline.header
-                            img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{_author.name}
-                    
-                    +image_edit key='image_id' label='image' icon='image' 
-                    +boolean_edit key='has_assignee' label='has assignee' icon='user' 
-                    if has_assignee
-                        +single_user_edit key='assignee' label='recipient' icon='donate' 
-                    div
-                    +boolean_edit key='has_due_date' label='has date' icon='calendar' 
-                    if has_due_date
-                        +datetime_edit key='due_date' label='due date/time'    
-                    div
-                    +array_edit key='location_tags' label='location tags' icon='marker' 
-                    +boolean_edit key='has_bounty' label='has bounty (pts)' icon='coins'
-                    if has_bounty
-                        +key_value_edit key='bounty' value=10
-                        +key_value_edit key='bounty' value=20
-                        +key_value_edit key='bounty' value=50
-                        +number_edit key='bounty' label='custom bounty'
-                    .spacer
-                .eight.wide.column
-                    +html_edit key='description' label='description'
-                    // +group_picker
-                    +boolean_edit key='requires_confirmation' label='requires confirmation' icon='reviewer-female'
-                    if requires_confirmation
-                        +single_user_edit key='verifier' label='verifier' icon='reviewer-female' 
-                    .ui.header
-                        +i name='eye'
-                        |visibility
-                    +boolean_edit key='private' label='private' icon='lock'
-                    if private 
-                        +multi_user_edit key='access_user_ids' label='user picker' 
-                    // +boolean_edit key='has_content' icon='content' 
-                    // if has_content
-                    div
+                    +bu
+                    // +text_edit key='title' label='title'
+                    +textarea_edit key='description' label='description'
+                    if currentUser.admin_mode
+                        .ui.segment
+                            .ui.inline.grey.header author
+                            .ui.inline.header
+                                img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                |#{_author.name}
+                        // +image_edit key='image_id' label='image' icon='image' 
+                        +boolean_edit key='has_assignee' label='has assignee' icon='user' 
+                        if has_assignee
+                            +single_user_edit key='assignee' label='recipient' icon='donate' 
+                        div
+                        +boolean_edit key='has_due_date' label='has date' icon='calendar' 
+                        if has_due_date
+                            +datetime_edit key='due_date' label='due date/time'    
+                        div
+                        +array_edit key='location_tags' label='location tags' icon='marker' 
+                        +boolean_edit key='has_bounty' label='has bounty (pts)' icon='coins'
+                        if has_bounty
+                            +key_value_edit key='bounty' value=10
+                            +key_value_edit key='bounty' value=20
+                            +key_value_edit key='bounty' value=50
+                            +number_edit key='bounty' label='custom bounty'
+                        .spacer
+                        // +group_picker
+                        +boolean_edit key='requires_confirmation' label='requires confirmation' icon='reviewer-female'
+                        if requires_confirmation
+                            +single_user_edit key='verifier' label='verifier' icon='reviewer-female' 
+                        .ui.header
+                            +i name='eye'
+                            |visibility
+                        +boolean_edit key='private' label='private' icon='lock'
+                        if private 
+                            +multi_user_edit key='access_user_ids' label='user picker' 
+                        // +boolean_edit key='has_content' icon='content' 
+                        // if has_content
+                    .ui.fluid.big.green.circular.button.submit_task.zoomer
+                        i.large.save.icon 
+                        |submit
+                    // if published
+                    //     a.ui.green.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
+                    //         i.save.large.icon
+                    //         |save
+                    //     |published {{long_date published_timestamp}} {{from_now published_timestamp}}
+                    //     a.ui.yellow.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
+                    //         i.undo.large.icon
+                    //         |unpublish
+                    // else 
+                    //     +save_and_publish_button
+                    // div
                                         
                      
                      
 template(name='save_and_publish_button')
-    a.ui.green.big.circular.button.save_and_publish.zoomer.fly_up(href="/#{model}/#{_id}") 
+    a.ui.green.big.fluid.circular.button.save_and_publish.zoomer.fly_up(href="/kiosk") 
         i.save.large.icon
-        |save and publish
+        // |save + publish
+        |submit
 
 
 template(name='user_tasks')

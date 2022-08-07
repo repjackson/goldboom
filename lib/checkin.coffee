@@ -118,6 +118,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'guest_by_checkin_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'docs_by_checkin_id', Router.current().params.doc_id, ->
             
 
     Template.checkin_edit.helpers 
@@ -187,6 +188,41 @@ if Meteor.isClient
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/post/#{new_id}/edit"
+            , 1000
+        'click .add_request': (e)->
+            new_id = 
+                Docs.insert 
+                    model:'task'
+                    kiosk:true
+                    building_number:@building_number
+                    unit_number:@unit_number
+                    resident_id:@resident_id
+                    resident_username:@resident_username
+            $(e.currentTarget).closest('.grid').transition('fly left',1000)
+            Meteor.setTimeout ->
+                Router.go "/task/#{new_id}/edit"
+            , 1000
+        'click .add_rental': (e)->
+            new_id = 
+                Docs.insert 
+                    model:'order'
+                    building_number:@building_number
+                    unit_number:@unit_number
+                    resident_id:@resident_id
+                    resident_username:@resident_username
+            $(e.currentTarget).closest('.grid').transition('fly left',1000)
+            Meteor.setTimeout ->
+                Router.go "/order/#{new_id}/edit"
+            , 1000
+        'click .add_task': (e)->
+            new_id = 
+                Docs.insert 
+                    model:'task'
+                    building_number:@building_number
+                    unit_number:@unit_number
+            $(e.currentTarget).closest('.grid').transition('fly left',1000)
+            Meteor.setTimeout ->
+                Router.go "/task/#{new_id}/edit"
             , 1000
         'click .submit_checkin': ->
             resident = 
@@ -301,13 +337,17 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'docs_by_checkin_id', (checkin_id)->
+        checkin = Docs.findOne checkin_id  
+        Docs.find
+            resident_user_id:checkin.resident_user_id
     Meteor.publish 'guest_by_checkin_id', (checkin_id)->
         checkin = Docs.findOne checkin_id  
         Docs.find
             model:'guest'
             resident_user_id:checkin.resident_user_id
+   
     Meteor.publish 'resident_by_id', (doc_id)->
-        
         doc = Docs.findOne doc_id
         if doc
             Meteor.users.find doc.resident_user_id
@@ -331,174 +371,174 @@ if Meteor.isServer
                 
                 
                 
-if Meteor.isClient
-    Template.checkin.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Session.get('new_guest_id'), ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'checkin_guests',Router.current().params.doc_id, ->
-        @autorun -> Meteor.subscribe 'resident_from_session', Router.current().params.doc_id, ->
-        # @autorun -> Meteor.subscribe 'session', Router.current().params.doc_id, ->
-        # @autorun -> Meteor.subscribe 'model_docs', 'guest'
+# if Meteor.isClient
+#     Template.checkin.onCreated ->
+#         @autorun => Meteor.subscribe 'doc_by_id', Session.get('new_guest_id'), ->
+#         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+#         @autorun => Meteor.subscribe 'checkin_guests',Router.current().params.doc_id, ->
+#         @autorun -> Meteor.subscribe 'resident_from_session', Router.current().params.doc_id, ->
+#         # @autorun -> Meteor.subscribe 'session', Router.current().params.doc_id, ->
+#         # @autorun -> Meteor.subscribe 'model_docs', 'guest'
 
-        # @autorun => Meteor.subscribe 'rules_signed_username', @data.username
-    Template.checkin.onRendered ->
-        # @timer = new ReactiveVar 5
-        Session.set 'timer',5
-        Session.set 'timer_engaged', false
-        # Meteor.setTimeout ->
-        #     session_document = Docs.findOne Router.current().params.doc_id
-        #     # console.log @
-        #     if session_document and session_document.user_id
-        #         resident = Meteor.users.findOne session_document.user_id
-        #         # if resident.user_id
-        #         rules_found = Docs.findOne
-        #             model:'rules_and_regs_signing'
-        #             resident:resident.username
-        #         if resident.rules_and_regulations_signed and resident.member_waiver_signed
-        #             Session.set 'timer_engaged', true
-        #             interval_id = Meteor.setInterval( ->
-        #                 if Session.equals 'timer_engaged', true
-        #                     if Session.equals 'timer', 0
-        #                         Meteor.call 'submit_checkin'
-        #                         Meteor.clearInterval interval_id
-        #                     else
-        #                         Session.set('timer', Session.get('timer')-1)
-        #                 # t.timer.set(t.timer.get()-1)
-        #             ,1000)
-        # , 4000
-
-
-    # Template.checkin.events
-    #     # 'click .cancel_checkin': (e)->
-    #     #     session_document = Docs.findOne Router.current().params.doc_id
-    #     #     if session_document
-    #     #         Docs.remove session_document._id
-    #     #     if session_document and session_document.user_id
-    #     #         Meteor.users.update session_document.user_id,
-    #     #             $inc:
-    #     #                 checkins_without_email_verification:-1
-    #     #                 checkins_without_gov_id:-1
-    #     #     $(e.currentTarget).closest('.grid').transition('fly_left')
+#         # @autorun => Meteor.subscribe 'rules_signed_username', @data.username
+#     Template.checkin.onRendered ->
+#         # @timer = new ReactiveVar 5
+#         Session.set 'timer',5
+#         Session.set 'timer_engaged', false
+#         # Meteor.setTimeout ->
+#         #     session_document = Docs.findOne Router.current().params.doc_id
+#         #     # console.log @
+#         #     if session_document and session_document.user_id
+#         #         resident = Meteor.users.findOne session_document.user_id
+#         #         # if resident.user_id
+#         #         rules_found = Docs.findOne
+#         #             model:'rules_and_regs_signing'
+#         #             resident:resident.username
+#         #         if resident.rules_and_regulations_signed and resident.member_waiver_signed
+#         #             Session.set 'timer_engaged', true
+#         #             interval_id = Meteor.setInterval( ->
+#         #                 if Session.equals 'timer_engaged', true
+#         #                     if Session.equals 'timer', 0
+#         #                         Meteor.call 'submit_checkin'
+#         #                         Meteor.clearInterval interval_id
+#         #                     else
+#         #                         Session.set('timer', Session.get('timer')-1)
+#         #                 # t.timer.set(t.timer.get()-1)
+#         #             ,1000)
+#         # , 4000
 
 
-    #     #     Router.go "/checkin"
-
-    #     # 'click .recheck_photo': ->
-    #     #     session_document = Docs.findOne Router.current().params.doc_id
-    #     #     if session_document and session_document.user_id
-    #     #         user = Meteor.users.findOne session_document.user_id
-    #     #         Meteor.call 'image_check', user
-    #     #         Meteor.call 'staff_government_id_check', user
-    #     #
-    #     #
-    #     #
-    #     # 'click .recheck': ->
-    #     #     console.log @
-    #     #     Meteor.call 'run_user_checks', @
-    #     #     Meteor.call 'member_waiver_signed', @
-    #     #     Meteor.call 'rules_and_regulations_signed', @
-
-    #     'click .add_guest': ->
-    #         # console.log @
-    #         session_document = Docs.findOne Router.current().params.doc_id
-    #         new_guest_id =
-    #             Docs.insert
-    #                 model:'guest'
-    #                 session_id: session_document._id
-    #                 resident_id: session_document.user_id
-    #                 resident: session_document.resident_username
-    #         # Session.set 'displaying_profile', null
-    #         #
-    #         Router.go "/add_guest/#{new_guest_id}"
-
-    #     'click .sign_rules': ->
-    #         session_document = Docs.findOne Router.current().params.doc_id
-    #         new_id = Docs.insert
-    #             model:'rules_and_regs_signing'
-    #             session_id: session_document._id
-    #             resident_id: session_document.user_id
-    #             resident: session_document.resident_username
-    #         Router.go "/sign_rules/#{new_id}/#{session_document.resident_username}"
-    #         # Session.set 'displaying_profile',null
+#     # Template.checkin.events
+#     #     # 'click .cancel_checkin': (e)->
+#     #     #     session_document = Docs.findOne Router.current().params.doc_id
+#     #     #     if session_document
+#     #     #         Docs.remove session_document._id
+#     #     #     if session_document and session_document.user_id
+#     #     #         Meteor.users.update session_document.user_id,
+#     #     #             $inc:
+#     #     #                 checkins_without_email_verification:-1
+#     #     #                 checkins_without_gov_id:-1
+#     #     #     $(e.currentTarget).closest('.grid').transition('fly_left')
 
 
-    #     'click .sign_guidelines': ->
-    #         session_document = Docs.findOne Router.current().params.doc_id
-    #         new_id = Docs.insert
-    #             model:'member_guidelines_signing'
-    #             session_id: session_document._id
-    #             resident_id: session_document.user_id
-    #             resident: session_document.resident_username
-    #         Router.go "/sign_guidelines/#{new_id}/#{session_document.resident_username}"
-    #         # Session.set 'displaying_profile',null
+#     #     #     Router.go "/checkin"
 
-    #     'click .add_recent_guest': ->
-    #         current_session = Docs.findOne
-    #             model:'checkin'
-    #             current:true
-    #         Docs.update current_session._id,
-    #             $addToSet:guest_ids:@_id
+#     #     # 'click .recheck_photo': ->
+#     #     #     session_document = Docs.findOne Router.current().params.doc_id
+#     #     #     if session_document and session_document.user_id
+#     #     #         user = Meteor.users.findOne session_document.user_id
+#     #     #         Meteor.call 'image_check', user
+#     #     #         Meteor.call 'staff_government_id_check', user
+#     #     #
+#     #     #
+#     #     #
+#     #     # 'click .recheck': ->
+#     #     #     console.log @
+#     #     #     Meteor.call 'run_user_checks', @
+#     #     #     Meteor.call 'member_waiver_signed', @
+#     #     #     Meteor.call 'rules_and_regulations_signed', @
 
-    #     'click .remove_guest': ->
-    #         current_session = Docs.findOne
-    #             model:'checkin'
-    #             current:true
-    #         # console.log current_session
-    #         Docs.update current_session._id,
-    #             $pull:guest_ids:@_id
+#     #     'click .add_guest': ->
+#     #         # console.log @
+#     #         session_document = Docs.findOne Router.current().params.doc_id
+#     #         new_guest_id =
+#     #             Docs.insert
+#     #                 model:'guest'
+#     #                 session_id: session_document._id
+#     #                 resident_id: session_document.user_id
+#     #                 resident: session_document.resident_username
+#     #         # Session.set 'displaying_profile', null
+#     #         #
+#     #         Router.go "/add_guest/#{new_guest_id}"
 
-    #     'click .toggle_adding_guest': ->
-    #         Session.set 'adding_guest', true
-    #         Session.set 'timer_engaged', false
-
-    #     'click .submit_checkin': (e,t)->
-    #         Meteor.call 'submit_checkin'
-
-    #     'click .cancel_auto_checkin': (e,t)->
-    #         Session.set 'timer_engaged',false
-
-    Template.checkin.helpers
-        timer_engaged: ->
-            Session.get 'timer_engaged'
-        timer: ->
-            Session.get 'timer'
-            # console.log Template.instance()
-            # Template.instance().timer.get()
-
-        rules_signed: ->
-            session_document = Docs.findOne Router.current().params.doc_id
-            # console.log @
-            if session_document.user_id
-                resident = Meteor.users.findOne session_document.user_id
-                # if resident.user_id
-                Docs.findOne
-                    model:'rules_and_regs_signing'
-                    resident:resident.username
-        session_document: -> Docs.findOne Router.current().params.doc_id
-
-        adding_guests: -> Session.get 'adding_guest'
-        checking_in_doc: ->
-            session_document = Docs.findOne Router.current().params.doc_id
-            # console.log session_document
-            session_document
-        checkin_guest_docs: () ->
-            session_document = Docs.findOne Router.current().params.doc_id
-            # console.log @
-            Docs.find
-                _id:$in:session_document.guest_ids
-
-        user: ->
-            session_document = Docs.findOne Router.current().params.doc_id
-            if session_document and session_document.user_id
-                Meteor.users.findOne session_document.user_id
+#     #     'click .sign_rules': ->
+#     #         session_document = Docs.findOne Router.current().params.doc_id
+#     #         new_id = Docs.insert
+#     #             model:'rules_and_regs_signing'
+#     #             session_id: session_document._id
+#     #             resident_id: session_document.user_id
+#     #             resident: session_document.resident_username
+#     #         Router.go "/sign_rules/#{new_id}/#{session_document.resident_username}"
+#     #         # Session.set 'displaying_profile',null
 
 
-    Template.resident_guest.onCreated ->
-        # console.log @
-        @autorun => Meteor.subscribe 'doc_by_id', @data
-    Template.resident_guest.helpers
-        guest_doc: ->
-            Docs.findOne Template.currentData()
+#     #     'click .sign_guidelines': ->
+#     #         session_document = Docs.findOne Router.current().params.doc_id
+#     #         new_id = Docs.insert
+#     #             model:'member_guidelines_signing'
+#     #             session_id: session_document._id
+#     #             resident_id: session_document.user_id
+#     #             resident: session_document.resident_username
+#     #         Router.go "/sign_guidelines/#{new_id}/#{session_document.resident_username}"
+#     #         # Session.set 'displaying_profile',null
+
+#     #     'click .add_recent_guest': ->
+#     #         current_session = Docs.findOne
+#     #             model:'checkin'
+#     #             current:true
+#     #         Docs.update current_session._id,
+#     #             $addToSet:guest_ids:@_id
+
+#     #     'click .remove_guest': ->
+#     #         current_session = Docs.findOne
+#     #             model:'checkin'
+#     #             current:true
+#     #         # console.log current_session
+#     #         Docs.update current_session._id,
+#     #             $pull:guest_ids:@_id
+
+#     #     'click .toggle_adding_guest': ->
+#     #         Session.set 'adding_guest', true
+#     #         Session.set 'timer_engaged', false
+
+#     #     'click .submit_checkin': (e,t)->
+#     #         Meteor.call 'submit_checkin'
+
+#     #     'click .cancel_auto_checkin': (e,t)->
+#     #         Session.set 'timer_engaged',false
+
+#     Template.checkin.helpers
+#         timer_engaged: ->
+#             Session.get 'timer_engaged'
+#         timer: ->
+#             Session.get 'timer'
+#             # console.log Template.instance()
+#             # Template.instance().timer.get()
+
+#         rules_signed: ->
+#             session_document = Docs.findOne Router.current().params.doc_id
+#             # console.log @
+#             if session_document.user_id
+#                 resident = Meteor.users.findOne session_document.user_id
+#                 # if resident.user_id
+#                 Docs.findOne
+#                     model:'rules_and_regs_signing'
+#                     resident:resident.username
+#         session_document: -> Docs.findOne Router.current().params.doc_id
+
+#         adding_guests: -> Session.get 'adding_guest'
+#         checking_in_doc: ->
+#             session_document = Docs.findOne Router.current().params.doc_id
+#             # console.log session_document
+#             session_document
+#         checkin_guest_docs: () ->
+#             session_document = Docs.findOne Router.current().params.doc_id
+#             # console.log @
+#             Docs.find
+#                 _id:$in:session_document.guest_ids
+
+#         user: ->
+#             session_document = Docs.findOne Router.current().params.doc_id
+#             if session_document and session_document.user_id
+#                 Meteor.users.findOne session_document.user_id
+
+
+    # Template.resident_guest.onCreated ->
+    #     # console.log @
+    #     @autorun => Meteor.subscribe 'doc_by_id', @data
+    # Template.resident_guest.helpers
+    #     guest_doc: ->
+    #         Docs.findOne Template.currentData()
 
 
 
@@ -513,57 +553,57 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'users'
 
 
-    Template.checkin.onRendered ->
-        # video = document.querySelector('#videoElement')
-        # if navigator.mediaDevices.getUserMedia
-        #   navigator.mediaDevices.getUserMedia(video: true).then((stream) ->
-        #     video.srcObject = stream
-        #     return
-        #   ).catch (err0r) ->
-        #     return
-        # @autorun =>
-        #     if @subscriptionsReady()
-        #         Meteor.setTimeout ->
-        #             $('.dropdown').dropdown()
-        #         , 3000
+    # Template.checkin.onRendered ->
+    #     # video = document.querySelector('#videoElement')
+    #     # if navigator.mediaDevices.getUserMedia
+    #     #   navigator.mediaDevices.getUserMedia(video: true).then((stream) ->
+    #     #     video.srcObject = stream
+    #     #     return
+    #     #   ).catch (err0r) ->
+    #     #     return
+    #     # @autorun =>
+    #     #     if @subscriptionsReady()
+    #     #         Meteor.setTimeout ->
+    #     #             $('.dropdown').dropdown()
+    #     #         , 3000
 
-        # Meteor.setTimeout ->
-        #     $('.item').popup()
-        # , 3000
-        Meteor.setInterval ->
-              $('.name_search').focus();
-        , 5000
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 3000
+    #     # Meteor.setTimeout ->
+    #     #     $('.item').popup()
+    #     # , 3000
+    #     Meteor.setInterval ->
+    #           $('.name_search').focus();
+    #     , 5000
+    #     Meteor.setTimeout ->
+    #         $('.accordion').accordion()
+    #     , 3000
 
 
-    Template.checkin_input.helpers
-        search_results: ->
-            Docs.find 
-                model:'resident'
-            #     username: {$regex:"#{name_search}", $options: 'i'}
-    Template.checkin.helpers
-        current_session_doc: ()->
-            Docs.findOne
-                model:'checkin'
-                current:true
+    # Template.checkin_input.helpers
+    #     search_results: ->
+    #         Docs.find 
+    #             model:'resident'
+    #         #     username: {$regex:"#{name_search}", $options: 'i'}
+    # Template.checkin.helpers
+    #     current_session_doc: ()->
+    #         Docs.findOne
+    #             model:'checkin'
+    #             current:true
 
-        # selected_person: ->
-        #     Meteor.users.findOne Session.get('selected_user_id')
+    #     # selected_person: ->
+    #     #     Meteor.users.findOne Session.get('selected_user_id')
 
-        checkedin_members: ->
-            Docs.find
-                model:'resident'
-                checked_in:true
+    #     checkedin_members: ->
+    #         Docs.find
+    #             model:'resident'
+    #             checked_in:true
 
-        checking_in: -> Session.get('checking_in')
-        is_query: -> Session.get('name_search')
+    #     checking_in: -> Session.get('checking_in')
+    #     is_query: -> Session.get('name_search')
 
-        # events: ->
-        #     Docs.find {
-        #       model:'log_event'
-        #     }, sort:_timestamp:-1
+    #     # events: ->
+    #     #     Docs.find {
+    #     #       model:'log_event'
+    #     #     }, sort:_timestamp:-1
 
 
     Template.checkin_button.events
