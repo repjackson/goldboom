@@ -1,6 +1,6 @@
 template(name='home')
     .ui.stackable.padded.grid
-        .two.column.row
+        .three.column.row
             // .center.aligned.column
             //     .ui.inline.header 
             //         +i name='dumbbell'
@@ -32,10 +32,14 @@ template(name='home')
             if currentUser
                 .column     
                     +active_checkins
+                .column     
+                    +latest_notes
+                .column     
+                    +latest_requests
+                .column     
+                    +latest_rentals
                 .column       
                     +guest_block
-            .column       
-                +healthclub_rentals
             .column       
                 .ui.header 
                     +i name='info'
@@ -72,10 +76,31 @@ template(name='guest_block')
                 a.ui.circular.icon.button(href="/guest/#{_id}")
                     i.chevron.right.large.icon
                 
-template(name='healthclub_rentals')
+template(name='latest_requests')
+    .ui.header 
+        +i name='wrench'
+        |latest requests
+    each rental_item_docs
+        .ui.segment
+            img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            .ui.inline.header #{title}
+            .ui.button.checkout_rental
+                i.big.checkmark.icon
+                // |checkout
+template(name='latest_notes')
+    .ui.header 
+        +i name='chat'
+        |#{latest_note_docs.count} latest notes
+    each latest_note_docs
+        .ui.segment
+            if image_id
+                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            .ui.inline.header #{title}
+            +bu
+template(name='latest_rentals')
     .ui.header 
         +i name='basketball'
-        |healthclub rentals
+        |latest rentals
     each rental_item_docs
         .ui.segment
             img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
@@ -88,8 +113,8 @@ template(name='healthclub_rentals')
 template(name='active_checkins')
     .ui.header 
         +i name='clock'
-        |active checkins
-    .ui.big.divided.animated.selection.list
+        |#{active_checkin_docs.count} active checkins
+    .ui.big.divided.animated.selection.list.smallscroll
         each active_checkin_docs 
             .item(href="/checkin/#{_id}" title=resident_user_id)
                 a.ui.large.label.fly_down(href="/user/#{resident_username}") 
@@ -97,11 +122,9 @@ template(name='active_checkins')
                     strong #{_resident.last_name}
                 +bu
                 | #{_when}
-                .ui.compact.button.checkout 
+                .ui.compact.icon.button.checkout 
                     i.sign.out.red.icon
                     // |checkout
-                
-                .ui.label #{notes}
                 
 template(name='latest_activity')
     .ui.header 

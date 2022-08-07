@@ -5,6 +5,15 @@ if Meteor.isClient
         ), name:'home'
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
+    Template.active_checkins.events
+        'click .checkout': ->
+            Docs.update @_id,
+                $set:
+                    active:false
+                    checkout_timestamp:Date.now()
+            Meteor.users.update @resident_user_id,
+                $set:
+                    checked_in:false
     Template.active_checkins.helpers 
         active_checkin_docs: ->
             Docs.find {
@@ -12,13 +21,45 @@ if Meteor.isClient
                 active:true
             }, 
                 sort:_timestamp:-1
-    Template.healthclub_rentals.onCreated ->
-        @autorun => Meteor.subscribe 'healthclub_rentals', ->
+                
+                
+    Template.latest_rentals.onCreated ->
+        @autorun => Meteor.subscribe 'latest_rentals', ->
+
+    Template.latest_notes.onCreated ->
+        @autorun => Meteor.subscribe 'latest_notes', ->
+    Template.latest_notes.helpers 
+        latest_note_docs: ->
+            Docs.find {
+                model:'post'
+            }, 
+                sort:_timestamp:-1
+                
+
+    Template.latest_requests.onCreated ->
+        @autorun => Meteor.subscribe 'latest_requests', ->
+    Template.latest_requests.helpers 
+        latest_request_docs: ->
+            Docs.find {
+                model:'task'
+            }, 
+                sort:_timestamp:-1
+                
+
+
 if Meteor.isServer 
-    Meteor.publish 'healthclub_rentals', ->
-        Docs.find 
+    Meteor.publish 'latest_notes', ->
+        Docs.find {
+            model:'post'
+        },
+            sort:_timestamp:-1
+            limit:20
+    Meteor.publish 'latest_rentals', ->
+        Docs.find {
             model:'rental'
-            healthclub:true
+        },
+            sort:_timestamp:-1
+            limit:20
     Meteor.publish 'home_guests', ->
         Docs.find {
             model:'guest'
@@ -41,20 +82,11 @@ if Meteor.isServer
                 last_name:1
     
 if Meteor.isClient
-    Template.active_checkins.events
-        'click .checkout': ->
-            Docs.update @_id,
-                $set:
-                    active:false
-                    checkout_timestamp:Date.now()
-            Meteor.users.update @resident_user_id,
-                $set:
-                    checked_in:false
-    Template.healthclub_rentals.helpers
+    Template.latest_rentals.helpers
         rental_item_docs: ->
             Docs.find 
                 model:'rental'
-    Template.healthclub_rentals.events
+    Template.latest_rentals.events
         'click .checkout_rental': ->
             new_id =
                 Docs.insert 
