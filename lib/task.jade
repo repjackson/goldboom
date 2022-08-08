@@ -196,10 +196,13 @@ template(name='task_edit')
         .ui.stackable.padded.grid
             .row 
                 .eight.wide.column
+                    .ui.big.button(href="/checkin/#{checkin_id}/edit")
+                        i.large.red.ban.icon 
+                        |cancel
                     .ui.inline.header editing task
                     +bu
                     // +text_edit key='title' label='title'
-                    +textarea_edit key='description' label='description'
+                    +html_edit key='description' label='description'
                     if currentUser.admin_mode
                         .ui.segment
                             .ui.inline.grey.header author

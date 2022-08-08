@@ -77,19 +77,21 @@ template(name='guest_block')
                     i.chevron.right.large.icon
                 
 template(name='latest_requests')
-    .ui.header 
+    a.ui.header.zoomer(href="/tasks" title='view all tasks')
         +i name='wrench'
         |latest requests
     .medscroll
         each kiosk_task_docs
             .ui.segment
-                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                // img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 .ui.inline.header #{title}
-                    |#{_when}
-                    |#{resident_username}
+                |!{content}
+                +bu
+                |#{_when}
+                |#{resident_username}
 template(name='latest_notes')
     .medscroll
-        .ui.header 
+        a.ui.header.zoomer(href="/posts" title='view posts')
             +i name='chat'
             |#{latest_note_docs.count} latest notes
         each latest_note_docs
@@ -109,7 +111,7 @@ template(name='view_button')
         i.large.chevron.right.icon
             
 template(name='latest_rentals')
-    .ui.header 
+    a.ui.header(href="/rentals" title='view rentals')
         +i name='basketball'
         |latest rentals
     .medscroll
@@ -125,7 +127,7 @@ template(name='latest_rentals')
         
                 
 template(name='active_checkins')
-    .ui.header 
+    a.ui.header.zoomer(href="/checkins" title='view checkins')
         +i name='clock'
         |#{active_checkin_docs.count} active checkins
     if subs_ready

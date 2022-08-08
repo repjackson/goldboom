@@ -227,6 +227,8 @@ if Meteor.isClient
                     model:'post'
                     building_number:@building_number
                     unit_number:@unit_number
+                    resident_username:@resident_username
+                    resident_user_id:@resident_user_id
                     parent_id:Router.current().params.doc_id
                     checkin_id:Router.current().params.doc_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
@@ -268,6 +270,8 @@ if Meteor.isClient
                     model:'task'
                     building_number:@building_number
                     unit_number:@unit_number
+                    resident_username:@resident_username
+                    resident_user_id:@resident_user_id
                     parent_id:Router.current().params.doc_id
                     checkin_id:Router.current().params.doc_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
@@ -279,7 +283,7 @@ if Meteor.isClient
                 Meteor.users.findOne @resident_user_id
                 
             Swal.fire({
-                # title: "thanks, #{resident.}, you're checked in"
+                title: "thanks, #{resident.first_name}, you're checked in"
                 # title: "checked in"
                 # text: "point bounty will be held "
                 icon: 'success'
