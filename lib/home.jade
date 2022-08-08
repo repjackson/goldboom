@@ -84,6 +84,8 @@ template(name='latest_requests')
         .ui.segment
             img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             .ui.inline.header #{title}
+                |#{_when}
+                |#{resident_username}
 template(name='latest_notes')
     .medscroll
         .ui.header 
@@ -96,7 +98,8 @@ template(name='latest_notes')
                 .ui.inline.header !{content}
                 +bu
                 +print_this
-                +view_button 
+                a.ui.large.icon.basic.circular.button(href="/post/#{_id}") 
+                    i.large.chevron.right.icon
             
 template(name='view_button')
     .ui.icon.button.fly_right(href="/#{model}/#{_id}")

@@ -152,6 +152,23 @@ if Meteor.isClient
                         $set:
                             status:'checked_out'
                             active:false
+                $('body').toast({
+                    title: "#{resident.first_name} #{resident.last_name} checked out"
+                    # message: 'Please see desk staff for key.'
+                    class : 'success'
+                    showIcon:'checkmark'
+                    showProgress:'bottom'
+                    position:'top center'
+                    className:
+                        toast: 'ui massive green fluid icon message'
+                    # displayTime: 5000
+                    transition:
+                      showMethod   : 'zoom',
+                      showDuration : 250,
+                      hideMethod   : 'fade',
+                      hideDuration : 250
+                    })
+                            
             else 
                 Router.go '/login'
                 
