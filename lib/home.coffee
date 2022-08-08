@@ -5,32 +5,36 @@ if Meteor.isClient
         ), name:'home'
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
-    Template.active_checkins.events
-        'click .checkout': ->
+    Template.active_checkin_doc.events
+        'click .checkout': (e)->
+            $(e.currentTarget).closest('.item').transition('fly right', 500)
             resident = Meteor.users.findOne @resident_user_id
-            Docs.update @_id,
-                $set:
-                    active:false
-                    checkout_timestamp:Date.now()
-            Meteor.users.update @resident_user_id,
-                $set:
-                    checked_in:false
-            $('body').toast({
-                title: "#{resident.first_name} #{resident.last_name} checked out"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'checkmark'
-                showProgress:'bottom'
-                position:'bottom right'
-                # className:
-                #     toast: 'ui massive green fluid icon message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
+            Meteor.setTimeout =>
+                Docs.update @_id,
+                    $set:
+                        active:false
+                        checkout_timestamp:Date.now()
+                Meteor.users.update @resident_user_id,
+                    $set:
+                        checked_in:false
+    
+                $('body').toast({
+                    title: "#{resident.first_name} #{resident.last_name} checked out"
+                    # message: 'Please see desk staff for key.'
+                    class : 'success'
+                    showIcon:'checkmark'
+                    showProgress:'bottom'
+                    position:'bottom right'
+                    # className:
+                    #     toast: 'ui massive green fluid icon message'
+                    # displayTime: 5000
+                    transition:
+                      showMethod   : 'zoom',
+                      showDuration : 250,
+                      hideMethod   : 'fade',
+                      hideDuration : 250
+                    })
+            ,500
                     
     Template.active_checkins.helpers 
         active_checkin_docs: ->
@@ -120,75 +124,75 @@ if Meteor.isClient
                     parent_id:@_id
             Router.go "/order/#{new_id}/edit"
     Template.home.events
-        'click .pick_user': ->
-            console.log @
-            Docs.insert 
-                model:'checkin'
-                active:true
-                resident_user_id:@_id
-                resident_username:@username
-            Session.set('current_search_user',null)
-            $('.search_user').val('')
-        'keyup .search_user': _.throttle((e,t)->
-            search_user = $('.search_user').val().trim().toLowerCase()
-            # if search_user.length > 1
-            #     Session.set('current_search_user', search_user)
-            Session.set('current_search_user', search_user)
-            console.log Session.get('current_search_user')
-            # picked_tags.push search_user
-            # # $( "p" ).blur();
-        , 500)
+        # 'click .pick_user': ->
+        #     console.log @
+        #     Docs.insert 
+        #         model:'checkin'
+        #         active:true
+        #         resident_user_id:@_id
+        #         resident_username:@username
+        #     Session.set('current_search_user',null)
+        #     $('.search_user').val('')
+        # 'keyup .search_user': _.throttle((e,t)->
+        #     search_user = $('.search_user').val().trim().toLowerCase()
+        #     # if search_user.length > 1
+        #     #     Session.set('current_search_user', search_user)
+        #     Session.set('current_search_user', search_user)
+        #     console.log Session.get('current_search_user')
+        #     # picked_tags.push search_user
+        #     # # $( "p" ).blur();
+        # , 500)
     
-        'click .checkin': ->
-            if Meteor.userId() 
-                Meteor.users.update Meteor.userId(),
-                    $set:
-                        checkedin:true
-                        checkedin_timestamp:Date.now()
-                Docs.insert 
-                    model:'checkin'
-                    status:'active'
-                    active:true
-                    building_number:Meteor.user().building_number
-                    unit_number:Meteor.user().unit_number
-            else 
-                Router.go '/login'
+        # 'click .checkin': ->
+        #     if Meteor.userId() 
+        #         Meteor.users.update Meteor.userId(),
+        #             $set:
+        #                 checkedin:true
+        #                 checkedin_timestamp:Date.now()
+        #         Docs.insert 
+        #             model:'checkin'
+        #             status:'active'
+        #             active:true
+        #             building_number:Meteor.user().building_number
+        #             unit_number:Meteor.user().unit_number
+        #     else 
+        #         Router.go '/login'
                 
-        'click .checkout': ->
-            if Meteor.userId() 
-                Meteor.users.update Meteor.userId(),
-                    $set:
-                        checkedin:false
-                        checked_out_timestamp:Date.now()
-                found = 
-                    Docs.findOne 
-                        model:'checkin'
-                        _author_id:Meteor.userId()
-                        active:true
-                if found
-                    Docs.update found._id,
-                        $set:
-                            status:'checked_out'
-                            active:false
-                $('body').toast({
-                    title: "#{resident.first_name} #{resident.last_name} checked out"
-                    # message: 'Please see desk staff for key.'
-                    class : 'success'
-                    showIcon:'checkmark'
-                    showProgress:'bottom'
-                    position:'top center'
-                    className:
-                        toast: 'ui massive green fluid icon message'
-                    # displayTime: 5000
-                    transition:
-                      showMethod   : 'zoom',
-                      showDuration : 250,
-                      hideMethod   : 'fade',
-                      hideDuration : 250
-                    })
+        # 'click .checkout': ->
+        #     if Meteor.userId() 
+        #         Meteor.users.update Meteor.userId(),
+        #             $set:
+        #                 checkedin:false
+        #                 checked_out_timestamp:Date.now()
+        #         found = 
+        #             Docs.findOne 
+        #                 model:'checkin'
+        #                 _author_id:Meteor.userId()
+        #                 active:true
+        #         if found
+        #             Docs.update found._id,
+        #                 $set:
+        #                     status:'checked_out'
+        #                     active:false
+        #         $('body').toast({
+        #             title: "#{resident.first_name} #{resident.last_name} checked out"
+        #             # message: 'Please see desk staff for key.'
+        #             class : 'success'
+        #             showIcon:'checkmark'
+        #             showProgress:'bottom'
+        #             position:'top center'
+        #             className:
+        #                 toast: 'ui massive green fluid icon message'
+        #             # displayTime: 5000
+        #             transition:
+        #               showMethod   : 'zoom',
+        #               showDuration : 250,
+        #               hideMethod   : 'fade',
+        #               hideDuration : 250
+        #             })
                             
-            else 
-                Router.go '/login'
+        #     else 
+        #         Router.go '/login'
                 
     Template.guest_block.helpers
         guest_docs: ->

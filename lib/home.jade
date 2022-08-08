@@ -122,21 +122,24 @@ template(name='active_checkins')
     .ui.header 
         +i name='clock'
         |#{active_checkin_docs.count} active checkins
-        if subs_ready
-            .ui.large.divided.animated.selection.list.medscroll
-                each active_checkin_docs 
-                    .item(href="/checkin/#{_id}" title=resident_user_id)
-                        .content
-                            a.ui.big.label.fly_down.zoomer(href="/user/#{resident_username}") 
-                                strong #{_resident.first_name}
-                                strong #{_resident.last_name}
-                            +bu
-                            | #{_when}
-                            .ui.compact.icon.button.checkout(title='sign out')
-                                i.sign.out.red.icon
-                                // |checkout
-        else 
-            i.massive.loading.refresh.icon
+    if subs_ready
+        .ui.large.divided.animated.selection.list.medscroll
+            each active_checkin_docs 
+                +active_checkin_doc
+    else 
+        i.massive.loading.refresh.icon
+        
+template(name='active_checkin_doc')
+    .item(href="/checkin/#{_id}" title=resident_user_id)
+        .content
+            a.ui.big.label.fly_down.zoomer(href="/user/#{resident_username}") 
+                strong #{_resident.first_name}
+                strong #{_resident.last_name}
+            +bu
+            | #{_when}
+            .ui.compact.icon.button.checkout(title='sign out')
+                i.sign.out.red.icon
+                // |checkout
                     
 template(name='latest_activity')
     .ui.header 

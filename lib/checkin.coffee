@@ -682,21 +682,24 @@ if Meteor.isClient
             # , 750
 
         'click .checkout': (e,t)->
-            # $(e.currentTarget).closest('.card').transition('fade up')
             # Meteor.setTimeout =>
-            Meteor.call 'checkout_user', @_id, =>
-                $('body').toast({
-                    title: "#{@first_name} #{@last_name} checked out"
-                    class: 'success'
-                    transition:
-                        showMethod   : 'zoom',
-                        showDuration : 250,
-                        hideMethod   : 'fade',
-                        hideDuration : 250
-                })
-                Session.set 'name_search',null
-                $('.name_search').val('')
-                # , 100
+            $(e.currentTarget).closest('.item').transition('fly right',500)
+            Meteor.setTimeout ->
+                Meteor.call 'checkout_user', @_id, =>
+                    $('body').toast({
+                        title: "#{@first_name} #{@last_name} checked out"
+                        class: 'success'
+                        transition:
+                            showMethod   : 'zoom',
+                            showDuration : 250,
+                            hideMethod   : 'fade',
+                            hideDuration : 250
+                    })
+    
+                    Session.set 'name_search',null
+                    $('.name_search').val('')
+            , 500
+                
 
 
     Template.checkin_input.events

@@ -120,7 +120,7 @@ if Meteor.isClient
                     )
                 # Session.set('current_building_number', null)
                 # Session.set('current_unit_number',null)
-                # $(e.currentTarget).closest('.label').transition('shake', 500)
+                $(e.currentTarget).closest('.label').transition('tada', 1000)
             else 
                 # Session.set('current_building_number', @building_number)
                 # Session.set('current_unit_number',null)
@@ -130,7 +130,7 @@ if Meteor.isClient
                     $unset:
                         current_unit_number:1
                     )
-                # $(e.currentTarget).closest('.label').transition('jiggle', 500)
+                $(e.currentTarget).closest('.label').transition('jiggle', 1000)
         'click .pick_unit': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number is @unit_number
@@ -139,14 +139,14 @@ if Meteor.isClient
                     $set:
                         current_unit_number:null
                 )
-                # $(e.currentTarget).closest('.label').transition('shake', 500)
+                $(e.currentTarget).closest('.label').transition('shake', 1000)
             else 
                 # Session.set('current_unit_number', @unit_number)
                 Docs.update(kiosk._id, 
                     $set:
                         current_unit_number:@unit_number
                     )
-                # $(e.currentTarget).closest('.label').transition('jiggle', 500)
+                $(e.currentTarget).closest('.label').transition('jiggle', 1000)
     Template.resident_picker.events
         'keyup .new_resident_name':(e)->
             if e.which in [13,9]
@@ -189,7 +189,7 @@ if Meteor.isClient
                                 current_search_user:null
                                 current_building_number:null
                                 current_unit_number:null
-                        $(e.currentTarget).closest('.grid').transition('fly right', 500)
+                        $(e.currentTarget).closest('.grid').transition('fly right', 1000)
    
                         Router.go "/checkin/#{new_id}/edit"
                         
@@ -231,7 +231,7 @@ if Meteor.isClient
                     current_search_user:null
                     current_building_number:null
                     current_unit_number:null
-            $(e.currentTarget).closest('.grid').transition('fly right', 500)
+            $(e.currentTarget).closest('.grid').transition('fly right', 1000)
 
             Router.go "/checkin/#{new_id}/edit"
             # Session.set('current_search_user',null)
@@ -268,7 +268,7 @@ if Meteor.isClient
         #     # console.log Session.get('current_search_user')
         #     # picked_tags.push search_user
         #     # # $( "p" ).blur();
-        # , 500)
+        # , 1000)
         # 'keyup .add_unit_number': _.throttle((e,t)->
         #     kiosk = Docs.findOne model:'kiosk'
         #     new_unit_number = parseInt($('.add_unit_number').val())
@@ -283,7 +283,7 @@ if Meteor.isClient
         #             $set:
         #                 current_unit_number:new_unit_number
         #         # Session.set('current_unit_number', new_unit_number)
-        # , 500)
+        # , 1000)
         # 'click .add_new_unit': (e)->
         #     kiosk = Docs.findOne model:'kiosk'
         #     Docs.update kiosk._id,
@@ -438,20 +438,20 @@ if Meteor.isClient
 
     Template.healthclub_session.events
         'click .vote_yes': ->
-            $('.poll_area').transition('fade out', 500)
+            $('.poll_area').transition('fade out', 1000)
             Meteor.setTimeout =>
                 healthclub_session_document = Docs.findOne Router.current().params.doc_id
                 Meteor.call 'kiosk_vote_yes', @_id, healthclub_session_document.user_id
-            , 500
-            $('.poll_area').transition('fade in', 500)
+            , 1000
+            $('.poll_area').transition('fade in', 1000)
 
         'click .vote_no': ->
-            $('.poll_area').transition('fade out', 500)
+            $('.poll_area').transition('fade out', 1000)
             Meteor.setTimeout =>
                 healthclub_session_document = Docs.findOne Router.current().params.doc_id
                 Meteor.call 'kiosk_vote_no', @_id, healthclub_session_document.user_id
-            , 500
-            $('.poll_area').transition('fade in', 500)
+            , 1000
+            $('.poll_area').transition('fade in', 1000)
 
 
         'click .cancel_checkin': ->
