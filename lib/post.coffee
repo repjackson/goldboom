@@ -37,7 +37,9 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs','post', ->
     Template.posts.helpers
         total_post_count: -> Counts.get('model_counter') 
-
+        doc_results: ->
+            Docs.find 
+                model:'post'
 
     Template.post_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->

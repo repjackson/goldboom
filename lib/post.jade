@@ -30,34 +30,34 @@ template(name='posts')
                         i.search.link.icon.refresh_agg
                         // i.yin.yang.big.loading.link.icon.reconnect
                     if is_loading
-                        i.yin.yang.big.loading.icon
+                        i.refresh.big.loading.icon
                     //- input#search(type='text' autofocus='' autocomplete="off" value=current_query)
                     input#search(type='text' autofocus='' autocomplete="off" placeholder='')
                     //- .ui.header #{connection.status}
-                    with emotion_avg_result
-                        // .ui.label
-                        //     |{{to_percent avg_sent_score}}%
-                        //     small sentiment
-                        if above_50 avg_joy_score
-                            .ui.green.big.label
-                                |{{to_percent avg_joy_score}}%
-                                small joyful
-                        if above_50 avg_anger_score
-                            .ui.red.big.label
-                                |{{to_percent avg_anger_score}}%
-                                small angry
-                        if above_50 avg_sadness_score
-                            .ui.blue.big.label
-                                |{{to_percent avg_sadness_score}}%
-                                small sad
-                        if above_50 avg_disgust_score
-                            .ui.orange.big.label
-                                |{{to_percent avg_disgust_score}}%
-                                small disgusted
-                        if above_50 avg_fear_score
-                            .ui.grey.big.label
-                                |{{to_percent avg_fear_score}}%
-                                small fearful
+                    // with emotion_avg_result
+                    //     // .ui.label
+                    //     //     |{{to_percent avg_sent_score}}%
+                    //     //     small sentiment
+                    //     if above_50 avg_joy_score
+                    //         .ui.green.big.label
+                    //             |{{to_percent avg_joy_score}}%
+                    //             small joyful
+                    //     if above_50 avg_anger_score
+                    //         .ui.red.big.label
+                    //             |{{to_percent avg_anger_score}}%
+                    //             small angry
+                    //     if above_50 avg_sadness_score
+                    //         .ui.blue.big.label
+                    //             |{{to_percent avg_sadness_score}}%
+                    //             small sad
+                    //     if above_50 avg_disgust_score
+                    //         .ui.orange.big.label
+                    //             |{{to_percent avg_disgust_score}}%
+                    //             small disgusted
+                    //     if above_50 avg_fear_score
+                    //         .ui.grey.big.label
+                    //             |{{to_percent avg_fear_score}}%
+                    //             small fearful
                     
                 unless connected
                     //- .ui.header disconnected
@@ -87,12 +87,13 @@ template(name='posts')
                             +agg_tag
                 // .ui.hidden.divider
             .sixteen.wide.column
-                if subs_ready
-                    // if session_is 'view_mode' 'list'
-                    .ui.segment.alpha
-                        .ui.selection.animated.divided.list 
-                            each doc_results
-                                +post_item
+                // if subs_ready
+                //     // if session_is 'view_mode' 'list'
+                // .ui.segment.alpha
+                    // .ui.selection.animated.divided.list 
+                .ui.three.stackable.cards
+                    each doc_results
+                        +post_item
                             
 template(name='unpick_tag')
     button.ui.big.image.link.label.zoomer.unpick_tag.pointer(tabindex="0" class="#{loading_class} #{active_term_class}")
@@ -104,19 +105,23 @@ template(name='unpick_tag')
 
                             
 template(name='post_item')
-    .item 
-        if image_id
-            a.fly_right(href="/post/#{_id}")
-                img.ui.image(src="{{c.url image_id width=600 height=600 crop='crop'}}")
-        a.ui.inline.header.zoomer.fly_left(href="/post/#{_id}") !{title}
-        +bu
-        .ui.label
-            i.comment.icon 
-            |#{num_comments}
-        .ui.label 
-            i.plus.icon
-            |#{_when}
-        +voting
+    .card 
+        .content
+            if image_id
+                a.fly_right(href="/post/#{_id}")
+                    img.ui.image(src="{{c.url image_id width=600 height=600 crop='crop'}}")
+            a.ui.inline.header.zoomer.fly_left(href="/post/#{_id}") !{title}
+            +bu
+            |!{content} 
+            |!{body}
+            .ui.label #{resident_username}
+            .ui.label
+                i.comment.icon 
+                |#{num_comments}
+            .ui.label 
+                i.plus.icon
+                |#{_when}
+            // +voting
             
             
             
@@ -161,12 +166,6 @@ template(name='post_view')
             img.ui.fluid.image.checkin_banner(src=url)
         .ui.stackable.padded.grid 
             .eleven.wide.column
-                a.ui.compact.button.fly_left.zoomer(href="/posts" title='back to browse')
-                    i.chevron.left.icon
-                    +i name='news'
-                    |posts
-                +building_nav_button
-                +unit_nav_button
                 .ui.segment.alpha.scrollin
                     .ui.inline.header #{title}
                     if can_edit 
@@ -180,6 +179,12 @@ template(name='post_view')
                     |!{body} !{content}
                     +comments
             .five.wide.column
+                a.ui.compact.button.fly_left.zoomer(href="/posts" title='back to browse')
+                    i.chevron.left.icon
+                    +i name='news'
+                    |posts
+                +building_nav_button
+                +unit_nav_button
                 if thumbnail
                     img.ui.centered.rounded.image.invert(src=thumbnail)
                     .ui.segment 
@@ -231,7 +236,7 @@ template(name='post_edit')
                     |editing note
                 +bu
                 .bigger
-                    +textarea_edit key='content'
+                    +html_edit key='content'
                 
                 a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post
                     i.checkmark.big.icon
