@@ -50,11 +50,11 @@ template(name='home')
                 a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
                     +i name='phone'
                     |phone: (303) 545-1787
-            .column
-                +latest_activity
-            if currentUser
-                .column
-                    +latest_checkins
+            // .column
+            //     +latest_activity
+            // if currentUser
+            //     .column
+            //         +latest_checkins
             // .column
             //     +map_view
         // .one.column.row
@@ -122,18 +122,21 @@ template(name='active_checkins')
     .ui.header 
         +i name='clock'
         |#{active_checkin_docs.count} active checkins
-    .ui.large.divided.animated.selection.list.medscroll
-        each active_checkin_docs 
-            .item(href="/checkin/#{_id}" title=resident_user_id)
-                .content
-                    a.ui.big.label.fly_down.zoomer(href="/user/#{resident_username}") 
-                        strong #{_resident.first_name}
-                        strong #{_resident.last_name}
-                    +bu
-                    | #{_when}
-                    .ui.compact.icon.button.checkout(title='sign out')
-                        i.sign.out.red.icon
-                        // |checkout
+        if subs_ready
+            .ui.large.divided.animated.selection.list.medscroll
+                each active_checkin_docs 
+                    .item(href="/checkin/#{_id}" title=resident_user_id)
+                        .content
+                            a.ui.big.label.fly_down.zoomer(href="/user/#{resident_username}") 
+                                strong #{_resident.first_name}
+                                strong #{_resident.last_name}
+                            +bu
+                            | #{_when}
+                            .ui.compact.icon.button.checkout(title='sign out')
+                                i.sign.out.red.icon
+                                // |checkout
+        else 
+            i.massive.loading.refresh.icon
                     
 template(name='latest_activity')
     .ui.header 

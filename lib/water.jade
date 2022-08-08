@@ -63,6 +63,7 @@ template(name='hot_tub_readings')
                 | #{notes}
                 .ui.large.label #{ph_message}
                 .ui.large.label #{chlorine_message}
+                |#{_when}
                 +author_info
                 | #{when}
                 a.ui.large.icon.button.inline(href="/hot_tub_reading/edit/#{_id}")
@@ -85,6 +86,7 @@ template(name='pool_readings')
                 .ui.basic.label #{chlorine}cl
                 .ui.basic.label #{temperature}deg
                 | #{notes}  
+                |#{_when}
                 .ui.large.label #{ph_message}
                 .ui.large.label #{chlorine_message}
                 +author_info

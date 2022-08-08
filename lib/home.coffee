@@ -7,6 +7,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkins.events
         'click .checkout': ->
+            resident = Meteor.users.findOne @resident_user_id
             Docs.update @_id,
                 $set:
                     active:false
@@ -14,6 +15,23 @@ if Meteor.isClient
             Meteor.users.update @resident_user_id,
                 $set:
                     checked_in:false
+            $('body').toast({
+                title: "#{resident.first_name} #{resident.last_name} checked out"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'checkmark'
+                showProgress:'bottom'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive green fluid icon message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+                    
     Template.active_checkins.helpers 
         active_checkin_docs: ->
             Docs.find {
