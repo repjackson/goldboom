@@ -51,9 +51,10 @@ if Meteor.isClient
         @autorun => @subscribe 'user_checkins', Router.current().params.username, ->
     Template.user_checkins.helpers 
         user_checkin_docs: ->
-            Docs.find
+            Docs.find {
                 model:'checkin'
                 resident_username:Router.current().params.username
+            }, sort:_timestamp:-1
     Template.profile.onCreated ->
         Meteor.call 'calc_user_stats', Router.current().params.username, ->
         # Meteor.call 'calc_user_points', Router.current().params.username, ->

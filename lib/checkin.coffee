@@ -156,11 +156,23 @@ if Meteor.isClient
                     $pull:
                         guest_ids: @_id
                         guest_names:@name
+                $('body').toast({
+                    title: "#{@name} added"
+                    showIcon:'plus'
+                    class: 'success'
+                    position:'bottom right'
+                })
             else
                 Docs.update Router.current().params.doc_id, 
                     $addToSet:
                         guest_ids: @_id
                         guest_names:@name
+                $('body').toast({
+                    title: "#{@name} removed"
+                    iconClass:'remove'
+                    class: 'info'
+                    position:'bottom right'
+                })
         # 'click .add_guest': ->
         #     kiosk = Docs.findOne model:'kiosk'
         #     name = prompt 'first and last name'

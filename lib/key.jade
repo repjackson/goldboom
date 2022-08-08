@@ -31,7 +31,8 @@ template(name='keys')
                         each key_docs
                             +key_item
         else 
-            +login
+            .sixteen.wide.centered.column
+                +login
             
 template(name='key_item')
     a.ui.item.fly_right(href="/key/#{_id}") 

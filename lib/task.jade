@@ -24,8 +24,8 @@ template(name='tasks')
             unless one_result
                 .ui.inline.header(title='result count') #{result_docs.count}
                 // +search_input key='title'
-                +session_icon_button key='view_mode' value='grid' icon='grid' 
-                +session_icon_button key='view_mode' value='list' icon='list'
+                // +session_icon_button key='view_mode' value='grid' icon='grid' 
+                // +session_icon_button key='view_mode' value='list' icon='list'
                 
                 +sort_direction_toggle
                 // +sort_key_toggle
@@ -38,39 +38,25 @@ template(name='tasks')
                 // +session_set key='limit' value=100
             .ui.hidden.divider
             if subs_ready
-                if session_is 'view_mode' 'grid'
-                    .ui.stackable.cards.scrolling
-                        if one_result
-                            .ui.one.cards
-                                each task_docs 
-                                    +task_card
-                        else
-                            .ui.cards
-                                each task_docs 
-                                    +task_card
-                else
-                    .ui.large.divided.list 
-                        each task_docs 
-                            +task_item
+                // if session_is 'view_mode' 'grid'
+                //     .ui.stackable.cards.scrolling
+                //         if one_result
+                //             .ui.one.cards
+                //                 each task_docs 
+                //                     +task_card
+                //         else
+                //             .ui.cards
+                //                 each task_docs 
+                //                     +task_card
+                // else
+                .ui.large.divided.list 
+                    each task_docs 
+                        +task_item
             else 
                 .ui.center.aligned.basic.segment
                     i.massive.yin.yang.loading.grey.icon
 
 
-template(name='task_card')
-    .card
-        if image_id 
-            img.ui.image.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-        .content
-            .ui.header #{title}
-            span(title='recipient')
-                +i name='lend'
-                with _target
-                    +user_info
-            span.smallscroll
-                |!{description}
-            a.ui.icon.button.zoomer(href="/task/#{_id}")
-                i.right.large.chevron.icon
 template(name='task_item')
     .item.mark_viewed
         .content
@@ -117,16 +103,17 @@ template(name='task_view')
                         i.chevron.left.icon
                         +i name='checkmark'
                         |checkin
-                    a.ui.large.compact.button.fly_left(href="/tasks")
-                        i.chevron.left.icon
-                        +i name='tasks'
-                        |tasks
+                    if currentUser
+                        a.ui.large.compact.button.fly_left(href="/tasks")
+                            i.chevron.left.icon
+                            +i name='tasks'
+                            |tasks
                     .ui.inline.small.header viewing task
                     .ui.big.inline.header #{title}
                     
-                    a.ui.large.compact.button.fly_down(href="/task/#{_id}/edit")
-                        i.pencil.icon
-                        |edit
+                    // a.ui.large.compact.button.fly_down(href="/task/#{_id}/edit")
+                    //     i.pencil.icon
+                    //     |edit
                     |#{_when}
                     if complete 
                         i.big.green.checkmark.icon
@@ -188,10 +175,11 @@ template(name='task_view')
                     //     +group_segment 
                     if event_id 
                         +event_segment
-                    +voting_full
-                    .ui.button.clone_task 
-                        +i name='clone'
-                        |clone
+                    if currentUser
+                        +voting_full
+                        .ui.button.clone_task 
+                            +i name='clone'
+                            |clone
                     a.fly_right(href="/user/#{_target.username}")
                         img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url _target.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.large.center.aligned.header.pointer.zoom

@@ -8,13 +8,13 @@ template(name='checkin_edit')
                 .ui.hidden.divider
                 with _resident
                     .ui.massive.inline.header #{first_initial} #{last_initial}
-                    .ui.large.basic.brown.label.inline 
-                        // +i name='apartment'
-                        i.large.building.icon
+                    .ui.large.basic.brown.image.label 
+                        +i name='apartment'
+                        // i.large.building.icon
                         |#{building_number}
-                    .ui.large.basic.blue.label.inline
-                        // +i name='room'
-                        i.large.cube.icon
+                    .ui.large.basic.blue.image.label
+                        +i name='room'
+                        // i.large.cube.icon
                         |#{unit_number}
                     if verified 
                         .ui.large.basic.label 
@@ -262,6 +262,7 @@ template(name='checkins')
             .four.wide.column
                 .ui.inline.header 
                     +i name='checkmark'
+                    |#{checkin_docs.count}
                     |checkins
                 .ui.icon.button.add_checkin
                     i.plus.icon
@@ -273,29 +274,30 @@ template(name='checkins')
                 +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
                 +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
                 +session_set key='sort_key' value='building_number' label='building #' icon='apartment'
-                .ui.large.selection.animated.list.scrolling
+                .ui.selection.animated.divided.list.scrolling
                     each checkin_docs
                         +checkin_item
         else 
-            +login
+            .sixteen.wide.column
+                +login
                     
                     
 template(name='checkin_item')
     a.ui.item(href="/checkin/#{_id}") 
         .content 
-            .ui.big.label  
-                |#{_when}
-            .ui.big.label  
+            .ui.inline.header  
                 |#{resident_username}
+            // .ui.big.label  
+            |#{_when}
             +bu
             // .ui.big.label 
             //     small author:
             //     |#{_author_username}
-            if session_resident.kiosk_photo
-                img.ui.image(src="{{c.url session_resident.kiosk_photo width=300 height=300 gravity='face' crop='fill'}}")
-            else
-                //- |old photo
-                img.ui.image(src="{{c.url session_resident.image_id width=300 height=300 gravity='face' crop='fill'}}")
+            // if session_resident.kiosk_photo
+            //     img.ui.image(src="{{c.url session_resident.kiosk_photo width=300 height=300 gravity='face' crop='fill'}}")
+            // else
+            //     //- |old photo
+            //     img.ui.image(src="{{c.url session_resident.image_id width=300 height=300 gravity='face' crop='fill'}}")
             a.fly_right(href="/resident/#{resident_id}")
                 .ui.inline.header
                     |#{resident_first_name} #{resident_last_name}
@@ -324,10 +326,11 @@ template(name='checkin_item')
             if user_is_resident
                 +date_view key='start_date' label='start date' direct=true
                 +date_view key='expiration_date' label='expiration date' direct=true
-            .ui.button.sign_out
-                +i name='exit' classes='ui mini inline image'
+            span.ui.image.large.label.zoomer.sign_out
+                +i name='exit'
                 |check out
-            +print_this
+            if currentUser.admin_mode
+                +print_this
 
 
 template(name='checkin_view')

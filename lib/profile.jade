@@ -128,10 +128,12 @@ template(name='user_checkins')
     .ui.header 
         +i name='checkmark'
         |checkins 
-    .ui.list 
+    .ui.list.medscroll
         each user_checkin_docs 
-            .item #{_when}
-                +bu
+            .item 
+                .content 
+                    |#{_when}
+                    +bu
          
          
 template(name='user_models')

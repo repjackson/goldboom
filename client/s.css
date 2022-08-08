@@ -678,7 +678,7 @@ embed {
     margin:2px !important;
     /*opacity:.9 !important;*/
     /*font-family: 'Ubuntu', sans-serif !important;*/
-    border-radius: 20px !important; 
+    /*border-radius: 20px !important; */
 }
 
 .disabled, .disabled.segment, .disabled.label{
@@ -1200,7 +1200,8 @@ h1.ui.header{
 }
 
 .scrolling::-webkit-scrollbar {
-    display: none;
+    /*display: none;*/
+    width: 2px;
 }
 .smallscroll::-webkit-scrollbar {
     width: 2px;
