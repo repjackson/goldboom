@@ -177,8 +177,7 @@ template(name='post_view')
                         +print_this
                     if image_id 
                         +image_view key='image_id'
-                    if comments 
-                        .ui.header comments
+                    |!{body} !{content}
                     +comments
             .five.wide.column
                 if thumbnail

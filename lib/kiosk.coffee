@@ -131,6 +131,7 @@ if Meteor.isClient
                         current_unit_number:1
                     )
                 $(e.currentTarget).closest('.label').transition('jiggle', 1000)
+    Template.unit_picker.events 
         'click .pick_unit': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number is @unit_number
@@ -146,7 +147,7 @@ if Meteor.isClient
                     $set:
                         current_unit_number:@unit_number
                     )
-                $(e.currentTarget).closest('.label').transition('jiggle', 1000)
+                $(e.currentTarget).closest('.label').transition('tada', 1000)
     Template.resident_picker.events
         'keyup .new_resident_name':(e)->
             if e.which in [13,9]
@@ -356,7 +357,7 @@ if Meteor.isClient
         # selected_unit: -> Session.get('current_unit_number')
         building_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_building_number is @building_number then 'black massive' else 'big black basic'
+            if kiosk.current_building_number is @building_number then 'brown massive' else 'big brown basic'
         building_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number
@@ -371,7 +372,7 @@ if Meteor.isClient
     Template.unit_picker.helpers
         unit_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_unit_number is @unit_number then 'black massive' else 'big basic black'
+            if kiosk.current_unit_number is @unit_number then 'blue massive' else 'big basic blue'
         unit_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number
@@ -397,193 +398,193 @@ if Meteor.isClient
             Meteor.users.find match
 
 
-    Template.healthclub_session.onCreated ->
-        # @autorun => Meteor.subscribe 'current_poll'
-        @autorun => Meteor.subscribe 'doc', Session.get('new_guest_id')
-        @autorun => Meteor.subscribe 'checkin_guests',Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'resident_from_healthclub_session', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'healthclub_session', Router.current().params.doc_id
-        # @autorun -> Meteor.subscribe 'model_docs', 'guest'
+    # Template.healthclub_session.onCreated ->
+    #     # @autorun => Meteor.subscribe 'current_poll'
+    #     @autorun => Meteor.subscribe 'doc', Session.get('new_guest_id')
+    #     @autorun => Meteor.subscribe 'checkin_guests',Router.current().params.doc_id
+    #     @autorun -> Meteor.subscribe 'resident_from_healthclub_session', Router.current().params.doc_id
+    #     @autorun -> Meteor.subscribe 'healthclub_session', Router.current().params.doc_id
+    #     # @autorun -> Meteor.subscribe 'model_docs', 'guest'
 
-        # @autorun => Meteor.subscribe 'rules_signed_username', @data.username
-    Template.healthclub_session.onRendered ->
-        # @timer = new ReactiveVar 5
-        # Session.set 'timer',5
-        # Session.set 'timer_engaged', false
-        # Meteor.setTimeout ->
-        #     healthclub_session_document = Docs.findOne Router.current().params.doc_id
-        #     # console.log @
-        #     if healthclub_session_document and healthclub_session_document.user_id
-        #         resident = Meteor.users.findOne healthclub_session_document.user_id
-        #         # if resident.user_id
-        #         rules_found = Docs.findOne
-        #             model:'rules_and_regs_signing'
-        #             resident:resident.username
-        #         if resident.rules_and_regulations_signed and resident.member_waiver_signed
-        #             Session.set 'timer_engaged', true
-        #             interval_id = Meteor.setInterval( ->
-        #                 if Session.equals 'timer_engaged', true
-        #                     if Session.equals 'timer', 0
-        #                         Meteor.call 'submit_checkin'
-        #                         Meteor.clearInterval interval_id
-        #                     else
-        #                         Session.set('timer', Session.get('timer')-1)
-        #                 # t.timer.set(t.timer.get()-1)
-        #             ,1000)
-        # , 4000
-        # Session.set 'loading_checkin', false
-        # alert 'stop loading'
-
-
-
-    Template.healthclub_session.events
-        'click .vote_yes': ->
-            $('.poll_area').transition('fade out', 1000)
-            Meteor.setTimeout =>
-                healthclub_session_document = Docs.findOne Router.current().params.doc_id
-                Meteor.call 'kiosk_vote_yes', @_id, healthclub_session_document.user_id
-            , 1000
-            $('.poll_area').transition('fade in', 1000)
-
-        'click .vote_no': ->
-            $('.poll_area').transition('fade out', 1000)
-            Meteor.setTimeout =>
-                healthclub_session_document = Docs.findOne Router.current().params.doc_id
-                Meteor.call 'kiosk_vote_no', @_id, healthclub_session_document.user_id
-            , 1000
-            $('.poll_area').transition('fade in', 1000)
+    #     # @autorun => Meteor.subscribe 'rules_signed_username', @data.username
+    # Template.healthclub_session.onRendered ->
+    #     # @timer = new ReactiveVar 5
+    #     # Session.set 'timer',5
+    #     # Session.set 'timer_engaged', false
+    #     # Meteor.setTimeout ->
+    #     #     healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #     #     # console.log @
+    #     #     if healthclub_session_document and healthclub_session_document.user_id
+    #     #         resident = Meteor.users.findOne healthclub_session_document.user_id
+    #     #         # if resident.user_id
+    #     #         rules_found = Docs.findOne
+    #     #             model:'rules_and_regs_signing'
+    #     #             resident:resident.username
+    #     #         if resident.rules_and_regulations_signed and resident.member_waiver_signed
+    #     #             Session.set 'timer_engaged', true
+    #     #             interval_id = Meteor.setInterval( ->
+    #     #                 if Session.equals 'timer_engaged', true
+    #     #                     if Session.equals 'timer', 0
+    #     #                         Meteor.call 'submit_checkin'
+    #     #                         Meteor.clearInterval interval_id
+    #     #                     else
+    #     #                         Session.set('timer', Session.get('timer')-1)
+    #     #                 # t.timer.set(t.timer.get()-1)
+    #     #             ,1000)
+    #     # , 4000
+    #     # Session.set 'loading_checkin', false
+    #     # alert 'stop loading'
 
 
-        'click .cancel_checkin': ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            if healthclub_session_document
-                Docs.remove healthclub_session_document._id
-            if healthclub_session_document and healthclub_session_document.user_id
-                Meteor.users.update healthclub_session_document.user_id,
-                    $inc:
-                        checkins_without_email_verification:-1
-                        checkins_without_gov_id:-1
 
-            Router.go "/healthclub"
+    # Template.healthclub_session.events
+    #     'click .vote_yes': ->
+    #         $('.poll_area').transition('fade out', 1000)
+    #         Meteor.setTimeout =>
+    #             healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #             Meteor.call 'kiosk_vote_yes', @_id, healthclub_session_document.user_id
+    #         , 1000
+    #         $('.poll_area').transition('fade in', 1000)
 
-        # 'click .recheck_photo': ->
-        #     healthclub_session_document = Docs.findOne Router.current().params.doc_id
-        #     if healthclub_session_document and healthclub_session_document.user_id
-        #         user = Meteor.users.findOne healthclub_session_document.user_id
-        #         Meteor.call 'image_check', user
-        #         Meteor.call 'staff_government_id_check', user
-        #
-        #
-        #
-        # 'click .recheck': ->
-        #     console.log @
-        #     Meteor.call 'run_user_checks', @
-        #     Meteor.call 'member_waiver_signed', @
-        #     Meteor.call 'rules_and_regulations_signed', @
-
-        'click .add_guest': ->
-            # console.log @
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            new_guest_id =
-                Docs.insert
-                    model:'guest'
-                    session_id: healthclub_session_document._id
-                    resident_id: healthclub_session_document.user_id
-                    resident: healthclub_session_document.resident_username
-            # Session.set 'displaying_profile', null
-            #
-            Router.go "/add_guest/#{new_guest_id}"
-
-        'click .sign_rules': ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            new_id = Docs.insert
-                model:'rules_and_regs_signing'
-                session_id: healthclub_session_document._id
-                resident_id: healthclub_session_document.user_id
-                resident: healthclub_session_document.resident_username
-            Router.go "/sign_rules/#{new_id}/#{healthclub_session_document.resident_username}"
-            # Session.set 'displaying_profile',null
+    #     'click .vote_no': ->
+    #         $('.poll_area').transition('fade out', 1000)
+    #         Meteor.setTimeout =>
+    #             healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #             Meteor.call 'kiosk_vote_no', @_id, healthclub_session_document.user_id
+    #         , 1000
+    #         $('.poll_area').transition('fade in', 1000)
 
 
-        'click .sign_guidelines': ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            new_id = Docs.insert
-                model:'member_guidelines_signing'
-                session_id: healthclub_session_document._id
-                resident_id: healthclub_session_document.user_id
-                resident: healthclub_session_document.resident_username
-            Router.go "/sign_guidelines/#{new_id}/#{healthclub_session_document.resident_username}"
-            # Session.set 'displaying_profile',null
+    #     'click .cancel_checkin': ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         if healthclub_session_document
+    #             Docs.remove healthclub_session_document._id
+    #         if healthclub_session_document and healthclub_session_document.user_id
+    #             Meteor.users.update healthclub_session_document.user_id,
+    #                 $inc:
+    #                     checkins_without_email_verification:-1
+    #                     checkins_without_gov_id:-1
 
-        'click .add_recent_guest': ->
-            current_session = Docs.findOne
-                model:'healthclub_session'
-                current:true
-            Docs.update current_session._id,
-                $addToSet:guest_ids:@_id
+    #         Router.go "/healthclub"
 
-        'click .remove_guest': ->
-            current_session = Docs.findOne
-                model:'healthclub_session'
-                current:true
-            # console.log current_session
-            Docs.update current_session._id,
-                $pull:guest_ids:@_id
+    #     # 'click .recheck_photo': ->
+    #     #     healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #     #     if healthclub_session_document and healthclub_session_document.user_id
+    #     #         user = Meteor.users.findOne healthclub_session_document.user_id
+    #     #         Meteor.call 'image_check', user
+    #     #         Meteor.call 'staff_government_id_check', user
+    #     #
+    #     #
+    #     #
+    #     # 'click .recheck': ->
+    #     #     console.log @
+    #     #     Meteor.call 'run_user_checks', @
+    #     #     Meteor.call 'member_waiver_signed', @
+    #     #     Meteor.call 'rules_and_regulations_signed', @
 
-        'click .toggle_adding_guest': ->
-            Session.set 'adding_guest', true
-            Session.set 'timer_engaged', false
+    #     'click .add_guest': ->
+    #         # console.log @
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         new_guest_id =
+    #             Docs.insert
+    #                 model:'guest'
+    #                 session_id: healthclub_session_document._id
+    #                 resident_id: healthclub_session_document.user_id
+    #                 resident: healthclub_session_document.resident_username
+    #         # Session.set 'displaying_profile', null
+    #         #
+    #         Router.go "/add_guest/#{new_guest_id}"
 
-        'click .submit_checkin': (e,t)->
-            Meteor.call 'submit_checkin'
+    #     'click .sign_rules': ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         new_id = Docs.insert
+    #             model:'rules_and_regs_signing'
+    #             session_id: healthclub_session_document._id
+    #             resident_id: healthclub_session_document.user_id
+    #             resident: healthclub_session_document.resident_username
+    #         Router.go "/sign_rules/#{new_id}/#{healthclub_session_document.resident_username}"
+    #         # Session.set 'displaying_profile',null
 
-        'click .cancel_auto_checkin': (e,t)->
-            Session.set 'timer_engaged',false
 
-    Template.healthclub_session.helpers
-        current_poll: ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            # console.log @
-            # healthclub_session_document.user_id
+    #     'click .sign_guidelines': ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         new_id = Docs.insert
+    #             model:'member_guidelines_signing'
+    #             session_id: healthclub_session_document._id
+    #             resident_id: healthclub_session_document.user_id
+    #             resident: healthclub_session_document.resident_username
+    #         Router.go "/sign_guidelines/#{new_id}/#{healthclub_session_document.resident_username}"
+    #         # Session.set 'displaying_profile',null
 
-            Docs.findOne
-                model:'vote'
-                upvoter_ids: $nin:[healthclub_session_document.user_id]
-                downvoter_ids: $nin:[healthclub_session_document.user_id]
+    #     'click .add_recent_guest': ->
+    #         current_session = Docs.findOne
+    #             model:'healthclub_session'
+    #             current:true
+    #         Docs.update current_session._id,
+    #             $addToSet:guest_ids:@_id
 
-        timer_engaged: ->
-            Session.get 'timer_engaged'
-        timer: ->
-            Session.get 'timer'
-            # console.log Template.instance()
-            # Template.instance().timer.get()
+    #     'click .remove_guest': ->
+    #         current_session = Docs.findOne
+    #             model:'healthclub_session'
+    #             current:true
+    #         # console.log current_session
+    #         Docs.update current_session._id,
+    #             $pull:guest_ids:@_id
 
-        rules_signed: ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            # console.log @
-            if healthclub_session_document.user_id
-                resident = Meteor.users.findOne healthclub_session_document.user_id
-                # if resident.user_id
-                Docs.findOne
-                    model:'rules_and_regs_signing'
-                    resident:resident.username
-        session_document: -> Docs.findOne Router.current().params.doc_id
+    #     'click .toggle_adding_guest': ->
+    #         Session.set 'adding_guest', true
+    #         Session.set 'timer_engaged', false
 
-        adding_guests: -> Session.get 'adding_guest'
-        checking_in_doc: ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            # console.log healthclub_session_document
-            healthclub_session_document
-        checkin_guest_docs: () ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            # console.log @
-            Docs.find
-                _id:$in:healthclub_session_document.guest_ids
+    #     'click .submit_checkin': (e,t)->
+    #         Meteor.call 'submit_checkin'
 
-        user: ->
-            healthclub_session_document = Docs.findOne Router.current().params.doc_id
-            if healthclub_session_document and healthclub_session_document.user_id
-                Meteor.users.findOne healthclub_session_document.user_id
+    #     'click .cancel_auto_checkin': (e,t)->
+    #         Session.set 'timer_engaged',false
+
+    # Template.healthclub_session.helpers
+    #     current_poll: ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         # console.log @
+    #         # healthclub_session_document.user_id
+
+    #         Docs.findOne
+    #             model:'vote'
+    #             upvoter_ids: $nin:[healthclub_session_document.user_id]
+    #             downvoter_ids: $nin:[healthclub_session_document.user_id]
+
+    #     timer_engaged: ->
+    #         Session.get 'timer_engaged'
+    #     timer: ->
+    #         Session.get 'timer'
+    #         # console.log Template.instance()
+    #         # Template.instance().timer.get()
+
+    #     rules_signed: ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         # console.log @
+    #         if healthclub_session_document.user_id
+    #             resident = Meteor.users.findOne healthclub_session_document.user_id
+    #             # if resident.user_id
+    #             Docs.findOne
+    #                 model:'rules_and_regs_signing'
+    #                 resident:resident.username
+    #     session_document: -> Docs.findOne Router.current().params.doc_id
+
+    #     adding_guests: -> Session.get 'adding_guest'
+    #     checking_in_doc: ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         # console.log healthclub_session_document
+    #         healthclub_session_document
+    #     checkin_guest_docs: () ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         # console.log @
+    #         Docs.find
+    #             _id:$in:healthclub_session_document.guest_ids
+
+    #     user: ->
+    #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
+    #         if healthclub_session_document and healthclub_session_document.user_id
+    #             Meteor.users.findOne healthclub_session_document.user_id
 
 
     Template.resident_guest.onCreated ->

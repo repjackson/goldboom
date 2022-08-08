@@ -3,7 +3,7 @@ template(name='checkin_edit')
         .ui.padded.one.column.center.aligned.grid.z
             .column
                 .ui.basic.fluid.compact.icon.button.cancel_checkin
-                    i.big.chevron.left.icon
+                    i.big.chevron.left.red.icon
                     // |cancel
                 .ui.hidden.divider
                 with _resident
@@ -65,49 +65,53 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
                 .ui.hidden.divider
-                a.ui.massive.fluid.basic.green.icon.button.submit_checkin.z(href="/kiosk")
+                a.ui.massive.fluid.green.circular.button.submit_checkin.z(href="/kiosk")
                     i.checkmark.big.icon
-                    | check in
+                    | hc check in
                 .ui.hidden.divider
-                .ui.inline.small.header 
-                    i.chat.outline.icon
-                    |#{resident_notes.count} notes
-                .ui.icon.circular.compact.large.button.add_note
-                    i.plus.large.icon
-                .ui.list 
-                    each resident_notes
-                        .item !{content}
-                            |#{_when}
-                .spacer
-                .ui.inline.small.header
-                    i.wrench.icon
-                    |#{resident_unit_tasks.count}
-                    |maintenance requests
-                .ui.icon.circular.compact.large.button.add_task
-                    i.plus.large.icon 
-                .ui.list 
-                    each resident_unit_tasks
-                        .item !{content} !{description}
-                            small #{_when}
-                div         
-                .spacer
-                .ui.inline.small.header 
-                    i.key.icon
-                    |#{unit_key_checkouts.count}
-                    |key checkouts
-                .ui.icon.circular.compact.large.button.new_key_checkout
-                    i.large.plus.icon
-                each unit_key_checkouts
-                    .item #{_when}
-                div
-                .spacer
-                .ui.inline.small.header 
-                    i.clock.icon
-                    |rentals
-                .ui.icon.circular.compact.large.button.add_rental
-                    i.large.plus.icon
-                each resident_rental_docs
-                    .item #{_when}
+            
+                .ui.stackable.two.column.grid 
+                    .column
+                        .ui.inline.small.header 
+                            i.chat.outline.icon
+                            |#{resident_notes.count} notes
+                        .ui.icon.circular.compact.large.button.add_note
+                            i.plus.large.icon
+                        .ui.list 
+                            each resident_notes
+                                .item !{content}
+                                    |#{_when}
+                    .column
+                        .ui.inline.small.header
+                            i.wrench.icon
+                            |#{resident_unit_tasks.count}
+                            |maintenance requests
+                        .ui.icon.circular.compact.large.button.add_task
+                            i.plus.large.icon 
+                        .ui.list 
+                            each resident_unit_tasks
+                                .item !{content} !{description}
+                                    small #{_when}
+                        div         
+                    .column
+                        .ui.inline.small.header 
+                            i.key.icon
+                            |#{unit_key_checkouts.count}
+                            |key checkouts
+                        .ui.icon.circular.compact.large.button.new_key_checkout
+                            i.large.plus.icon
+                        each unit_key_checkouts
+                            .item #{_when}
+                        div
+                    .column
+                        .spacer
+                        .ui.inline.small.header 
+                            i.clock.icon
+                            |rentals
+                        .ui.icon.circular.compact.large.button.add_rental
+                            i.large.plus.icon
+                        each resident_rental_docs
+                            .item #{_when}
 
 
 

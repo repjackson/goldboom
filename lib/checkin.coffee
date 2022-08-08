@@ -187,9 +187,9 @@ if Meteor.isClient
             
             
         'click .cancel_checkin': (e)->
-            Docs.remove @_id 
-            $(e.currentTarget).closest('.grid').transition('fly left',1000)
-            Meteor.setTimeout ->
+            $(e.currentTarget).closest('.grid').transition('fly right',1000)
+            Meteor.setTimeout =>
+                Docs.remove @_id 
                 Router.go "/kiosk"
             , 1000
         'click .add_note': (e)->
