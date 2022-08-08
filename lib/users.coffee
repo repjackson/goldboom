@@ -48,20 +48,22 @@ if Meteor.isServer
         if username_search
             match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find(match,{ 
-            # limit:20, 
+            limit:42, 
             sort:
                 "#{sort_key}":sort_direction
-            # fields:
-            #     username:1
-            #     image_id:1
-            #     tags:1
-            #     points:1
-            #     credit:1
-            #     first_name:1
-            #     last_name:1
-            #     group_memberships:1
-            #     createdAt:1
-            #     profile_views:1
+            fields:
+                username:1
+                # image_id:1
+                building_number:1
+                unit_number:1
+                # tags:1
+                # points:1
+                # credit:1
+                first_name:1
+                last_name:1
+                # group_memberships:1
+                createdAt:1
+                profile_views:1
         })
             
 if Meteor.isClient
@@ -338,16 +340,16 @@ if Meteor.isServer
 
 
 if Meteor.isServer
-    Meteor.publish 'user_search', (username, role)->
-        if role
-            Meteor.users.find({
-                username: {$regex:"#{username}", $options: 'i'}
-                roles:$in:[role]
-            },{ limit:150})
-        else
-            Meteor.users.find({
-                username: {$regex:"#{username}", $options: 'i'}
-            },{ limit:150})
+    # Meteor.publish 'user_search', (username, role)->
+    #     if role
+    #         Meteor.users.find({
+    #             username: {$regex:"#{username}", $options: 'i'}
+    #             roles:$in:[role]
+    #         },{ limit:150})
+    #     else
+    #         Meteor.users.find({
+    #             username: {$regex:"#{username}", $options: 'i'}
+    #         },{ limit:150})
             
             
     Meteor.publish 'user_counter', ()->
@@ -355,6 +357,7 @@ if Meteor.isServer
             Docs.find({
                 model:'user'
             })
-        return undefined    # otherwise coffeescript returns a Counts.publish
-                          # handle when Meteor expects a Mongo.Cursor object.
-            
+        return undefined
+        
+        
+        

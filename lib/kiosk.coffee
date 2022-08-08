@@ -221,12 +221,13 @@ if Meteor.isClient
                     active:true
                     resident_user_id:@_id
                     resident_username:@username
+                    guest_ids:[]
                     building_number:kiosk.current_building_number
                     unit_number:kiosk.current_unit_number
             
-            Meteor.users.update @_id,
-                $set:
-                    checked_in:true
+            # Meteor.users.update @_id,
+            #     $set:
+            #         checked_in:true
             Docs.update kiosk._id, 
                 $set:
                     current_search_user:null
@@ -330,6 +331,17 @@ if Meteor.isClient
                     Docs.update kiosk._id,
                         $set:
                             current_unit_number:val
+            $('body').toast({
+                title: "#unit ##{@val} added"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'cube'
+                showProgress:'bottom'
+                position:'bottom center'
+                # className:
+                #     toast: 'ui massive green fluid message'
+                # displayTime: 5000
+                })
 
 
     Template.kiosk_container.helpers

@@ -79,16 +79,19 @@ template(name='guest_block')
 template(name='latest_requests')
     a.ui.header.zoomer(href="/tasks" title='view all tasks')
         +i name='wrench'
+        |#{kiosk_task_docs.count}
         |latest requests
     .medscroll
         each kiosk_task_docs
             .ui.segment
                 // img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 .ui.inline.header #{title}
-                |!{content}
+                |!{content} !{description}
                 +bu
                 |#{_when}
                 |#{resident_username}
+                a.fly_down(href="/task/#{_id}" title='view task')
+                    i.large.chevron.right.link.circular.icon.zoomer
 template(name='latest_notes')
     .medscroll
         a.ui.header.zoomer(href="/posts" title='view posts')
@@ -140,14 +143,12 @@ template(name='active_checkins')
 template(name='active_checkin_doc')
     .item(href="/checkin/#{_id}" title=resident_user_id)
         .content
-            a.ui.big.label.fly_down.zoomer(href="/user/#{resident_username}") 
+            a.ui.big.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
                 strong #{_resident.first_name}
                 strong #{_resident.last_name}
             +bu
             | #{_when}
-            .ui.compact.icon.button.checkout(title='sign out')
-                i.sign.out.red.icon
-                // |checkout
+            i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
             
                     
 template(name='latest_activity')
@@ -163,6 +164,7 @@ template(name='latest_checkins')
     .ui.segment.alpha
         .ui.header 
             +i name='history'
+            |#{latest_checkin_docs.count}
             |latest checkins 
         .ui.selection.divided.list.medscroll
             each latest_checkin_docs 

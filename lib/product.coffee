@@ -32,7 +32,7 @@ if Meteor.isServer
                 Docs.find({
                     model:model
                 })
-            return undefined    # otherwise coffeescript returns a Counts.publish
+            return undefined
 
 if Meteor.isClient 
     Template.product_edit.onCreated ->

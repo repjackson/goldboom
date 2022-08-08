@@ -50,7 +50,8 @@ template(name='users')
                             each user_docs
                                 +user_item
                     else 
-                        i.massive.yin.yang.loading.grey.icon
+                        .ui.center.aligned.basic.segment
+                            i.massive.users.loading.grey.icon
                         // +loading_segment
         else 
             .ui.sixteen.wide.center.aligned.column

@@ -18,11 +18,11 @@ template(name='checkin_edit')
                         |#{unit_number}
                     if verified 
                         .ui.large.basic.label 
-                            +i name='id badge green'
+                            +i name='id-verified'
                             |id verified
                     else 
                         .ui.large.basic.label 
-                            +i name='remove'
+                            +i name='id-not-verified'
                             |id unverified
                     .ui.hidden.divider
                     // +image_edit key='image_id' label='profile image'

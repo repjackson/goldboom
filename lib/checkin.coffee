@@ -141,7 +141,7 @@ if Meteor.isClient
             if doc.guest_ids and @_id in doc.guest_ids
                 'big blue circular'
             else 
-                'circular basic big'
+                'circular basic large compact'
         kiosk: ->
             Docs.findOne model:'kiosk'
             
@@ -157,9 +157,9 @@ if Meteor.isClient
                         guest_ids: @_id
                         guest_names:@name
                 $('body').toast({
-                    title: "#{@name} added"
-                    showIcon:'plus'
-                    class: 'success'
+                    title: "#{@name} removed"
+                    iconClass:'remove'
+                    class: 'info'
                     position:'bottom right'
                 })
             else
@@ -168,9 +168,9 @@ if Meteor.isClient
                         guest_ids: @_id
                         guest_names:@name
                 $('body').toast({
-                    title: "#{@name} removed"
-                    iconClass:'remove'
-                    class: 'info'
+                    title: "#{@name} added"
+                    showIcon:'plus'
+                    class: 'success'
                     position:'bottom right'
                 })
         # 'click .add_guest': ->
