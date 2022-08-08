@@ -183,7 +183,24 @@ if Meteor.isClient
                         resident_username:@resident_username
                         building_number:@building_number
                         unit_number:@unit_number
+                doc = Docs.findOne Router.current().params.doc_id
+                if doc.guest_ids and new_id in doc.guest_ids
+                    Docs.update Router.current().params.doc_id, 
+                        $pull:
+                            guest_ids: new_id
+                            guest_names:@name
+                else
+                    Docs.update Router.current().params.doc_id, 
+                        $addToSet:
+                            guest_ids: new_id
+                            guest_names:@name
                 $('.add_guest').val('')
+                $('body').toast({
+                    title: "#{val} added"
+                    class: 'success'
+                    position:'bottom right'
+                })
+
             
             
         'click .cancel_checkin': (e)->
@@ -198,6 +215,8 @@ if Meteor.isClient
                     model:'post'
                     building_number:@building_number
                     unit_number:@unit_number
+                    parent_id:Router.current().params.doc_id
+                    checkin_id:Router.current().params.doc_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/post/#{new_id}/edit"
@@ -211,6 +230,8 @@ if Meteor.isClient
                     unit_number:@unit_number
                     resident_id:@resident_id
                     resident_username:@resident_username
+                    parent_id:Router.current().params.doc_id
+                    checkin_id:Router.current().params.doc_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/task/#{new_id}/edit"
@@ -223,6 +244,8 @@ if Meteor.isClient
                     unit_number:@unit_number
                     resident_id:@resident_id
                     resident_username:@resident_username
+                    parent_id:Router.current().params.doc_id
+                    checkin_id:Router.current().params.doc_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/order/#{new_id}/edit"
@@ -233,6 +256,8 @@ if Meteor.isClient
                     model:'task'
                     building_number:@building_number
                     unit_number:@unit_number
+                    parent_id:Router.current().params.doc_id
+                    checkin_id:Router.current().params.doc_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/task/#{new_id}/edit"

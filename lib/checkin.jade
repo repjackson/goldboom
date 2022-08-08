@@ -8,11 +8,11 @@ template(name='checkin_edit')
                 .ui.hidden.divider
                 with _resident
                     .ui.massive.inline.header #{first_initial} #{last_initial}
-                    .ui.large.basic.label.inline 
+                    .ui.large.basic.brown.label.inline 
                         // +i name='apartment'
                         i.large.building.icon
                         |#{building_number}
-                    .ui.large.basic.label.inline
+                    .ui.large.basic.blue.label.inline
                         // +i name='room'
                         i.large.cube.icon
                         |#{unit_number}
@@ -50,8 +50,8 @@ template(name='checkin_edit')
                         i.large.user.icon
                         |#{name}
                 .ui.large.icon.active.input  
-                    i.large.plus.icon
-                    input.add_guest(type='text' placeholder='add guest...')
+                    i.large.user.plus.icon
+                    input.add_guest(type='text' placeholder='add...')
                 // .ui.inline.header
                 //     |purpose (optional)
                 // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='massive'
@@ -65,37 +65,40 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
                 .ui.hidden.divider
-                a.ui.massive.fluid.green.circular.button.submit_checkin.z(href="/kiosk")
+                a.ui.massive.fluid.green.circular.compact.button.submit_checkin.z(href="/kiosk")
                     i.checkmark.big.icon
-                    | hc check in
+                    | submit
                 .ui.hidden.divider
             
                 .ui.stackable.two.column.grid 
                     .column
                         .ui.inline.small.header 
-                            i.chat.outline.icon
+                            // i.chat.outline.icon
+                            +i name='chat'
                             |#{resident_notes.count} notes
                         .ui.icon.circular.compact.large.button.add_note
                             i.plus.large.icon
-                        .ui.list 
+                        .ui.selection.animated.list 
                             each resident_notes
-                                .item !{content}
+                                a.item.fly_right(href="/post/#{_id}") !{content}
                                     |#{_when}
                     .column
                         .ui.inline.small.header
-                            i.wrench.icon
+                            // i.wrench.icon
+                            +i name='wrench'
                             |#{resident_unit_tasks.count}
                             |maintenance requests
                         .ui.icon.circular.compact.large.button.add_task
                             i.plus.large.icon 
-                        .ui.list 
+                        .ui.selection.animated.list 
                             each resident_unit_tasks
-                                .item !{content} !{description}
+                                a.item.fly_right(href="/task/#{_id}") !{content} !{description}
                                     small #{_when}
                         div         
                     .column
                         .ui.inline.small.header 
-                            i.key.icon
+                            // i.key.icon
+                            +i name='key'
                             |#{unit_key_checkouts.count}
                             |key checkouts
                         .ui.icon.circular.compact.large.button.new_key_checkout
@@ -106,12 +109,13 @@ template(name='checkin_edit')
                     .column
                         .spacer
                         .ui.inline.small.header 
-                            i.clock.icon
+                            +i name='clock'
+                            // i.clock.icon
                             |rentals
                         .ui.icon.circular.compact.large.button.add_rental
                             i.large.plus.icon
                         each resident_rental_docs
-                            .item #{_when}
+                            a.item.fly_right(href="/rental/#{_id}") #{_when}
 
 
 

@@ -80,12 +80,13 @@ template(name='latest_requests')
     .ui.header 
         +i name='wrench'
         |latest requests
-    each kiosk_task_docs
-        .ui.segment
-            img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            .ui.inline.header #{title}
-                |#{_when}
-                |#{resident_username}
+    .medscroll
+        each kiosk_task_docs
+            .ui.segment
+                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                .ui.inline.header #{title}
+                    |#{_when}
+                    |#{resident_username}
 template(name='latest_notes')
     .medscroll
         .ui.header 
@@ -97,7 +98,9 @@ template(name='latest_notes')
                     img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 .ui.inline.header !{content}
                 +bu
-                +print_this
+                if currentUser.admin_mode
+                    +print_this
+                |#{when}
                 a.ui.large.icon.basic.circular.button(href="/post/#{_id}") 
                     i.large.chevron.right.icon
             
@@ -109,13 +112,16 @@ template(name='latest_rentals')
     .ui.header 
         +i name='basketball'
         |latest rentals
-    each rental_item_docs
-        .ui.segment
-            img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            .ui.inline.header #{title}
-            .ui.button.checkout_rental
-                i.big.checkmark.icon
-                // |checkout
+    .medscroll
+        each rental_item_docs
+            .ui.segment
+                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                .ui.inline.header #{title}
+                    small #{_when}
+                // .ui.button.checkout_rental
+                //     i.big.checkmark.icon
+                //     // |checkout
+            
         
                 
 template(name='active_checkins')
@@ -140,6 +146,7 @@ template(name='active_checkin_doc')
             .ui.compact.icon.button.checkout(title='sign out')
                 i.sign.out.red.icon
                 // |checkout
+            
                     
 template(name='latest_activity')
     .ui.header 

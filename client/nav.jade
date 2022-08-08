@@ -21,14 +21,14 @@ template(name='nav')
                 +i name='cube'
                 span.mobile.hidden units
             a.item.zoomer.fly_right.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
-                +i name='users'
+                +i name='groups'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden people
                 
             a.zoomer.item.fly_right(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
-                +i name='tablet'
+                +i name='kindle'
                 i.external.icon
                 span.mobile.hidden kiosk
             // a.item.fly_right(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
@@ -110,12 +110,12 @@ template(name='nav')
             //     span.mobile.hidden events
             a.zoomer.item.fly_right(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
-                +i name='exclamation'
+                +i name='alert'
                 span.mobile.hidden violations
                 
             a.item.zoomer.fly_right.clear_search(href="/guests" class="{{isActiveRoute 'guests'}}" title='guests')
-                +i name='external'
-                .mobile.hidden guests
+                +i name='friends'
+                span.mobile.hidden guests
             a.item.zoomer.fly_right.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
                 +i name='car'
                 // i.large.users.icon

@@ -42,6 +42,30 @@ if Meteor.isClient
     Template.post_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.post_edit.events
+        'click .cancel_note': (e)->
+            # Docs.update @_id,
+            #     submitted:true
+            $(e.currentTarget).closest('.grid').transition('fly right', 1000)
+            Router.go "/checkin/#{@checkin_id}/edit"
+            Docs.remove @_id
+
+            # Swal.fire({
+            #     title: "thanks for your feedback"
+            #     # title: "checked in"
+            #     # text: "point bounty will be held "
+            #     icon: 'success'
+            #     timer:2000
+            #     # background: 'green'
+            #     timerProgressBar:true
+            #     showClass: {popup: 'animate__animated animate__fadeInDown'}
+            #     hideClass: {popup: 'animate__animated animate__fadeOutUp'}
+            #     showConfirmButton:false
+            #     # confirmButtonText: 'publish'
+            #     # confirmButtonColor: 'green'
+            #     # showCancelButton: true
+            #     # cancelButtonText: 'cancel'
+            #     # reverseButtons: true
+            # })
         'click .submit_post': ->
             Docs.update @_id,
                 submitted:true

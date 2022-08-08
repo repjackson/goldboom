@@ -220,9 +220,10 @@ template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid 
             .sixteen.wide.column
-                .ui.fluid.button.cancel_note
-                    i.chevron.left.icon 
+                .ui.fluid.large.basic.red.button.cancel_note
+                    i.chevron.left.large.icon 
                     |cancel
+                .spacer
                 if in_dev 
                     +print_this
                 .ui.inline.header 

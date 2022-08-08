@@ -24,13 +24,13 @@ template(name='bu')
     +unit_label
 
 template(name='building_label')
-    .ui.circular.basic.large.label.inline
+    .ui.circular.basic.image.large.brown.label
         +i name='building'
         |#{building_number}
 template(name='unit_label')
-    .ui.circular.basic.large.label.inline
-        // +i name='room'
-        i.large.cube.icon
+    .ui.circular.basic.image.large.blue.label
+        +i name='room'
+        // i.large.cube.icon
         |#{unit_number}
 
 

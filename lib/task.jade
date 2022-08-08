@@ -113,6 +113,10 @@ template(name='task_view')
         .ui.stackable.padded.grid
             .centered.row 
                 .sixteen.wide.column
+                    a.ui.large.compact.button.fly_left(href="/checkin/#{checkin_id}/edit")
+                        i.chevron.left.icon
+                        +i name='checkmark'
+                        |checkin
                     a.ui.large.compact.button.fly_left(href="/tasks")
                         i.chevron.left.icon
                         +i name='tasks'
@@ -129,7 +133,7 @@ template(name='task_view')
                     else 
                         i.big.yellow.clock.icon
                     
-                .five.wide.column
+                .eight.wide.column
                     if image_id
                         img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
 
@@ -166,7 +170,7 @@ template(name='task_view')
                     if location_tags
                         +array_view key='location_tags' label='location_tags' 
                     +viewing_info
-                .eleven.wide.column
+                .eight.wide.column
                     unless complete
                         .ui.button.mark_complete
                             |mark complete 
