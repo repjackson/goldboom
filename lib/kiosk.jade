@@ -40,8 +40,8 @@ template(name='healthclub')
                         // if image_id
                         // i.building.icon
                         //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        | {{lowered building_letter}}
-                        // | {{building_letter}}
+                        // | {{lowered building_letter}}
+                        | {{building_letter}}
                         // i.big.building.icon
                         // +i name='apartment'
                         unless is building_number 1
@@ -85,14 +85,18 @@ template(name='hc_rental')
             .item #{title}
          
 template(name='water_small')
+    div
     with latest_pool_reading
-        .ui.header pool 
-            small #{temperature}deg #{ph}ph #{chlorine}chl
+        .ui.big.basic.label 
+            |pool 
+            strong #{temperature}deg
+            // #{ph}ph #{chlorine}chl
             |#{_when}
     with latest_hot_tub_reading
-        .ui.header 
+        .ui.big.basic.label
             |hot tub
-            small #{temperature}deg #{ph}ph #{chlorine}chl
+            strong #{temperature}deg 
+            // #{ph}ph #{chlorine}chl
             |#{_when}
          
 template(name='resident_picker')
