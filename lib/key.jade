@@ -7,26 +7,26 @@ template(name='keys')
                 |keys
             if currentUser 
                 +add_button model='key'
-            .ui.icon.fluid.input 
-                i.hashtag.icon
-                input.search_key_number(type='text' placeholder='number')
-            .ui.icon.fluid.input 
-                i.building.icon
-                input.search_building_number(type='text' placeholder='building')
-        .twelve.wide.column
+            // .ui.icon.fluid.input 
+            //     i.hashtag.icon
+            //     input.search_key_number(type='text' placeholder='number')
+            // .ui.icon.fluid.input 
+            //     i.building.icon
+            //     input.search_building_number(type='text' placeholder='building')
             .ui.inline.header(title='result count') #{result_docs.count}
-            +search_input key='address'
+            // +search_input key='address'
             +sort_direction_toggle
             // +sort_key_toggle
             +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
             +session_set key='sort_key' value='building_number' label='building #' icon='building'
-            +session_set key='sort_key' value='views' label='views' icon='eye'
+            // +session_set key='sort_key' value='views' label='views' icon='eye'
             +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
             +session_set key='sort_key' value='keytag_number' label='tag #' icon='key'
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
 
+        .twelve.wide.column
             if subs_ready
                 .ui.divided.selection.animated.list
                     each key_docs

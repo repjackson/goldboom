@@ -258,13 +258,13 @@ template(name='favorite_icon_toggle')
 
 template(name='sort_direction_toggle')
     if session_is 'sort_direction' -1
-        .ui.icon.compact.circular.button.toggle(title='toggle sort direction')
-            i.sort.down.big.icon
+        .ui.icon.compact.circular.basic.button.toggle(title='toggle sort direction')
+            i.sort.amount.down.big.icon
             // +i name='sort-down'
     else
-        .ui.icon.compact.circular.button.toggle(title='toggle sort direction')
+        .ui.icon.compact.circular.basic.button.toggle(title='toggle sort direction')
             // +i name='sort-up'
-            i.sort.up.big.icon
+            i.sort.amount.up.big.icon
 
 
 template(name='limit_menu')

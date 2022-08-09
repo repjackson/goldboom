@@ -7,6 +7,8 @@ Router.route '/key/:doc_id/edit', -> @render 'key_edit'
 if Meteor.isClient
     Template.keys.onCreated ->
         document.title = 'gr keys'
+        Session.setDefault('sort_key','_timestamp')
+        Session.setDefault('sort_direction',-1)
         @autorun => Meteor.subscribe 'model_docs', 'key', ->
     Template.key_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
