@@ -141,12 +141,12 @@ template(name='key_edit')
                 +text_edit key='building_letter' label='building_letter' icon='building'
                 div
                 div
-                +key_value_edit key='color' label='blue' value='blue' icon='paint'
-                +key_value_edit key='color' label='red' value='red' icon='paint'
-                +key_value_edit key='color' label='green' value='green' icon='paint'
-                +key_value_edit key='color' label='orange' value='orange' icon='paint'
-                +key_value_edit key='color' label='black' value='black' icon='paint'
-                +key_value_edit key='color' label='yellow' value='yellow' icon='paint'
+                +key_value_edit key='color' label='blue' value='blue' color='blue'
+                +key_value_edit key='color' label='red' value='red' color='red'
+                +key_value_edit key='color' label='green' value='green'  color='green'
+                +key_value_edit key='color' label='orange' value='orange' color='orange'
+                +key_value_edit key='color' label='black' value='black'  color='black'
+                +key_value_edit key='color' label='yellow' value='yellow' color='yellow'
                 +textarea_edit key='description' label='description' 
                 if currentUser.admin_mode
                     +delete_button
