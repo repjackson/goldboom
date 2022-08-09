@@ -43,15 +43,18 @@ template(name='key_item')
                 +i name='groups'
                 each key_residents 
                     |#{username}
-                    // +user_info
+        |#{color}
+        // +user_info
         if checked_out
             .ui.label 
                 |checked out
         else
             .ui.green.label 
                 |checked in
-        if currentUser.admin_mode
-            .ui.big.label #{keytag_number}
+        .ui.big.label keytag ##{keytag_number}
+        if building_letter 
+            .ui.label letter: #{building_letter}
+        // if currentUser.admin_mode
                 
         +bu                    
 
@@ -76,6 +79,7 @@ template(name='key_view')
                 +number_view key='building_number' label='building number' icon='apartment'
                 if currentUser.admin_mode
                     .ui.big.label #{keytag_number}
+                .ui.header #{color}
             .column
                 if can_edit 
                     a.ui.large.compact.button(href="/key/#{_id}/edit")
@@ -116,7 +120,11 @@ template(name='key_edit')
                 div
                 +number_edit key='building_number' label='building number' icon='building'
                 div
+                +text_edit key='building_letter' label='building_letter' icon='building'
                 +number_edit key='keytag_number' label='key tag number' icon='key'
+                +key_value_edit key='color' label='blue' value='blue' icon='paint'
+                +key_value_edit key='color' label='red' value='red' icon='paint'
+                +key_value_edit key='color' label='green' value='green' icon='paint'
             .column
                 a.ui.big.fluid.icon.green.button(href="/key/#{_id}")
                     i.checkmark.big.icon

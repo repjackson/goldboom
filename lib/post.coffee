@@ -20,7 +20,7 @@ if Meteor.isClient
     
     
     Router.route '/post/:doc_id', (->
-        @layout 'layout'
+        @layout 'mlayout'
         @render 'post_view'
         ), name:'post_view'
     Router.route '/post/:doc_id/edit', (->
