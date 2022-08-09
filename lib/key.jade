@@ -1,7 +1,7 @@
 template(name='keys')
     .ui.stackable.padded.grid
         // if currentUser
-        .four.wide.column
+        .sixteen.wide.column
             .ui.inline.header 
                 +i name='key'
                 |keys
@@ -26,48 +26,52 @@ template(name='keys')
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
 
-        .twelve.wide.column
+        .sixteen.wide.column.scrolling
             if subs_ready
-                .ui.divided.selection.animated.list
+                // .ui.divided.selection.animated.list
+                // .ui.five.inverted.doubling.cards
+                .ui.five.column.stackable.grid
                     each key_docs
-                        +key_item
+                        .column
+                            +key_item
         // else 
         //     .sixteen.wide.centered.column
         //         +login
             
 template(name='key_item')
-    a.ui.item.fly_right(href="/key/#{_id}") 
+    // a.ui.inverted.segment.fly_right(href="/key/#{_id}" class=color) 
+    .ui.inverted.segment.fly_right(class=color) 
         // .ui.inline.header #{address}
         // .ui.inline.header ##{key_number}
-        .content
-            .ui.inline.header 
-                // i.key.icon
-                |##{keytag_number}
-            if building_letter 
-                .ui.big.label(title='letter') #{building_letter}
-            if key_residents
-                .ui.large.label
-                    +i name='groups'
-                    each key_residents 
-                        |#{username}
-            .ui.big.circular.label(class=color)
-                |#{color}
-            img.ui.tiny.inline.image.superzoomer.rounded(src="{{c.url image_id height=300 crop='pad'}}")
-            span 
-                |#{description}
-            // +when
-            // +user_info
-            if checked_out
-                .ui.label 
-                    |checked out
-            else
-                .ui.green.label 
-                    |checked in
-            // if currentUser.admin_mode
-            +bu         
-            +author_info
-            if currentUser.admin_mode
-                +edit_button
+        img.ui.small.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
+        // .content
+        .ui.inline.header 
+            // i.key.icon
+            |##{keytag_number}
+        if building_letter 
+            .ui.big.label(title='letter') #{building_letter}
+        if key_residents
+            .ui.large.label
+                +i name='groups'
+                each key_residents 
+                    |#{username}
+        // .ui.big.circular.label(class=color)
+        //     |#{color}
+        .ui.inline.header 
+            |#{description}
+        // +when
+        // +user_info
+        if checked_out
+            .ui.label 
+                |checked out
+        else
+            .ui.green.label 
+                |checked in
+        // if currentUser.admin_mode
+        +bu         
+        +author_info
+        if currentUser.admin_mode
+            +edit_button
 
 template(name='key_view')
     with current_doc
