@@ -22,6 +22,7 @@ template(name='keys')
                 +session_set key='sort_key' value='building_number' label='building #' icon='building'
                 +session_set key='sort_key' value='views' label='views' icon='eye'
                 +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
+                +session_set key='sort_key' value='keytag_number' label='tag #' icon='key'
                 // +session_set key='limit' value=10
                 // +session_set key='limit' value=25
                 // +session_set key='limit' value=100
@@ -38,25 +39,33 @@ template(name='key_item')
     a.ui.item.fly_right(href="/key/#{_id}") 
         // .ui.inline.header #{address}
         // .ui.inline.header ##{key_number}
-        if key_residents
-            .ui.large.label
-                +i name='groups'
-                each key_residents 
-                    |#{username}
-        |#{color}
-        // +user_info
-        if checked_out
-            .ui.label 
-                |checked out
-        else
-            .ui.green.label 
-                |checked in
-        .ui.big.label keytag ##{keytag_number}
-        if building_letter 
-            .ui.label letter: #{building_letter}
-        // if currentUser.admin_mode
-                
-        +bu                    
+        .content
+            if key_residents
+                .ui.large.label
+                    +i name='groups'
+                    each key_residents 
+                        |#{username}
+            .ui.label #{color}
+            if is color 'blue'
+                .ui.big.circular.blue.label
+                    |blue
+            if is color 'red'
+                .ui.big.circular.red.label
+            
+            |!{description}
+            // +user_info
+            if checked_out
+                .ui.label 
+                    |checked out
+            else
+                .ui.green.label 
+                    |checked in
+            .ui.big.label keytag ##{keytag_number}
+            if building_letter 
+                .ui.label letter: #{building_letter}
+            // if currentUser.admin_mode
+                    
+            +bu                    
 
 template(name='key_view')
     with current_doc

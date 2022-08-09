@@ -387,6 +387,8 @@ template(name='account')
                             i.remove.icon
                             |delete user
                 .column 
+                    +key_value_edit key='icon_class' value='color' label='color' icon='rainbow'
+                    +key_value_edit key='icon_class' value='ios' label='ios' icon='black'
                     .ui.inline.header
                         +i name='privacy'
                         |privacy

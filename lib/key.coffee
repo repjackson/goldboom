@@ -14,9 +14,10 @@ if Meteor.isClient
             
     Template.keys.helpers
         key_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'key'
-                
+            },
+                sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
                 
     Template.user_key.onCreated ->
         @autorun => Meteor.subscribe 'user_key', Router.current().params.doc_id
