@@ -40,19 +40,20 @@ template(name='key_item')
         // .ui.inline.header #{address}
         // .ui.inline.header ##{key_number}
         .content
+            .ui.inline.header 
+                i.key.icon
+                |##{keytag_number}
             if key_residents
                 .ui.large.label
                     +i name='groups'
                     each key_residents 
                         |#{username}
-            .ui.label #{color}
-            if is color 'blue'
-                .ui.big.circular.blue.label
-                    |blue
-            if is color 'red'
-                .ui.big.circular.red.label
-            
-            |!{description}
+            .ui.big.circular.label(class=color)
+                |#{color}
+            img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+            span 
+                |#{description}
+            +when
             // +user_info
             if checked_out
                 .ui.label 
@@ -60,12 +61,12 @@ template(name='key_item')
             else
                 .ui.green.label 
                     |checked in
-            .ui.big.label keytag ##{keytag_number}
             if building_letter 
-                .ui.label letter: #{building_letter}
+                .ui.big.label letter: #{building_letter}
             // if currentUser.admin_mode
-                    
             +bu                    
+            if currentUser.admin_mode
+                +edit_button
 
 template(name='key_view')
     with current_doc
@@ -129,6 +130,7 @@ template(name='key_edit')
                 div
                 +number_edit key='building_number' label='building number' icon='building'
                 div
+                +image_edit key='image_id' label='image'
                 +text_edit key='building_letter' label='building_letter' icon='building'
                 +number_edit key='keytag_number' label='key tag number' icon='key'
                 +key_value_edit key='color' label='blue' value='blue' icon='paint'
@@ -137,6 +139,6 @@ template(name='key_edit')
             .column
                 a.ui.big.fluid.icon.green.button(href="/key/#{_id}")
                     i.checkmark.big.icon
-                +html_edit key='description' label='description' 
+                +textarea_edit key='description' label='description' 
                 if currentUser.admin_mode
                     +delete_button

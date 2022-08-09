@@ -369,7 +369,7 @@ if Meteor.isClient
         # selected_unit: -> Session.get('current_unit_number')
         building_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_building_number is @building_number then 'brown massive' else 'big brown basic'
+            if kiosk.current_building_number is @building_number then 'black massive' else 'big black basic'
         building_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number
