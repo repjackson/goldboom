@@ -43,6 +43,8 @@ template(name='key_item')
             .ui.inline.header 
                 // i.key.icon
                 |##{keytag_number}
+            if building_letter 
+                .ui.big.label(title='letter') #{building_letter}
             if key_residents
                 .ui.large.label
                     +i name='groups'
@@ -50,7 +52,7 @@ template(name='key_item')
                         |#{username}
             .ui.big.circular.label(class=color)
                 |#{color}
-            img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+            img.ui.small.inline.image.zoomer.rounded(src="{{c.url image_id height=300 crop='pad'}}")
             span 
                 |#{description}
             +when
@@ -61,8 +63,6 @@ template(name='key_item')
             else
                 .ui.green.label 
                     |checked in
-            if building_letter 
-                .ui.big.label letter: #{building_letter}
             // if currentUser.admin_mode
             +bu                    
             if currentUser.admin_mode
@@ -124,7 +124,9 @@ template(name='key_edit')
     with current_doc
         .ui.padded.one.column.centered.grid
             .column
-                .ui.header editing key ##{building_number} ##{unit_number}
+                a.ui.big.icon.green.button(href="/key/#{_id}")
+                    i.checkmark.big.icon
+                .ui.inline.header editing key ##{building_number} ##{unit_number}
                 // +text_edit key='address' label='address' icon='marker'
                 +number_edit key='unit_number' label='unit number' icon='cube'
                 div
@@ -136,9 +138,9 @@ template(name='key_edit')
                 +key_value_edit key='color' label='blue' value='blue' icon='paint'
                 +key_value_edit key='color' label='red' value='red' icon='paint'
                 +key_value_edit key='color' label='green' value='green' icon='paint'
-            .column
-                a.ui.big.fluid.icon.green.button(href="/key/#{_id}")
-                    i.checkmark.big.icon
+                +key_value_edit key='color' label='orange' value='orange' icon='paint'
+                +key_value_edit key='color' label='black' value='black' icon='paint'
+                +key_value_edit key='color' label='yellow' value='yellow' icon='paint'
                 +textarea_edit key='description' label='description' 
                 if currentUser.admin_mode
                     +delete_button

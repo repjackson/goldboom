@@ -20,8 +20,10 @@ template(name='building_facet')
             strong #{name}
 
 template(name='bu')
-    +building_label
-    +unit_label
+    if building_number
+        +building_label
+    if unit_number
+        +unit_label
 
 template(name='building_label')
     span.ui.basic.image.large.brown.label
@@ -87,11 +89,11 @@ template(name='send_points_button')
         
         
 template(name='edit_button')
-    a.ui.icon.large.button.fly_down.zoomer(href="/#{model}/#{_id}/edit" title="edit #{title}")
+    a.ui.icon.large.basic.button.fly_down.zoomer(href="/#{model}/#{_id}/edit" title="edit #{title}")
         // +i name='edit'
-        i.large.pencil.icon
-        unless currentUser.hide_labels
-            |edit
+        i.large.pencil.blue.icon
+        // unless currentUser.hide_labels
+        //     |edit
 
         
 template(name='log_item')
