@@ -122,6 +122,12 @@ if Meteor.isClient
             
 
     Template.checkin_edit.helpers 
+        keys_on_file: ->
+            current = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                model:'key'
+                building_number:current.building_number
+                unit_number:current.unit_number
         resident_notes:->
             Docs.find 
                 model:'post'

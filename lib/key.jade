@@ -4,6 +4,7 @@ template(name='keys')
         .sixteen.wide.column
             .ui.inline.header 
                 +i name='key'
+                |#{key_docs.count}
                 |keys
             if currentUser 
                 +add_button model='key'
