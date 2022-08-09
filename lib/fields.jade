@@ -326,6 +326,8 @@ template(name='image_edit')
                 //     |autotag
             else
                 input.pointer.zoomer(type='file' name='upload_image' accept='image/*' )
+                .ui.label capture test
+                input.pointer.zoomer.capture(type='file' name='upload_image2' accept='image/*' capture="camera")
             
 
 template(name='image_link_edit')

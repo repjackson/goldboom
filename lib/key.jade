@@ -41,7 +41,7 @@ template(name='key_item')
         // .ui.inline.header ##{key_number}
         .content
             .ui.inline.header 
-                i.key.icon
+                // i.key.icon
                 |##{keytag_number}
             if key_residents
                 .ui.large.label
@@ -122,7 +122,7 @@ template(name='unit_nav_button')
             
 template(name='key_edit')         
     with current_doc
-        .ui.padded.two.column.centered.grid
+        .ui.padded.one.column.centered.grid
             .column
                 .ui.header editing key ##{building_number} ##{unit_number}
                 // +text_edit key='address' label='address' icon='marker'
