@@ -481,7 +481,7 @@ html.dark-mode img {
 }
 
 .invert{
-    filter: invert(.9) !important; 
+    /*filter: invert(.9) !important; */
     /*background-color:black !important; */
      /*height: 100%; */
  } 

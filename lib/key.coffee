@@ -6,10 +6,13 @@ Router.route '/key/:doc_id/edit', -> @render 'key_edit'
 
 if Meteor.isClient
     Template.keys.onCreated ->
+        document.title = 'gr keys'
         @autorun => Meteor.subscribe 'model_docs', 'key', ->
     Template.key_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        document.title = 'gr view key'
     Template.key_edit.onCreated ->
+        document.title = 'gr edit key'
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
             
     Template.keys.helpers

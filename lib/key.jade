@@ -1,39 +1,39 @@
 template(name='keys')
     .ui.stackable.padded.grid
-        if currentUser
-            .four.wide.column
-                .ui.inline.header 
-                    +i name='key'
-                    |keys
-                if currentUser 
-                    +add_button model='key'
-                .ui.icon.fluid.input 
-                    i.hashtag.icon
-                    input.search_key_number(type='text' placeholder='number')
-                .ui.icon.fluid.input 
-                    i.building.icon
-                    input.search_building_number(type='text' placeholder='building')
-            .twelve.wide.column
-                .ui.inline.header(title='result count') #{result_docs.count}
-                +search_input key='address'
-                +sort_direction_toggle
-                // +sort_key_toggle
-                +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-                +session_set key='sort_key' value='building_number' label='building #' icon='building'
-                +session_set key='sort_key' value='views' label='views' icon='eye'
-                +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
-                +session_set key='sort_key' value='keytag_number' label='tag #' icon='key'
-                // +session_set key='limit' value=10
-                // +session_set key='limit' value=25
-                // +session_set key='limit' value=100
-    
-                if subs_ready
-                    .ui.divided.selection.animated.list
-                        each key_docs
-                            +key_item
-        else 
-            .sixteen.wide.centered.column
-                +login
+        // if currentUser
+        .four.wide.column
+            .ui.inline.header 
+                +i name='key'
+                |keys
+            if currentUser 
+                +add_button model='key'
+            .ui.icon.fluid.input 
+                i.hashtag.icon
+                input.search_key_number(type='text' placeholder='number')
+            .ui.icon.fluid.input 
+                i.building.icon
+                input.search_building_number(type='text' placeholder='building')
+        .twelve.wide.column
+            .ui.inline.header(title='result count') #{result_docs.count}
+            +search_input key='address'
+            +sort_direction_toggle
+            // +sort_key_toggle
+            +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
+            +session_set key='sort_key' value='building_number' label='building #' icon='building'
+            +session_set key='sort_key' value='views' label='views' icon='eye'
+            +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
+            +session_set key='sort_key' value='keytag_number' label='tag #' icon='key'
+            // +session_set key='limit' value=10
+            // +session_set key='limit' value=25
+            // +session_set key='limit' value=100
+
+            if subs_ready
+                .ui.divided.selection.animated.list
+                    each key_docs
+                        +key_item
+        // else 
+        //     .sixteen.wide.centered.column
+        //         +login
             
 template(name='key_item')
     a.ui.item.fly_right(href="/key/#{_id}") 
@@ -52,10 +52,10 @@ template(name='key_item')
                         |#{username}
             .ui.big.circular.label(class=color)
                 |#{color}
-            img.ui.small.inline.image.zoomer.rounded(src="{{c.url image_id height=300 crop='pad'}}")
+            img.ui.tiny.inline.image.superzoomer.rounded(src="{{c.url image_id height=300 crop='pad'}}")
             span 
                 |#{description}
-            +when
+            // +when
             // +user_info
             if checked_out
                 .ui.label 
@@ -64,7 +64,8 @@ template(name='key_item')
                 .ui.green.label 
                     |checked in
             // if currentUser.admin_mode
-            +bu                    
+            +bu         
+            +author_info
             if currentUser.admin_mode
                 +edit_button
 
@@ -76,9 +77,9 @@ template(name='key_view')
                     i.large.left.chevron.icon
                     +i name='key'
                     |keys
-                +building_nav_button
-                +unit_nav_button
-                .ui.header
+                // +building_nav_button
+                // +unit_nav_button
+                .ui.inline.header
                     // i.home.icon 
                     +i name='key'
                     |key
@@ -126,15 +127,20 @@ template(name='key_edit')
             .column
                 a.ui.big.icon.green.button(href="/key/#{_id}")
                     i.checkmark.big.icon
-                .ui.inline.header editing key ##{building_number} ##{unit_number}
+                .ui.inline.header editing key
+                div
+                +number_edit key='keytag_number' label='key tag number' icon='key'
+                div
                 // +text_edit key='address' label='address' icon='marker'
                 +number_edit key='unit_number' label='unit number' icon='cube'
                 div
                 +number_edit key='building_number' label='building number' icon='building'
                 div
                 +image_edit key='image_id' label='image'
+                div
                 +text_edit key='building_letter' label='building_letter' icon='building'
-                +number_edit key='keytag_number' label='key tag number' icon='key'
+                div
+                div
                 +key_value_edit key='color' label='blue' value='blue' icon='paint'
                 +key_value_edit key='color' label='red' value='red' icon='paint'
                 +key_value_edit key='color' label='green' value='green' icon='paint'

@@ -88,16 +88,17 @@ template(name='nav')
             //     // i.large.exchange.icon
             //     +i name='users'
             //     span.mobile.hidden groups
-            a.item.zoomer.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
-                +i name='checkmark'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden checkins
-            a.item.zoomer.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
-                +i name='key'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden keys
+            if currentUser
+                a.item.zoomer.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
+                    +i name='checkmark'
+                    // i.large.users.icon
+                    // if currentUser.show_labels
+                    span.mobile.hidden checkins
+                a.item.zoomer.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
+                    +i name='key'
+                    // i.large.users.icon
+                    // if currentUser.show_labels
+                    span.mobile.hidden keys
             a.item.zoomer.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
                 +i name='clock'
                 // i.large.users.icon
