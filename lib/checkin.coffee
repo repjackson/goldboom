@@ -294,7 +294,7 @@ if Meteor.isClient
                 # text: "point bounty will be held "
                 icon: 'success'
                 timer:2000
-                # background: 'green'
+                background: 'pink'
                 timerProgressBar:true
                 showClass: {popup: 'animate__animated animate__fadeInDown'}
                 hideClass: {popup: 'animate__animated animate__fadeOutUp'}

@@ -369,7 +369,7 @@ if Meteor.isClient
         # selected_unit: -> Session.get('current_unit_number')
         building_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_building_number is @building_number then 'black massive bigger2' else 'big black basic'
+            if kiosk.current_building_number is @building_number then 'black massive bigger2' else ' black basic'
         building_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number
@@ -384,7 +384,7 @@ if Meteor.isClient
     Template.unit_picker.helpers
         unit_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_unit_number is @unit_number then ' massive' else 'big basic '
+            if kiosk.current_unit_number is @unit_number then 'bigger2 massive' else 'big basic inverted bigger'
         unit_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number

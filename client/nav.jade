@@ -79,7 +79,7 @@ template(name='nav')
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
     if is_connected
-        .ui.attached.borderless.menu.hscroll.secnav
+        .ui.attached.borderless.big.menu.hscroll.secnav
             // a.zoomer.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
             //     // i.large.exchange.icon
             //     +i name='cart'
@@ -111,11 +111,11 @@ template(name='nav')
             //     span.mobile.hidden events
             a.zoomer.item(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
-                +i name='alert'
+                +i name='exclamation'
                 span.mobile.hidden violations
                 
             a.item.zoomer.clear_search(href="/guests" class="{{isActiveRoute 'guests'}}" title='guests')
-                +i name='friends'
+                +i name='smile'
                 span.mobile.hidden guests
             a.item.zoomer.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
                 +i name='car'
