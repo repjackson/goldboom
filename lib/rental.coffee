@@ -1,7 +1,16 @@
-Router.route '/rentals', -> @render 'rentals'
 Router.route '/rental', -> @render 'rentals'
-Router.route '/rental/:doc_id', -> @render 'rental_view'
-Router.route '/rental/:doc_id/edit', -> @render 'rental_edit'
+Router.route '/rentals', (->
+    @layout 'layout'
+    @render 'rentals'
+    ), name:'rentals'
+Router.route '/rental/:doc_id', (->
+    @layout 'mlayout'
+    @render 'rental_view'
+    ), name:'rental_view'
+Router.route '/rental/:doc_id/edit', (->
+    @layout 'mlayout'
+    @render 'rental_edit'
+    ), name:'rental_edit'
 
 
 if Meteor.isClient

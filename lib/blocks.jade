@@ -26,12 +26,12 @@ template(name='bu')
         +unit_label
 
 template(name='building_label')
-    span.ui.basic.image.large.brown.label
+    span.ui.basic.image.large.inverted.label
         +i name='building'
         |#{building_number}
 template(name='unit_label')
-    span.ui.basic.image.large.blue.label
-        +i name='room'
+    span.ui.basic.image.large.inverted.label
+        +i name='cube'
         // i.large.cube.icon
         |#{unit_number}
 
@@ -584,7 +584,7 @@ template(name='role_editor')
 
 template(name='author_info')
     with _author
-        a.ui.big.basic.circular.image.inveted.label(href="/user/#{username}")
+        a.ui.big.basic.circular.image.inverted.label(href="/user/#{username}")
             if image_id
                 img.ui.avatar.image.invert(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             small by 
