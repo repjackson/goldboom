@@ -114,6 +114,14 @@ if Meteor.isClient
             Docs.update found._id, 
                 $set:kiosk_view:'settings'
     Template.healthclub.events 
+        'click .clear_all': ->
+            kiosk = Docs.findOne model:'kiosk'
+            Docs.update kiosk._id, 
+                $unset:
+                    building_number:1
+                    unit_number:1
+            
+            
         'click .pick_building': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number is @building_number
