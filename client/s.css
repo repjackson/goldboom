@@ -94,10 +94,10 @@ img {
      /*filter: invert(1) !important; */
 }
 .image {
-    filter: invert(1) !important; 
+    /*filter: invert(1) !important; */
 }
 .segment > .image, .label {
-    filter: invert(1) !important; 
+    /*filter: invert(1) !important; */
 }
 
 /*.label, input, .input, .progress, .text, .invert{*/

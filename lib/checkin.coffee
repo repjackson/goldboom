@@ -240,18 +240,25 @@ if Meteor.isClient
                 # Router.go "/kiosk"
             , 1000
         'click .add_note': (e)->
+            kiosk = Docs.findOne model:'kiosk'
+            checkin = Docs.findOne kiosk.current_checkin_id
             new_id = 
                 Docs.insert 
                     model:'post'
-                    building_number:@building_number
-                    unit_number:@unit_number
-                    resident_username:@resident_username
-                    resident_user_id:@resident_user_id
-                    parent_id:Router.current().params.doc_id
-                    checkin_id:Router.current().params.doc_id
+                    building_number:checkin.building_number
+                    unit_number:checkin.unit_number
+                    resident_username:checkin.resident_username
+                    resident_user_id:checkin.resident_user_id
+                    parent_id:checkin._id
+                    checkin_id:checkin._id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
-            Meteor.setTimeout ->
-                Router.go "/post/#{new_id}/edit"
+            Meteor.setTimeout =>
+                Docs.update kiosk._id,
+                    $set:
+                        current_route:'post_edit'
+                        current_doc_id:new_id
+                        post_id:new_id
+                # Router.go "/post/#{new_id}/edit"
             , 1000
         'click .add_request': (e)->
             new_id = 

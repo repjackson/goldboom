@@ -5,7 +5,8 @@ template(name='kiosk_container')
         i.massive.refresh.loading.icon
     with kiosk_doc
         if currentUser.admin_mode
-            .ui.header current_route #{current_route}
+            .ui.label current_route #{current_route}
+            .ui.label current doc id  #{current_doc_id}
         +Template.dynamic template=current_route
         // +healthclub
     else 

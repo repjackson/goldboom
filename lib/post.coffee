@@ -45,12 +45,18 @@ if Meteor.isClient
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.post_edit.events
         'click .cancel_note': (e)->
+            $(e.currentTarget).closest('.grid').transition('fly right', 1000)
+            kiosk = Docs.findOne model:'kiosk'
+            
+            Docs.update kiosk._id, 
+                $set:
+                    current_route:'checkin_edit'
+                    current_doc_id:null
             # Docs.update @_id,
             #     submitted:true
-            $(e.currentTarget).closest('.grid').transition('fly right', 1000)
-            Router.go "/checkin/#{@checkin_id}/edit"
-            Docs.remove @_id
+            # Router.go "/checkin/#{@checkin_id}/edit"
 
+            Docs.remove @_id
             # Swal.fire({
             #     title: "thanks for your feedback"
             #     # title: "checked in"
@@ -69,9 +75,16 @@ if Meteor.isClient
             #     # reverseButtons: true
             # })
         'click .submit_post': ->
+            kiosk = Docs.findOne model:'kiosk'
+            
+            Docs.update kiosk._id, 
+                $set:
+                    current_route:'checkin_edit'
+                    current_doc_id:null
+            
             Docs.update @_id,
                 submitted:true
-            Router.go "/kiosk"
+            # Router.go "/kiosk"
             Swal.fire({
                 title: "thanks for your feedback"
                 # title: "checked in"
@@ -91,12 +104,25 @@ if Meteor.isClient
             })
 
     Template.post_edit.onCreated ->
-        @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        # @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => @subscribe 'current_kiosk_doc', Router.current().params.doc_id, ->
     Template.post_view.onRendered ->
         # console.log @
         found_doc = Docs.findOne Router.current().params.doc_id
-
-
+if Meteor.isServer
+    Meteor.publish 'current_kiosk_doc', ->
+        if Meteor.isDevelopment
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+                    dev:true
+        else 
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+        Docs.find 
+            _id:kiosk.current_doc_id
+if Meteor.isClient
     Template.agg_tag.onCreated ->
         # console.log @
         @autorun => @subscribe 'tag_image', @data.name, Session.get('porn'),->

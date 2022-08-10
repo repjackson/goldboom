@@ -128,6 +128,10 @@ if Meteor.isClient
         # Template.parentData()
     Template.registerHelper 'current_time', () -> moment().format("h:mm a")
     
+    Template.registerHelper 'current_kiosk_doc', () ->
+        kiosk = Docs.findOne model:'kiosk'
+        Docs.findOne 
+            _id:kiosk.current_doc_id
     Template.registerHelper 'id_from_building_number', () -> 
         found = 
             Docs.findOne 

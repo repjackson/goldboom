@@ -10,13 +10,14 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'latest_model_doc','hot_tub_reading', ->
     Template.kiosk_container.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
+        @autorun -> Meteor.subscribe 'kiosk_document', ->
+    Template.healthclub.onCreated ->
         @autorun -> Meteor.subscribe 'model_docs','building', ->
         @autorun -> Meteor.subscribe 'model_docs','unit', ->
         # @autorun -> Meteor.subscribe 'model_docs','kiosk', ->
         # @autorun -> Meteor.subscribe 'kiosk_buildings', ->
             
         # @autorun -> Meteor.subscribe 'all_users', ->
-        @autorun -> Meteor.subscribe 'kiosk_document', ->
     Template.unit_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_units', ->
 if Meteor.isServer 
