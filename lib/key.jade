@@ -29,22 +29,21 @@ template(name='keys')
 
         .sixteen.wide.column.scrolling
             if subs_ready
-                // .ui.divided.selection.animated.list
-                // .ui.five.inverted.doubling.cards
-                .ui.five.column.stackable.grid
+                .ui.divided.selection.animated.list
                     each key_docs
-                        .column
-                            +key_item
+                        +key_item
+                // .ui.five.inverted.doubling.cards
+                // .ui.five.column.stackable.grid
         // else 
         //     .sixteen.wide.centered.column
         //         +login
             
 template(name='key_item')
     // a.ui.inverted.segment.fly_right(href="/key/#{_id}" class=color) 
-    .ui.inverted.compact.segment.fly_right(class=color) 
+    .ui.item(class=color) 
         // .ui.inline.header #{address}
         // .ui.inline.header ##{key_number}
-        img.ui.small.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
+        img.ui.tiny.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
         // .content
         .ui.inline.header 
             // i.key.icon
@@ -56,23 +55,27 @@ template(name='key_item')
                 +i name='groups'
                 each key_residents 
                     |#{username}
-        // .ui.big.circular.label(class=color)
-        //     |#{color}
+        .ui.massive.circular.label.invert(class=color)
+            // |#{color}
         .ui.inline.header 
             |#{description}
         // +when
         // +user_info
-        if checked_out
-            .ui.label 
-                |checked out
-        else
-            .ui.green.label 
-                |checked in
+        // if checked_out
+        //     .ui.label 
+        //         |checked out
+        // else
+        //     .ui.green.label 
+        //         |checked in
         // if currentUser.admin_mode
-        +bu         
-        +author_info
-        if currentUser.admin_mode
-            +edit_button
+        span
+            +bu         
+            +author_info
+            if currentUser.admin_mode
+                +edit_button
+            a.ui.big.icon.button.fly_right(href="/key/#{_id}")
+                i.large.chevron.right.icon
+
 
 template(name='key_view')
     with current_doc

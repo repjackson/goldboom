@@ -18,17 +18,17 @@ template(name='nav')
                 span.mobile.hidden buildings
             a.zoomer.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                 // i.large.exchange.icon
-                +i name='room'
+                +i name='cube'
                 span.mobile.hidden units
             a.item.zoomer.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
-                +i name='groups'
+                +i name='users'
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden people
                 
             a.zoomer.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
-                +i name='kindle'
+                +i name='tablet'
                 i.external.icon
                 span.mobile.hidden kiosk
             // a.item(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')

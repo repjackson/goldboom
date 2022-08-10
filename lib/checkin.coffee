@@ -289,7 +289,7 @@ if Meteor.isClient
                 Meteor.users.findOne @resident_user_id
                 
             Swal.fire({
-                title: "thanks, #{resident.first_name}, you're checked in"
+                # title: "thanks, #{resident.first_name}, you're checked in"
                 # title: "checked in"
                 # text: "point bounty will be held "
                 icon: 'success'
