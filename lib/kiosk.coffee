@@ -234,8 +234,11 @@ if Meteor.isClient
                     current_building_number:null
                     current_unit_number:null
             $(e.currentTarget).closest('.grid').transition('fly right', 500)
-
-            Router.go "/checkin/#{new_id}/edit"
+            Docs.update kiosk._id, 
+                $set:
+                    current_checkin_id:new_id
+                    current_route:'checkin_edit'
+            # Router.go "/checkin/#{new_id}/edit"
             # Session.set('current_search_user',null)
             
             # Session.set('current_building_number',null)
@@ -348,10 +351,11 @@ if Meteor.isClient
         kiosk_doc: ->
             Docs.findOne
                 model:'kiosk'
-        kiosk_view: ->
-            kiosk_doc = Docs.findOne
-                model:'kiosk'
-            kiosk_doc.kiosk_view
+        # kiosk_view: ->
+        #     kiosk = Docs.findOne
+        #         model:'kiosk'
+        #     kiosk.current_route
+        #     # if kiosk.current_route is 'checkin_edit
     Template.unit_picker.helpers
         kiosk_doc: -> 
             Docs.findOne model:'kiosk'

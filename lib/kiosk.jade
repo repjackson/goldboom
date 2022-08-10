@@ -3,9 +3,10 @@ template(name='kiosk_container')
     unless subs_ready
         i.massive.refresh.loading.icon
     with kiosk_doc
-        // .ui.header template #{kiosk_view}
-        // +Template.dynamic template=kiosk_view
-        +healthclub
+        .ui.header template #{kiosk_view}
+        .ui.header current_route #{current_route}
+        +Template.dynamic template=current_route
+        // +healthclub
     // else 
     //     .ui.segment 
     //         .ui.button.make
