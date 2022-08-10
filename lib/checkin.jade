@@ -1,10 +1,10 @@
-template(name='checkin_edit')         
+template(name='checkin_edit')   
+    .ui.basic.fluid.compact.icon.button.cancel_checkin
+        i.big.chevron.left.red.icon
+            // |cancel
     with current_checkin
         .ui.padded.one.column.center.aligned.grid.z
             .column
-                .ui.basic.fluid.compact.icon.button.cancel_checkin
-                    i.big.chevron.left.red.icon
-                    // |cancel
                 .ui.hidden.divider
                 with _resident
                     .ui.massive.inline.header #{first_initial} #{last_initial}

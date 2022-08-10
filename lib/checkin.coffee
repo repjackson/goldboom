@@ -228,9 +228,13 @@ if Meteor.isClient
             
             
         'click .cancel_checkin': (e)->
+            kiosk = Docs.findOne model:'kiosk'
+                        
             $(e.currentTarget).closest('.grid').transition('fly right',1000)
             Meteor.setTimeout =>
-                Docs.remove @_id 
+                Docs.remove @_id
+                Docs.update kiosk._id, 
+                    $set:current_route:'healthclub'
                 Router.go "/kiosk"
             , 1000
         'click .add_note': (e)->
@@ -409,18 +413,21 @@ if Meteor.isServer
         }, 
             sort:_timestamp:-1
     Meteor.publish 'docs_by_checkin_id', (checkin_id)->
-        checkin = Docs.findOne checkin_id  
+        kiosk = Docs.findOne model:'kiosk'
+        checkin = Docs.findOne kiosk.current_checkin_id  
         Docs.find
             building_number:checkin.building_number
             unit_numeber:checkin.unit_numeber
             # resident_user_id:checkin.resident_user_id
     Meteor.publish 'guest_by_checkin_id', (checkin_id)->
-        checkin = Docs.findOne checkin_id  
+        kiosk = Docs.findOne model:'kiosk'
+        checkin = Docs.findOne kiosk.current_checkin_id  
         Docs.find
             model:'guest'
             resident_user_id:checkin.resident_user_id
    
     Meteor.publish 'resident_by_id', (doc_id)->
+        kiosk = Docs.findOne model:'kiosk'
         doc = Docs.findOne doc_id
         if doc
             Meteor.users.find doc.resident_user_id

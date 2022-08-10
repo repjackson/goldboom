@@ -1,5 +1,6 @@
 template(name='kiosk_container')
-    
+    if currentUser
+        +set_route key='healthclub'
     unless subs_ready
         i.massive.refresh.loading.icon
     with kiosk_doc
@@ -7,13 +8,19 @@ template(name='kiosk_container')
         .ui.header current_route #{current_route}
         +Template.dynamic template=current_route
         // +healthclub
-    // else 
-    //     .ui.segment 
-    //         .ui.button.make
-    //             |make
-    // +footer
+    else 
+        if currentUser
+            .ui.segment 
+                .ui.massive.button.make
+                    |make
+    if in_dev
+        +footer
 
-
+template(name='set_route')
+    .ui.button.goto_route
+        |#{key}
+            
+            
 template(name='healthclub')
     .ui.stackable.grid.z
         .one.column.row

@@ -177,8 +177,8 @@ template(name='footer')
                             | #{all_docs.count}
                             |docs
                         each all_docs 
-                            .ui.image.label 
-                                img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                            .ui.label 
+                                // img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                                 |#{title}
                                 // +model_label
                                 |[#{model}]

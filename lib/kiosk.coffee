@@ -9,7 +9,10 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'latest_model_doc','pool_reading', ->
         @autorun -> Meteor.subscribe 'latest_model_doc','hot_tub_reading', ->
     Template.kiosk_container.onCreated ->
+        @autorun -> Meteor.subscribe 'me', ->
         @autorun -> Meteor.subscribe 'model_docs','building', ->
+        @autorun -> Meteor.subscribe 'model_docs','unit', ->
+        # @autorun -> Meteor.subscribe 'model_docs','kiosk', ->
         # @autorun -> Meteor.subscribe 'kiosk_buildings', ->
             
         # @autorun -> Meteor.subscribe 'all_users', ->
@@ -311,6 +314,11 @@ if Meteor.isClient
         #     # })`
         #     # if email
         #     #     Swal.fire("Entered email: #{email}")
+    Template.set_route.events
+        'click .goto_route': (e)->
+            kiosk = Docs.findOne model:'kiosk'
+            Docs.update kiosk._id, 
+                $set:current_route:@key
     Template.unit_picker.events
         'keyup .add_unit_number': (e)->
             kiosk = Docs.findOne model:'kiosk'
