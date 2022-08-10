@@ -125,8 +125,9 @@ template(name='checkin_edit')
                             |rentals
                         .ui.icon.circular.compact.large.button.add_rental
                             i.large.plus.icon
-                        each resident_rental_docs
-                            a.item.fly_right(href="/rental/#{_id}") #{_when}
+                        .ui.list
+                            each resident_rental_docs
+                                a.item.fly_right(href="/rental/#{_id}") #{_when}
 
 
 

@@ -125,12 +125,13 @@ if Meteor.isClient
 
     Template.checkin_edit.helpers 
         current_checkin: ->
-            kiosk = 
-                Docs.findOne model:'kiosk'
+            kiosk = Docs.findOne model:'kiosk'
             console.log kiosk
+            # current = Docs.findOne kiosk.currrent_checkin_id
             Docs.findOne kiosk.current_checkin_id
         keys_on_file: ->
-            current = Docs.findOne Router.current().params.doc_id
+            kiosk = Docs.findOne model:'kiosk'
+            current = Docs.findOne kiosk.currrent_checkin_id
             Docs.find 
                 model:'key'
                 building_number:current.building_number
@@ -429,12 +430,20 @@ if Meteor.isServer
         }, 
             sort:_timestamp:-1
             limit:1
-    Meteor.publish 'docs_by_checkin_id', (checkin_id)->
-        kiosk = Docs.findOne model:'kiosk'
+    Meteor.publish 'docs_by_checkin_id', ()->
+        if Meteor.isDevelopment
+            kiosk = Docs.findOne 
+                model:'kiosk'
+                dev:true
+        else
+            kiosk = Docs.findOne 
+                model:'kiosk'
+        
         checkin = Docs.findOne kiosk.current_checkin_id  
         Docs.find
+            model:$in:['post','task','key','order']
             building_number:checkin.building_number
-            unit_numeber:checkin.unit_numeber
+            unit_number:checkin.unit_number
             # resident_user_id:checkin.resident_user_id
     Meteor.publish 'guest_by_checkin_id', (checkin_id)->
         kiosk = Docs.findOne model:'kiosk'
