@@ -76,7 +76,6 @@ if Meteor.isClient
             # })
         'click .submit_post': ->
             kiosk = Docs.findOne model:'kiosk'
-            
             Docs.update kiosk._id, 
                 $set:
                     current_route:'checkin_edit'

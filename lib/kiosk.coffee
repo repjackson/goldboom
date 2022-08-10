@@ -13,7 +13,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'kiosk_document', ->
     Template.healthclub.onCreated ->
         @autorun -> Meteor.subscribe 'model_docs','building', ->
-        @autorun -> Meteor.subscribe 'model_docs','unit', ->
+        # @autorun -> Meteor.subscribe 'model_docs','unit', ->
         # @autorun -> Meteor.subscribe 'model_docs','kiosk', ->
         # @autorun -> Meteor.subscribe 'kiosk_buildings', ->
             
@@ -397,7 +397,7 @@ if Meteor.isClient
     Template.unit_picker.helpers
         unit_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
-            if kiosk.current_unit_number is @unit_number then 'bigger2 massive' else 'big basic inverted bigger'
+            if kiosk.current_unit_number is @unit_number then 'bigger2 massive inverted' else 'big basic bigger'
         unit_docs: ->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_unit_number
