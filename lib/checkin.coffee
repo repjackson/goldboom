@@ -120,6 +120,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'docs_by_checkin_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'last_checkin', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'checkin_resident', ->
             
 
     Template.checkin_edit.helpers 
@@ -232,10 +233,10 @@ if Meteor.isClient
                         
             $(e.currentTarget).closest('.grid').transition('fly right',1000)
             Meteor.setTimeout =>
-                Docs.remove @_id
+                Docs.remove kiosk.current_checkin_id
                 Docs.update kiosk._id, 
                     $set:current_route:'healthclub'
-                Router.go "/kiosk"
+                # Router.go "/kiosk"
             , 1000
         'click .add_note': (e)->
             new_id = 
@@ -295,6 +296,7 @@ if Meteor.isClient
                 Router.go "/task/#{new_id}/edit"
             , 1000
         'click .submit_checkin': ->
+            kiosk = Docs.findOne model:'kiosk'
             resident = 
                 Meteor.users.findOne @resident_user_id
                 
@@ -304,7 +306,7 @@ if Meteor.isClient
                 # text: "point bounty will be held "
                 icon: 'success'
                 timer:2000
-                background: 'pink'
+                # background: 'pink'
                 timerProgressBar:true
                 showClass: {popup: 'animate__animated animate__fadeInDown'}
                 hideClass: {popup: 'animate__animated animate__fadeOutUp'}
@@ -315,6 +317,8 @@ if Meteor.isClient
                 # cancelButtonText: 'cancel'
                 # reverseButtons: true
             })
+            Docs.update kiosk._id, 
+                $set:current_route:'healthclub'
             # $('body').toast({
             #     title: "#{resident.first_name} #{resident.last_name} checked in"
             #     # message: 'Please see desk staff for key.'
@@ -407,11 +411,24 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'checkin_resident', ()->
+        if Meteor.isDevelopment
+            kiosk = Docs.findOne 
+                model:'kiosk'
+                dev:true
+        else
+            kiosk = Docs.findOne 
+                model:'kiosk'
+        checkin = Docs.findOne kiosk.current_checkin_id
+        Meteor.users.find {
+            _id:checkin.resident_user_id
+        }
     Meteor.publish 'last_checkin', ()->
         Docs.find {
             model:'checkin'
         }, 
             sort:_timestamp:-1
+            limit:1
     Meteor.publish 'docs_by_checkin_id', (checkin_id)->
         kiosk = Docs.findOne model:'kiosk'
         checkin = Docs.findOne kiosk.current_checkin_id  
