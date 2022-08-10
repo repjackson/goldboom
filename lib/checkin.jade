@@ -67,7 +67,7 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
                 .ui.hidden.divider
-                a.ui.massive.fluid.green.circular.compact.button.submit_checkin.z(href="/kiosk")
+                a.ui.massive.fluid.green.circular.compact.button.invert.submit_checkin.z(href="/kiosk")
                     i.checkmark.big.icon
                     | complete
                 .ui.hidden.divider
@@ -103,18 +103,17 @@ template(name='checkin_edit')
                             +i name='key'
                             |#{unit_key_checkouts.count}
                             |key checkouts
+                        if keys_on_file.count
+                            .ui.circular.compact.large.button.new_key_checkout
+                                i.large.plus.icon
+                                |checkout
                         .ui.small.header
                             +i name='hanging'
                             |#{keys_on_file.count}
                             |keys on file
                         .ui.list
                             each keys_on_file
-                                .ui.item key 
-                                    |#{_when}
-                                    +bu
-                                    +print_this
-                        .ui.icon.circular.compact.large.button.new_key_checkout
-                            i.large.plus.icon
+                                .ui.item added #{_when}
                         each unit_key_checkouts
                             .item #{_when}
                         div
