@@ -820,10 +820,10 @@ if Meteor.isServer
         
         
 if Meteor.isServer
-    Meteor.publish 'checkin_docs', (doc_id)->
-        Docs.find 
-            model:'checkin'
-            parent_id:doc_id
+    # Meteor.publish 'checkin_docs', (doc_id)->
+    #     Docs.find 
+    #         model:'checkin'
+    #         parent_id:doc_id
     Meteor.methods 
         checkin: (parent_id)->
             Docs.insert 

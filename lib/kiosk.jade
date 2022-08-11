@@ -29,7 +29,7 @@ template(name='healthclub')
                 // .ui.segment.alpha
                 // .spacer
                 if kiosk_doc.current_building_number
-                    .ui.black.icon.button.clear_all
+                    .ui.black.icon.circular.button.clear_all
                         i.large.remove.icon
                 if currentUser.admin_mode
                     a.ui.big.header(href="/" title='go home')
@@ -45,8 +45,11 @@ template(name='healthclub')
                 // +ibig name='apartment' cl='ui inline image'
                 // .ui.big.inline.header
                     // |building
-                i.building.brown.big.icon
-                +building_picker
+                if kiosk_doc.current_building_number
+                    .ui.blue.compact.button.bigger.unpick_building
+                        .ui.inverted.header #{kiosk_doc.current_building_number}
+                unless kiosk_doc.current_building_number
+                    +building_picker
                 // div
                 if kiosk_doc.current_building_number
                     if is kiosk_doc.current_building_number 2959
@@ -78,6 +81,7 @@ template(name='healthclub')
                 
                 
 template(name='building_picker')
+    +i name='apartment'
     each building_docs 
         // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
         a.ui.bigger.compact.grey.secondary.button.pick_building.zoomer(class=building_button_class)

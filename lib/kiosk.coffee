@@ -11,8 +11,8 @@ if Meteor.isClient
     Template.kiosk_container.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
-    Template.healthclub.onCreated ->
-        @autorun -> Meteor.subscribe 'model_docs','building', ->
+    Template.building_picker.onCreated ->
+        @autorun -> Meteor.subscribe 'kiosk_buildings', ->
         # @autorun -> Meteor.subscribe 'model_docs','unit', ->
         # @autorun -> Meteor.subscribe 'model_docs','kiosk', ->
         # @autorun -> Meteor.subscribe 'kiosk_buildings', ->
@@ -21,6 +21,22 @@ if Meteor.isClient
     Template.unit_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_units', ->
 if Meteor.isServer 
+    Meteor.publish 'kiosk_buildings', (model)->
+        if Meteor.isDevelopment
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+                    dev:true
+        else 
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+        match = {model:'building'}
+        if kiosk.current_building_number
+            match.building_number = kiosk.current_building_number
+        Docs.find match
+        
+        
     Meteor.publish 'latest_model_doc', (model)->
         Docs.find {
             model:model
@@ -100,6 +116,11 @@ if Meteor.isClient
             kiosk_doc.kiosk_view
 
     Template.kiosk_container.events 
+        'click .unpick_building': ->
+            kiosk = Docs.findOne model:'kiosk'
+            Docs.update kiosk._id, 
+                $unset:
+                    current_building_number:1
         'click .make': ->
             if Meteor.isDevelopment
                 Docs.insert 
@@ -118,18 +139,18 @@ if Meteor.isClient
             kiosk = Docs.findOne model:'kiosk'
             Docs.update kiosk._id, 
                 $unset:
-                    building_number:1
-                    unit_number:1
+                    current_building_number:1
+                    current_unit_number:1
             
             
         'click .pick_building': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number is @building_number
-                Docs.update(kiosk._id, 
+                Docs.update kiosk._id, 
                     $unset:
                         current_building_number:1
                         current_unit_number:1
-                    )
+        
                 # Session.set('current_building_number', null)
                 # Session.set('current_unit_number',null)
                 $(e.currentTarget).closest('.label').transition('tada', 500)
@@ -169,7 +190,7 @@ if Meteor.isClient
                 splitted = new_username.split(' ')
                 formatted = new_username.split(' ').join('_').toLowerCase()
                 console.log formatted
-                Meteor.call 'add_user', formatted, (err,res)->
+                Meteor.call 'add_user', formatted, (err,res)=>
                     if err 
                         alert err.reason
                     else 
@@ -202,9 +223,10 @@ if Meteor.isClient
                                 current_search_user:null
                                 current_building_number:null
                                 current_unit_number:null
+                                current_route: 'checkin_edit'
+                                current_checkin_id:new_id
                         $(e.currentTarget).closest('.grid').transition('fly right', 500)
-   
-                        Router.go "/checkin/#{new_id}/edit"
+                        # Router.go "/checkin/#{new_id}/edit"
                         
                         $('body').toast({
                             title: "#{splitted[0]} added"
@@ -388,6 +410,7 @@ if Meteor.isClient
             Docs.findOne model:'kiosk'
         # selected_building: -> Session.get('current_building_number')
         # selected_unit: -> Session.get('current_unit_number')
+    Template.building_picker.helpers
         building_button_class: -> 
             kiosk = Docs.findOne model:'kiosk'
             if kiosk.current_building_number is @building_number then 'black massive bigger2' else ' black basic'
