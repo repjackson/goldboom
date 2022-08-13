@@ -71,16 +71,16 @@ template(name='guest_view')
     with current_doc
         .ui.stackable.padded.three.column.grid
             .column
-                a.ui.big.button(href="/guests")
-                    i.large.left.chevron.icon
-                    // |#{guest_code}
-                    +i name='apartment'
-                    |guests
                 .ui.inline.header
                     // i.home.icon 
                     +i name='friends'
                     |guest
                     |#{name}
+                a.ui.big.button(href="/guests")
+                    i.large.left.chevron.icon
+                    // |#{guest_code}
+                    +i name='friends'
+                    |guests
                 +verified_label
 
                 if can_edit 

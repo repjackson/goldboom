@@ -1,4 +1,6 @@
 template(name='home')
+    img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
+
     .ui.stackable.padded.grid
         .three.column.row
             // .center.aligned.column
@@ -148,6 +150,7 @@ template(name='active_checkin_doc')
                 strong #{_resident.last_name}
             +bu
             | #{_when}
+            small {{cal_time _timestamp}}
             i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
             
                     

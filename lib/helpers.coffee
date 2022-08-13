@@ -80,6 +80,9 @@ if Meteor.isClient
         Docs.findOne 
             model:'unit'
             unit_number:@unit_number
+    Template.registerHelper 'stats_doc', (input) -> 
+        Docs.findOne 
+            model:'stats'
     Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
     Template.registerHelper 'first_initial', (input) -> 
         if @first_name

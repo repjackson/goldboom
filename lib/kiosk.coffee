@@ -670,7 +670,7 @@ if Meteor.isServer
             
 
     Meteor.methods
-        convert_units: ->
+        # convert_units: ->
             # units = Docs.find(model:'unit')
             # # for unit in units.fetch()
             # #     console.log typeof(unit.unit_number)

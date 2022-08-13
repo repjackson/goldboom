@@ -1,6 +1,6 @@
 template(name='kiosk_container')
     if currentUser.admin_mode
-        +set_route key='healthclub'
+        +set_route key='healthclub' icon='home' cl='big'
     unless subs_ready
         i.massive.refresh.loading.icon
     with kiosk_doc
@@ -18,18 +18,24 @@ template(name='kiosk_container')
         +footer
 
 template(name='set_route')
-    .ui.button.goto_route
-        |#{key}
+    .ui.compact.basic.circular.button.goto_route(class=cl)
+        if icon 
+            +i name=icon
+        if label 
+            strong #{label}
+        else 
+            strong #{key}
             
             
 template(name='healthclub')
+    // img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
     .ui.stackable.padded.grid.z
         .one.column.row
             .center.aligned.column
                 // .ui.segment.alpha
                 // .spacer
                 if kiosk_doc.current_building_number
-                    .ui.black.icon.circular.button.clear_all
+                    .ui.red.icon.circular.button.clear_all
                         i.large.remove.icon
                 if currentUser.admin_mode
                     a.ui.big.header(href="/" title='go home')
@@ -65,9 +71,9 @@ template(name='healthclub')
                 if kiosk_doc.current_unit_number
                     +resident_picker
                 // +active_checkins
-                if currentUser.admin_mode
-                    +footer
                 unless current_building_number
+                    .ui.basic.label last equipment cleaning: {{from_now last_cleaning._timestamp}} 
+                        |by {{last_cleaning.author_username}}
                     +water_small
                     .ui.big.inline.header 
                         // i.grey.mail.icon
@@ -76,7 +82,9 @@ template(name='healthclub')
                     .ui.big.header 
                         |303.402.6900
                     // .spacer
-                
+                    +set_route key='posts' icon='news'
+                    +set_route key='tasks' icon='tasks'
+                    +set_route key='readings' icon='water'
                 
                 
                 
@@ -84,7 +92,7 @@ template(name='building_picker')
     +i name='apartment'
     each building_docs 
         // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
-        a.ui.bigger.compact.grey.secondary.button.pick_building.zoomer(class=building_button_class)
+        a.ui.bigger.compact.basic.button.pick_building.zoomer(class=building_button_class)
             // if image_id
             // i.building.icon
             //     img.ui.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
@@ -111,16 +119,19 @@ template(name='water_small')
     div
     with latest_pool_reading
         .ui.big.basic.label 
+            +i name='pool'
             |pool 
-            strong #{temperature}deg
+            strong #{temperature}
+                |&deg;
             // #{ph}ph #{chlorine}chl
-            |#{_when}
+            small #{_when}
     with latest_hot_tub_reading
         .ui.big.basic.label
+            +i name='jacuzzi'
             |hot tub
-            strong #{temperature}deg 
+            strong #{temperature} &deg;
             // #{ph}ph #{chlorine}chl
-            |#{_when}
+            small #{_when}
          
 template(name='resident_picker')
     // .spacer
@@ -166,21 +177,20 @@ template(name='unit_picker')
     div
     unless kiosk_doc.current_unit_number
         .ui.big.inline.header
-            // +i name='room'
+            +i name='room'
             |pick unit
     //     // div
     //     // .ui.button.add_new_unit
     //     //     i.large.plus.icon
     //     //     |add new unit
     //     // if kiosk_doc.adding_unit
-    // if kiosk_doc.current_unit_number
-    //     .ui.big.inline.header
-    //         +i name='room'
-    //         | unit
+    if kiosk_doc.current_unit_number
+        .ui.big.inline.header
+            +i name='room'
     // +ibig name='room' cl='ui inline image'
     // |&nbsp;
     // |&nbsp;
-    i.cube.big.icon.inline.bigger
+    // i.cube.big.icon.inline.bigger
     each unit_docs 
         a.ui.massive.compact.circular.label.pick_unit.zoomer(class=unit_button_class)
             // i.cube.icon.inline

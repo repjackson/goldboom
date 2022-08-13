@@ -13,7 +13,10 @@ if Meteor.isClient
     Template.units.onCreated ->
         Session.setDefault('unit_number_filter',null)
         Session.setDefault('building_number_filter',null)
-        @autorun => Meteor.subscribe 'model_docs', 'unit', ->
+        @autorun => Meteor.subscribe 'units_pub',
+            Session.get('unit_number_filter')
+            Session.get('building_number_filter')
+            ,->
     Template.unit_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'unit_by_both', Router.current().params.building_number, Router.current().params.unit_number, ->
@@ -36,11 +39,11 @@ if Meteor.isClient
         'keyup .search_unit_number': ->
             val = $('.search_unit_number').val()
             console.log val
-            Session.set('unit_number_filter',val)
+            Session.set('unit_number_filter',parseInt(val))
         'keyup .search_building_number': ->
             val = $('.search_building_number').val()
             console.log val
-            Session.set('building_number_filter',val)
+            Session.set('building_number_filter',parseint(val))
             
         'click .clear_filters': ->
             Session.set('unit_number_filter',null)
@@ -58,17 +61,51 @@ if Meteor.isClient
     Template.units.helpers
         unit_docs: ->
             match = {model:'unit'}
-            if Session.get('unit_number_filter')
-                match.unit_number = {$regex:"#{Session.get('unit_number_filter')}", $options: 'i'}
-            if Session.get('building_number_filter')
-                match.building_number = {$regex:"#{Session.get('building_number_filter')}", $options: 'i'}
+            # if Session.get('unit_number_filter')
+            #     match.unit_number = {$regex:"#{Session.get('unit_number_filter')}", $options: 'i'}
+            # if Session.get('building_number_filter')
+            #     match.building_number = {$regex:"#{Session.get('building_number_filter')}", $options: 'i'}
 
             Docs.find match,
                 sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
+         
+if Meteor.isServer
+    Meteor.methods 
+        convert_units: ->
+            cursor = Docs.find model:'unit'
+            for unit in cursor.fetch()
+                # unit_doc = Docs.findOne unit._id
+                console.log unit.unit_number
+                Docs.update unit._id,
+                    $set:
+                        unit_number_string:String(unit.unit_number)
+                        building_number_string:String(unit.building_number)
+    Meteor.publish 'units_pub', (
+        unit_filter=null, 
+        building_filter=null
+        sort_key='_timestamp'
+        sort_direction=-1
+        )->
+        match = {model:'unit'}
+
+        # { $where: "/^123.*/.test(this.example)" })
+        if unit_filter
+            # "$expr": {
+            #     "$regexMatch": {
+            #       "input": {"$toString": "$name"}, 
+            #       "regex": /123/ 
+            #     }
+            # }
+            match.unit_number_string = {$regex:unit_filter, $options: 'i'}
+        if building_filter
+            match.building_number_string = {$regex:building_number, $options: 'i'}
+
+        Docs.find match,
+            sort:"#{sort_key}":sort_direction
                 
                 
 
-                
+if Meteor.isClient                
     Template.unit_owners.helpers
         owners: ->
             unit =

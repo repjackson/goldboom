@@ -1,26 +1,28 @@
 template(name='tasks')
     .ui.stackable.padded.grid 
-        .four.wide.column.scrolling
+        .sixteen.wide.column
+            +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
+        
             .ui.inline.header 
-                +i name='exchange'
+                +i name='tasks'
                 |#{artist_docs.count} tasks
             if current_search 
                 i.large.red.circular.link.remove.icon.clear
             .ui.large.input 
                 input.task_search(type='text' placeholder='search...' value=current_search)
-            .ui.header your points #{currentUser.points}
-            a.ui.big.icon.button.new_task
-                i.big.green.plus.icon
-            +i name='tags'
-            each picked_tasks_tags
-                button.ui.blue.compact.circular.button.unpick_tag(tabindex='0')
-                    //- i.remove.icon
-                    | #{this}
-            each tasks_tag_results
-                button.ui.circular.compact.black.button.pick_tag(tabindex="0" class=result_class title=count)
-                    |#{name}
-                    // small #{count}
-        .twelve.wide.column
+            // .ui.header your points #{currentUser.points}
+            if currentUser
+                a.ui.big.icon.button.new_task
+                    i.big.green.plus.icon
+            // +i name='tags'
+            // each picked_tasks_tags
+            //     button.ui.blue.compact.circular.button.unpick_tag(tabindex='0')
+            //         //- i.remove.icon
+            //         | #{this}
+            // each tasks_tag_results
+            //     button.ui.circular.compact.black.button.pick_tag(tabindex="0" class=result_class title=count)
+            //         |#{name}
+            //         // small #{count}
             unless one_result
                 .ui.inline.header(title='result count') #{result_docs.count}
                 // +search_input key='title'
@@ -36,7 +38,7 @@ template(name='tasks')
                 // +session_set key='limit' value=10
                 // +session_set key='limit' value=25
                 // +session_set key='limit' value=100
-            .ui.hidden.divider
+        .sixteen.wide.column
             if subs_ready
                 // if session_is 'view_mode' 'grid'
                 //     .ui.stackable.cards.scrolling

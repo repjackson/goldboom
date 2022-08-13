@@ -5,6 +5,7 @@ template(name='users')
                 .ui.inline.header
                     // i.large.users.icon
                     |#{user_docs.count}
+                    |#{stats_doc.user_count_total}
                     +i name='groups'
                     |users
                 if currentUser.admin

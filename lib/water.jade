@@ -1,13 +1,12 @@
 template(name='readings')
+    +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
     .ui.padded.stackable.grid 
         .eight.wide.column
-            .ui.inline.header 
-                +i name='water'
-                |water readings
-            a.ui.button.fly_right(href="/staff")
-                i.chevron.left.icon
-                +i name='shield'
-                |staff
+            if currentUser.admin_mode
+                a.ui.button.fly_right(href="/staff")
+                    i.chevron.left.icon
+                    +i name='shield'
+                    |staff
             div
             +hot_tub_readings
         .eight.wide.column
@@ -61,13 +60,15 @@ template(name='hot_tub_readings')
                 .ui.basic.label #{chlorine}cl
                 .ui.basic.label #{temperature}deg
                 | #{notes}
-                .ui.large.label #{ph_message}
-                .ui.large.label #{chlorine_message}
+                if currentUser.admin_mode
+                    .ui.large.label #{ph_message}
+                    .ui.large.label #{chlorine_message}
                 |#{_when}
                 +author_info
                 | #{when}
-                a.ui.large.icon.button.inline(href="/hot_tub_reading/edit/#{_id}")
-                    i.pencil.icon
+                if currentUser.admin_mode
+                    a.ui.large.icon.button.inline(href="/hot_tub_reading/edit/#{_id}")
+                        i.pencil.icon
 
             
             
@@ -91,8 +92,9 @@ template(name='pool_readings')
                 .ui.large.label #{chlorine_message}
                 +author_info
                 | #{when}
-                a.ui.large.icon.button(href="/pool_reading/edit/#{_id}")
-                    i.pencil.icon
+                if currentUser.admin_mode
+                    a.ui.large.icon.button(href="/pool_reading/edit/#{_id}")
+                        i.pencil.icon
 
             
 template(name='ph')            
@@ -100,8 +102,9 @@ template(name='ph')
         label 
             +ismall name='molecule'
             |ph (goal 7.2-7.4)
-            if ph_message
-                .ui.big.label #{ph_message}
+            if currentUser.admin_mode
+                if ph_message
+                    .ui.big.label #{ph_message}
         input#ph(type='number' step='.1' min='6.4' max='8.0' value=ph)
         
 template(name='indoor_ph')            
