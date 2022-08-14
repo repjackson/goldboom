@@ -58,24 +58,6 @@ template(name='orders')
                 .ui.center.aligned.basic.segment
                     i.massive.yin.yang.loading.grey.icon
 
-template(name='order_card')
-    .card
-        .content
-            span(title='recipient')
-                +i name='lend'
-                with _target
-                    +user_info
-            .ui.header #{amount}pts
-            .ui.label 
-                i.user.icon
-                |#{_author_username}
-            each tags 
-                .ui.label #{this}
-            span.smallscroll
-                |!{description}
-            .ui.label #{_when}
-            a.ui.icon.button.zoomer(href="/order/#{_id}")
-                i.right.large.chevron.icon
 template(name='order_item')
     .item
         .content
@@ -152,11 +134,12 @@ template(name='order_edit')
                     // +key_value_edit key='order_type' value='product' label='product'
                     // +key_value_edit key='order_type' value='transfer' label='transfer'
                     // .ui.big.header #{amount}pts
-                    each rental_items 
-                        .ui.segment
-                            img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}")
-                            .content
-                                |#{title}
+                    .ui.centered.four.cards
+                        each rental_items 
+                            .card.pick_item(class=rental_class)
+                                img.ui.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}")
+                                .content
+                                    |#{title}
                     // if is order_type 'transfer'
                     //     .ui.big.input
                     //         input.point_amount(type='number' value=amount min='1' max=point_max)

@@ -2,7 +2,7 @@ template(name='nav')
     // #topnav.topnav.ui.attached.borderless.big.four.item.menu.hscroll(class=darkmode_class)
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
-    #topnav.topnav.ui.attached.borderless.big.black.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.black.menu.hscroll
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.zoomer
@@ -69,7 +69,7 @@ template(name='nav')
                     a.item(href="/user/#{currentUser.username}/points" class="{{isActiveRoute 'user_points'}}" title='points')
                         +i name='coins'
                         |#{points}pts
-                a.fly_up.zoomer2.item.tada(href="/user/#{currentUser.username}" class=user_nav_button_class title='profile' class="{{isActiveRoute 'profile'}}" )
+                a.zoomer2.item.tada(href="/user/#{currentUser.username}" class=user_nav_button_class title='profile' class="{{isActiveRoute 'profile'}}" )
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=300 height=300 gravity='face' crop='fill'}}")
                     else
@@ -79,7 +79,7 @@ template(name='nav')
                     |&nbsp;
                 // a.icon.item(href="/mail/inbox")
     if is_connected
-        .ui.attached.borderless.big.menu.hscroll.secnav
+        .ui.attached.borderless.menu.hscroll.secnav
             // a.zoomer2.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
             //     // i.large.exchange.icon
             //     +i name='cart'

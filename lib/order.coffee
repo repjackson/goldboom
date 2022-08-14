@@ -1,14 +1,15 @@
 if Meteor.isClient
+    Template.mlayout.onCreated ->
+        @autorun => @subscribe 'me'
     Template.orders.onCreated ->
         document.title = 'gr orders'
         
         Session.setDefault('current_search', null)
-        Session.setDefault('porn', false)
         Session.setDefault('dummy', false)
         Session.setDefault('is_loading', false)
         @autorun => @subscribe 'doc_by_id', Session.get('full_doc_id'), ->
-        @autorun => @subscribe 'agg_emotions',
-            picked_tags.array()
+        # @autorun => @subscribe 'agg_emotions',
+        #     picked_tags.array()
         @autorun => @subscribe 'order_tag_results',
             picked_tags.array()
             
@@ -72,43 +73,6 @@ if Meteor.isClient
         found_doc = Docs.findOne Router.current().params.doc_id
 
 
-    Template.agg_tag.onCreated ->
-        # console.log @
-        @autorun => @subscribe 'tag_image', @data.name, Session.get('porn'),->
-    Template.agg_tag.helpers
-        term_image: ->
-            # console.log Template.currentData().name
-            found = Docs.findOne {
-                model:'order'
-                tags:$in:[Template.currentData().name]
-                "watson.metadata.image":$exists:true
-            }, sort:ups:-1
-            # console.log 'found image', found
-            found
-    Template.unpick_tag.onCreated ->
-        # console.log @
-        @autorun => @subscribe 'tag_image', @data, Session.get('porn'),->
-    Template.unpick_tag.helpers
-        flat_term_image: ->
-            # console.log Template.currentData()
-            found = Docs.findOne {
-                model:'order'
-                tags:$in:[Template.currentData()]
-                "watson.metadata.image":$exists:true
-            }, sort:ups:-1
-            # console.log 'found flat image', found.watson.metadata.image
-            found.watson.metadata.image
-    Template.agg_tag.events
-        'click .result': (e,t)->
-            # Meteor.call 'log_term', @title, ->
-            picked_tags.push @name
-            $('#search').val('')
-            Session.set('full_doc_id', null)
-            
-            Session.set('current_search', null)
-            Session.set('searching', true)
-            Session.set('is_loading', true)
-            # Meteor.call 'call_wiki', @name, ->
     
     
     Template.orders.events
@@ -124,8 +88,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'product_from_order_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.order_card.onCreated ->
-        @autorun => Meteor.subscribe 'target_from_doc_id', (@data._id), ->
         
     Template.order_view.onRendered ->
 
@@ -149,7 +111,20 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'model_docs', 'rental', ->
+        @autorun => Meteor.subscribe 'kiosk_document', ->
+        @autorun => Meteor.subscribe 'kiosk_checkin', ->
 
+if Meteor.isServer 
+    Meteor.publish 'kiosk_checkin', ->
+        if Meteor.isDevelopment
+            kiosk = Docs.findOne 
+                model:'kiosk'
+                dev:true
+        else
+            kiosk = Docs.findOne 
+                model:'kiosk'
+        Docs.find kiosk.current_checkin_id
+if Meteor.isClient
     Template.order_view.helpers
         _target: ->
             order = Docs.findOne Router.current().params.doc_id
@@ -163,8 +138,6 @@ if Meteor.isClient
                 model:'rental'
         # terms: ->
         #     Terms.find()
-        suggestions: ->
-            Results.find(model:'tag')
         _target: ->
             order = Docs.findOne Router.current().params.doc_id
             if order and order.target_id
@@ -192,7 +165,23 @@ if Meteor.isClient
         can_submit: ->
             order = Docs.findOne Router.current().params.doc_id
             order.amount and order.target_id
+        rental_class: ->
+            kiosk = Docs.findOne model:'kiosk'
+            if kiosk
+                checkin = Docs.findOne kiosk.current_checkin_id
+                if checkin
+                    if checkin.rental_id and @_id is checkin.rental_id then 'inverted' else ''
     Template.order_edit.events
+        'click .pick_item': ->
+            console.log @
+            kiosk = Docs.findOne model:'kiosk'
+            console.log kiosk
+            checkin = Docs.findOne kiosk.current_checkin_id
+            console.log checkin
+            if checkin
+                Docs.update checkin._id, 
+                    $set:
+                        rental_id:@_id
         'click .cancel': ->
             if confirm 'cancel?'
                 Docs.remove @_id
