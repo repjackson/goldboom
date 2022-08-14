@@ -121,7 +121,8 @@ template(name='order_view')
                                 
 
 template(name='order_edit')
-    with current_doc
+    .ui.header
+    with current_checkin
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
@@ -129,17 +130,22 @@ template(name='order_edit')
                         i.chevron.left.icon
                         i.large.remove.icon
                         |cancel
-                    .ui.header editing rental order
+                    .ui.header
+                        +i name='basketball'
+                        |equipment checkout
                     // +key_value_edit key='order_type' value='rental' label='rental'
                     // +key_value_edit key='order_type' value='product' label='product'
                     // +key_value_edit key='order_type' value='transfer' label='transfer'
                     // .ui.big.header #{amount}pts
-                    .ui.centered.four.cards
-                        each rental_items 
-                            .card.pick_item(class=rental_class)
-                                img.ui.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}")
-                                .content
-                                    |#{title}
+                    each rental_items 
+                        .ui.button.pick_item(class=rental_class)
+                            img.ui.small.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}")
+                            .content
+                                |#{title}
+                    if current_checkin.rental_id
+                        .ui.fluid.green.big.button.complete_rental
+                            i.checkmark.icon
+                            |complete
                     // if is order_type 'transfer'
                     //     .ui.big.input
                     //         input.point_amount(type='number' value=amount min='1' max=point_max)

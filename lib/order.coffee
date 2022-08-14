@@ -7,11 +7,11 @@ if Meteor.isClient
         Session.setDefault('current_search', null)
         Session.setDefault('dummy', false)
         Session.setDefault('is_loading', false)
-        @autorun => @subscribe 'doc_by_id', Session.get('full_doc_id'), ->
+        # @autorun => @subscribe 'doc_by_id', Session.get('full_doc_id'), ->
         # @autorun => @subscribe 'agg_emotions',
         #     picked_tags.array()
-        @autorun => @subscribe 'order_tag_results',
-            picked_tags.array()
+        # @autorun => @subscribe 'order_tag_results',
+        #     picked_tags.array()
             
     Template.orders.onCreated ->
         @autorun => @subscribe 'model_docs', 'order', ->
@@ -49,22 +49,6 @@ if Meteor.isClient
             Router.go "/order/#{new_id}/edit"
 
 
-    Template.user_points.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs','order', ->
-    Template.user_points.helpers
-        points_in_docs: ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            
-            Docs.find 
-                model:'order'
-                target_id:user._id
-
-        points_out_docs: ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find 
-                model:'order'
-                _author_id:user._id
-
 
     Template.order_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
@@ -75,19 +59,11 @@ if Meteor.isClient
 
     
     
-    Template.orders.events
-        'click .select_search': ->
-            picked_tags.push @name
-            Session.set('full_doc_id', null)
-    
-            $('#search').val('')
-            Session.set('current_search', null)
     
 if Meteor.isClient
     Template.order_view.onCreated ->
         @autorun => Meteor.subscribe 'product_from_order_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         
     Template.order_view.onRendered ->
 
@@ -143,24 +119,9 @@ if Meteor.isClient
             if order and order.target_id
                 Meteor.users.findOne
                     _id: order.target_id
-        members: ->
-            order = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find({
-                # levels: $in: ['member','domain']
-                _id: $ne: Meteor.userId()
-            }, {
-                sort:points:1
-                limit:10
-                })
         # subtotal: ->
         #     order = Docs.findOne Router.current().params.doc_id
         #     order.amount*order.target_ids.length
-        
-        point_max: ->
-            if Meteor.user().username is 'one'
-                1000
-            else 
-                Meteor.user().points
         
         can_submit: ->
             order = Docs.findOne Router.current().params.doc_id
@@ -170,7 +131,8 @@ if Meteor.isClient
             if kiosk
                 checkin = Docs.findOne kiosk.current_checkin_id
                 if checkin
-                    if checkin.rental_id and @_id is checkin.rental_id then 'inverted' else ''
+                    if checkin.rental_id 
+                        if @_id is checkin.rental_id then 'big black' else 'compact large'
     Template.order_edit.events
         'click .pick_item': ->
             console.log @
@@ -182,10 +144,34 @@ if Meteor.isClient
                 Docs.update checkin._id, 
                     $set:
                         rental_id:@_id
-        'click .cancel': ->
+        'click .cancel_order': ->
             if confirm 'cancel?'
                 Docs.remove @_id
                 Router.go "/orders"
+        'click .complete_rental': (e)->
+            checkin = Docs.findOne model:'checkin'
+            kiosk = Docs.findOne model:'kiosk'
+            $('body').toast({
+                title: "submitted, see staff"
+                # message: 'see desk staff for'
+                class : 'success'
+                iconClass:'checkmark'
+                position:'bottom center'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+            $(e.currentTarget).closest('.grid').transition('fly left',1000)
+                
+            Docs.update kiosk._id, 
+                $set:
+                    current_route:'healthclub'
+
         'click .submit': ->
             Meteor.call 'send_order', @_id, =>
                 $('body').toast({

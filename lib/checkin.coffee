@@ -124,11 +124,6 @@ if Meteor.isClient
             
 
     Template.checkin_edit.helpers 
-        current_checkin: ->
-            kiosk = Docs.findOne model:'kiosk'
-            console.log kiosk
-            # current = Docs.findOne kiosk.currrent_checkin_id
-            Docs.findOne kiosk.current_checkin_id
         keys_on_file: ->
             kiosk = Docs.findOne model:'kiosk'
             current = Docs.findOne kiosk.currrent_checkin_id
@@ -276,6 +271,7 @@ if Meteor.isClient
                 Router.go "/task/#{new_id}/edit"
             , 1000
         'click .add_rental': (e)->
+            kiosk = Docs.findOne model:'kiosk'
             new_id = 
                 Docs.insert 
                     model:'order'
@@ -283,12 +279,15 @@ if Meteor.isClient
                     unit_number:@unit_number
                     resident_id:@resident_id
                     resident_username:@resident_username
-                    parent_id:Router.current().params.doc_id
-                    checkin_id:Router.current().params.doc_id
+                    parent_id:kiosk.current_checkin_id
+                    checkin_id:kiosk.current_checkin_id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
-            Meteor.setTimeout ->
-                Router.go "/order/#{new_id}/edit"
-            , 1000
+            Docs.update kiosk._id, 
+                $set:
+                    current_route:'order_edit'
+            # Meteor.setTimeout ->
+            #     Router.go "/order/#{new_id}/edit"
+            # , 1000
         'click .add_task': (e)->
             new_id = 
                 Docs.insert 

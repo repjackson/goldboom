@@ -1,5 +1,6 @@
 template(name='kiosk_container')
-    if currentUser.admin_mode
+    // if currentUser.admin_mode
+    if in_dev
         +set_route key='healthclub' icon='home' cl='big'
     unless subs_ready
         i.massive.refresh.loading.icon
@@ -108,7 +109,6 @@ template(name='building_picker')
 template(name='hc_rental')
     .ui.header 
         |vendors
-    
     .ui.header
         |rentals
     .ui.list 

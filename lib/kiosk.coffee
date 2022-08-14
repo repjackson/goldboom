@@ -11,6 +11,8 @@ if Meteor.isClient
     Template.kiosk_container.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
+        @autorun => Meteor.subscribe 'kiosk_checkin', ->
+            
     Template.building_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_buildings', ->
         # @autorun -> Meteor.subscribe 'model_docs','unit', ->
