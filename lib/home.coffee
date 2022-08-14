@@ -124,6 +124,7 @@ if Meteor.isClient
                     parent_id:@_id
             Router.go "/order/#{new_id}/edit"
     Template.home.events
+    
         # 'click .pick_user': ->
         #     console.log @
         #     Docs.insert 
@@ -227,6 +228,26 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
 
 if Meteor.isServer
+    Meteor.methods 
+        parse_parking: (parsed_results)->
+            # console.log parsed_results
+            # console.log parsed_results.data.length
+            for item in parsed_results.data[..10]
+                console.log item
+                # found_item = 
+                #     Docs.findOne    
+                #         model:'mishi_order'
+                #         Charge_ID:item.Charge_ID
+                #         Ean_Code:item.Ean_Code
+                # if found_item 
+                #     console.log 'skipping existing item', item.Charge_ID
+                #     Meteor.call 'mishi_meta', found_item._id, ->
+                # else 
+                #     item.model = 'mishi_order'
+                #     new_id = Docs.insert item
+                #     Meteor.call 'mishi_meta', new_id, ->
+                # # console.log item.Txn_Timestamp, converted
+
     Meteor.publish 'checkedout_users_from_search', (username_search=null)->
         match = {}
         # match.checkedin = $ne:true
