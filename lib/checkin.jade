@@ -3,7 +3,7 @@ template(name='checkin_edit')
         i.big.chevron.left.red.icon
             // |cancel
     with current_checkin
-        .ui.padded.one.column.center.aligned.grid.z
+        .ui.one.column.center.aligned.grid.z
             .column
                 .ui.hidden.divider
                 with _resident
@@ -269,6 +269,8 @@ template(name='checkin_button')
 
 
 template(name='checkins')
+    +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
+
     .ui.stackable.padded.grid
         // if currentUser
         .four.wide.column

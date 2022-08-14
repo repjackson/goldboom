@@ -229,13 +229,13 @@ if Meteor.isClient
         'click .cancel_checkin': (e)->
             kiosk = Docs.findOne model:'kiosk'
                         
-            $(e.currentTarget).closest('.grid').transition('fly right',1000)
-            Meteor.setTimeout =>
-                Docs.remove kiosk.current_checkin_id
-                Docs.update kiosk._id, 
-                    $set:current_route:'healthclub'
-                # Router.go "/kiosk"
-            , 1000
+            $(e.currentTarget).closest('.grid').transition('fade right',500)
+            # Meteor.setTimeout =>
+            Docs.remove kiosk.current_checkin_id
+            Docs.update kiosk._id, 
+                $set:current_route:'healthclub'
+            # Router.go "/kiosk"
+            # , 500
         'click .add_note': (e)->
             kiosk = Docs.findOne model:'kiosk'
             checkin = Docs.findOne kiosk.current_checkin_id

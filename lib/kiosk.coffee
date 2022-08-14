@@ -353,8 +353,12 @@ if Meteor.isClient
     Template.set_route.events
         'click .goto_route': (e)->
             kiosk = Docs.findOne model:'kiosk'
-            Docs.update kiosk._id, 
-                $set:current_route:@key
+            $('.grid').transition('fade right', 500)
+            if kiosk
+                Meteor.setTimeout =>
+                    Docs.update kiosk._id, 
+                        $set:current_route:@key
+                , 500
     Template.unit_picker.events
         'keyup .add_unit_number': (e)->
             kiosk = Docs.findOne model:'kiosk'
@@ -403,6 +407,14 @@ if Meteor.isClient
     Template.unit_picker.helpers
         kiosk_doc: -> 
             Docs.findOne model:'kiosk'
+    Template.water_small.events 
+        'click .goto_water':->
+            kiosk = Docs.findOne model:'kiosk'
+            $('.grid').transition('fade right', 500)
+            Meteor.setTimeout =>
+                Docs.update kiosk._id, 
+                    $set:current_route:'readings'
+            , 500
     Template.water_small.helpers
         latest_pool_reading: ->
             Docs.findOne

@@ -79,7 +79,7 @@ template(name='healthclub')
                     .ui.basic.label last equipment cleaning: {{from_now last_cleaning._timestamp}} 
                         |by {{last_cleaning.author_username}}
                     +water_small
-                    .ui.big.inline.header 
+                    .ui.large.inline.header 
                         // i.grey.mail.icon
                         |maintenance@boomprop.com
                     img.ui.tiny.inline.image(src="/emailqr.png")
@@ -91,6 +91,7 @@ template(name='healthclub')
                     +set_route key='readings' icon='water'
                     +set_route key='rentals' icon='clock'
                     +set_route key='checkins' icon='checkmark'
+                    +set_route key='violations' icon='alert'
                 
                 
                 
@@ -123,7 +124,7 @@ template(name='hc_rental')
 template(name='water_small')
     div
     with latest_pool_reading
-        .ui.big.basic.label 
+        a.ui.big.basic.label.zoomer.goto_water
             +i name='pool'
             |pool 
             strong #{temperature}
@@ -131,7 +132,7 @@ template(name='water_small')
             // #{ph}ph #{chlorine}chl
             small #{_when}
     with latest_hot_tub_reading
-        .ui.big.basic.label
+        a.ui.big.basic.label.zoomer.goto_water
             +i name='jacuzzi'
             |hot tub
             strong #{temperature} &deg;
