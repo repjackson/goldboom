@@ -89,7 +89,7 @@ if Meteor.isClient
             @first_name[..0].toUpperCase()+@first_name[1]+'.'
     Template.registerHelper 'last_initial', (input) -> 
         if @last_name
-            @last_name[..0].toUpperCase()+@first_name[1]+'.'
+            @last_name[..0].toUpperCase()+@last_name[1]+'.'
     Template.registerHelper 'current_checkin', () -> 
         kiosk = Docs.findOne model:'kiosk'
         console.log kiosk
