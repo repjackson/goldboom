@@ -250,16 +250,19 @@ if Meteor.isClient
         'click .pick_user': (e)->
             console.log @
             kiosk = Docs.findOne model:'kiosk'
+            new_checkin = {
+                model:'checkin'
+                active:true
+                resident_user_id:@_id
+                resident_username:@username
+                guest_ids:[]
+                building_number:kiosk.current_building_number
+                unit_number:kiosk.current_unit_number
             
-            new_id = 
-                Docs.insert 
-                    model:'checkin'
-                    active:true
-                    resident_user_id:@_id
-                    resident_username:@username
-                    guest_ids:[]
-                    building_number:kiosk.current_building_number
-                    unit_number:kiosk.current_unit_number
+            }
+            if in_dev
+                new_checkin.dev = true
+            new_id = Docs.insert new_checkin 
             
             # Meteor.users.update @_id,
             #     $set:

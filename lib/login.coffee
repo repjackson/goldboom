@@ -35,7 +35,7 @@ if Meteor.isClient
                 else
                     # console.log res
                     # Router.go "/user/#{username}"
-                    $(e.currentTarget).closest('.grid').transition('fly right', 500)
+                    $(e.currentTarget).closest('.grid').transition('zoom', 500)
                     Meteor.setTimeout ->
                         Router.go "/user/#{username}"
                     , 500

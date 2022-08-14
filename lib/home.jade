@@ -95,20 +95,20 @@ template(name='latest_requests')
                 a.fly_down(href="/task/#{_id}" title='view task')
                     i.large.chevron.right.link.circular.icon.zoomer
 template(name='latest_notes')
+    a.ui.header.zoomer(href="/posts" title='view posts')
+        +i name='chat'
+        |#{latest_note_docs.count} latest notes
     .medscroll
-        a.ui.header.zoomer(href="/posts" title='view posts')
-            +i name='chat'
-            |#{latest_note_docs.count} latest notes
         each latest_note_docs
             .ui.segment
                 if image_id
                     img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                .ui.inline.header !{content}
+                a.ui.inline.header.fly_down(href="/post/#{_id}")  !{content}
                 +bu
                 if currentUser.admin_mode
                     +print_this
                 |#{when}
-                a.ui.large.icon.basic.circular.button(href="/post/#{_id}") 
+                a.ui.large.icon.basic.circular.button.fly_down(href="/post/#{_id}") 
                     i.large.chevron.right.icon
             
 template(name='view_button')
@@ -136,14 +136,14 @@ template(name='active_checkins')
         +i name='clock'
         |#{active_checkin_docs.count} active checkins
     if subs_ready
-        .ui.large.divided.animated.selection.list.medscroll
+        .ui.large.divided.selection.list.medscroll
             each active_checkin_docs 
                 +active_checkin_doc
     else 
         i.massive.loading.refresh.icon
         
 template(name='active_checkin_doc')
-    .item(href="/checkin/#{_id}" title=resident_user_id)
+    .item.zoomer
         .content
             a.ui.big.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
                 strong #{_resident.first_name}
@@ -151,6 +151,12 @@ template(name='active_checkin_doc')
             +bu
             | #{_when}
             small {{cal_time _timestamp}}
+            a.fly_down(href="/checkin/#{_id}" title=resident_user_id)
+                i.circular.chevron.right.link.large.icon.zoomer
+            if dev 
+                i.large.code.icon(title='dev')
+            if rental_id 
+                +i name='clock'
             i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
             
                     
