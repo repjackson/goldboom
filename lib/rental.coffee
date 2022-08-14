@@ -1,6 +1,6 @@
 Router.route '/rental', -> @render 'rentals'
 Router.route '/rentals', (->
-    @layout 'layout'
+    @layout 'mlayout'
     @render 'rentals'
     ), name:'rentals'
 Router.route '/rental/:doc_id', (->

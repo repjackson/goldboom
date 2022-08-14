@@ -127,10 +127,11 @@ if Meteor.isClient
         keys_on_file: ->
             kiosk = Docs.findOne model:'kiosk'
             current = Docs.findOne kiosk.currrent_checkin_id
-            Docs.find 
-                model:'key'
-                building_number:current.building_number
-                unit_number:current.unit_number
+            if current
+                Docs.find 
+                    model:'key'
+                    building_number:current.building_number
+                    unit_number:current.unit_number
         resident_notes:->
             Docs.find 
                 model:'post'
@@ -160,6 +161,7 @@ if Meteor.isClient
     Template.checkin_edit.events
         'click .pick_guest': ->
             doc = Docs.findOne Router.current().params.doc_id
+            # checkin = 
             if doc.guest_ids and @_id in doc.guest_ids
                 Docs.update Router.current().params.doc_id, 
                     $pull:

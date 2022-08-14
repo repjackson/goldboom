@@ -1,5 +1,5 @@
 template(name='checkin_edit')   
-    .ui.basic.fluid.compact.icon.button.cancel_checkin
+    .ui.basic.fluid.compact.icon.massive.button.cancel_checkin
         i.big.chevron.left.red.icon
             // |cancel
     with current_checkin
@@ -270,79 +270,84 @@ template(name='checkin_button')
 
 template(name='checkins')
     .ui.stackable.padded.grid
-        if currentUser
-            .four.wide.column
-                .ui.inline.header 
-                    +i name='checkmark'
-                    |#{checkin_docs.count}
-                    |checkins
+        // if currentUser
+        .four.wide.column
+            .ui.inline.header 
+                +i name='checkmark'
+                |#{checkin_docs.count}
+                |checkins
+            if currentUser
                 .ui.icon.button.add_checkin
                     i.plus.icon
-                +building_facet
-                +unit_facet
-            .twelve.wide.column
-                +sort_direction_toggle
-                // +sort_key_toggle
-                +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-                +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
-                +session_set key='sort_key' value='building_number' label='building #' icon='apartment'
-                .ui.selection.animated.divided.list.scrolling
-                    each checkin_docs
-                        +checkin_item
-        else 
-            .sixteen.wide.column
-                +login
+            +building_facet
+            +unit_facet
+        .twelve.wide.column
+            +sort_direction_toggle
+            // +sort_key_toggle
+            +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
+            +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
+            +session_set key='sort_key' value='building_number' label='building #' icon='apartment'
+            .ui.selection.animated.divided.list.scrolling
+                each checkin_docs
+                    +checkin_item
+        // else 
+        //     .sixteen.wide.column
+        //         +login
                     
                     
 template(name='checkin_item')
-    a.ui.item(href="/checkin/#{_id}") 
-        .content 
-            .ui.inline.header  
-                |#{resident_username}
-            // .ui.big.label  
-            |#{_when}
-            +bu
-            // .ui.big.label 
-            //     small author:
-            //     |#{_author_username}
-            // if session_resident.kiosk_photo
-            //     img.ui.image(src="{{c.url session_resident.kiosk_photo width=300 height=300 gravity='face' crop='fill'}}")
-            // else
-            //     //- |old photo
-            //     img.ui.image(src="{{c.url session_resident.image_id width=300 height=300 gravity='face' crop='fill'}}")
-            a.fly_right(href="/resident/#{resident_id}")
-                .ui.inline.header
-                    |#{resident_first_name} #{resident_last_name}
-            with session_resident
-                +i name='marker' classes='ui avatar image'
-                |#{address}
+    unless currentUser
+        .ui.item
+            .ui.header #{_when}
+    if currentUser
+        a.ui.item(href="/checkin/#{_id}") 
+            .content 
+                .ui.inline.header  
+                    |#{resident_username}
+                // .ui.big.label  
+                |#{_when}
                 +bu
-                //- +number_edit key='checkins_without_gov_id' label='alter checkins without gov id' direct=true
-                //- +number_edit key='checkins_without_email_verification' label='alter checkins without email verification' direct=true
-                //- +number_view key='unit_number' label='unit #' direct=true
-                //- +text_view key='building_code' label='building code' direct=true
-                // +lease_expiration_check
-                //- +rules_and_regs_check
-                // +user_check_steps 
-                if active_violations
-                    .ui.big.red.label active violations
-                if staff_notes
-                    .ui.small.header
-                        i.clipboard.icon(title='staff notes')
-                        |#{staff_notes}       
-            if checkin_guest_docs.count
-                .ui.small.header guests
-                each checkin_guest_docs
-                    .ui.large.label 
-                        |#{guest_name} #{first_name} #{last_name}
-            if user_is_resident
-                +date_view key='start_date' label='start date' direct=true
-                +date_view key='expiration_date' label='expiration date' direct=true
-            span.ui.image.large.label.zoomer.sign_out
-                +i name='exit'
-                |check out
-            if currentUser.admin_mode
-                +print_this
+                // .ui.big.label 
+                //     small author:
+                //     |#{_author_username}
+                // if session_resident.kiosk_photo
+                //     img.ui.image(src="{{c.url session_resident.kiosk_photo width=300 height=300 gravity='face' crop='fill'}}")
+                // else
+                //     //- |old photo
+                //     img.ui.image(src="{{c.url session_resident.image_id width=300 height=300 gravity='face' crop='fill'}}")
+                a.fly_right(href="/resident/#{resident_id}")
+                    .ui.inline.header
+                        |#{resident_first_name} #{resident_last_name}
+                with session_resident
+                    +i name='marker' classes='ui avatar image'
+                    |#{address}
+                    +bu
+                    //- +number_edit key='checkins_without_gov_id' label='alter checkins without gov id' direct=true
+                    //- +number_edit key='checkins_without_email_verification' label='alter checkins without email verification' direct=true
+                    //- +number_view key='unit_number' label='unit #' direct=true
+                    //- +text_view key='building_code' label='building code' direct=true
+                    // +lease_expiration_check
+                    //- +rules_and_regs_check
+                    // +user_check_steps 
+                    if active_violations
+                        .ui.big.red.label active violations
+                    if staff_notes
+                        .ui.small.header
+                            i.clipboard.icon(title='staff notes')
+                            |#{staff_notes}       
+                if checkin_guest_docs.count
+                    .ui.small.header guests
+                    each checkin_guest_docs
+                        .ui.large.label 
+                            |#{guest_name} #{first_name} #{last_name}
+                if user_is_resident
+                    +date_view key='start_date' label='start date' direct=true
+                    +date_view key='expiration_date' label='expiration date' direct=true
+                span.ui.image.large.label.zoomer.sign_out
+                    +i name='exit'
+                    |check out
+                if currentUser.admin_mode
+                    +print_this
 
 
 template(name='checkin_view')

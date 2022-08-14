@@ -260,7 +260,7 @@ if Meteor.isClient
                 unit_number:kiosk.current_unit_number
             
             }
-            if in_dev
+            if Meteor.isDevelopment
                 new_checkin.dev = true
             new_id = Docs.insert new_checkin 
             

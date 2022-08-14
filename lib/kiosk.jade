@@ -53,8 +53,10 @@ template(name='healthclub')
                 // .ui.big.inline.header
                     // |building
                 if kiosk_doc.current_building_number
-                    .ui.blue.compact.button.bigger.unpick_building
-                        .ui.inverted.header #{kiosk_doc.current_building_number}
+                    .ui.blue.compact.massive.button.bigger.unpick_building
+                        .ui.inverted.inline.header 
+                            i.building.icon
+                            |##{kiosk_doc.current_building_number}
                 unless kiosk_doc.current_building_number
                     +building_picker
                 // div
@@ -69,8 +71,9 @@ template(name='healthclub')
                 // .ui.massive.icon.input.lookup_user
                 //     i.search.icon
                 //     input.search_user(type='text' placeholder='search user...')
-                if kiosk_doc.current_unit_number
-                    +resident_picker
+                if kiosk_doc.current_building_number
+                    if kiosk_doc.current_unit_number
+                        +resident_picker
                 // +active_checkins
                 unless current_building_number
                     .ui.basic.label last equipment cleaning: {{from_now last_cleaning._timestamp}} 
@@ -86,6 +89,8 @@ template(name='healthclub')
                     +set_route key='posts' icon='news'
                     +set_route key='tasks' icon='tasks'
                     +set_route key='readings' icon='water'
+                    +set_route key='rentals' icon='clock'
+                    +set_route key='checkins' icon='checkmark'
                 
                 
                 
