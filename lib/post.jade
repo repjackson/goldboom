@@ -123,39 +123,11 @@ template(name='post_item')
                 i.plus.icon
                 |#{_when}
             // +voting
+            if currentUser.admin_mode
+                a.ui.button(href="/post/#{_id}/edit")
+                    i.pencil.icon
             
             
-            
-template(name='flat_tag_picker')
-    a.ui.large.label.pick_flat_tag.zoomer(title='add tag') 
-        |#{this}
-    if currentUser
-        i.remove.link.circular.icon.remove_tag.zoomer(title='remove tag')
-
-
-template(name='agg_tag')
-    // button.ui.big.compact.active.fade.animated.button.result(tabindex="0" title=count)
-    button.ui.image.basic.big.label.result.zoomer(tabindex="0" title=count)
-        // .visible.content
-        if subs_ready
-            if term_image.watson.metadata.image
-                img.ui.image.superzoomer.invert(src=term_image.watson.metadata.image)
-        else 
-            i.yin.yang.grey.loading.icon
-        | #{name}
-        // .hidden.content
-        //     |+ #{title}
-        // if term.image
-        //     //- button.ui.compact.button(tabindex="0" title=count)
-        //     //- img.ui.mini.inline.image(src=term.image)
-        //     img.ui.mini.inline.image(src=term.image)
-        //     .ui.inline.small.thin.header(class=tag_result_class) #{title}
-        // else
-        //     //- button.ui.compact.button(tabindex="0" title=count)
-        //- small #{count}
-                
-                
-                
                     
 template(name='post_view')
     with current_doc
@@ -238,7 +210,8 @@ template(name='post_edit')
                 +bu
                 .bigger
                     +html_edit key='content'
-                
+                if currentUser.admin_mode
+                    +boolean_edit key='public' label='public'
                 a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post
                     i.checkmark.big.icon
                     |submit

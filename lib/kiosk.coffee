@@ -12,6 +12,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'me', ->
         @autorun -> Meteor.subscribe 'kiosk_document', ->
         @autorun => Meteor.subscribe 'kiosk_checkin', ->
+        Meteor.call 'set_kiosk', ->
             
     Template.building_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_buildings', ->
@@ -23,6 +24,17 @@ if Meteor.isClient
     Template.unit_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_units', ->
 if Meteor.isServer 
+    Meteor.method 
+        set_kiosk: ->
+            found = 
+                Docs.findOne 
+                    model:'kiosk'
+                    dev:$ne:true
+            Docs.update kiosk._id, 
+                $set:
+                    current_route:'healthclub'
+            
+        
     Meteor.publish 'kiosk_buildings', (model)->
         if Meteor.isDevelopment
             kiosk = 
