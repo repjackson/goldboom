@@ -132,45 +132,6 @@ if Meteor.isServer
         Docs.find 
             _id:kiosk.current_doc_id
 if Meteor.isClient
-    Template.agg_tag.onCreated ->
-        # console.log @
-        @autorun => @subscribe 'tag_image', @data.name, Session.get('porn'),->
-    Template.agg_tag.helpers
-        term_image: ->
-            # console.log Template.currentData().name
-            found = Docs.findOne {
-                model:'post'
-                tags:$in:[Template.currentData().name]
-                "watson.metadata.image":$exists:true
-            }, sort:ups:-1
-            # console.log 'found image', found
-            found
-    Template.unpick_tag.onCreated ->
-        # console.log @
-        @autorun => @subscribe 'tag_image', @data, Session.get('porn'),->
-    Template.unpick_tag.helpers
-        flat_term_image: ->
-            # console.log Template.currentData()
-            found = Docs.findOne {
-                model:'post'
-                tags:$in:[Template.currentData()]
-                "watson.metadata.image":$exists:true
-            }, sort:ups:-1
-            # console.log 'found flat image', found.watson.metadata.image
-            found.watson.metadata.image
-    Template.agg_tag.events
-        'click .result': (e,t)->
-            # Meteor.call 'log_term', @title, ->
-            picked_tags.push @name
-            $('#search').val('')
-            Session.set('full_doc_id', null)
-            
-            Session.set('current_search', null)
-            Session.set('searching', true)
-            Session.set('is_loading', true)
-            # Meteor.call 'call_wiki', @name, ->
-    
-    
     Template.posts.events
         'click .add_post': ->
             new_id = 
@@ -183,27 +144,6 @@ if Meteor.isClient
     
             $('#search').val('')
             Session.set('current_search', null)
-    Template.flat_tag_picker.events
-        'click .remove_tag': ->
-            # console.log @
-            parent = Template.parentData()
-            console.log parent
-            # if confirm "remove #{@valueOf()} tag?"
-            Docs.update parent._id,
-                $pull:
-                    tags:@valueOf()
-        'click .pick_flat_tag': -> 
-            picked_tags.push @valueOf()
-            Session.set('full_doc_id', null)
-    
-            Session.set('loading',true)
-    Template.unpick_tag.events
-        'click .unpick_tag': ->
-            picked_tags.remove @valueOf()
-            console.log picked_tags.array()
-            if picked_tags.array().length > 0
-                Session.set('is_loading', true)
-            
     
     
     Template.posts.events

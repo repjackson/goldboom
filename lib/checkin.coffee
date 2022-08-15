@@ -114,15 +114,34 @@ if Meteor.isClient
     Template.checkin_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'kiosk', ->
-        @autorun => Meteor.subscribe 'guest_by_checkin_id', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'model_docs', 'kiosk', ->
+        @autorun => Meteor.subscribe 'guests_by_checkin_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'docs_by_checkin_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'last_checkin', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'checkin_resident', ->
+        @autorun => Meteor.subscribe 'checkin_guests', ->
             
-
+if Meteor.isServer
+    Meteor.publish 'checkin_guests', ->
+        if Meteor.isDevelopment
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+                    dev:true
+        else 
+            kiosk = 
+                Docs.findOne 
+                    model:'kiosk'
+        checkin = Docs.findOne kiosk.current_checkin_id
+        if checkin 
+            Docs.find 
+                model:'guest'
+                resident_user_id:checkin.resident_user_id
+        
+        
+if Meteor.isClient
     Template.checkin_edit.helpers 
         keys_on_file: ->
             kiosk = Docs.findOne model:'kiosk'
@@ -146,9 +165,9 @@ if Meteor.isClient
                 model:'order'
                 
         guest_class: ->
-            doc = Docs.findOne Router.current().params.doc_id
-            
-            if doc.guest_ids and @_id in doc.guest_ids
+            # doc = Docs.findOne Router.current().params.doc_id
+            checkin = Docs.findOne model:'checkin'
+            if checkin.guest_ids and @_id in checkin.guest_ids
                 'big blue circular'
             else 
                 'circular basic large compact'
@@ -160,10 +179,10 @@ if Meteor.isClient
                 model:'guest'
     Template.checkin_edit.events
         'click .pick_guest': ->
-            doc = Docs.findOne Router.current().params.doc_id
-            # checkin = 
-            if doc.guest_ids and @_id in doc.guest_ids
-                Docs.update Router.current().params.doc_id, 
+            # doc = Docs.findOne Router.current().params.doc_id
+            checkin = Docs.findOne model:'checkin'
+            if checkin.guest_ids and @_id in checkin.guest_ids
+                Docs.update checkin._id, 
                     $pull:
                         guest_ids: @_id
                         guest_names:@name
@@ -174,7 +193,7 @@ if Meteor.isClient
                     position:'bottom right'
                 })
             else
-                Docs.update Router.current().params.doc_id, 
+                Docs.update checkin._id, 
                     $addToSet:
                         guest_ids: @_id
                         guest_names:@name
@@ -196,7 +215,8 @@ if Meteor.isClient
         'keyup .add_guest': (e)->
             kiosk = Docs.findOne model:'kiosk'
             val = $('.add_guest').val()
-            console.log val
+            # console.log val
+            console.log @resident_user_id
             if e.which is 13
                 new_id = 
                     Docs.insert 
@@ -206,14 +226,15 @@ if Meteor.isClient
                         resident_username:@resident_username
                         building_number:@building_number
                         unit_number:@unit_number
-                doc = Docs.findOne Router.current().params.doc_id
-                if doc.guest_ids and new_id in doc.guest_ids
-                    Docs.update Router.current().params.doc_id, 
+                # doc = Docs.findOne Router.current().params.doc_id
+                checkin = Docs.findOne model:'checkin'
+                if checkin.guest_ids and new_id in checkin.guest_ids
+                    Docs.update checkin._id, 
                         $pull:
                             guest_ids: new_id
                             guest_names:@name
                 else
-                    Docs.update Router.current().params.doc_id, 
+                    Docs.update checkin._id, 
                         $addToSet:
                             guest_ids: new_id
                             guest_names:@name
@@ -258,6 +279,7 @@ if Meteor.isClient
                 # Router.go "/post/#{new_id}/edit"
             , 1000
         'click .add_request': (e)->
+            checkin = Docs.findOne model:'checkin'
             new_id = 
                 Docs.insert 
                     model:'task'
@@ -266,8 +288,8 @@ if Meteor.isClient
                     unit_number:@unit_number
                     resident_id:@resident_id
                     resident_username:@resident_username
-                    parent_id:Router.current().params.doc_id
-                    checkin_id:Router.current().params.doc_id
+                    parent_id:checkin._id
+                    checkin_id:checkin._id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/task/#{new_id}/edit"
@@ -298,8 +320,8 @@ if Meteor.isClient
                     unit_number:@unit_number
                     resident_username:@resident_username
                     resident_user_id:@resident_user_id
-                    parent_id:Router.current().params.doc_id
-                    checkin_id:Router.current().params.doc_id
+                    parent_id:checkin._id
+                    checkin_id:checkin._id
             $(e.currentTarget).closest('.grid').transition('fly left',1000)
             Meteor.setTimeout ->
                 Router.go "/task/#{new_id}/edit"
@@ -453,7 +475,7 @@ if Meteor.isServer
             building_number:checkin.building_number
             unit_number:checkin.unit_number
             # resident_user_id:checkin.resident_user_id
-    Meteor.publish 'guest_by_checkin_id', (checkin_id)->
+    Meteor.publish 'guests_by_checkin_id', (checkin_id)->
         kiosk = Docs.findOne model:'kiosk'
         checkin = Docs.findOne kiosk.current_checkin_id  
         Docs.find
@@ -488,7 +510,7 @@ if Meteor.isServer
 # if Meteor.isClient
 #     Template.checkin.onCreated ->
 #         @autorun => Meteor.subscribe 'doc_by_id', Session.get('new_guest_id'), ->
-#         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+#         @autorun => Meteor.subscribe 'doc_by_id', checkin._id, ->
 #         @autorun => Meteor.subscribe 'checkin_guests',Router.current().params.doc_id, ->
 #         @autorun -> Meteor.subscribe 'resident_from_session', Router.current().params.doc_id, ->
 #         # @autorun -> Meteor.subscribe 'session', Router.current().params.doc_id, ->

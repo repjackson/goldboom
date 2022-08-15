@@ -24,13 +24,13 @@ if Meteor.isClient
     Template.unit_picker.onCreated ->
         @autorun -> Meteor.subscribe 'kiosk_units', ->
 if Meteor.isServer 
-    Meteor.method 
+    Meteor.methods
         set_kiosk: ->
             found = 
                 Docs.findOne 
                     model:'kiosk'
                     dev:$ne:true
-            Docs.update kiosk._id, 
+            Docs.update found._id, 
                 $set:
                     current_route:'healthclub'
             
