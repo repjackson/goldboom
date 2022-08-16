@@ -1,4 +1,6 @@
 if Meteor.isClient 
+    papa =  require 'papaparse'
+    
     Router.route '/', (->
         @layout 'layout'
         @render 'home'
@@ -226,6 +228,20 @@ if Meteor.isClient
                     _timestamp:-1
     Template.latest_checkins.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
+
+    Template.admin.events 
+        'change .upload_parking': (e,t)->
+            papa.parse(e.target.files[0], {
+                header: true
+                complete: (results)->
+                    console.log results
+                    # Meteor.call 'parse_mishi', results, ->
+                    # _.each(results.data, (csvData)-> 
+                    #     console.log(csvData.empId + ' , ' + csvData.empCode)
+                    # )
+                skipEmptyLines: true
+            })
+
 
 if Meteor.isServer
     Meteor.methods 

@@ -33,3 +33,5 @@ tmeasday:publish-counts
 multiply:iron-router-progress
 shell-server
 flowkey:hotkeys
+ecmascript@0.15.1
+modules@0.16.0

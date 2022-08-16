@@ -42,6 +42,8 @@ template(name='home')
                     +latest_rentals
                 .column       
                     +guest_block
+                .column       
+                    +admin
             .column       
                 .ui.header 
                     +i name='info'
@@ -52,7 +54,7 @@ template(name='home')
                 a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
                     +i name='phone'
                     |phone: (303) 545-1787
-                .ui.input
+            
             // .column
             //     +latest_activity
             // if currentUser
@@ -63,8 +65,13 @@ template(name='home')
         // .one.column.row
         //     .column
         //         +staff
+          
+          
                 
-                
+template(name='admin')
+    .ui.header admin 
+    .ui.input
+        input.upload_parking(type='file')
                 
 template(name='guest_block')
     .ui.header 

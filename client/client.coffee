@@ -6,6 +6,10 @@
 @picked_units = new ReactiveArray []
 
 
+Template.not_found.events
+    'click .browser_back': ->
+          window.history.back();
+
 
 Tracker.autorun ->
     current = Router.current()
