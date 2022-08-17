@@ -2,7 +2,7 @@ template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
 
     .ui.stackable.padded.grid
-        .three.column.row
+        .row
             // .center.aligned.column
             //     .ui.inline.header 
             //         +i name='dumbbell'
@@ -32,19 +32,20 @@ template(name='home')
             //                 img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             //                 |check in as #{currentUser.username}
             if currentUser
-                .column     
+                .four.wide.column     
                     +active_checkins
-                .column     
-                    +latest_notes
-                .column     
+                .twelve.wide.column
+                    +kiosk_settings
+                    // +latest_notes
+                .four.widecolumn     
                     +latest_requests
-                .column     
+                .four.widecolumn     
                     +latest_rentals
-                .column       
+                .four.widecolumn       
                     +guest_block
-                .column       
+                .four.widecolumn       
                     +admin
-            .column       
+            .four.wide.column       
                 .ui.header 
                     +i name='info'
                     | hours 7am-10pm
@@ -55,16 +56,16 @@ template(name='home')
                     +i name='phone'
                     |phone: (303) 545-1787
             
-            .column
+            .four.wide.column
                 +latest_activity
             // if currentUser
-            //     .column
+            //     .four.wide.column
             //         +latest_checkins
-            .column
+            .eight.wide.column
                 +map_view
-        .one.column.row
-            .column
-                +staff
+        // .one.column.row
+        //     .column
+        //         +staff
           
           
                 
