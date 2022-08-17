@@ -105,6 +105,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'home_guests', ->
         @autorun => Meteor.subscribe 'user_min', Session.get('current_search_user'), ->
+        @autorun => Meteor.subscribe 'kiosk_document', ->
     
 if Meteor.isServer
     Meteor.publish 'user_min', ->

@@ -1,22 +1,23 @@
 template(name='kiosk_container')
     // if currentUser.admin_mode
-    if in_dev
-        +set_route key='healthclub' icon='home' cl='big'
-    unless subs_ready
-        i.massive.refresh.loading.icon
-    with kiosk_doc
+    div(class=kiosk_doc.invert_class)
+        if in_dev
+            +set_route key='healthclub' icon='home' cl='big'
+        unless subs_ready
+            i.massive.refresh.loading.icon
+        with kiosk_doc
+            if currentUser.admin_mode
+                .ui.label current_route #{current_route}
+                .ui.label current doc id  #{current_doc_id}
+            +Template.dynamic template=current_route
+            // +healthclub
+        else 
+            if currentUser
+                .ui.segment 
+                    .ui.massive.button.make
+                        |make
         if currentUser.admin_mode
-            .ui.label current_route #{current_route}
-            .ui.label current doc id  #{current_doc_id}
-        +Template.dynamic template=current_route
-        // +healthclub
-    else 
-        if currentUser
-            .ui.segment 
-                .ui.massive.button.make
-                    |make
-    if currentUser.admin_mode
-        +footer
+            +footer
 
 template(name='set_route')
     .ui.compact.basic.circular.button.goto_route(class=cl)
