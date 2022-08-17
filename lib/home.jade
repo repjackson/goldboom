@@ -142,7 +142,7 @@ template(name='latest_rentals')
 template(name='active_checkins')
     a.ui.header.zoomer(href="/checkins" title='view checkins')
         +i name='clock'
-        |#{active_checkin_docs.count} active checkins
+        |#{active_checkin_docs.count} checkins today
     if subs_ready
         .ui.large.divided.selection.list.medscroll
             each active_checkin_docs 

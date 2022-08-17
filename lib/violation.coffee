@@ -32,8 +32,8 @@ if Meteor.isServer
         match = {model:model}
     
         # picked_tags.push current_herd
-        if picked_tags.length > 0
-            match.tags = $all: picked_tags
+        # if picked_tags.length > 0
+        #     match.tags = $all: picked_tags
             
         count = Docs.find(match).count()
         # cloud = Docs.aggregate [

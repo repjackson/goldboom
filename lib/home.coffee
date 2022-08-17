@@ -40,9 +40,12 @@ if Meteor.isClient
                     
     Template.active_checkins.helpers 
         active_checkin_docs: ->
+            yesterday = Date.now()-1000*60*60*10
+            
             Docs.find {
                 model:'checkin'
                 active:true
+                _timestamp:$gt:yesterday
             }, 
                 sort:_timestamp:-1
                 
@@ -234,8 +237,8 @@ if Meteor.isClient
             papa.parse(e.target.files[0], {
                 header: true
                 complete: (results)->
-                    console.log results
-                    # Meteor.call 'parse_mishi', results, ->
+                    # console.log results
+                    Meteor.call 'parse_parking', results, ->
                     # _.each(results.data, (csvData)-> 
                     #     console.log(csvData.empId + ' , ' + csvData.empCode)
                     # )
@@ -279,9 +282,12 @@ if Meteor.isServer
             limit:10
             
     Meteor.publish 'active_checkins', ()->
+        yesterday = Date.now()-(60*60*24*1000)
+        console.log yesterday
         Docs.find {
             model:'checkin'
             active:true
+            _timestamp:$gt:yesterday
         }
             
             
