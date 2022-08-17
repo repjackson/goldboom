@@ -661,7 +661,7 @@ if Meteor.isClient
         boolean_toggle_class: ->
             parent = Template.parentData()
             # console.log parent["#{@key}"] 
-            if parent["#{@key}"] then 'active big blue' else 'compact'
+            if parent["#{@key}"] then 'active big blue' else 'large'
     
     
     Template.boolean_edit.events
@@ -677,7 +677,7 @@ if Meteor.isClient
                 Meteor.users.update parent._id,
                     $set:"#{@key}":!parent["#{@key}"]
             $(e.currentTarget).closest('.button').transition('pulse', 500)
-            Meteor.call 'calc_user_points', ->
+            # Meteor.call 'calc_user_points', ->
             $('body').toast(
                 showIcon: 'checkmark'
                 message: "#{@key} saved"

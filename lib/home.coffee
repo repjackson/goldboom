@@ -58,7 +58,7 @@ if Meteor.isClient
     Template.latest_notes.helpers 
         latest_note_docs: ->
             Docs.find {
-                model:'post'
+                model:'poFst'
             }, 
                 sort:_timestamp:-1
                 
@@ -232,6 +232,8 @@ if Meteor.isClient
     Template.latest_checkins.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs','checkin', ->
 
+    Template.admin.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs','stats',->
     Template.admin.events 
         'change .upload_parking': (e,t)->
             papa.parse(e.target.files[0], {

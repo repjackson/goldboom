@@ -55,16 +55,16 @@ template(name='home')
                     +i name='phone'
                     |phone: (303) 545-1787
             
-            // .column
-            //     +latest_activity
+            .column
+                +latest_activity
             // if currentUser
             //     .column
             //         +latest_checkins
-            // .column
-            //     +map_view
-        // .one.column.row
-        //     .column
-        //         +staff
+            .column
+                +map_view
+        .one.column.row
+            .column
+                +staff
           
           
                 
@@ -72,6 +72,21 @@ template(name='admin')
     .ui.header admin 
     .ui.input
         input.upload_parking(type='file')
+                
+    .ui.header
+        +i name='line-chart'
+        |global stats
+    .ui.list 
+        with global_stats_doc 
+            .item 
+                i.users.icon
+                |#{user_count_total} users
+            .item 
+                i.checkmark.icon
+                |#{checkin_count_total} check ins
+            .item 
+                i.users.icon
+                |#{checkin_count_total} check ins
                 
 template(name='guest_block')
     .ui.header 

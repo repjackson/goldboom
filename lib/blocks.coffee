@@ -846,7 +846,7 @@ if Meteor.isClient
             # parent = Template.parentData()
             # console.log parent
             # if parent["#{@key}"] is @value then 'active' else ''
-            if parent["#{@key}"] is @value then "massive blue" else "basic"
+            if parent["#{@key}"] is @value then "big blue" else "basic"
         
         is_selected: ->
             console.log @key, @value
@@ -860,7 +860,7 @@ if Meteor.isClient
             parent = Template.parentData()
             # console.log parent, @key, @value
             user = Meteor.users.findOne username:Router.current().params.username
-            if Docs.findOne Router.current().params.doc_id
+            if Docs.findOne parent._id
                 Docs.update parent._id,
                     $set: "#{@key}": @value
             else

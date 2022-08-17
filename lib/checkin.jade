@@ -1,5 +1,6 @@
 template(name='checkin_edit')   
-    .ui.basic.fluid.compact.icon.massive.button.cancel_checkin
+    .spacer
+    .ui.basic.fluid.icon.massive.button.cancel_checkin
         i.big.chevron.left.red.icon
             // |cancel
     with current_checkin
@@ -18,40 +19,42 @@ template(name='checkin_edit')
                         |#{unit_number}
                 // +text_edit key='email' label='Email' direct=true
                 div
-                if in_dev 
+                if currentUser.admin_mode 
                     +print_this
-                .ui.inline.header 
-                    // +i name='groups'
-                    // i.large.users.icon
-                    |guests
-                    // small (max 8/month, 3/visit)
-
-                // .ui.big.button.add_guest.bigger
-                //     i.plus.icon 
-                //     |add guest
-                each resident_guests 
-                    .ui.big.button.pick_guest(class=guest_class)
-                        i.large.user.icon
-                        |#{name}
-                .ui.large.icon.active.input  
-                    i.large.user.plus.icon
-                    input.add_guest(type='text' placeholder='add...')
-                // .ui.inline.header
-                //     |purpose (optional)
-                // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='massive'
-                // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='water' label='water' icon='pool' cl='massive'
-                // // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='massive'
-                // // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
-                // // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
-                .ui.hidden.divider
+                .ui.segment.alpha
+                    +boolean_edit key='has_guests' label='guests' icon='friends'
+                    if has_guests
+                        small (max 8/month, 3/visit)
+        
+                        // .ui.big.button.add_guest.bigger
+                        //     i.plus.icon 
+                        //     |add guest
+                        each resident_guests 
+                            .ui.big.button.pick_guest(class=guest_class)
+                                i.large.user.icon
+                                |#{name}
+                        .ui.large.icon.active.input  
+                            i.large.user.plus.icon
+                            input.add_guest(type='text' placeholder='add...')
+                div
                 a.ui.massive.fluid.green.circular.compact.button.submit_checkin(href="/kiosk")
                     i.checkmark.big.white.icon
                     | check in
+                .ui.hidden.divider
+                .ui.inline.header
+                    |purpose
+                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='large'
+                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='large'
+                +key_value_edit key='checkin_purpose' value='water' label='water' icon='pool' cl='large'
+                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='large'
+                +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='spa' cl='large'
+                +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl='large'
+                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
+                // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
+                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='large'
+                // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
+                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
+                // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
                 .ui.hidden.divider
             
                 .ui.two.column.grid 
@@ -66,11 +69,11 @@ template(name='checkin_edit')
                                 |id unverified
                         // +image_edit key='image_id' label='profile image'
                         if email_verified 
-                            .ui.big.label 
+                            .ui.label 
                                 +i name='id-verified'
                                 |email verified
                         else 
-                            .ui.big.label 
+                            .ui.label 
                                 +i name='id-not-verified'
                                 |email unverified
                     .column

@@ -7,7 +7,10 @@ template(name='nav')
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.zoomer
             a.header.item.zoomer2(href="/" title='home')
-                +i name='home'
+                if in_dev 
+                    i.large.code.icon
+                else 
+                    +i name='one-ring'
                 // if currentUser.show_labels
                 span.mobile.hidden gold run
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
@@ -169,7 +172,7 @@ template(name='footer')
                     // +music
                     if currentUser
                         with currentUser
-                            +boolean_edit key='admin_mode' label='admin mode' icon='shield'
+                            +boolean_edit key='admin_mode' label='admin mode' icon='user-shield'
                             
                     if currentUser.admin_mode
                         .ui.inline.header 
