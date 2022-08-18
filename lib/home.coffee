@@ -9,7 +9,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkin_doc.events
         'click .checkout': (e)->
-            $(e.currentTarget).closest('.item').transition('fly right', 500)
+            # $(e.currentTarget).closest('.item').transition('zoom', 250)
             resident = Meteor.users.findOne @resident_user_id
             Meteor.setTimeout =>
                 Docs.update @_id,
@@ -30,13 +30,8 @@ if Meteor.isClient
                     # className:
                     #     toast: 'ui massive green fluid icon message'
                     # displayTime: 5000
-                    transition:
-                      showMethod   : 'zoom',
-                      showDuration : 250,
-                      hideMethod   : 'fade',
-                      hideDuration : 250
-                    })
-            ,500
+                })
+            ,250
                     
     Template.active_checkins.helpers 
         active_checkin_docs: ->

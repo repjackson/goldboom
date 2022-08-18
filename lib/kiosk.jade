@@ -56,7 +56,8 @@ template(name='healthclub')
                 if kiosk_doc.current_building_number
                     .ui.black.compact.massive.button.bigger.unpick_building
                         .ui.inverted.inline.header 
-                            i.building.icon
+                            // i.building.icon
+                            +i name='building'
                             |##{kiosk_doc.current_building_number}
                 unless kiosk_doc.current_building_number
                     +building_picker
@@ -143,12 +144,12 @@ template(name='water_small')
 template(name='resident_picker')
     // .spacer
     unless checkedout_user_docs.count
-        .ui.massive.header 
-            // +i name='groups'
+        .ui.big.header 
+            +i name='groups'
             |add resident
     if checkedout_user_docs.count
-        .ui.massive.header 
-            // +i name='groups'
+        .ui.big.header 
+            +i name='groups'
             |pick/add resident
     if checkedout_user_docs.count
         div
@@ -161,7 +162,9 @@ template(name='resident_picker')
                 // if image_id
                 //     img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 // else 
-                i.large.user.icon
+                    +i name=''
+                i.large.user.outline.icon
+                // +i name='user'
                 if first_name
                     |{{first_initial}} #{last_initial}
                 else 
@@ -173,7 +176,7 @@ template(name='resident_picker')
     //     i.user.plus.icon
     //     |add resident
     .spacer
-    .ui.massive.fluid.icon.active.inverted.input.invert
+    .ui.massive.fluid.icon.input.invert
         i.user.add.large.icon
         input.new_resident_name(type='text' placeholder='add resident...')
 
@@ -211,9 +214,9 @@ template(name='unit_picker')
         //     i.plus.icon
         //     strong OR
         //     |type new unit number:
-        .ui.massive.icon.fluid.active.inverted.black.input  
+        .ui.massive.icon.fluid.active.input  
             i.large.plus.icon
-            input.add_unit_number(type='number' min='100' max='399' placeholder='new unit #')
+            input.add_unit_number(type='number' min='100' max='399' placeholder='add new unit #')
 
                         
                         

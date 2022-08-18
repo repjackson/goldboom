@@ -74,7 +74,10 @@ template(name='home')
 template(name='staff_tasks')          
     .ui.header 
         +i name='tasks'
-        |staff tasks
+        |tasks
+    .ui.list 
+        each task_docs 
+            .item #{title}
     .ui.inline.grey.header 
         // i.hiking.icon
         +i name='walking' classes='ui inline image'                
@@ -83,19 +86,20 @@ template(name='staff_tasks')
         i.plus.icon    
     .ui.list
         each shift_walks
-            .item #{_when} 
+            // .item #{_when} 
+            .item 
                 +author_info
                 if currentUser.admin_mode
                     i.remove.small.link.icon.remove_walk(title='remove walk entry')
-    if checklist_completed
-        +i name='todo-list' classes='ui inline image'
-        // i.big.green.checkmark.icon
-        |shift checklist completed
-    else 
-        a.ui.fluid.big.button(href='/shift_checklist')
-            // i.large.tasks.icon
-            +i name='to-do' classes='ui inline mini image'
-            |checklist not completed
+    // if checklist_completed
+    //     +i name='todo-list' classes='ui inline image'
+    //     // i.big.green.checkmark.icon
+    //     |shift checklist completed
+    // else 
+    //     a.ui.fluid.big.button(href='/shift_checklist')
+    //         // i.large.tasks.icon
+    //         +i name='to-do' classes='ui inline mini image'
+    //         |checklist not completed
 
                 
 template(name='admin')
@@ -183,15 +187,13 @@ template(name='latest_rentals')
                 // .ui.button.checkout_rental
                 //     i.big.checkmark.icon
                 //     // |checkout
-            
-        
                 
 template(name='active_checkins')
     a.ui.header.zoomer(href="/checkins" title='view checkins')
         +i name='clock'
         |#{active_checkin_docs.count} checkins today
     if subs_ready
-        .ui.large.divided.selection.list.medscroll
+        .ui.divided.selection.list.medscroll
             each active_checkin_docs 
                 +active_checkin_doc
     else 
@@ -200,9 +202,9 @@ template(name='active_checkins')
 template(name='active_checkin_doc')
     .item.zoomer
         .content
-            a.ui.big.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
-                strong #{_resident.first_name}
-                strong #{_resident.last_name}
+            a.ui.large.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
+                | #{_resident.first_name}
+                | #{_resident.last_name}
             +bu
             | #{_when}
             small {{cal_time _timestamp}}
@@ -212,6 +214,8 @@ template(name='active_checkin_doc')
                 i.large.code.icon(title='dev')
             if rental_id 
                 +i name='clock'
+            if checkin_purpose
+                .ui.large.label #{checkin_purpose}
             i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
             
                     

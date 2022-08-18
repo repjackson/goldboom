@@ -742,84 +742,79 @@ if Meteor.isClient
     #     #     }, sort:_timestamp:-1
 
 
-    Template.checkin_button.events
-        'click .new_session': (e,t)->
-            # $(e.currentTarget).closest('.button').transition('fade up')
-            Session.set 'loading_checkin', true
-            # Meteor.setTimeout =>
-            # Docs.insert
-            #     model:'log_event'
-            #     object_id:@_id
-            #     body: "#{@username} checked in."
-            current_session_id = Docs.insert
-                model:'checkin'
-                active:true
-                submitted:false
-                approved:false
-                # user_id:@_id
-                guest_ids:[]
-                # resident_username:@username
-                resident_first_name: @first_name
-                resident_last_name: @last_name
-                resident_image_id: @image_id
-                resident_id:@_id
-                # current:true
-            Session.set('current_session_id', current_session_id)
-            # Meteor.call 'member_waiver_signed', @
-            # Meteor.call 'image_check', @
-            # Meteor.call 'staff_government_id_check', @
-            # Meteor.call 'rules_and_regulations_signed', @
-            # Meteor.call 'email_verified', @
-            # Session.set 'name_search',null
-            # Session.set 'session_document',session_document
-            # Session.set 'checking_in',false
+    # Template.checkin_button.events
+    #     'click .new_session': (e,t)->
+    #         # $(e.currentTarget).closest('.button').transition('fade up')
+    #         Session.set 'loading_checkin', true
+    #         # Meteor.setTimeout =>
+    #         # Docs.insert
+    #         #     model:'log_event'
+    #         #     object_id:@_id
+    #         #     body: "#{@username} checked in."
+    #         current_session_id = Docs.insert
+    #             model:'checkin'
+    #             active:true
+    #             submitted:false
+    #             approved:false
+    #             # user_id:@_id
+    #             guest_ids:[]
+    #             # resident_username:@username
+    #             resident_first_name: @first_name
+    #             resident_last_name: @last_name
+    #             resident_image_id: @image_id
+    #             resident_id:@_id
+    #             # current:true
+    #         Session.set('current_session_id', current_session_id)
+    #         # Meteor.call 'member_waiver_signed', @
+    #         # Meteor.call 'image_check', @
+    #         # Meteor.call 'staff_government_id_check', @
+    #         # Meteor.call 'rules_and_regulations_signed', @
+    #         # Meteor.call 'email_verified', @
+    #         # Session.set 'name_search',null
+    #         # Session.set 'session_document',session_document
+    #         # Session.set 'checking_in',false
 
-            # unless @email_verified
-            #     Meteor.users.update @_id,
-            #         $inc:checkins_without_email_verification:1
-            #     updated_user = Meteor.users.findOne @_id
-            #     if updated_user.checkins_without_email_verification > 4
-            #         Meteor.users.update @_id,
-            #             $set: email_red_flagged:true
-            #     else
-            #         Meteor.users.update @_id,
-            #             $set: email_red_flagged:false
+    #         # unless @email_verified
+    #         #     Meteor.users.update @_id,
+    #         #         $inc:checkins_without_email_verification:1
+    #         #     updated_user = Meteor.users.findOne @_id
+    #         #     if updated_user.checkins_without_email_verification > 4
+    #         #         Meteor.users.update @_id,
+    #         #             $set: email_red_flagged:true
+    #         #     else
+    #         #         Meteor.users.update @_id,
+    #         #             $set: email_red_flagged:false
 
-            # unless @staff_verifier
-            #     Meteor.users.update @_id,
-            #         $inc:checkins_without_gov_id:1
-            #     updated_user = Meteor.users.findOne @_id
-            #     if updated_user.checkins_without_gov_id > 4
-            #         Meteor.users.update @_id,
-            #             $set: gov_red_flagged:true
-            #     else
-            #         Meteor.users.update @_id,
-            #             $set: gov_red_flagged:false
+    #         # unless @staff_verifier
+    #         #     Meteor.users.update @_id,
+    #         #         $inc:checkins_without_gov_id:1
+    #         #     updated_user = Meteor.users.findOne @_id
+    #         #     if updated_user.checkins_without_gov_id > 4
+    #         #         Meteor.users.update @_id,
+    #         #             $set: gov_red_flagged:true
+    #         #     else
+    #         #         Meteor.users.update @_id,
+    #         #             $set: gov_red_flagged:false
 
-            $('.name_search').val('')
-            # Router.go "/checkin/#{current_session_id}"
-            Session.set 'loading_checkin', false
-            Session.set 'displaying_profile',@_id
-            # , 750
+    #         $('.name_search').val('')
+    #         # Router.go "/checkin/#{current_session_id}"
+    #         Session.set 'loading_checkin', false
+    #         Session.set 'displaying_profile',@_id
+    #         # , 750
 
-        'click .checkout': (e,t)->
-            # Meteor.setTimeout =>
-            $(e.currentTarget).closest('.item').transition('fly right',500)
-            Meteor.setTimeout ->
-                Meteor.call 'checkout_user', @_id, =>
-                    $('body').toast({
-                        title: "#{@first_name} #{@last_name} checked out"
-                        class: 'success'
-                        transition:
-                            showMethod   : 'zoom',
-                            showDuration : 250,
-                            hideMethod   : 'fade',
-                            hideDuration : 250
-                    })
-    
-                    Session.set 'name_search',null
-                    $('.name_search').val('')
-            , 500
+    #     'click .checkout': (e,t)->
+    #         # Meteor.setTimeout =>
+    #         $(e.currentTarget).closest('.item').transition('scale',250)
+    #         # Meteor.setTimeout ->
+    #         Meteor.call 'checkout_user', @_id, =>
+    #             $('body').toast({
+    #                 title: "#{@first_name} #{@last_name} checked out"
+    #                 class: 'success'
+    #             })
+
+    #             Session.set 'name_search',null
+    #             $('.name_search').val('')
+    #         # , 250
                 
 
 
