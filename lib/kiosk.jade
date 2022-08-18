@@ -54,7 +54,7 @@ template(name='healthclub')
                 // .ui.big.inline.header
                     // |building
                 if kiosk_doc.current_building_number
-                    .ui.blue.compact.massive.button.bigger.unpick_building
+                    .ui.black.compact.massive.button.bigger.unpick_building
                         .ui.inverted.inline.header 
                             i.building.icon
                             |##{kiosk_doc.current_building_number}
@@ -218,25 +218,25 @@ template(name='unit_picker')
                         
                         
 template(name='kiosk_settings')
-    .ui.header 
-        +i name='self-service-kiosk' classes='ui mini image'
-        |kiosk view
     .ui.padded.grid
-        .three.wide.column
+        .sixteen.wide.column
+            .ui.inline.header 
+                +i name='self-service-kiosk' classes='ui mini image'
+                |kiosk view
             if kiosk_doc
-                if is_dev
-                    .ui.icon.large.button.print_kiosk_doc(title='print session doc')
-                        i.code.icon
-                .ui.reset.icon.button(title='reload session')
-                    i.refresh.icon
-                .ui.delete_kiosk_doc.icon.button(title='delete session')
-                    i.trash.icon
+                // if is_dev
+                //     .ui.icon.large.button.print_kiosk_doc(title='print session doc')
+                //         i.code.icon
+                // .ui.reset.icon.button(title='reload session')
+                //     i.refresh.icon
+                // .ui.delete_kiosk_doc.icon.button(title='delete session')
+                //     i.trash.icon
             else
                 .ui.button.create_kiosk
                     |create kiosk doc
             +set_kiosk_template value='kiosk_away' label='set away template'
             +set_kiosk_template value='healthclub' label='check in'
-        .thirteen.wide.column
+        .sixteen.wide.column
             //- +healthclub
             with kiosk_doc
                 +Template.dynamic template=kiosk_view

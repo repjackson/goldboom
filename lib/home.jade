@@ -34,11 +34,11 @@ template(name='home')
             if currentUser
                 .four.wide.column     
                     +active_checkins
-                .eight.wide.column.scrolling
-                    +kiosk_settings
                     // +latest_notes
                 .four.wide.column     
                     +staff_tasks
+                .eight.wide.column.scrolling
+                    +kiosk_settings
                 .four.wide.column     
                     +latest_requests
                 .four.wide.column     
@@ -63,8 +63,8 @@ template(name='home')
             // if currentUser
             //     .four.wide.column
             //         +latest_checkins
-            .eight.wide.column
-                +map_view
+            // .eight.wide.column
+            //     +map_view
         // .one.column.row
         //     .column
         //         +staff
@@ -73,7 +73,7 @@ template(name='home')
           
 template(name='staff_tasks')          
     .ui.header 
-        +i name='admin'
+        +i name='tasks'
         |staff tasks
     .ui.inline.grey.header 
         // i.hiking.icon
@@ -81,10 +81,12 @@ template(name='staff_tasks')
         |shift walks
     .ui.icon.button.log_staff_walked(title='log hourly shift walk')
         i.plus.icon    
-    .ui.segment
+    .ui.list
         each shift_walks
-            .ui.header #{when}
-                i.remove.small.link.icon.remove_walk(title='remove walk entry')
+            .item #{_when} 
+                +author_info
+                if currentUser.admin_mode
+                    i.remove.small.link.icon.remove_walk(title='remove walk entry')
     if checklist_completed
         +i name='todo-list' classes='ui inline image'
         // i.big.green.checkmark.icon
