@@ -7,7 +7,7 @@ if Meteor.isClient
 
     Template.shift_change_requests.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shift_change_request'
-    Template.staff.onCreated ->
+    Template.staff_tasks.onCreated ->
         @autorun => Meteor.subscribe 'todays_checklist'
         @autorun => Meteor.subscribe 'todays_pool_readings'
         @autorun => Meteor.subscribe 'todays_lower_hot_tub_readings'
@@ -16,7 +16,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'shift_walks'
 
 
-    Template.staff.helpers
+    Template.staff_tasks.helpers
         checklist_completed: ->
             checklist =
                 Docs.findOne
@@ -66,7 +66,7 @@ if Meteor.isClient
                 _timestamp:$gt:start_window
 
 
-    Template.staff.events
+    Template.staff_tasks.events
         'click .log_staff_walked': ->
             if confirm 'log hourly walk?'
                 Docs.insert

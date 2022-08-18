@@ -34,16 +34,18 @@ template(name='home')
             if currentUser
                 .four.wide.column     
                     +active_checkins
-                .eight.wide.column
+                .eight.wide.column.scrolling
                     +kiosk_settings
                     // +latest_notes
-                .four.widecolumn     
+                .four.wide.column     
+                    +staff_tasks
+                .four.wide.column     
                     +latest_requests
-                .four.widecolumn     
+                .four.wide.column     
                     +latest_rentals
-                .four.widecolumn       
+                .four.wide.column       
                     +guest_block
-                .four.widecolumn       
+                .four.wide.column       
                     +admin
             .four.wide.column       
                 .ui.header 
@@ -68,6 +70,31 @@ template(name='home')
         //         +staff
           
           
+          
+template(name='staff_tasks')          
+    .ui.header 
+        +i name='admin'
+        |staff tasks
+    .ui.inline.grey.header 
+        // i.hiking.icon
+        +i name='walking' classes='ui inline image'                
+        |shift walks
+    .ui.icon.button.log_staff_walked(title='log hourly shift walk')
+        i.plus.icon    
+    .ui.segment
+        each shift_walks
+            .ui.header #{when}
+                i.remove.small.link.icon.remove_walk(title='remove walk entry')
+    if checklist_completed
+        +i name='todo-list' classes='ui inline image'
+        // i.big.green.checkmark.icon
+        |shift checklist completed
+    else 
+        a.ui.fluid.big.button(href='/shift_checklist')
+            // i.large.tasks.icon
+            +i name='to-do' classes='ui inline mini image'
+            |checklist not completed
+
                 
 template(name='admin')
     .ui.header admin 

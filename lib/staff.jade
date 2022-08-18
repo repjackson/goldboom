@@ -63,25 +63,6 @@ template(name='staff')
                         if chlorine_message
                             .ui.label #{chlorine_message}
                 .ui.hidden.divider
-                .ui.inline.grey.header 
-                    // i.hiking.icon
-                    +i name='walking' classes='ui inline image'                
-                    |shift walks
-                .ui.icon.button.log_staff_walked(title='log hourly shift walk')
-                    i.plus.icon    
-                .ui.segment
-                    each shift_walks
-                        .ui.header #{when}
-                            i.remove.small.link.icon.remove_walk(title='remove walk entry')
-                if checklist_completed
-                    +i name='todo-list' classes='ui inline image'
-                    // i.big.green.checkmark.icon
-                    |shift checklist completed
-                else 
-                    a.ui.fluid.big.button(href='/shift_checklist')
-                        // i.large.tasks.icon
-                        +i name='to-do' classes='ui inline mini image'
-                        |checklist not completed
 
             .twelve.wide.column
                 +kiosk_settings
