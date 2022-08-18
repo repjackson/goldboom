@@ -497,11 +497,11 @@ img {
     margin: 0px !important;
 }
 
-.invert{
-    filter: invert(1) !important; 
-    background-color:white !important; 
-    height: 100% !important; 
- } 
+/*.invert{*/
+/*    filter: invert(1) !important; */
+/*    background-color:white !important; */
+/*    height: 100% !important; */
+/* } */
 
 .red_flagged {
   border: 5px solid red !important;
