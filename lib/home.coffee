@@ -19,8 +19,10 @@ if Meteor.isClient
                 
     Template.staff_tasks.helpers    
         task_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'task'
+            }, 
+                sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkin_doc.events
