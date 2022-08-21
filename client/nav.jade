@@ -104,6 +104,12 @@ template(name='nav')
                     // i.large.users.icon
                     // if currentUser.show_labels
                     span.mobile.hidden keys
+            a.item.zoomer2.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
+                +i name='tasks'
+                .mobile.hidden tasks
+                // i.large.users.icon
+                // if currentUser.show_labels
+                // span.mobile.hidden tasks
             a.item.zoomer2.clear_search(href="/rentals" class="{{isActiveRoute 'rentals'}}" title='rentals')
                 +i name='clock'
                 // i.large.users.icon
@@ -144,12 +150,6 @@ template(name='nav')
             a.item.zoomer2.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
                 +i name='news'
                 .mobile.hidden posts
-            a.item.zoomer2.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
-                +i name='tasks'
-                .mobile.hidden tasks
-                // i.large.users.icon
-                // if currentUser.show_labels
-                // span.mobile.hidden tasks
 
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)

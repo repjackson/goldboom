@@ -165,7 +165,6 @@ if Meteor.isServer
             #     match.published = $in: [0,1]
     
             if title_search.length > 1
-            #     console.log 'searching org_query', org_query
                 match.title = {$regex:"#{title_search}", $options: 'i'}
     
             if picked_tags.length > 0 then match.tags = $all: picked_tags
@@ -199,13 +198,11 @@ if Meteor.isServer
             #     if view_bookmarked is true then match.bookmarked_ids = $in: [@userId]
             #     else if view_bookmarked is false then match.bookmarked_ids = $nin: [@userId]
             # if view_complete? then match.complete = view_complete
-            # console.log view_complete
     
     
     
             # match.site = Meteor.settings.public.site
     
-            # console.log 'match:', match
             # if view_images? then match.components?.image = view_images
     
             # lightbank models
@@ -222,15 +219,12 @@ if Meteor.isServer
             #     { $limit: limit }
             #     { $project: _id: 0, name: '$_id', count: 1 }
             #     ]
-            # # console.log 'theme ancestor_ids_cloud, ', ancestor_ids_cloud
             # ancestor_ids_cloud.forEach (ancestor_id, i) ->
             #     self.added 'ancestor_ids', Random.id(),
             #         name: ancestor_id.name
             #         count: ancestor_id.count
             #         index: i
             total_count = Docs.find(match).count()
-            # console.log 'total count', total_count
-            # console.log 'facet match', match
             tag_cloud = Docs.aggregate [
                 { $match: match }
                 { $project: tags: 1 }
@@ -242,9 +236,7 @@ if Meteor.isServer
                 { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
-            # console.log 'theme tag_cloud, ', tag_cloud
             tag_cloud.forEach (tag, i) ->
-                # console.log tag
                 self.added 'results', Random.id(),
                     name: tag.name
                     count: tag.count
@@ -263,7 +255,6 @@ if Meteor.isServer
             # #     { $limit: limit }
             # #     { $project: _id: 0, name: '$_id', count: 1 }
             # #     ]
-            # # # console.log 'cloud, ', cloud
             # # watson_keyword_cloud.forEach (keyword, i) ->
             # #     self.added 'watson_keywords', Random.id(),
             # #         name: keyword.name
@@ -280,7 +271,6 @@ if Meteor.isServer
                 { $limit: 10 }
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
-            # console.log 'sources_cloud, ', sources_cloud.count()
             sources_cloud.forEach (source_tag, i) ->
                 self.added 'results', Random.id(),
                     name: source_tag.name
@@ -298,7 +288,6 @@ if Meteor.isServer
             #     { $limit: 10 }
             #     { $project: _id: 0, name: '$_id', count: 1 }
             #     ]
-            # # console.log 'timestamp_tags_cloud, ', timestamp_tags_cloud.count()
             # timestamp_tags_cloud.forEach (timestamp_tag, i) ->
             #     self.added 'results', Random.id(),
             #         name: timestamp_tag.name
@@ -317,7 +306,6 @@ if Meteor.isServer
             #     { $limit: limit }
             #     { $project: _id: 0, name: '$_id', count: 1 }
             #     ]
-            # # console.log 'building building_tag_cloud, ', building_tag_cloud
             # building_tag_cloud.forEach (building_tag, i) ->
             #     self.added 'building_tags', Random.id(),
             #         name: building_tag.name
@@ -335,7 +323,6 @@ if Meteor.isServer
             #     { $limit: limit }
             #     { $project: _id: 0, name: '$_id', count: 1 }
             #     ]
-            # # console.log 'location location_tag_cloud, ', location_tag_cloud
             # location_tag_cloud.forEach (location_tag, i) ->
             #     self.added 'location_tags', Random.id(),
             #         name: location_tag.name
@@ -357,7 +344,6 @@ if Meteor.isServer
             #     ]
             #
             #
-            # # console.log author_tag_cloud
             #
             # # author_objects = []
             # # Docs.find _id: $in: author_tag_cloud.
@@ -377,14 +363,11 @@ if Meteor.isServer
             # int_doc_limit = parseInt doc_limit
             # subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
             #     added: (id, fields) ->
-            #         # console.log 'added doc', id, fields
             #         # doc_results.push id
             #         self.added 'docs', id, fields
             #     changed: (id, fields) ->
-            #         # console.log 'changed doc', id, fields
             #         self.changed 'docs', id, fields
             #     removed: (id) ->
-            #         # console.log 'removed doc', id, fields
             #         # doc_results.pull id
             #         self.removed 'docs', id
             # )
@@ -393,19 +376,15 @@ if Meteor.isServer
     
             # user_results = Docs.find(_id:$in:doc_results).observeChanges(
             #     added: (id, fields) ->
-            #         # console.log 'added doc', id, fields
             #         self.added 'docs', id, fields
             #     changed: (id, fields) ->
-            #         # console.log 'changed doc', id, fields
             #         self.changed 'docs', id, fields
             #     removed: (id) ->
-            #         # console.log 'removed doc', id, fields
             #         self.removed 'docs', id
             # )
     
     
     
-            # console.log 'doc handle count', subHandle
     
             self.ready()
     
@@ -460,7 +439,6 @@ if Meteor.isServer
         # if view_gf
         #     match.gluten_free = true
         if current_query.length > 1
-        #     console.log 'searching org_query', org_query
             match.title = {$regex:"#{current_query}", $options: 'i'}
         #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
     
@@ -471,18 +449,10 @@ if Meteor.isServer
         #     key_array = prematch["#{key}"]
         #     if key_array and key_array.length > 0
         #         match["#{key}"] = $all: key_array
-            # console.log 'current facet filter array', current_facet_filter_array
     
-        # console.log 'sort key', sort_key
-        # console.log 'sort direction', sort_direction
         # unless Meteor.userId()
         #     match.private = $ne:true
             
-        # console.log 'results match', match
-        # console.log 'sort_key', sort_key
-        # console.log 'sort_direction', sort_direction
-        # console.log 'limit', limit
-        console.log 'group results match', match
         
         Docs.find match,
             sort:"#{sort_key}":sort_direction
@@ -539,7 +509,6 @@ if Meteor.isServer
             post_count = 0
             
             for post in group_posts.fetch()
-                console.log 'group post', post.title
                 post_ids.push post._id
                 post_count++
                 
@@ -567,7 +536,6 @@ if Meteor.isServer
                     group_id:group._id
                 ).fetch()
 
-            console.log 'total_credit_exchanged', total_credit_exchanged
 
 
             Docs.update group._id,
@@ -584,7 +552,6 @@ if Meteor.isServer
         #         new_id = Docs.insert
         #             model:'group_stats'
         #         group_stat_doc = Docs.findOne(model:'group_stats')
-        #     console.log group_stat_doc
         #     total_count = Docs.find(model:'group').count()
         #     complete_count = Docs.find(model:'group', complete:true).count()
         #     incomplete_count = Docs.find(model:'group', complete:$ne:true).count()
@@ -608,7 +575,6 @@ if Meteor.isClient
         group_search_value: ->
             Session.get('group_search')
         group_doc: ->
-            # console.log @
             Docs.findOne @group_id
     Template.group_picker.events
         'click .clear_search': (e,t)->
@@ -634,7 +600,6 @@ if Meteor.isClient
             # if e.which is '13'
             val = t.$('.group_search').val()
             if val.length > 1
-                # console.log val
                 Session.set('group_search', val)
 
         'click .create_group': ->
@@ -697,9 +662,7 @@ if Meteor.isClient
             new_username = prompt('username')
             splitted = new_username.split(' ')
             formatted = new_username.split(' ').join('_').toLowerCase()
-            console.log formatted
             Meteor.call 'add_user', formatted, (err,res)->
-                console.log res
                 new_user = Meteor.users.findOne res
                 Meteor.users.update res,
                     $set:

@@ -5,6 +5,22 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
+    Template.staff_tasks.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'tasks', ->
+    Template.staff_tasks.events
+        'keyup .task_quickadd': (e)->
+            if e.which is 13 
+                new_title = $('.task_quickadd').val()
+                new_id = 
+                    Docs.insert
+                        model:'task'
+                        title:new_title
+                new_title = $('.task_quickadd').val('')
+                
+    Template.staff_tasks.helpers    
+        task_docs: ->
+            Docs.find 
+                model:'task'
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkin_doc.events
@@ -127,7 +143,6 @@ if Meteor.isClient
     Template.home.events
     
         # 'click .pick_user': ->
-        #     console.log @
         #     Docs.insert 
         #         model:'checkin'
         #         active:true
@@ -140,7 +155,6 @@ if Meteor.isClient
         #     # if search_user.length > 1
         #     #     Session.set('current_search_user', search_user)
         #     Session.set('current_search_user', search_user)
-        #     console.log Session.get('current_search_user')
         #     # picked_tags.push search_user
         #     # # $( "p" ).blur();
         # , 500)
@@ -235,10 +249,8 @@ if Meteor.isClient
             papa.parse(e.target.files[0], {
                 header: true
                 complete: (results)->
-                    # console.log results
                     Meteor.call 'parse_parking', results, ->
                     # _.each(results.data, (csvData)-> 
-                    #     console.log(csvData.empId + ' , ' + csvData.empCode)
                     # )
                 skipEmptyLines: true
             })
@@ -247,23 +259,18 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.methods 
         parse_parking: (parsed_results)->
-            # console.log parsed_results
-            # console.log parsed_results.data.length
-            for item in parsed_results.data[..10]
-                console.log item
+            # for item in parsed_results.data[..10]
                 # found_item = 
                 #     Docs.findOne    
                 #         model:'mishi_order'
                 #         Charge_ID:item.Charge_ID
                 #         Ean_Code:item.Ean_Code
                 # if found_item 
-                #     console.log 'skipping existing item', item.Charge_ID
                 #     Meteor.call 'mishi_meta', found_item._id, ->
                 # else 
                 #     item.model = 'mishi_order'
                 #     new_id = Docs.insert item
                 #     Meteor.call 'mishi_meta', new_id, ->
-                # # console.log item.Txn_Timestamp, converted
 
     Meteor.publish 'checkedout_users_from_search', (username_search=null)->
         match = {}
@@ -281,7 +288,6 @@ if Meteor.isServer
             
     Meteor.publish 'active_checkins', ()->
         yesterday = Date.now()-(60*60*24*1000)
-        console.log yesterday
         Docs.find {
             model:'checkin'
             active:true

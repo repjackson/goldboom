@@ -29,7 +29,6 @@ Meteor.startup ->
 
 # Meteor.users.find(_id:Meteor.userId()).observe({
 #     changed: (new_doc, old_doc)->
-#         # console.log 'changed', new_doc.points, old_doc.points
 #         difference = new_doc.points-old_doc.points
 #         if difference > 0
 #             $('body').toast({
@@ -56,12 +55,9 @@ Meteor.startup ->
 # Docs.find({model:'log',read_user_ids:$nin:[Meteor.userId()]}).observe({
 # Docs.find({model:'log',read_user_ids:{$nin:[Meteor.userId()]}}).observe({
 #     added: (new_doc)->
-#         console.log 'alert', new_doc
 #         # difference = new_doc.points-old_doc.points
 #         # author = Meteor.users.findOne new_doc._author_id
 #         # Meteor.call "c.get_download_url", author.image_id,(err,download_url) ->
-#         #     console.log "Upload Error: #{err}"
-#         #     console.log "#{download_url}"
 
 #         # if difference > 0
 #         $('body').toast({
@@ -107,31 +103,24 @@ Template.footer.helpers
 
 Template.layout.events
     'click .fly_down': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly right', 500)
         $(e.currentTarget).closest('.grid').transition('fade down', 500)
     'click .fly_up': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly right', 500)
         $(e.currentTarget).closest('.grid').transition('fade up', 500)
     'click .fly_left': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly left', 500)
         $(e.currentTarget).closest('.grid').transition('fade left', 500)
     'click .fly_right': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly right', 500)
         $(e.currentTarget).closest('.grid').transition('fade right', 500)
     'click .card_fly_right': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly right', 500)
         $(e.currentTarget).closest('.card').transition('fade right', 500)
     'click .zoom': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly right', 500)
         $(e.currentTarget).closest('.grid').transition('fade right', 500)
     'click .flip': (e,t)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.item').transition('fly right', 500)
         $(e.currentTarget).closest('.grid').transition('flip', 500)
         

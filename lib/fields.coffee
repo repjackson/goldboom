@@ -11,7 +11,6 @@ if Meteor.isClient
     
     Template.i.helpers
         is_active: -> 
-            # console.log @
     
     
     
@@ -58,7 +57,6 @@ if Meteor.isClient
         'click .get_end': ->
             doc_id = Router.current().params.doc_id
             result = $('.ui.calendar').calendar('get endDate')[0]
-            console.log result
             formatted = moment(result).format("YYYY-MM-DD[T]HH:mm")
             Docs.update doc_id,
                 $set:end_datetime:formatted
@@ -91,7 +89,6 @@ if Meteor.isClient
             parent = Template.parentData()
             val = $(e.currentTarget).closest('.edit_date').val()
             doc = Docs.findOne parent._id
-            console.log val
             if doc
                 Docs.update parent._id,
                     $set:"#{@key}":val
@@ -416,14 +413,12 @@ if Meteor.isClient
     
     Template.multi_user_view.helpers
         user_docs: ->
-            console.log @
     
     Template.array_edit.events
         # 'click .touch_element': (e,t)->
         #     $(e.currentTarget).closest('.touch_element').transition('slide left')
             
         'click .pick_tag': (e,t)->
-            # console.log @
             picked_tags.clear()
             picked_tags.push @valueOf()
             Router.go "/#{Router.current().params.group}"
@@ -596,7 +591,6 @@ if Meteor.isClient
     
     Template.number_edit.events
         'blur .edit_number': (e,t)->
-            # console.log @
             parent = Template.parentData()
             val = parseInt t.$('.edit_number').val()
             doc = Docs.findOne parent._id
@@ -660,7 +654,6 @@ if Meteor.isClient
     Template.boolean_edit.helpers
         boolean_toggle_class: ->
             parent = Template.parentData()
-            # console.log parent["#{@key}"] 
             if parent["#{@key}"] then 'active big blue' else 'large'
     
     
@@ -879,22 +872,17 @@ if Meteor.isClient
     
     Template.single_user_edit.onCreated ->
         @user_results = new ReactiveVar
-        # console.log @data.key
         @autorun => Meteor.subscribe 'user_info_min', ->
         @autorun => Meteor.subscribe 'user_by_ref', @data.key, Template.parentData(),->
             
 if Meteor.isServer
     Meteor.publish 'user_by_ref', (key, parent)->
-        # console.log key
-        # console.log parent
         Meteor.users.find 
             _id: parent["#{key}_id"]
     
 if Meteor.isClient
     Template.single_user_edit.helpers
         picked_user: ->
-            # console.log @
-            # console.log "#{@key}_id"
             if Router.current().params.doc_id
                 parent_doc_value = Docs.findOne(Router.current().params.doc_id)["#{@key}_id"]
             if parent_doc_value 
@@ -915,24 +903,15 @@ if Meteor.isClient
             search_value = $(e.currentTarget).closest('.single_user_select_input').val().trim()
             Session.set('current_user_search',search_value)
             if search_value.length > 1
-                # console.log 'searching', search_value
                 Meteor.call 'lookup_user', search_value, @role_filter, (err,res)=>
                     if err then console.error err
                     else
-                        # console.log res
                         t.user_results.set res
     
         'click .select_user': (e,t) ->
             page_doc = Docs.findOne Router.current().params.doc_id
             field = Template.currentData()
     
-            # console.log @
-            # console.log Template.currentData()
-            # console.log Template.parentData()
-            # console.log Template.parentData(1)
-            # console.log Template.parentData(2)
-            # console.log Template.parentData(3)
-            # console.log Template.parentData(4)
     
             
             val = t.$('.edit_text').val()
@@ -960,7 +939,6 @@ if Meteor.isClient
             #     $set: assignment_timestamp:Date.now()
     
         'click .pull_user': ->
-            console.log @
             if confirm "remove #{@key}?"
                 parent = Template.parentData(1)
                 # field = Template.currentData()
@@ -983,9 +961,7 @@ if Meteor.isClient
             new_username = prompt('username')
             splitted = new_username.split(' ')
             formatted = new_username.split(' ').join('_').toLowerCase()
-            console.log formatted
             Meteor.call 'add_user', formatted, (err,res)->
-                console.log res
                 # new_user = Meteor.users.findOne res
                 Meteor.users.update res,
                     $set:
@@ -1016,7 +992,6 @@ if Meteor.isClient
     Template.multi_user_edit.helpers
         user_results: -> Template.instance().user_results.get()
         picked_users: ->
-            # console.log Template.parentData()
             Meteor.users.find 
                 _id:$in:Template.parentData()["#{@key}_ids"]
     Template.multi_user_edit.events
@@ -1026,7 +1001,6 @@ if Meteor.isClient
         'keyup .multi_user_select_input': (e,t)->
             search_value = $(e.currentTarget).closest('.multi_user_select_input').val().trim()
             if search_value.length > 1
-                console.log 'searching', search_value
                 Meteor.call 'lookup_user', search_value, @role_filter, (err,res)=>
                     if err then console.error err
                     else
@@ -1036,13 +1010,6 @@ if Meteor.isClient
             page_doc = Docs.findOne Router.current().params.doc_id
             field = Template.currentData()
     
-            # console.log @
-            # console.log Template.currentData()
-            # console.log Template.parentData()
-            # console.log Template.parentData(1)
-            # console.log Template.parentData(2)
-            # console.log Template.parentData(3)
-            # console.log Template.parentData(4)
     
     
             val = t.$('.edit_text').val()

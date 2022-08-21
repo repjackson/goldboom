@@ -33,12 +33,15 @@ template(name='home')
             //                 |check in as #{currentUser.username}
             if currentUser
                 .four.wide.column     
-                    +active_checkins
-                    // +latest_notes
-                .four.wide.column     
                     +staff_tasks
-                .eight.wide.column.scrolling
+                .four.wide.column     
+                    +staff_checkin
+                .four.wide.column     
+                    +active_checkins
+                .eight.wide.column
                     +kiosk_settings
+                .four.wide.column     
+                    +latest_notes
                 .four.wide.column     
                     +latest_requests
                 .four.wide.column     
@@ -71,13 +74,26 @@ template(name='home')
           
           
           
+template(name='staff_checkin')          
+    .ui.header staff checkin
+    if checked_in
+        .ui.button.checkout
+            |checkout
+    else 
+        .ui.button.checkin
+            |checkin
+        
 template(name='staff_tasks')          
-    .ui.header 
+    a.ui.header.zoomer.fly_right(href='/tasks')
         +i name='tasks'
         |tasks
-    .ui.list 
+    .ui.icon.fluid.input 
+        i.plus.icon
+        input.task_quickadd(type='text' placeholder='quickadd')
+        
+    .ui.selection.animated.list 
         each task_docs 
-            .item #{title}
+            a.item.fly_right(href="/task/#{_id}") #{title}
     .ui.inline.grey.header 
         // i.hiking.icon
         +i name='walking' classes='ui inline image'                

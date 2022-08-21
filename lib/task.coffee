@@ -5,10 +5,6 @@ if Meteor.isClient
         Session.setDefault('current_search', null)
         Session.setDefault('is_loading', false)
         @autorun => @subscribe 'doc_by_id', Session.get('full_doc_id'), ->
-        @autorun => @subscribe 'agg_emotions',
-            picked_tags.array()
-        @autorun => @subscribe 'task_tag_results',
-            picked_tags.array()
             
     Template.tasks.onCreated ->
         # @autorun => @subscribe 'model_docs', 'task', ->
@@ -32,6 +28,7 @@ if Meteor.isClient
         ), name:'tasks'
     Template.tasks.onCreated ->
         @autorun => Meteor.subscribe 'model_counter',('task'), ->
+        @autorun => Meteor.subscribe 'model_docs','task', ->
             
     Template.task_edit.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->

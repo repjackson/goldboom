@@ -1,7 +1,6 @@
 if Meteor.isClient
     Template.model_label.helpers
         is_model: (input)->
-            console.log input
             if @model then @model else Session.get('model')
     Template.model_label.events 
         'click .pick_model': ->
@@ -11,7 +10,6 @@ if Meteor.isClient
     Template.call_method.events 
         'click .call': ->
             Meteor.call @name, ->
-                console.log 'called'
     Template.add_button.events 
         'click .add': ->
             new_id = 
@@ -151,7 +149,6 @@ if Meteor.isClient
     
 
     Template.facet.onCreated ->
-        console.log @
             
     Template.facet.helpers
         facet_results: ->
@@ -198,9 +195,7 @@ if Meteor.isClient
             search = $('.query').val().trim().toLowerCase()
             # if search.length > 1
             #     Session.set('current_search', search)
-            console.log Session.get('current_search')
             picked_tags.push search
-            console.log 'search', search
             # Meteor.call 'log_term', search, ->
             $('.search').val('')
             Session.set('current_search', null)
@@ -259,7 +254,6 @@ if Meteor.isClient
             $('.accordion').accordion()
         , 1000
     Template.group_info.onCreated ->
-        # console.log @data
         @autorun => Meteor.subscribe 'group_by_doc_id', @data.group_id, ->
     Template.comments.onCreated ->
         # if Router.current().params.doc_id
@@ -284,7 +278,6 @@ if Meteor.isClient
         'click .print': -> 
             alert(JSON.stringify(@, null, 4));
 
-            console.log @
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
@@ -384,7 +377,6 @@ if Meteor.isClient
                     # displayTime: 'auto',
                     position: "bottom right"
                 )
-                console.log @
                 Meteor.call 'calc_user_points', ->
                 Meteor.call 'calc_user_points', @_author_id, ->
                     
@@ -477,13 +469,6 @@ if Meteor.isClient
 
     Template.toggle_edit.events
         'click .toggle_edit': ->
-            console.log @
-            console.log Template.currentData()
-            console.log Template.parentData()
-            console.log Template.parentData(1)
-            console.log Template.parentData(2)
-            console.log Template.parentData(3)
-            console.log Template.parentData(4)
 
 
 
@@ -493,7 +478,6 @@ if Meteor.isClient
 
     Template.user_list_info.helpers
         user: ->
-            console.log @
             Docs.findOne @valueOf()
 
 
@@ -583,7 +567,6 @@ if Meteor.isClient
         sort_key_class: -> if Session.equals('sort_key',@key) then 'blue' else ''
     Template.set_sort_key.events
         'click .set_key': (e,t)->
-            # console.log @
             Session.set('sort_key', @key)
             Session.set('sort_label', @label)
             Session.set('sort_icon', @icon)
@@ -591,7 +574,6 @@ if Meteor.isClient
 
     Template.delete_button.events
         'click .remove_doc': (e,t)->
-            console.log 'remove'
             if confirm "remove #{@model}?"
                 # if $(e.currentTarget).closest('.card')
                 # else
@@ -630,8 +612,6 @@ if Meteor.isClient
 
     Template.session_icon_button.events
         'click .set_session_value': ->
-            # console.log @key
-            # console.log @value
             if Meteor.user() 
                 Meteor.users.update Meteor.userId(),
                     $set:
@@ -654,8 +634,6 @@ if Meteor.isClient
                 })
     Template.session_set.events
         'click .set_session_value': ->
-            # console.log @key
-            # console.log @value
             if Meteor.user() 
                 Meteor.users.update Meteor.userId(),
                     $set:
@@ -679,14 +657,12 @@ if Meteor.isClient
     Template.session_set.helpers
         set_button_class: ->
             res = ''
-            # console.log @
             if @cl
                 res += @cl
             if Session.equals(@key,@value)
                 res += ' active big '
             else 
                 res += 'basic '
-            # console.log res
             res
 
         is_active: -> Session.equals(@key,@value)
@@ -695,7 +671,6 @@ if Meteor.isClient
 
     Template.session_boolean_toggle.events
         'click .toggle_session_key': ->
-            console.log @key
             Session.set(@key, !Session.get(@key))
             $('body').toast({
                 title: "session toggled #{@key}"
@@ -715,7 +690,6 @@ if Meteor.isClient
     Template.session_boolean_toggle.helpers
         calculated_class: ->
             res = ''
-            # console.log @
             if @cl
                 res += @cl
             if Session.get(@key)
@@ -723,13 +697,11 @@ if Meteor.isClient
             else
                 res += ' '
 
-            # console.log res
             res
             
             
     Template.session_boolean_toggle.events
         'click .toggle_session_key': ->
-            console.log @key
             Session.set(@key, !Session.get(@key))
             $('body').toast({
                 title: "session toggled #{@key}"
@@ -748,7 +720,6 @@ if Meteor.isClient
     Template.session_boolean_toggle.helpers
         calculated_class: ->
             res = ''
-            # console.log @
             if @cl
                 res += @cl
             if Session.get(@key)
@@ -756,13 +727,10 @@ if Meteor.isClient
             else
                 res += ' '
 
-            # console.log res
             res
 
 if Meteor.isServer
     Meteor.publish 'children', (model, parent_id, limit)->
-        # console.log model
-        # console.log parent_id
         limit = if limit then limit else 10
         Docs.find {
             model:model
@@ -779,8 +747,6 @@ if Meteor.isClient
     Template.doc_array_toggle.events
         'click .toggle': (e,t)->
             parent = Template.parentData()
-            console.log 'key', @key, @value
-            console.log 'parent', parent
             if parent["#{@key}"]
                 if @value in parent["#{@key}"]
                     Docs.update parent._id,
@@ -819,7 +785,6 @@ Meteor.methods
 if Meteor.isClient
     Template.session_key_value_edit.events
         'click .set_key_value': ->
-            console.log 'hi'
             # parent = Template.parentData()
             # Docs.update parent._id,
             #     $set: "#{@key}": @value
@@ -833,7 +798,6 @@ if Meteor.isClient
     Template.session_key_value_edit.helpers
         set_key_value_class: ->
             parent = Template.parentData()
-            # console.log parent
             # if parent["#{@key}"] is @value then 'active' else ''
             if Session.equals("#{@key}",@value) then 'active large' else 'basic'
     
@@ -844,21 +808,17 @@ if Meteor.isClient
         calculated_class: ->
             parent = Template.parentData()
             # parent = Template.parentData()
-            # console.log parent
             # if parent["#{@key}"] is @value then 'active' else ''
             if parent["#{@key}"] is @value then "big blue" else "basic"
         
         is_selected: ->
-            console.log @key, @value
             parent = Template.parentData()
             parent["#{@key}"] is @value
             
     
     Template.key_value_edit.events
         'click .set_key_value': (e)->
-            # console.log 'hi'
             parent = Template.parentData()
-            # console.log parent, @key, @value
             user = Meteor.users.findOne username:Router.current().params.username
             if Docs.findOne parent._id
                 Docs.update parent._id,
@@ -985,5 +945,4 @@ if Meteor.isClient
     
     Template.detect.events
         'click .detect_fields': ->
-            # console.log @
             Meteor.call 'detect_fields', @_id

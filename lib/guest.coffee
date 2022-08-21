@@ -45,7 +45,6 @@ if Meteor.isClient
 
     Template.guest_view.helpers
         current_guest: ->
-            console.log Router.current().params.guest_number
             Docs.findOne
                 model:'guest'
                 # guest_number: Router.current().params.guest_number

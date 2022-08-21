@@ -1,6 +1,5 @@
 Template.nav.helpers
     is_connected: -> 
-        # console.log Meteor.status().connected
         Meteor.status().connected
     unread_count: ->
         Docs.find(
@@ -9,7 +8,6 @@ Template.nav.helpers
         ).count()
 Template.nav_item.helpers
     nav_item_class: (model)->
-        # console.log model
         if Router.current().params.model is model then 'active' else ''
         
         
@@ -38,10 +36,8 @@ Template.nav.onRendered ->
 Template.nav.events
     'click .reconnect': -> Meteor.reconnect()
     'mouseenter img': (e)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.image').addClass('pulse')
     'mouseleave img': (e)->
-        # console.log 'hi'
         $(e.currentTarget).closest('.image').removeClass('pulse')
         
 Template.nav_item.events 

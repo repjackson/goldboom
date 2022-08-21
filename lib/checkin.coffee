@@ -215,8 +215,6 @@ if Meteor.isClient
         'keyup .add_guest': (e)->
             kiosk = Docs.findOne model:'kiosk'
             val = $('.add_guest').val()
-            # console.log val
-            console.log @resident_user_id
             if e.which is 13
                 new_id = 
                     Docs.insert 
@@ -523,7 +521,6 @@ if Meteor.isServer
 #         Session.set 'timer_engaged', false
 #         # Meteor.setTimeout ->
 #         #     session_document = Docs.findOne Router.current().params.doc_id
-#         #     # console.log @
 #         #     if session_document and session_document.user_id
 #         #         resident = Meteor.users.findOne session_document.user_id
 #         #         # if resident.user_id
@@ -569,13 +566,11 @@ if Meteor.isServer
 #     #     #
 #     #     #
 #     #     # 'click .recheck': ->
-#     #     #     console.log @
 #     #     #     Meteor.call 'run_user_checks', @
 #     #     #     Meteor.call 'member_waiver_signed', @
 #     #     #     Meteor.call 'rules_and_regulations_signed', @
 
 #     #     'click .add_guest': ->
-#     #         # console.log @
 #     #         session_document = Docs.findOne Router.current().params.doc_id
 #     #         new_guest_id =
 #     #             Docs.insert
@@ -619,7 +614,6 @@ if Meteor.isServer
 #     #         current_session = Docs.findOne
 #     #             model:'checkin'
 #     #             current:true
-#     #         # console.log current_session
 #     #         Docs.update current_session._id,
 #     #             $pull:guest_ids:@_id
 
@@ -638,12 +632,10 @@ if Meteor.isServer
 #             Session.get 'timer_engaged'
 #         timer: ->
 #             Session.get 'timer'
-#             # console.log Template.instance()
 #             # Template.instance().timer.get()
 
 #         rules_signed: ->
 #             session_document = Docs.findOne Router.current().params.doc_id
-#             # console.log @
 #             if session_document.user_id
 #                 resident = Meteor.users.findOne session_document.user_id
 #                 # if resident.user_id
@@ -655,11 +647,9 @@ if Meteor.isServer
 #         adding_guests: -> Session.get 'adding_guest'
 #         checking_in_doc: ->
 #             session_document = Docs.findOne Router.current().params.doc_id
-#             # console.log session_document
 #             session_document
 #         checkin_guest_docs: () ->
 #             session_document = Docs.findOne Router.current().params.doc_id
-#             # console.log @
 #             Docs.find
 #                 _id:$in:session_document.guest_ids
 
@@ -670,7 +660,6 @@ if Meteor.isServer
 
 
     # Template.resident_guest.onCreated ->
-    #     # console.log @
     #     @autorun => Meteor.subscribe 'doc_by_id', @data
     # Template.resident_guest.helpers
     #     guest_doc: ->
@@ -827,7 +816,6 @@ if Meteor.isClient
         # 'keyup .name_search': _.debounce((e,t)->
         'keyup .name_search': (e,t)->
             name_search = $('.name_search').val()
-            console.log name_search
             # if e.which is 8
             #     if name_search.length is 0
             #         Session.set 'name_search',null
@@ -1031,7 +1019,6 @@ if Meteor.isClient
 
     Template.session_item.onCreated ->
         # @autorun => Meteor.subscribe 'user_by_username', @data.resident_username
-        console.log @
         @autorun => Meteor.subscribe 'doc_by_id', Session.get('session_resident_id')
         @autorun => Meteor.subscribe 'session_guests', @data
     Template.session_item.helpers
@@ -1042,7 +1029,6 @@ if Meteor.isClient
                 when 'unit_key_checkout' then 'key'
 
         session_resident: ->
-            console.log @
             # Meteor.users.findOne
             #     username:@resident_username
             Docs.findOne 
@@ -1060,7 +1046,6 @@ if Meteor.isClient
             # resident = Meteor.users.findOne
             #     username:@resident_username
             #
-            # console.log @
             # if confirm "Check Out #{@first_name} #{@last_name}?"
             $(e.currentTarget).closest('.card').transition('fade up',500)
             Meteor.setTimeout =>

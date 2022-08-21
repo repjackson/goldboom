@@ -30,7 +30,6 @@ if Meteor.isClient
         #         Meteor.call 'buy_ticket', charge, (err,res)=>
         #             if err then alert err.reason, 'danger'
         #             else
-        #                 console.log 'res', res
         #                 Swal.fire(
         #                     'ticket purchased',
         #                     ''
@@ -113,7 +112,6 @@ if Meteor.isClient
             )
     
         'click .buy_for_usd': (e,t)->
-            console.log Template.instance()
             val = parseInt t.$('.usd_input').val()
             Session.set('usd_paying',val)
 
@@ -153,7 +151,6 @@ if Meteor.isClient
     Template.attendance.events
         'click .mark_maybe': ->
             event = Docs.findOne Router.current().params.doc_id
-            # console.log 'hi'
             # Meteor.call 'mark_maybe', Router.current().params.doc_id, ->
             # event = Docs.findOne event_id
             if event.maybe_ids
@@ -278,7 +275,6 @@ if Meteor.isClient
         room_button_class: -> 
             if Session.equals('viewing_room_id', @_id) then 'blue' else 'basic'
         event_docs: ->
-            # console.log moment().format()
             match = {}
             match.model = 'event'
             # published:true
@@ -360,10 +356,8 @@ if Meteor.isClient
             else 
                 res += 'basic'
             if reservation_exists
-                # console.log 'res exists'
                 res += ' disabled'
             else
-                console.log 'no res'
             res
     
         room_reservations: ->
@@ -387,7 +381,6 @@ if Meteor.isClient
                     model:'room_reservation'
                     room_id:event.room_id 
                     date:event.date
-            console.log reservation_exists
             unless reservation_exists            
                 Docs.update Router.current().params.doc_id,
                     $set:

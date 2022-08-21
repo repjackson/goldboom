@@ -45,7 +45,7 @@ if Meteor.isClient
 
     Template.building_view.helpers
         current_building: ->
-            console.log Router.current().params.building_number
+            # console.log Router.current().params.building_number
             Docs.findOne
                 model:'building'
                 # building_number: Router.current().params.building_number

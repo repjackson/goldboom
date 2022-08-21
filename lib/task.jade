@@ -31,9 +31,11 @@ template(name='tasks')
                 +sort_direction_toggle
                 // +sort_key_toggle
                 +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-                +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                // +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                +session_set key='sort_key' value='building_number' label='building' icon='building'
+                +session_set key='sort_key' value='unit_number' label='unit' icon='cube'
                 +session_set key='sort_key' value='views' label='views' icon='eye'
-                +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
+                // +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
                 // +session_set key='limit' value=10
                 // +session_set key='limit' value=25
                 // +session_set key='limit' value=100
@@ -70,25 +72,31 @@ template(name='task_item')
             a.ui.inline.header.fly_right(href="/task/#{_id}") #{title}
             if image_id 
                 img.ui.small.inline.image.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            span(title='recipient')
-                +i name='lend'
-                with _target
-                    +user_info
+            if _target
+                span(title='recipient')
+                    +i name='lend'
+                    with _target
+                        +user_info
             span.smallscroll
                 |!{description}
-            .ui.label 
-                small created by 
-                |#{_author_username}
-                |#{_when}
+            +bu
+            +author_info
+            // .ui.label 
+            //     small created by 
+            //     |#{_author_username}
+            //     |#{_when}
             if due_date 
                 |due #{due_date}
-            i.eye.icon 
-            |#{views} views
-            each viewer_usernames 
-                .ui.label #{this}
+            +viewer_info
             
-            a.ui.icon.button.zoomer(href="/task/#{_id}")
+            a.ui.icon.circular.compact.button.zoomer(href="/task/#{_id}")
                 i.right.large.chevron.icon
+
+template(name='viewer_info')    
+    i.eye.icon 
+    |#{views} views
+    each viewer_usernames 
+        .ui.label #{this}
 
 template(name='task_view')
     with current_doc
@@ -100,15 +108,20 @@ template(name='task_view')
         .ui.stackable.padded.grid
             .centered.row 
                 .sixteen.wide.column
-                    a.ui.large.compact.button.fly_left(href="/checkin/#{checkin_id}/edit")
-                        i.chevron.left.icon
-                        +i name='checkmark'
-                        |checkin
+                    if checkin_id
+                        a.ui.large.compact.button.fly_left(href="/checkin/#{checkin_id}/edit")
+                            i.chevron.left.icon
+                            +i name='checkmark'
+                            |checkin
                     if currentUser
                         a.ui.large.compact.button.fly_left(href="/tasks")
                             i.chevron.left.icon
                             +i name='tasks'
                             |tasks
+                        a.ui.large.compact.button.fly_left(href="/")
+                            i.chevron.left.icon
+                            +i name='home'
+                            |home
                     .ui.inline.small.header viewing task
                     .ui.big.inline.header #{title}
                     
@@ -126,11 +139,12 @@ template(name='task_view')
                         img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
 
                     |!{description}
-                    |by
-                    a(href="/user/#{_author.username}") 
-                        img.ui.inline.small.pointer.zoomer.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        .ui.inline.header.pointer.zoomer
-                            |#{_author.name}
+                    .ui.segment
+                        |by
+                        a(href="/user/#{_author.username}") 
+                            img.ui.inline.small.pointer.zoomer.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            .ui.inline.header.pointer.zoomer
+                                |#{_author.name}
                     if has_bounty
                         .ui.header bounty amount: #{bounty}
                     if requires_confirmation 

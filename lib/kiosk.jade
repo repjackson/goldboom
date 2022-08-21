@@ -225,7 +225,7 @@ template(name='kiosk_settings')
         .sixteen.wide.column
             .ui.inline.header 
                 +i name='self-service-kiosk' classes='ui mini image'
-                |kiosk view
+                |kiosk
             if kiosk_doc
                 // if is_dev
                 //     .ui.icon.large.button.print_kiosk_doc(title='print session doc')
@@ -237,15 +237,17 @@ template(name='kiosk_settings')
             else
                 .ui.button.create_kiosk
                     |create kiosk doc
-            +set_kiosk_template value='kiosk_away' label='set away template'
-            +set_kiosk_template value='healthclub' label='check in'
-        .sixteen.wide.column
+            +set_kiosk_template value='kiosk_away' label='away' icon='clock'
+            +set_kiosk_template value='healthclub' label='check in' icon='checkmark'
+        .sixteen.wide.column.scrolling
             //- +healthclub
             with kiosk_doc
                 +Template.dynamic template=kiosk_view
 
 template(name='set_kiosk_template')            
-    .ui.button.set_kiosk_template #{label}
+    .ui.basic.button.set_kiosk_template
+        i.icon(class=icon)
+        |#{label}
 
 
 

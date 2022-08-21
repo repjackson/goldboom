@@ -4,7 +4,6 @@ if Meteor.isClient
             if @sentiment is 'positive' then 'green' else 'red'
         
         # if @max_emotion_name
-        #     # console.log @max_emotion_name
         #     switch @max_emotion_name
         #         when 'sadness' then 'blue'
         #         when 'joy' then 'green'
@@ -12,7 +11,6 @@ if Meteor.isClient
         #         when 'analytical' then 'orange'
         #         when 'tentative' then 'yellow'
         # else if @doc_sentiment_label
-        #     # console.log @doc_sentiment_label
         #     if @doc_sentiment_label is 'positive' then 'green'
         #     else if @doc_sentiment_label is 'negative' then 'red'
     # Template.registerHelper 'user_group_memberships', () -> 
@@ -95,7 +93,6 @@ if Meteor.isClient
             model:'stats'
     Template.registerHelper 'current_checkin', () -> 
         kiosk = Docs.findOne model:'kiosk'
-        # console.log kiosk
         # current = Docs.findOne kiosk.currrent_checkin_id
         Docs.findOne kiosk.current_checkin_id
 
@@ -105,15 +102,12 @@ if Meteor.isClient
             Results.findOne 
                 model:'emotion_avg'
         if found_emotion_avg
-            # console.log 'max', _.max([found_emotion_avg.avg_joy_score,found_emotion_avg.avg_anger_score,found_emotion_avg.avg_sadness_score,found_emotion_avg.avg_disgust_score,found_emotion_avg.avg_fear_score])
             
             if found_emotion_avg.avg_sent_score < 0
                 'red'
             else 
                 'green'
-        # console.log 'found emtion', found_emotion_avg
     Template.registerHelper 'above_50', (input) ->
-        # console.log input
         input > .5
     Template.registerHelper 'has_thumbnail', () ->
         @thumbnail and @thumbnail not in ['self','default']
@@ -151,7 +145,6 @@ if Meteor.isClient
                 model:'building'
                 building_number:@building_number
         if found 
-            console.log 'found', found
             found._id
     Template.registerHelper 'is_connected', () -> Meteor.status().connected
     
@@ -192,30 +185,16 @@ if Meteor.isClient
     Template.registerHelper 'session_get', (key)-> Session.get(key)
     
     Template.registerHelper 'key_value_is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
         @["#{key}"] is value
     
     Template.registerHelper 'is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
         key is value
     
     Template.registerHelper 'parent_is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
-        # console.log Template.parentData()
-        # console.log Template.parentData()
         Template.parentData()["#{key}"] is value
         # key is value
     
     Template.registerHelper 'parent_key_value_is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
         @["#{key}"] is value
     
     
@@ -238,7 +217,6 @@ if Meteor.isClient
     
     
     Template.registerHelper 'template_parent', () ->
-        # console.log Template.parentData()
         Template.parentData()
     
     
@@ -261,17 +239,12 @@ if Meteor.isClient
     #     #     @
     # Template.registerHelper 'user_from_user_id_param', () ->
     #     found = Meteor.users.findOne _id:Router.current().params.user_id
-    #     # console.log found
     #     found
     
     
     
     Template.registerHelper 'calculated_size', (metric) ->
-        # console.log metric
-        # console.log typeof parseFloat(@relevance)
-        # console.log typeof (@relevance*100).toFixed()
         whole = parseInt(@["#{metric}"]*10)
-        # console.log whole
     
         if whole is 2 then 'f2'
         else if whole is 3 then 'f3'
@@ -295,13 +268,9 @@ if Meteor.isClient
         return txt.value
         
     Template.registerHelper 'session_key_value_is', (key, value) ->
-        # console.log 'key', key
-        # console.log 'value', value
         Session.equals key,value
     
     Template.registerHelper 'key_value_is', (key, value) ->
-        # console.log 'key', key
-        # console.log 'value', value
         @["#{key}"] is value
     
     
@@ -316,21 +285,17 @@ if Meteor.isClient
     Template.registerHelper 'is_loading', -> Session.get 'is_loading'
     Template.registerHelper 'dev', -> Meteor.isDevelopment
     Template.registerHelper 'fixed', (number)->
-        # console.log number
         (number/100).toFixed()
     # Template.registerHelper 'to_percent', (number)->
-    #     # console.log number
     #     (number*100).toFixed()
     
     Template.registerHelper 'is_image', () ->
         # regExp = /^.*(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png).*/
         # match = @url.match(regExp)
-        # # console.log 'image match', match
         # if match then true
         # true
         regExp = /^.*(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png).*/
         match = @url.match(regExp)
-        # console.log 'image match', match
         if match then true
         # true
     
@@ -346,7 +311,6 @@ if Meteor.isClient
         if @sentiment
             if @sentiment is 'positive' then 'green' else 'red'
         # if @max_emotion_name
-        #     # console.log @max_emotion_name
         #     switch @max_emotion_name
         #         when 'sadness' then 'blue'
         #         when 'joy' then 'green'
@@ -354,7 +318,6 @@ if Meteor.isClient
         #         when 'analytical' then 'orange'
         #         when 'tentative' then 'yellow'
         # else if @doc_sentiment_label
-        #     # console.log @doc_sentiment_label
         #     if @doc_sentiment_label is 'positive' then 'green'
         #     else if @doc_sentiment_label is 'negative' then 'red'
     Template.registerHelper 'current_viewer_users', () -> 
@@ -428,7 +391,6 @@ if Meteor.isClient
     Template.registerHelper 'is_editing', () -> Session.equals 'editing_id', @_id
 
     Template.registerHelper 'user_groups', () ->
-        # console.log @
         if @group_membership_ids
             Docs.find 
                 model:'group'
@@ -545,30 +507,16 @@ if Meteor.isClient
     Template.registerHelper 'session_get', (key)-> Session.get(key)
     
     Template.registerHelper 'key_value_is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
         @["#{key}"] is value
     
     Template.registerHelper 'is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
         key is value
     
     Template.registerHelper 'parent_is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
-        # console.log Template.parentData()
-        # console.log Template.parentData()
         Template.parentData()["#{key}"] is value
         # key is value
     
     Template.registerHelper 'parent_key_value_is', (key, value)->
-        # console.log 'key', key
-        # console.log 'value', value
-        # console.log 'this', this
         @["#{key}"] is value
     
     
@@ -592,18 +540,15 @@ if Meteor.isClient
     # Template.registerHelper 'checkin_guest_docs', () ->
     #     Docs.findOne Router.current().params.doc_id
     #     session_document = Docs.findOne Router.current().params.doc_id
-    #     # console.log session_document.guest_ids
     #     Docs.find
     #         _id:$in:session_document.guest_ids
     
     
     Template.registerHelper '_author', () -> Meteor.users.findOne @_author_id
     Template.registerHelper 'is_text', () ->
-        # console.log @field_type
         @field_type is 'text'
     
     Template.registerHelper 'template_parent', () ->
-        # console.log Template.parentData()
         Template.parentData()
     
     
@@ -647,14 +592,11 @@ if Meteor.isClient
     
     Template.registerHelper 'user_from_username_param', () ->
         found = Meteor.users.findOne username:Router.current().params.username
-        # console.log found
         found
     # Template.registerHelper 'user_from_user_id_param', () ->
     #     found = Meteor.users.findOne _id:Router.current().params.user_id
-    #     # console.log found
     #     found
     Template.registerHelper 'field_value', () ->
-        # console.log @
         parent = Template.parentData()
         parent5 = Template.parentData(5)
         parent6 = Template.parentData(6)
@@ -673,7 +615,6 @@ if Meteor.isClient
     
     
     Template.registerHelper 'sorted_field_values', () ->
-        # console.log @
         parent = Template.parentData()
         parent5 = Template.parentData(5)
         parent6 = Template.parentData(6)
@@ -691,11 +632,7 @@ if Meteor.isClient
     
     
     Template.registerHelper 'calculated_size', (metric) ->
-        # console.log metric
-        # console.log typeof parseFloat(@relevance)
-        # console.log typeof (@relevance*100).toFixed()
         whole = parseInt(@["#{metric}"]*10)
-        # console.log whole
     
         if whole is 2 then 'f2'
         else if whole is 3 then 'f3'
