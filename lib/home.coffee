@@ -34,12 +34,11 @@ if Meteor.isClient
         staff_activity_docs: ->
             Docs.find {
                 model:'completed_staff_task'
-                is_staff:true
             }, 
                 sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
     Template.staff_tasks.events 
         'click .mark_did': ->
-            if confirm 'mark completed?'
+            if confirm "mark '#{@title}' completed?"
                 Docs.insert 
                     task_title:@title
                     parent_id:@_id

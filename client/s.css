@@ -17,6 +17,9 @@ body {
 .fullheight {
     height-min: 800px !important;
 }
+.smaller {
+    zoom: 70% !important;
+}
 .bigger {
     zoom: 150% !important;
 }

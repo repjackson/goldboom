@@ -92,8 +92,9 @@ if Meteor.isClient
     Template.tasks.helpers
         total_task_count: -> Counts.get('model_counter') 
         task_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'task'
+            }, sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
     Template.tasks.events 
         'click .new_task': ->
             new_id = 

@@ -1,7 +1,8 @@
 template(name='tasks')
     .ui.stackable.padded.grid 
         .sixteen.wide.column
-            +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
+            unless currentUser
+                +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
             .ui.inline.header 
                 +i name='tasks'
                 |#{artist_docs.count} tasks
@@ -11,7 +12,7 @@ template(name='tasks')
                 input.task_search(type='text' placeholder='search...' value=current_search)
             // .ui.header your points #{currentUser.points}
             if currentUser
-                a.ui.big.icon.button.new_task
+                a.ui.big.icon.circular.basic.button.new_task.zoomer(title='add task')
                     i.big.green.plus.icon
             // +i name='tags'
             // each picked_tasks_tags
@@ -63,12 +64,17 @@ template(name='tasks')
 template(name='task_item')
     .item.mark_viewed
         .content
-            if complete
-                span(title='completed')
-                    i.big.green.checkmark.icon 
-                    small {{long_date completion_timestamp}} {{from_now _completion_timestamp}}
+            if is_staff
+                .ui.large.label 
+                    +i name='shield'
+                    |staff task
             else 
-                i.big.circle.outline.icon
+                if complete
+                    span(title='completed')
+                        i.big.green.checkmark.icon 
+                        small {{long_date completion_timestamp}} {{from_now _completion_timestamp}}
+                else 
+                    i.big.circle.outline.icon
             a.ui.inline.header.fly_right(href="/task/#{_id}") #{title}
             if image_id 
                 img.ui.small.inline.image.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)

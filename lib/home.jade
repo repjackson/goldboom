@@ -4,13 +4,12 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             if currentUser
-                .eight.wide.column     
+                .six.wide.column     
                     +staff_tasks
-                .four.wide.column     
                     +staff_checkin
                 .four.wide.column     
                     +active_checkins
-                .eight.wide.column
+                .six.wide.column.smaller
                     +kiosk_settings
                 .four.wide.column     
                     +latest_notes
@@ -99,28 +98,28 @@ template(name='staff_checkin')
 template(name='staff_tasks')          
     a.ui.header.zoomer.fly_right(href='/tasks')
         +i name='tasks'
-        |staff #{task_docs.count} tasks
-    .ui.icon.fluid.input 
-        i.plus.icon
-        input.task_quickadd(type='text' placeholder='quickadd')
-    +sort_direction_toggle
-    +session_set key='sort_key' value='_timestamp' label='when' icon='clock'
-    +session_set key='sort_key' value='building_number' label='building' icon='building'
-    +session_set key='sort_key' value='unit_number' label='unit' icon='room'
-    +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
-    +session_set key='sort_key' value='_author_username' label='author' icon='user'
+        |#{staff_task_docs.count} staff tasks
+    // .ui.icon.fluid.input 
+    //     i.plus.icon
+    //     input.task_quickadd(type='text' placeholder='quickadd')
+    // +sort_direction_toggle
+    // +session_set key='sort_key' value='_timestamp' label='when' icon='clock'
+    // +session_set key='sort_key' value='building_number' label='building' icon='building'
+    // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
+    // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
+    // +session_set key='sort_key' value='_author_username' label='author' icon='user'
 
-    .ui.divided.list.medscroll 
+    .ui.divided.large.list.medscroll 
         each staff_task_docs 
             // a.item.fly_right(href="/task/#{_id}")
             .item
                 .header
                     if image_id
                         img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    if complete 
-                        i.large.green.checkmark.icon 
-                    else 
-                        i.large.circle.outline.icon.zoomer.mark_did(title='mark complete')
+                    // if complete 
+                    //     i.large.green.checkmark.icon 
+                    // else 
+                    i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
                     |#{title}
                 .content 
                     // +author_info
@@ -129,7 +128,7 @@ template(name='staff_tasks')
                     |!{description}
     .ui.small.header 
         +i name='realtime-protection'
-        |staff activity
+        |#{staff_activity_docs.count} staff activity
     .ui.small.list 
         each staff_activity_docs 
             .item #{task_title}
