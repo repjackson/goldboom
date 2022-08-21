@@ -112,7 +112,7 @@ Template.layout.events
         $(e.currentTarget).closest('.item').transition('fly left', 500)
         $(e.currentTarget).closest('.grid').transition('fade left', 500)
     'click .fly_right': (e,t)->
-        $(e.currentTarget).closest('.item').transition('fly right', 500)
+        $(e.currentTarget).closest('.item').transition('zoom', 250)
         $(e.currentTarget).closest('.grid').transition('fade right', 500)
     'click .card_fly_right': (e,t)->
         $(e.currentTarget).closest('.item').transition('fly right', 500)

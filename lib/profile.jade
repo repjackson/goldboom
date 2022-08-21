@@ -331,6 +331,7 @@ template(name='account')
                     // if currentUser.admin_mode
                     if in_dev
                         +boolean_edit key='admin' label='admin' icon='shield' 
+                        +boolean_edit key='is_staff' label='is staff' icon='shield' 
                     if currentUser.admin_mode
                         +print_this
                     +boolean_edit key='verified' label='verified' icon='verified-account'

@@ -3,36 +3,8 @@ template(name='home')
 
     .ui.stackable.padded.grid
         .row
-            .center.aligned.column
-                .ui.inline.header 
-                    +i name='dumbbell'
-                    |healthclub check in
-                if currentUser.admin_mode
-                    +add_user_button
-                    +call_method name='convert_units'
-                unless currentUser
-                    .ui.massive.icon.input.lookup_user
-                        i.search.icon
-                        input.search_user(type='text' placeholder='search user...')
-                    each checkedout_user_docs 
-                        a.ui.big.image.label.pick_user 
-                            img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{username}
-                            |#{building_number}: ##{unit_number}
-                if currentUser 
-                    if currentUser.checkedin 
-                        .ui.header currently checked in
-                        .ui.big.button.checkout
-                            +i name='exit'
-                            img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |check out as #{currentUser.username}
-                    else 
-                        .ui.big.button.checkin 
-                            +i name='internal'
-                            img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |check in as #{currentUser.username}
             if currentUser
-                .four.wide.column     
+                .eight.wide.column     
                     +staff_tasks
                 .four.wide.column     
                     +staff_checkin
@@ -75,14 +47,55 @@ template(name='home')
           
           
 template(name='staff_checkin')          
-    .ui.header staff checkin
+    .ui.header
+        +i name='shield'
+        |staff
+    .ui.small.header 
+        |staff list 
+    .ui.selection.animated.list
+        each staff_users 
+            a.item.fly_right.zoomer(href="/user/#{username}") 
+                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                |#{first_name} #{last_name}
+                // |#{username}
     if checked_in
-        .ui.button.checkout
-            |checkout
+        .ui.button.clockout
+            +i name='exit'
+            |clock out
     else 
-        .ui.button.checkin
-            |checkin
-        
+        .ui.button.clockin
+            +i name='clock'
+            |clock in
+    .ui.inline.header 
+        +i name='clock'
+        |staff shifts
+    if currentUser.admin_mode
+        +add_user_button
+        +call_method name='convert_units'
+    // unless currentUser
+    //     .ui.massive.icon.input.lookup_user
+    //         i.search.icon
+    //         input.search_user(type='text' placeholder='search user...')
+    //     each checkedout_user_docs 
+    //         a.ui.big.image.label.pick_user 
+    //             img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    //             |#{username}
+    //             |#{building_number}: ##{unit_number}
+    // if currentUser 
+    //     if currentUser.checkedin 
+    //         .ui.header currently checked in
+    //         .ui.big.button.checkout
+    //             +i name='exit'
+    //             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    //             |check out as #{currentUser.username}
+    //     else 
+    //         .ui.big.button.checkin 
+    //             +i name='internal'
+    //             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    //             |check in as #{currentUser.username}
+
+
+
 template(name='staff_tasks')          
     a.ui.header.zoomer.fly_right(href='/tasks')
         +i name='tasks'
@@ -97,10 +110,12 @@ template(name='staff_tasks')
     +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
     +session_set key='sort_key' value='_author_username' label='author' icon='user'
 
-    .ui.selection.animated.divided.list 
+    .ui.selection.animated.divided.list.medscroll 
         each task_docs 
             a.item.fly_right(href="/task/#{_id}")
                 .header
+                    if image_id
+                        img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     if complete 
                         i.large.green.checkmark.icon 
                     else 

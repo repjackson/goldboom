@@ -17,6 +17,12 @@ if Meteor.isClient
                         title:new_title
                 new_title = $('.task_quickadd').val('')
                 
+    Template.staff_checkin.onCreated ->
+        @autorun => Meteor.subscribe 'staff_users', ->
+    Template.staff_checkin.helpers
+        staff_users: ->
+            Meteor.users.find 
+                is_staff: true
     Template.staff_tasks.helpers    
         task_docs: ->
             Docs.find {
@@ -88,6 +94,12 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
+    Meteor.publish 'staff_users', ->
+        Meteor.users.find {
+            is_staff:true
+        },
+            sort:_timestamp:-1
+            limit:20
     Meteor.publish 'latest_requests', ->
         Docs.find {
             model:'task'

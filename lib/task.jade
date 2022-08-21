@@ -124,10 +124,10 @@ template(name='task_view')
                             |home
                     .ui.inline.small.header viewing task
                     .ui.big.inline.header #{title}
-                    
-                    // a.ui.large.compact.button.fly_down(href="/task/#{_id}/edit")
-                    //     i.pencil.icon
-                    //     |edit
+                    if can_edit
+                        a.ui.large.compact.button.fly_down(href="/task/#{_id}/edit")
+                            i.pencil.icon
+                            |edit
                     |#{_when}
                     if complete 
                         i.big.green.checkmark.icon
@@ -216,8 +216,10 @@ template(name='task_edit')
                         |cancel
                     .ui.inline.header editing task
                     +bu
-                    // +text_edit key='title' label='title'
+                    +text_edit key='title' label='title'
                     +html_edit key='description' label='description'
+                .eight.wide.column
+                    +image_edit key='image_id' label='image'
                     if currentUser.admin_mode
                         .ui.segment
                             .ui.inline.grey.header author
@@ -256,17 +258,17 @@ template(name='task_edit')
                     .ui.fluid.big.green.circular.button.submit_task.zoomer
                         i.large.save.icon 
                         |submit
-                    // if published
-                    //     a.ui.green.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
-                    //         i.save.large.icon
-                    //         |save
-                    //     |published {{long_date published_timestamp}} {{from_now published_timestamp}}
-                    //     a.ui.yellow.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
-                    //         i.undo.large.icon
-                    //         |unpublish
-                    // else 
-                    //     +save_and_publish_button
-                    // div
+                    if published
+                        a.ui.green.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
+                            i.save.large.icon
+                            |save
+                        |published {{long_date published_timestamp}} {{from_now published_timestamp}}
+                        a.ui.yellow.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
+                            i.undo.large.icon
+                            |unpublish
+                    else 
+                        +save_and_publish_button
+                    div
                                         
                      
                      
