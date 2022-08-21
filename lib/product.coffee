@@ -54,19 +54,15 @@ if Meteor.isClient
             Session.get('product_search')
 
     Template.product_view.onRendered ->
-        # console.log @
         found_doc = Docs.findOne Router.current().params.doc_id
         if found_doc 
             unless found_doc.details 
                 Meteor.call 'product_details', Router.current().params.doc_id, ->
-                    console.log 'pulled product details'
                 
     Template.product_view.helpers
         split_ingredient_list: ->
             @ingredientList.split ','
         instruction_steps: ->
-            console.log @
-            console.log @details.analyzedInstructions[0]
             @details.analyzedInstructions[0].steps
             
     Template.product_view.events
@@ -81,7 +77,6 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'model_docs', 'food'
     Template.product_item.events
         'click .quickbuy': ->
-            console.log @
             Session.set('quickbuying_id', @_id)
             # $('.ui.dimmable')
             #     .dimmer('show')
@@ -114,7 +109,6 @@ if Meteor.isClient
             Session.equals('quickbuying_id', @_id)
 
         food: ->
-            # console.log Meteor.user().roles
             Docs.find {
                 model:'food'
             }, sort:title:1
@@ -189,7 +183,6 @@ if Meteor.isClient
             picked_tags.remove @valueOf()
         
         'keyup .product_search': (e,t)->
-            console.log 'hi'
             query = t.$('.product_search').val()
             Session.set('product_search',query)
             if e.which is 13
@@ -197,7 +190,6 @@ if Meteor.isClient
 
             
         'keyup .menu_search': (e,t)->
-            console.log 'hi'
             query = t.$('.menu_search').val()
             Session.set('menu_search',query)
             if e.which is 13
@@ -231,8 +223,6 @@ if Meteor.isServer
             if picked_tags.length > 0 then match.tags = $all: picked_tags
 
             total_count = Docs.find(match).count()
-            # console.log 'total count', total_count
-            # console.log 'facet match', match
             tag_cloud = Docs.aggregate [
                 { $match: match }
                 { $project: tags: 1 }
@@ -244,9 +234,7 @@ if Meteor.isServer
                 { $limit: 20 }
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
-            # console.log 'theme tag_cloud, ', tag_cloud
             tag_cloud.forEach (tag, i) ->
-                # console.log tag
                 self.added 'results', Random.id(),
                     name: tag.name
                     count: tag.count
@@ -270,15 +258,9 @@ if Meteor.isServer
             match.title = {$regex:"#{title_search}", $options: 'i'}
         #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
     
-        # console.log 'sort key', sort_key
-        # console.log 'sort direction', sort_direction
         # unless Meteor.userId()
         #     match.private = $ne:true
             
-        # console.log 'results match', match
-        # console.log 'sort_key', sort_key
-        # console.log 'sort_direction', sort_direction
-        # console.log 'limit', limit
         
         Docs.find match,
             sort:_timestamp:-1

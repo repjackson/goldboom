@@ -99,7 +99,7 @@ template(name='staff_checkin')
 template(name='staff_tasks')          
     a.ui.header.zoomer.fly_right(href='/tasks')
         +i name='tasks'
-        |#{task_docs.count} tasks
+        |staff #{task_docs.count} tasks
     .ui.icon.fluid.input 
         i.plus.icon
         input.task_quickadd(type='text' placeholder='quickadd')
@@ -110,21 +110,30 @@ template(name='staff_tasks')
     +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
     +session_set key='sort_key' value='_author_username' label='author' icon='user'
 
-    .ui.selection.animated.divided.list.medscroll 
-        each task_docs 
-            a.item.fly_right(href="/task/#{_id}")
+    .ui.divided.list.medscroll 
+        each staff_task_docs 
+            // a.item.fly_right(href="/task/#{_id}")
+            .item
                 .header
                     if image_id
                         img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     if complete 
                         i.large.green.checkmark.icon 
                     else 
-                        i.large.circle.outline.icon
+                        i.large.circle.outline.icon.zoomer.mark_did(title='mark complete')
                     |#{title}
                 .content 
-                    +author_info
-                    if building_number
-                        +bu
+                    // +author_info
+                    // if building_number
+                    //     +bu
+                    |!{description}
+    .ui.small.header 
+        +i name='realtime-protection'
+        |staff activity
+    .ui.small.list 
+        each staff_activity_docs 
+            .item #{task_title}
+                +author_info
     .ui.inline.grey.header 
         // i.hiking.icon
         +i name='walking' classes='ui inline image'                

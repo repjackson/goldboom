@@ -41,7 +41,6 @@ if Meteor.isClient
             hours = 1000*60*60*20
             now = Date.now()
             start_window = now-hours
-            # console.log start_window
             Docs.find
                 model:'pool_reading'
                 _author_id:Meteor.userId()
@@ -50,7 +49,6 @@ if Meteor.isClient
             hours = 1000*60*60*20
             now = Date.now()
             start_window = now-hours
-            # console.log start_window
             Docs.find
                 model:'upper_hot_tub_reading'
                 _author_id:Meteor.userId()
@@ -59,7 +57,6 @@ if Meteor.isClient
             hours = 1000*60*60*20
             now = Date.now()
             start_window = now-hours
-            # console.log start_window
             Docs.find
                 model:'lower_hot_tub_reading'
                 _author_id:Meteor.userId()
@@ -100,7 +97,6 @@ if Meteor.isClient
             # resident = Meteor.users.findOne
             #     username:@resident_username
             #
-            # console.log @
             # if confirm "Check Out #{@first_name} #{@last_name}?"
             $(e.currentTarget).closest('.card').transition('fade right',500)
             Meteor.setTimeout =>
@@ -178,7 +174,6 @@ if Meteor.isClient
             building_number = parseInt t.$('.building_number').val()
             unit_number = parseInt t.$('.unit_number').val()
             Meteor.call 'lookup_key',building_number, unit_number, (err,res)->
-                console.log res
                 alert "key tag number #{res.tag_number}"
 
 
@@ -294,7 +289,6 @@ if Meteor.isClient
             task_count = Docs.find(
                 model:'field'
                 field_type:'boolean').count()
-            console.log task_count
             todays_checklist =
                 Docs.findOne
                     model:'shift_checklist'
@@ -304,7 +298,6 @@ if Meteor.isClient
         completed: ->
             checklist = Docs.findOne
                 model:'shift_checklist'
-            # console.log @
             checklist["#{@key}"]
 
         # checklist_items: ->
@@ -325,12 +318,10 @@ if Meteor.isClient
 if Meteor.isServer
     # Meteor.methods
     #     lookup_key: (building_number, unit_number)->
-    #         console.log 'looking up', building_number, unit_number
     #         found_key = Docs.findOne
     #             model:'key'
     #             building_number:building_number
     #             unit_number:unit_number
-    #         # console.log 'found key', found_key
     #         if found_key
     #             Docs.insert
     #                 model:'log_event'
@@ -351,11 +342,9 @@ if Meteor.isServer
 
     Meteor.publish 'shift_walks', ()->
         # this_moment = moment(Date.now())
-        # console.log this_moment.subtract(20, 'hours')
         hours = 1000*60*60*20
         now = Date.now()
         start_window = now-hours
-        console.log start_window
         Docs.find
             model:'shift_walk'
             _author_id:Meteor.userId()
@@ -363,11 +352,9 @@ if Meteor.isServer
 
     Meteor.publish 'todays_pool_readings', ()->
         # this_moment = moment(Date.now())
-        # console.log this_moment.subtract(20, 'hours')
         hours = 1000*60*60*20
         now = Date.now()
         start_window = now-hours
-        console.log start_window
         Docs.find
             model:'pool_reading'
             _author_id:Meteor.userId()
@@ -375,11 +362,9 @@ if Meteor.isServer
 
     Meteor.publish 'todays_upper_hot_tub_readings', ()->
         # this_moment = moment(Date.now())
-        # console.log this_moment.subtract(20, 'hours')
         hours = 1000*60*60*20
         now = Date.now()
         start_window = now-hours
-        console.log start_window
         Docs.find
             model:'upper_hot_tub_reading'
             _author_id:Meteor.userId()
@@ -387,11 +372,9 @@ if Meteor.isServer
 
     Meteor.publish 'todays_lower_hot_tub_readings', ()->
         # this_moment = moment(Date.now())
-        # console.log this_moment.subtract(20, 'hours')
         hours = 1000*60*60*20
         now = Date.now()
         start_window = now-hours
-        console.log start_window
         Docs.find
             model:'lower_hot_tub_reading'
             _author_id:Meteor.userId()
@@ -405,11 +388,9 @@ if Meteor.isServer
 
     Meteor.publish 'todays_checklist', ->
         this_moment = moment(Date.now())
-        # console.log this_moment.subtract(20, 'hours')
         hours = 1000*60*60*24
         now = Date.now()
         start_window = now-hours
-        # console.log start_window
         Docs.find
             model:'shift_checklist'
             _author_id:Meteor.userId()

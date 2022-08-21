@@ -63,8 +63,6 @@ Docs.before.insert (userId, doc)->
     date_array = [ap, weekday, month, date, year]
     if _
         date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
-        # date_array = _.each(date_array, (el)-> console.log(typeof el))
-        # console.log date_array
         doc._timestamp_tags = date_array
     unless doc._author_id
         if Meteor.user()
@@ -78,7 +76,6 @@ Docs.before.insert (userId, doc)->
     return
 
 if Meteor.isClient
-    # console.log $
     $.cloudinary.config
         cloud_name:"facet"
 
@@ -92,7 +89,6 @@ if Meteor.isServer
 
 
 # Docs.after.insert (userId, doc)->
-#     console.log doc.tags
 #     return
 
 # Docs.after.update ((userId, doc, fieldNames, modifier, options) ->

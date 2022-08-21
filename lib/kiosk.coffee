@@ -113,7 +113,6 @@ if Meteor.isClient
 
         'click .print_kiosk': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
-            console.log kiosk
 
         'click .delete_kiosk': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
@@ -203,12 +202,10 @@ if Meteor.isClient
                 new_username = $('.new_resident_name').val()
                 splitted = new_username.split(' ')
                 formatted = new_username.split(' ').join('_').toLowerCase()
-                console.log formatted
                 Meteor.call 'add_user', formatted, (err,res)=>
                     if err 
                         alert err.reason
                     else 
-                        console.log res
                         # new_user = Meteor.users.findOne res
                         
                         Meteor.users.update res,
@@ -260,7 +257,6 @@ if Meteor.isClient
                 
 
         'click .pick_user': (e)->
-            console.log @
             kiosk = Docs.findOne model:'kiosk'
             new_checkin = {
                 model:'checkin'
@@ -321,7 +317,6 @@ if Meteor.isClient
         #         $set:
         #             current_search_user:search_user
         #     # Session.set('current_search_user', search_user)
-        #     # console.log Session.get('current_search_user')
         #     # picked_tags.push search_user
         #     # # $( "p" ).blur();
         # , 500)
@@ -375,7 +370,6 @@ if Meteor.isClient
         'keyup .add_unit_number': (e)->
             kiosk = Docs.findOne model:'kiosk'
             val = parseInt($('.add_unit_number').val())
-            console.log val
             if kiosk.current_building_number is 1
                 if val.toString().length is 4
                     Docs.insert 
@@ -498,7 +492,6 @@ if Meteor.isClient
     #     # Session.set 'timer_engaged', false
     #     # Meteor.setTimeout ->
     #     #     healthclub_session_document = Docs.findOne Router.current().params.doc_id
-    #     #     # console.log @
     #     #     if healthclub_session_document and healthclub_session_document.user_id
     #     #         resident = Meteor.users.findOne healthclub_session_document.user_id
     #     #         # if resident.user_id
@@ -562,13 +555,11 @@ if Meteor.isClient
     #     #
     #     #
     #     # 'click .recheck': ->
-    #     #     console.log @
     #     #     Meteor.call 'run_user_checks', @
     #     #     Meteor.call 'member_waiver_signed', @
     #     #     Meteor.call 'rules_and_regulations_signed', @
 
     #     'click .add_guest': ->
-    #         # console.log @
     #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
     #         new_guest_id =
     #             Docs.insert
@@ -612,7 +603,6 @@ if Meteor.isClient
     #         current_session = Docs.findOne
     #             model:'healthclub_session'
     #             current:true
-    #         # console.log current_session
     #         Docs.update current_session._id,
     #             $pull:guest_ids:@_id
 
@@ -629,7 +619,6 @@ if Meteor.isClient
     # Template.healthclub_session.helpers
     #     current_poll: ->
     #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
-    #         # console.log @
     #         # healthclub_session_document.user_id
 
     #         Docs.findOne
@@ -641,12 +630,10 @@ if Meteor.isClient
     #         Session.get 'timer_engaged'
     #     timer: ->
     #         Session.get 'timer'
-    #         # console.log Template.instance()
     #         # Template.instance().timer.get()
 
     #     rules_signed: ->
     #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
-    #         # console.log @
     #         if healthclub_session_document.user_id
     #             resident = Meteor.users.findOne healthclub_session_document.user_id
     #             # if resident.user_id
@@ -658,11 +645,9 @@ if Meteor.isClient
     #     adding_guests: -> Session.get 'adding_guest'
     #     checking_in_doc: ->
     #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
-    #         # console.log healthclub_session_document
     #         healthclub_session_document
     #     checkin_guest_docs: () ->
     #         healthclub_session_document = Docs.findOne Router.current().params.doc_id
-    #         # console.log @
     #         Docs.find
     #             _id:$in:healthclub_session_document.guest_ids
 
@@ -673,7 +658,6 @@ if Meteor.isClient
 
 
     Template.resident_guest.onCreated ->
-        # console.log @
         @autorun => Meteor.subscribe 'doc', @data
     Template.resident_guest.helpers
         guest_doc: ->
@@ -682,7 +666,6 @@ if Meteor.isClient
 
     Template.healthclub_stats.events
         'click .recalc': ->
-            console.log @
             Meteor.call 'recalc_healthclub_stats', @user
 
 
@@ -702,42 +685,34 @@ if Meteor.isServer
         # convert_units: ->
             # units = Docs.find(model:'unit')
             # # for unit in units.fetch()
-            # #     console.log typeof(unit.unit_number)
             # #     Docs.update unit._id,
             # #         $set:
             # #             unit_number:parseInt(unit.unit_number)
             # checkins = Docs.find(model:'checkin')
             # for checkin in checkins.fetch()
-            #     console.log typeof(checkin.unit_number)
             #     Docs.update checkin._id,
             #         $set:
             #             unit_number:parseInt(checkin.unit_number)
             # users = Meteor.users.find()
             # for user in users.fetch()
-            #     console.log typeof(user.unit_number)
             #     Meteor.users.update user._id,
             #         $set:
             #             unit_number:parseInt(user.unit_number)
-            #     console.log 'after',typeof(user.unit_number)
                 
         kiosk_vote_no: (poll_id, user_id)->
-            console.log poll_id, user_id
             Docs.update poll_id,
                 $addToSet: downvoter_ids: user_id
         kiosk_vote_yes: (poll_id, user_id)->
-            console.log poll_id, user_id
             Docs.update poll_id,
                 $addToSet: upvoter_ids: user_id
 
 
         recalc_healthclub_stats: (user)->
-            # console.log user
             session_count =
                 Docs.find(
                     model:'healthclub_session'
                     user_id:user._id
                 ).count()
-            # console.log session_count
             Meteor.users.update user._id,
                 $set:total_session_count:session_count
             sorted_session_count =
@@ -749,9 +724,7 @@ if Meteor.isServer
                         username:1
                         total_session_count:1
                 ).fetch()
-            # console.log total_top_ten
             found_in_ranking = _.findWhere(sorted_session_count,{username:user.username})
-            console.log 'found', found_in_ranking
             global_rank = _.indexOf(sorted_session_count,found_in_ranking)+1
             if global_rank > 0
                 Meteor.users.update user._id,

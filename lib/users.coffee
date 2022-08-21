@@ -126,10 +126,8 @@ if Meteor.isClient
             new_username = prompt('username')
             splitted = new_username.split(' ')
             formatted = new_username.split(' ').join('_').toLowerCase()
-            console.log formatted
                 #   return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             Meteor.call 'add_user', formatted, (err,res)->
-                console.log res
                 new_user = Meteor.users.findOne res
                 Meteor.users.update res,
                     $set:
@@ -166,7 +164,6 @@ if Meteor.isClient
         # all_user_tags: -> Results.find model:'user_tag'
         
         one_result: ->
-            # console.log 'one'
             Meteor.users.find({_id:$ne:Meteor.userId()}).count() is 1
         username_query: -> Session.get('username_query')
         user_docs: ->
@@ -275,15 +272,11 @@ if Meteor.isServer
         calc_user_tags: (user_id)->
             debit_tags = Meteor.call 'omega', user_id, 'debit'
             # debit_tags = Meteor.call 'omega', user_id, 'debit', (err, res)->
-            # console.log res
-            # console.log 'res from async agg'
             Meteor.users.update user_id, 
                 $set:
                     debit_tags:debit_tags
     
             credit_tags = Meteor.call 'omega', user_id, 'credit'
-            # console.log res
-            # console.log 'res from async agg'
             Meteor.users.update user_id, 
                 $set:
                     credit_tags:credit_tags
@@ -302,12 +295,10 @@ if Meteor.isServer
             if direction is 'credit'
                 match.target_id = user_id
     
-            console.log 'found debits', Docs.find(match).count()
             # if omega.selected_tags.length > 0
             #     limit = 42
             # else
             # limit = 10
-            # console.log 'omega_match', match
             # { $match: tags:$all: omega.selected_tags }
             pipe =  [
                 { $match: match }
@@ -326,8 +317,6 @@ if Meteor.isServer
                 res = {}
                 if agg
                     agg.toArray()
-                    printed = console.log(agg.toArray())
-                    # console.log(agg.toArray())
                     # omega = Docs.findOne model:'omega_session'
                     # Docs.update omega._id,
                     #     $set:

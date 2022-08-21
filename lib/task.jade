@@ -168,6 +168,10 @@ template(name='task_view')
                         i.clock.icon
                         | #{_when}
                     .spacer
+                    if is_staff
+                        .ui.header 
+                            +i name='shield'
+                            |staff task
                     .spacer
                     if location_tags
                         +array_view key='location_tags' label='location_tags' 
@@ -211,13 +215,26 @@ template(name='task_edit')
         .ui.stackable.padded.grid
             .row 
                 .eight.wide.column
-                    .ui.big.button(href="/checkin/#{checkin_id}/edit")
-                        i.large.red.ban.icon 
-                        |cancel
+                    if checkin_id
+                        .ui.basic.button.fly_up(href="/checkin/#{checkin_id}/edit")
+                            i.large.red.ban.icon 
+                            |cancel/delete
+                    a.ui.big.green.button.fly_down(href="/task/#{_id}/")
+                        i.large.save.icon 
+                        |save
                     .ui.inline.header editing task
                     +bu
                     +text_edit key='title' label='title'
                     +html_edit key='description' label='description'
+                    +boolean_edit key='is_staff' label='staff' icon='shield'
+                    +boolean_edit key='repeating' label='repeating' icon='refresh'
+                    if repeating 
+                        +key_value_edit key='repeating_type' value='daily'
+                        +key_value_edit key='repeating_type' value='weekly'
+                        +key_value_edit key='repeating_type' value='hourly'
+                        +key_value_edit key='repeating_type' value='other'
+                    unless is_staff
+                        +bu_edit
                 .eight.wide.column
                     +image_edit key='image_id' label='image'
                     if currentUser.admin_mode

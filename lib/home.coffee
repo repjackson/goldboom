@@ -6,7 +6,8 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     Template.staff_tasks.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'tasks', ->
+        @autorun => Meteor.subscribe 'model_docs', 'task', ->
+        @autorun => Meteor.subscribe 'model_docs', 'completed_staff_task', ->
     Template.staff_tasks.events
         'keyup .task_quickadd': (e)->
             if e.which is 13 
@@ -24,11 +25,29 @@ if Meteor.isClient
             Meteor.users.find 
                 is_staff: true
     Template.staff_tasks.helpers    
-        task_docs: ->
+        staff_task_docs: ->
             Docs.find {
                 model:'task'
+                is_staff:true
             }, 
                 sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
+        staff_activity_docs: ->
+            Docs.find {
+                model:'completed_staff_task'
+                is_staff:true
+            }, 
+                sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
+    Template.staff_tasks.events 
+        'click .mark_did': ->
+            if confirm 'mark completed?'
+                Docs.insert 
+                    task_title:@title
+                    parent_id:@_id
+                    task_id:@_id
+                    model:'completed_staff_task'
+            
+    
+    
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkin_doc.events
@@ -77,7 +96,7 @@ if Meteor.isClient
     Template.latest_notes.helpers 
         latest_note_docs: ->
             Docs.find {
-                model:'poFst'
+                model:'post'
             }, 
                 sort:_timestamp:-1
                 

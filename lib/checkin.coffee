@@ -41,7 +41,7 @@ if Meteor.isServer
         picked_buildings
         picked_units
         picked_residents
-        picked_tags
+        picked_tags=[]
         )->
         # user = Meteor.users.findOne @userId
         # current_herd = user.profile.current_herd

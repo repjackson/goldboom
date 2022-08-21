@@ -237,7 +237,6 @@ if Meteor.isClient
 
         'click .set_password': (e, t) ->
             new_password = $('#new_password').val()
-            console.log 'new password', new_password
             current_user = Meteor.users.findOne username:Router.current().params.username
             Meteor.call 'set_password', current_user._id, new_password, (err,res)->
                 if err 
@@ -262,7 +261,6 @@ if Meteor.isClient
     
     Template.account.helpers
         user_from_user_id_param: ->
-            console.log 'hi'
             Meteor.users.findOne Router.current().params.user_id
     Template.account.events
         'click .remove_user': ->
@@ -271,8 +269,6 @@ if Meteor.isClient
                 Router.go "/users"
         'click .clear_session': (e)->
             user = Meteor.users.findOne username:Router.current().params.username
-            console.log @
-            console.log user.services.resume.loginTokens
             $(e.currentTarget).closest('.item').transition('fly left', 500)
             Meteor.setTimeout =>
                 Meteor.users.update Meteor.userId(),

@@ -24,7 +24,11 @@ template(name='bu')
         +building_label
     if unit_number
         +unit_label
-
+template(name='bu_edit')
+    div
+    +number_edit key='building_edit' label='building number' icon='building'
+    div
+    +number_edit key='unit_edit' label='unit number' icon='room'
 template(name='building_label')
     span.ui.basic.image.large.label
         +i name='building'

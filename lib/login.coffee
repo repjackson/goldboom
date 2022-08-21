@@ -9,7 +9,6 @@ if Meteor.isClient
             Session.set 'username', username
             Meteor.call 'find_username', username, (err,res)->
                 if res
-                    console.log res
                     Session.set('enter_mode', 'login')
 
         'blur .username': ->
@@ -23,17 +22,12 @@ if Meteor.isClient
             # e.preventDefault()
             username = $('.username').val().trim()
             password = $('#pass').val()
-            # console.log options
-            # console.log username
-            # console.log password
             Meteor.loginWithPassword username, password, (err,res)=>
                 if err
-                    console.log err
                     $('body').toast({
                         message: err.reason
                     })
                 else
-                    # console.log res
                     # Router.go "/user/#{username}"
                     $(e.currentTarget).closest('.grid').transition('zoom', 500)
                     Meteor.setTimeout ->
@@ -61,12 +55,9 @@ if Meteor.isClient
                 e.preventDefault()
                 username = $('.username').val().trim()
                 password = $('#pass').val()
-                console.log username
-                console.log password
                 if username and username.length > 0 and password and password.length > 0
                     Meteor.loginWithPassword username, password, (err,res)=>
                         if err
-                            console.log err
                             $('body').toast({
                                 message: err.reason
                             })
@@ -128,7 +119,6 @@ if Meteor.isClient
             # if Session.equals 'enter_mode', 'register'
             # if confirm "register #{username}?"
             # Meteor.call 'validate_email', email, (err,res)->
-            #     console.log res
             # options = {
             #     username:username
             #     password:password
@@ -141,8 +131,6 @@ if Meteor.isClient
                 if err
                     alert err
                 else
-                    console.log res
-                    console.log username
                     Meteor.loginWithPassword username, password, (err,res)=>
                         if err
                             alert err.reason
@@ -187,7 +175,6 @@ if Meteor.isServer
     Meteor.methods
         set_user_password: (user, password)->
             result = Accounts.setPassword(user._id, password)
-            console.log result
             result
 
         # verify_email: (email)->
@@ -195,13 +182,11 @@ if Meteor.isServer
 
 
         create_user: (options)->
-            console.log 'creating user', options
             Accounts.createUser options
 
         find_username: (username)->
             res = Accounts.findUserByUsername(username)
             if res
-                # console.log res
                 unless res.disabled
                     return res
 

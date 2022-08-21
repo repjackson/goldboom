@@ -38,11 +38,9 @@ if Meteor.isClient
     Template.units.events
         'keyup .search_unit_number': ->
             val = $('.search_unit_number').val()
-            console.log val
             Session.set('unit_number_filter',parseInt(val))
         'keyup .search_building_number': ->
             val = $('.search_building_number').val()
-            console.log val
             Session.set('building_number_filter',parseint(val))
             
         'click .clear_filters': ->
@@ -75,7 +73,6 @@ if Meteor.isServer
             cursor = Docs.find model:'unit'
             for unit in cursor.fetch()
                 # unit_doc = Docs.findOne unit._id
-                console.log unit.unit_number
                 Docs.update unit._id,
                     $set:
                         unit_number_string:String(unit.unit_number)
@@ -162,8 +159,6 @@ if Meteor.isClient
                     building_number:@building_number
             if found 
                 Router.go "/building/#{found._id}"
-            else 
-                console.log 'no building'
         # 'keyup .unit_number': (e,t)->
         #     if e.which is 13
         #         unit_number = parseInt($('.unit_number').val())
@@ -214,7 +209,6 @@ if Meteor.isServer
             slug:unit_code
 
     Meteor.publish 'unit_by_both', (building_number,unit_number)->
-        console.log building_number, unit_number
         Docs.find
             model:'unit'
             building_number:parseInt(building_number)

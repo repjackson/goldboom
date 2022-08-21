@@ -53,7 +53,6 @@ if Meteor.isClient
     Template.order_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.order_view.onRendered ->
-        # console.log @
         found_doc = Docs.findOne Router.current().params.doc_id
 
 
@@ -135,11 +134,8 @@ if Meteor.isClient
                         if @_id is checkin.rental_id then 'big black' else 'compact large'
     Template.order_edit.events
         'click .pick_item': ->
-            console.log @
             kiosk = Docs.findOne model:'kiosk'
-            console.log kiosk
             checkin = Docs.findOne kiosk.current_checkin_id
-            console.log checkin
             if checkin
                 Docs.update checkin._id, 
                     $set:
@@ -204,7 +200,6 @@ if Meteor.isServer
             target = Meteor.users.findOne order.target_id
             orderer = Meteor.users.findOne order._author_id
 
-            console.log 'sending order', order
             Meteor.call 'calc_user_stats', target._id, ->
             Meteor.call 'calc_user_stats', order._author_id, ->
     
