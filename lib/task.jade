@@ -53,7 +53,7 @@ template(name='tasks')
                 //                 each task_docs 
                 //                     +task_card
                 // else
-                .ui.large.divided.list 
+                .ui.large.divided.selection.list 
                     each task_docs 
                         +task_item
             else 
@@ -75,7 +75,7 @@ template(name='task_item')
                         small {{long_date completion_timestamp}} {{from_now _completion_timestamp}}
                 else 
                     i.big.circle.outline.icon
-            a.ui.inline.header.fly_right(href="/task/#{_id}") #{title}
+            a.ui.inline.small.header.fly_right.zoomer(href="/task/#{_id}") #{title}
             if image_id 
                 img.ui.small.inline.image.zoomer(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             if _target
@@ -85,8 +85,9 @@ template(name='task_item')
                         +user_info
             span.smallscroll
                 |!{description}
-            +bu
-            +author_info
+            unless is_staff
+                +bu
+                +author_info
             // .ui.label 
             //     small created by 
             //     |#{_author_username}
@@ -95,8 +96,8 @@ template(name='task_item')
                 |due #{due_date}
             +viewer_info
             
-            a.ui.icon.circular.compact.button.zoomer(href="/task/#{_id}")
-                i.right.large.chevron.icon
+            a.ui.icon.circular.compact.button.zoomer.fly_up(href="/task/#{_id}" title='view task details')
+                i.right.large.chevron.green.icon
 
 template(name='viewer_info')    
     i.eye.icon 

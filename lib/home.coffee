@@ -35,16 +35,26 @@ if Meteor.isClient
             Docs.find {
                 model:'completed_staff_task'
             }, 
-                sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
+                sort:_timestamp:-1
+                # sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
     Template.staff_tasks.events 
-        'click .mark_did': ->
+        'click .mark_did': (e)->
             if confirm "mark '#{@title}' completed?"
                 Docs.insert 
                     task_title:@title
                     parent_id:@_id
                     task_id:@_id
                     model:'completed_staff_task'
-            
+                $(e.currentTarget).closest('.item').transition('fly right', 500)
+                $('body').toast(
+                    message: "#{@title} marked done"
+                    showIcon: "checkmark"
+                    showProgress: 'bottom'
+                    class: 'success'
+                    # displayTime: 'auto',
+                    position: "bottom right"
+                )
+
     
     
     Template.active_checkins.onCreated ->

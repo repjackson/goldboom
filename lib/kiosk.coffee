@@ -75,10 +75,24 @@ if Meteor.isClient
     # Template.kiosk_settings.onCreated ->
     #     @autorun -> Meteor.subscribe 'kiosk_document', ->
 
+    Template.healthclub.onCreated ->
+        @autorun => Meteor.subscribe 'latest_wipe_doc', ->
+        @autorun => Meteor.subscribe 'latest_wipe_author', ->
     Template.resident_picker.onCreated ->
         # @autorun => Meteor.subscribe 'checkedout_users_from_search', Session.get('current_search_user'), ->
         @autorun => Meteor.subscribe 'kiosk_residents', ->
 if Meteor.isServer 
+    Meteor.publish 'latest_wipe_doc', ->
+        Docs.find
+            model:'completed_staff_task'
+            parent_id:'Pr4GvobLBRyYdR9rf'   
+    Meteor.publish 'latest_wipe_author', ->
+        found = 
+            Docs.findOne
+                model:'completed_staff_task'
+                parent_id:'Pr4GvobLBRyYdR9rf'
+        if found 
+            Meteor.users.find _id:found._author_id
     Meteor.publish 'kiosk_residents', ->
         if Meteor.isDevelopment
             kiosk = 
@@ -429,6 +443,11 @@ if Meteor.isClient
             Docs.findOne
                 model:'hot_tub_reading'
     Template.healthclub.helpers
+        last_wipe_doc: -> 
+            Docs.findOne 
+                model:'completed_staff_task'
+                parent_id:'Pr4GvobLBRyYdR9rf'   
+            
         kiosk_doc: -> 
             Docs.findOne model:'kiosk'
         # selected_building: -> Session.get('current_building_number')
