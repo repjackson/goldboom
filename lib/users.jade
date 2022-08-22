@@ -13,9 +13,29 @@ template(name='users')
                 // if currentUser
                 //     +session_boolean_toggle key='view_friends' label='friends' icon='friends'
                 div
-                +building_facet
-                div
-                +unit_facet
+                +i name='apartment'
+                .ui.inline.header buildings
+                if picked_user_buildings
+                    #clear_buildings.ui.primary.icon.compact.button
+                        i.remove.icon
+                    each picked_user_buildings
+                        .unpick_building.ui.primary.compact.button
+                            strong #{this}
+                each building_results
+                    .ui.compact.button.pick_building(class=cloud_tag_class) 
+                        strong #{name}
+                        
+                +i name='room'
+                .ui.inline.header units
+                if picked_user_units
+                    #clear_units.ui.primary.icon.compact.button
+                        i.remove.icon
+                    each picked_user_units
+                        .unpick_unit.ui.primary.compact.button
+                            strong #{this}
+                each unit_results
+                    .ui.compact.button.pick_unit(class=cloud_tag_class) 
+                        strong #{name}
                 // if picked_user_tags
                 //     // #clear_tags.ui.primary.icon.compact.button
                 //     //     i.remove.icon

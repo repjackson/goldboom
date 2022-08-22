@@ -31,6 +31,7 @@ if Meteor.isClient
                 is_staff:true
             }, 
                 sort:"#{Session.get('sort_key')}":Session.get('sort_direction')
+    Template.staff_activity.helpers    
         staff_activity_docs: ->
             Docs.find {
                 model:'completed_staff_task'

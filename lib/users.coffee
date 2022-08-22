@@ -3,19 +3,16 @@ if Meteor.isClient
     Template.user_item.onCreated ->
         @autorun => Meteor.subscribe 'user_groups_small', @data.username, -> 
         
-        
-        
     Template.users.onCreated ->
         Session.setDefault('sort_key', 'createdAt')
-        @autorun => Meteor.subscribe 'user_counter', ->
-    Template.users.onCreated ->
         Session.set('view_friends', false)
         # @autorun -> Meteor.subscribe('users')
         Session.setDefault 'limit', 42
-        Session.setDefault 'sort_key', 'points'
+        @autorun => Meteor.subscribe 'user_counter', ->
         @autorun => Meteor.subscribe 'user_tags', 
-            picked_user_tags.array()
-            Session.get('dummy')
+            Session.get('user_search')
+            picked_buildings.array()
+            picked_units.array()
             , ->
         @autorun => Meteor.subscribe 'users_pub', 
             Session.get('user_search')
@@ -28,8 +25,99 @@ if Meteor.isClient
             ->
         # @autorun => Meteor.subscribe 'user_tags', picked_user_tags.array(), ->
      
-     
+if Meteor.isServer
+    Meteor.publish 'user_tags', (
+        # picked_tags
+        username_search=''
+        picked_buildings=[]
+        picked_units=[]
+        )->
+        # user = Meteor.users.findOne @userId
+        # current_herd = user.profile.current_herd
+    
+        self = @
+        match = {}
+    
+        # picked_tags.push current_herd
+        if picked_buildings.length > 0
+            match.building_number = $all: picked_buildings
+        if picked_units.length > 0
+            match.unit_number = $all: picked_units
             
+        count = Meteor.users.find(match).count()
+        # cloud = Meteor.users.aggregate [
+        #     { $match: match }
+        #     { $project: tags: 1 }
+        #     { $unwind: "$tags" }
+        #     { $group: _id: '$tags', count: $sum: 1 }
+        #     { $match: _id: $nin: picked_tags }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: count }
+        #     { $limit: 20 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # cloud.forEach (tag, i) ->
+    
+        #     self.added 'results', Random.id(),
+        #         name: tag.name
+        #         count: tag.count
+        #         model:'user_tag'
+        #         index: i
+        building_cloud = Meteor.users.aggregate [
+            { $match: match }
+            { $project: building_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$building_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_buildings }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        building_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'building_tag'
+                index: i
+        unit_cloud = Meteor.users.aggregate [
+            { $match: match }
+            { $project: unit_number: 1 }
+            # { $unwind: "$location_tags" }
+            { $group: _id: '$unit_number', count: $sum: 1 }
+            { $match: _id: $nin: picked_units }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        unit_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'unit_tag'
+                index: i
+
+        self.ready()
+        
+     
+     
+if Meteor.isClient     
+    # Template.users.onCreated ->
+    #     @autorun => Meteor.subscribe 'user_location_facets', picked_buildings.array(), picked_units.array(), ->
+    Template.users.helpers
+        building_results: -> Results.find model:'building_tag'
+        picked_user_buildings: -> picked_buildings.array()
+        unit_results: -> Results.find model:'unit_tag'
+        picked_user_units: -> picked_units.array()
+    Template.users.events
+        'click .pick_building': -> picked_buildings.push @name
+        'click .unpick_building': -> picked_buildings.remove @valueOf()
+        'click .pick_unit': -> picked_units.push @name
+        'click .unpick_unit': -> picked_units.remove @valueOf()
+    
+     
+     
 if Meteor.isServer 
     Meteor.publish 'users_pub', (
         username_search, 
@@ -45,6 +133,7 @@ if Meteor.isServer
         # if view_friends
         #     match._id = $in: Meteor.user().friend_ids
         if picked_buildings.length > 0 then match.building_number = $all:picked_buildings 
+        if picked_units.length > 0 then match.unit_number = $all:picked_units
         if username_search
             match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find(match,{ 
@@ -195,76 +284,6 @@ if Meteor.isClient
         #     })
 
 
-if Meteor.isServer
-    Meteor.publish 'user_tags', (
-        picked_tags
-        )->
-        # user = Meteor.users.findOne @userId
-        # current_herd = user.profile.current_herd
-    
-        self = @
-        match = {}
-    
-        # picked_tags.push current_herd
-        if picked_tags.length > 0
-            match.tags = $all: picked_tags
-            
-        count = Meteor.users.find(match).count()
-        # cloud = Meteor.users.aggregate [
-        #     { $match: match }
-        #     { $project: tags: 1 }
-        #     { $unwind: "$tags" }
-        #     { $group: _id: '$tags', count: $sum: 1 }
-        #     { $match: _id: $nin: picked_tags }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $match: count: $lt: count }
-        #     { $limit: 20 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # cloud.forEach (tag, i) ->
-    
-        #     self.added 'results', Random.id(),
-        #         name: tag.name
-        #         count: tag.count
-        #         model:'user_tag'
-        #         index: i
-        building_cloud = Meteor.users.aggregate [
-            { $match: match }
-            { $project: building_number: 1 }
-            # { $unwind: "$location_tags" }
-            { $group: _id: '$building_number', count: $sum: 1 }
-            { $match: _id: $nin: picked_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 20 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        building_cloud.forEach (tag, i) ->
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'building_tag'
-                index: i
-        unit_cloud = Meteor.users.aggregate [
-            { $match: match }
-            { $project: unit_number: 1 }
-            # { $unwind: "$location_tags" }
-            { $group: _id: '$unit_number', count: $sum: 1 }
-            { $match: _id: $nin: picked_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 20 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        unit_cloud.forEach (tag, i) ->
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'unit_tag'
-                index: i
-
-        self.ready()
-        
         
         
 if Meteor.isServer 

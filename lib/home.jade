@@ -6,10 +6,15 @@ template(name='home')
             if currentUser
                 .six.wide.column     
                     +staff_tasks
+                .four.wide.column 
+                    +staff_activity
+                .four.wide.column     
+                    +staff_checkin
+                .four.wide.column     
                     +staff_checkin
                 .four.wide.column     
                     +active_checkins
-                .six.wide.column.smaller
+                .six.wide.column.smaller.scrolling
                     +kiosk_settings
                 .four.wide.column     
                     +latest_notes
@@ -126,12 +131,17 @@ template(name='staff_tasks')
                     // if building_number
                     //     +bu
                     |!{description}
+
+
+template(name='staff_activity')
     .ui.small.header 
         +i name='realtime-protection'
         |#{staff_activity_docs.count} staff activity
-    .ui.small.list 
+    .ui.small.list.medscroll
         each staff_activity_docs 
-            .item #{task_title}
+            .item.zoomer
+                
+                |#{task_title}
                 +author_info
     .ui.inline.grey.header 
         // i.hiking.icon
@@ -139,10 +149,10 @@ template(name='staff_tasks')
         |shift walks
     .ui.icon.button.log_staff_walked(title='log hourly shift walk')
         i.plus.icon    
-    .ui.list
+    .ui.divided.selection.list
         each shift_walks
             // .item #{_when} 
-            .item 
+            .item.zoomer
                 +author_info
                 if currentUser.admin_mode
                     i.remove.small.link.icon.remove_walk(title='remove walk entry')

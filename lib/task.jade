@@ -268,6 +268,9 @@ template(name='task_edit')
                             +number_edit key='bounty' label='custom bounty'
                         .spacer
                         // +group_picker
+                        .ui.red.button.remove_task 
+                            i.big.remove.icon
+                            |delete
                         +boolean_edit key='requires_confirmation' label='requires confirmation' icon='reviewer-female'
                         if requires_confirmation
                             +single_user_edit key='verifier' label='verifier' icon='reviewer-female' 

@@ -18,13 +18,31 @@ if Meteor.isClient
                     published:false
             Router.go "/#{@model}/#{new_id}/edit"
        
-    Template.building_facet.onCreated ->
-        @autorun => Meteor.subscribe 'building_results', 
             
+    
+    Template.building_facet.onCreated ->
+        @autorun => Meteor.subscribe 'building_facet', picked_buildings.array(), picked_units.array(), ->
+    Template.building_facet.helpers
+        building_results: -> Results.find model:'building_tag'
+        picked_user_buildings: -> picked_buildings.array()
+    Template.building_facet.events
+        'click .pick_building': -> picked_buildings.push @name
+        'click .unpick_building': -> picked_buildings.remove @valueOf()
+    
+    
+    # Template.unit_facet.onCreated ->
+    #     @autorun => Meteor.subscribe 'unit_facet', picked_buildings.array(), picked_units.array(), ->
+    # Template.unit_facet.helpers
+    #     unit_results: -> Results.find model:'unit_tag'
+    #     picked_user_units: -> picked_units.array()
+    # Template.unit_facet.events
+    #     'click .pick_unit': -> picked_units.push @name
+    #     'click .unpick_unit': -> picked_units.remove @valueOf()
             
 if Meteor.isServer 
-    Meteor.publish 'building_facet', (
+    Meteor.publish 'user_location_facets', (
         picked_buildings
+        picked_units
         )->
         # user = Meteor.users.findOne @userId
         # current_herd = user.profile.current_herd
@@ -33,8 +51,10 @@ if Meteor.isServer
         match = {}
     
         # picked_tags.push current_herd
-        if picked_tags.length > 0
-            match.tags = $all: picked_tags
+        if picked_buildings.length > 0
+            match.building_number = $all: picked_buildings
+        if picked_units.length > 0
+            match.unit_number = $all: picked_units
             
         count = Meteor.users.find(match).count()
 

@@ -78,7 +78,9 @@ template(name='healthclub')
                         +resident_picker
                 // +active_checkins
                 unless current_building_number
-                    .ui.basic.label last equipment cleaning: {{from_now last_cleaning._timestamp}} 
+                    .ui.basic.label 
+                        +i name='cleaning-a-surface'
+                        |last equipment cleaning: {{from_now last_wipe_doc._timestamp}} 
                         |by {{last_wipe_doc._author.first_name}}
                     +water_small
                     .ui.large.inline.header 

@@ -215,7 +215,7 @@ if Meteor.isClient
                 # new_username = prompt('first and last name')
                 new_username = $('.new_resident_name').val()
                 splitted = new_username.split(' ')
-                formatted = new_username.split(' ').join('_').toLowerCase()
+                formatted = new_username.trim().split(' ').join('_').toLowerCase()
                 Meteor.call 'add_user', formatted, (err,res)=>
                     if err 
                         alert err.reason

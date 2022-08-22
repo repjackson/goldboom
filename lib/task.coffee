@@ -33,6 +33,10 @@ if Meteor.isClient
     Template.task_edit.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.task_edit.events
+        'click .remove_task': ->
+            if confirm 'delete?'
+                Docs.remove @_id
+                Router.go "/tasks"
         'click .submit_task': ->
             Docs.update @_id,
                 submitted:true
