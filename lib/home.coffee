@@ -117,6 +117,7 @@ if Meteor.isClient
         kiosk_task_docs: ->
             Docs.find {
                 model:'task'
+                is_staff:$ne:true
             }, 
                 sort:_timestamp:-1
                 
@@ -132,6 +133,7 @@ if Meteor.isServer
     Meteor.publish 'latest_requests', ->
         Docs.find {
             model:'task'
+            is_staff:$ne:true
         },
             sort:_timestamp:-1
             limit:20
