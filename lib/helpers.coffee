@@ -155,7 +155,6 @@ if Meteor.isClient
         Session.equals(key,value)
     
     Template.registerHelper 'is_loading', () -> Session.get 'loading'
-    Template.registerHelper 'dev', () -> Meteor.isDevelopment
     # Template.registerHelper 'is_author', ()-> @_author_id is Meteor.userId()
     # Template.registerHelper 'is_grandparent_author', () ->
     #     grandparent = Template.parentData(2)
@@ -283,7 +282,6 @@ if Meteor.isClient
     
     Template.registerHelper 'sval', (input)-> Session.get(input)
     Template.registerHelper 'is_loading', -> Session.get 'is_loading'
-    Template.registerHelper 'dev', -> Meteor.isDevelopment
     Template.registerHelper 'fixed', (number)->
         (number/100).toFixed()
     # Template.registerHelper 'to_percent', (number)->
@@ -452,7 +450,6 @@ if Meteor.isClient
             model:'global_settings'
     Template.registerHelper 'display_mode', () -> Session.get('display_mode',true)
     Template.registerHelper 'is_loading', () -> Session.get 'loading'
-    Template.registerHelper 'dev', () -> Meteor.isDevelopment
     # Template.registerHelper 'is_author', ()-> @_author_id is Meteor.userId()
     # Template.registerHelper 'is_grandparent_author', () ->
     #     grandparent = Template.parentData(2)

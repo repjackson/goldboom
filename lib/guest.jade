@@ -4,8 +4,8 @@ template(name='guests')
             .ui.inline.header 
                 +i name='apartment'
                 |guests
-            .ui.icon.button.add_guest
-                i.plus.icon
+            // .ui.icon.button.add_guest
+            //     i.plus.icon
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             // +search_input key='title'
@@ -14,7 +14,7 @@ template(name='guests')
             
             +sort_direction_toggle
             // +sort_key_toggle
-            // +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
+            +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
             +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
             +session_set key='sort_key' value='building_number' label='building #' icon='apartment'
             // +session_set key='sort_key' value='views' label='views' icon='eye'
@@ -39,16 +39,12 @@ template(name='guests')
 
 template(name='guest_item')
     // a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/guest/#{guest_number}")
-    a.ui.item.zoomer.fly_right(class=guest_item_class href="/guest/#{_id}")
+    .ui.item.zoomer
         img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
         .ui.inline.header #{name}
         +when
         +bu
         +verified_label
-        // each units 
-        //     .ui.label ##{unit_number}
-        each location_tags 
-            .ui.basic.label #{this}
         if can_edit 
             +edit_button
         // a.ui.icon.button(href="/guest/#{guest_number}" title='view')

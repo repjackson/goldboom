@@ -7,7 +7,7 @@ if Meteor.isClient
         ), name:'home'
     Template.staff_tasks.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'task', ->
-        @autorun => Meteor.subscribe 'model_docs', 'completed_staff_task', ->
+        @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
     Template.staff_tasks.events
         'keyup .task_quickadd': (e)->
             if e.which is 13 
@@ -120,7 +120,19 @@ if Meteor.isClient
                 is_staff:$ne:true
             }, 
                 sort:_timestamp:-1
-                
+             
+             
+    Template.checkin_purpose_label.helpers
+        icon_class: ->
+            # console.log @
+            switch @checkin_purpose
+                when 'gym' then 'barbell'
+                when 'pool' then 'pool'
+                when 'water' then 'pool'
+                when 'hottub' then 'jacuzzi'
+                when 'sauna' then 'spa'
+                when 'racquetball' then 'racquetball'
+                when 'rental' then 'clock'
 
 
 if Meteor.isServer 
@@ -279,9 +291,9 @@ if Meteor.isClient
                 Docs.remove @_id
     Template.latest_checkins.helpers
         latest_checkin_docs: ->
-            Docs.find {
-                model:'checkin'
-            }, 
+            match = {model:'checkin'}
+            match.dev = $ne:true
+            Docs.find match,
                 sort:
                     _timestamp:-1
     Template.latest_checkins.onCreated ->
@@ -324,12 +336,12 @@ if Meteor.isServer
             match.username = {$regex:"#{username_search}", $options: 'i'}
         Meteor.users.find match
             
-    Meteor.publish 'latest_model_docs', (model)->
+    Meteor.publish 'latest_model_docs', (model,limit=20)->
         Docs.find {
             model:model
         }, 
             sort:_timestamp:-1
-            limit:10
+            limit:limit
             
     Meteor.publish 'active_checkins', ()->
         yesterday = Date.now()-(60*60*24*1000)

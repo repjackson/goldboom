@@ -28,15 +28,18 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'checkin_docs', (
-        picked_tags=[]
+        picked_buildings=[]
+        picked_units=[]
         )->
         match = {model:'checkin'}
-        if picked_tags.length > 0 then match.tags = $all:picked_tags
+        match.dev = $ne:true
+        # if picked_tags.length > 0 then match.tags = $all:picked_tags
 
         Docs.find match,
-            limit:20
+            limit:100
             sort:
                 _timestamp:-1
+            
     Meteor.publish 'checkin_tags', (
         picked_buildings
         picked_units

@@ -23,6 +23,9 @@ template(name='home')
                 .four.wide.column       
                     +admin
                     +staff_checkin
+            else 
+                .twelve.wide.column
+                    +login
             .four.wide.column       
                 .ui.header 
                     +i name='info'
@@ -276,11 +279,18 @@ template(name='active_checkin_doc')
                 i.large.code.icon(title='dev')
             if rental_id 
                 +i name='clock'
-            if checkin_purpose
-                .ui.large.label #{checkin_purpose}
+            +checkin_purpose_label
             i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
             
                     
+template(name='checkin_purpose_label')
+    if checkin_purpose
+        .ui.large.label 
+            +i name=icon_class
+            |#{checkin_purpose}
+        
+        
+        
 template(name='latest_activity')
     .ui.header 
         +i name='clock'
