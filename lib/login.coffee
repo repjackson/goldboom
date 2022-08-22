@@ -31,7 +31,8 @@ if Meteor.isClient
                     # Router.go "/user/#{username}"
                     $(e.currentTarget).closest('.grid').transition('zoom', 500)
                     Meteor.setTimeout ->
-                        Router.go "/user/#{username}"
+                        # Router.go "/user/#{username}"
+                        Router.go "/"
                     , 500
                     $('body').toast({
                         title: "logged in"
@@ -62,8 +63,8 @@ if Meteor.isClient
                                 message: err.reason
                             })
                         else
-                            Router.go "/user/#{username}"
-                            # Router.go "/"
+                            # Router.go "/user/#{username}"
+                            Router.go "/"
 
 
     Template.login.helpers
@@ -139,8 +140,8 @@ if Meteor.isClient
                             #     Session.set 'enter_mode', 'register'
                             #     Session.set 'username', "#{username}"
                         else
-                            # Router.go '/'
-                            Router.go "/user/#{username}"
+                            Router.go '/'
+                            # Router.go "/user/#{username}"
                 # else
                 #     Meteor.loginWithPassword username, password, (err,res)=>
                 #         if err

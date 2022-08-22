@@ -23,6 +23,7 @@ if Meteor.isServer
             user_count = Meteor.users.find().count()
             checkin_count = Docs.find(model:'checkin').count()
             task_count = Docs.find(model:'task').count()
+            guest_count = Docs.find(model:'guest').count()
     
             found = Docs.findOne model:'stats'
             if found 
@@ -31,6 +32,7 @@ if Meteor.isServer
                         user_count_total:user_count
                         checkin_count_total:checkin_count
                         task_count_total:task_count
+                        guest_count_total:guest_count
             else 
                 Docs.insert 
                     model:'stats'

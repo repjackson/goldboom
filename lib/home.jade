@@ -141,12 +141,12 @@ template(name='staff_activity')
     .ui.small.header 
         +i name='realtime-protection'
         |#{staff_activity_docs.count} staff activity
-    .ui.small.list.medscroll
+    .ui.small.divided.list.medscroll
         each staff_activity_docs 
             .item.zoomer
-                
                 |#{task_title}
                 +author_info
+                |{{long_date _timestamp}}
     .ui.inline.grey.header 
         // i.hiking.icon
         +i name='walking' classes='ui inline image'                
@@ -185,7 +185,7 @@ template(name='stats')
         |global stats
     if currentUser
         i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
-    .ui.list 
+    .ui.big.list 
         with global_stats_doc 
             .item 
                 +i name='groups'
@@ -197,6 +197,9 @@ template(name='stats')
             .item
                 +i name='tasks'
                 |#{task_count_total} tasks
+            .item
+                +i name='friends'
+                |#{guest_count_total} guests
 template(name='guest_block')
     .ui.header 
         +i name='friends'
