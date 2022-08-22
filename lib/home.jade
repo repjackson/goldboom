@@ -14,6 +14,8 @@ template(name='home')
                     +kiosk_settings
                 .five.wide.column     
                     +latest_notes
+                .four.wide.column       
+                    +stats
                 .five.wide.column     
                     +latest_requests
                 .four.wide.column     
@@ -26,6 +28,8 @@ template(name='home')
             else 
                 .twelve.wide.column
                     +login
+                .four.wide.column       
+                    +stats
             .four.wide.column       
                 .ui.header 
                     +i name='info'
@@ -37,8 +41,8 @@ template(name='home')
                     +i name='phone'
                     |phone: (303) 545-1787
             
-            .four.wide.column
-                +latest_activity
+            // .four.wide.column
+            //     +latest_activity
             // if currentUser
             //     .four.wide.column
             //         +latest_checkins
@@ -171,24 +175,28 @@ template(name='admin')
     .ui.header admin 
     .ui.input
         input.upload_parking(type='file')
-                
-    .ui.header
+     with kiosk_doc 
+        +key_value_edit key='invert_class' value='invert' label='night mode' icon='night'
+        +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
+   
+template(name='stats')
+    .ui.inline.header
         +i name='line-chart'
         |global stats
+    if currentUser
+        i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
     .ui.list 
         with global_stats_doc 
             .item 
-                i.users.icon
+                +i name='groups'
                 |#{user_count_total} users
             .item 
-                i.checkmark.icon
+                // i.checkmark.icon
+                +i name='checkmark'
                 |#{checkin_count_total} check ins
-            .item 
-                i.users.icon
-                |#{checkin_count_total} check ins
-    with kiosk_doc 
-        +key_value_edit key='invert_class' value='invert' label='night mode' icon='night'
-        +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
+            .item
+                +i name='tasks'
+                |#{task_count_total} tasks
 template(name='guest_block')
     .ui.header 
         +i name='friends'

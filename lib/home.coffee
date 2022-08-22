@@ -5,6 +5,36 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
+    Template.stats.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'stats', ->
+    
+    Template.stats.helpers 
+        global_stats_doc: ->
+            Docs.findOne 
+                model:'stats'
+    
+    Template.stats.events 
+        'click .refresh_stats': ->
+            Meteor.call 'refresh_stats', ->
+                
+if Meteor.isServer
+    Meteor.methods 
+        refresh_stats: ->
+            user_count = Meteor.users.find().count()
+            checkin_count = Docs.find(model:'checkin').count()
+            task_count = Docs.find(model:'task').count()
+    
+            found = Docs.findOne model:'stats'
+            if found 
+                Docs.update found._id,
+                    $set:
+                        user_count_total:user_count
+                        checkin_count_total:checkin_count
+                        task_count_total:task_count
+            else 
+                Docs.insert 
+                    model:'stats'
+if Meteor.isClient
     Template.staff_tasks.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'task', ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
