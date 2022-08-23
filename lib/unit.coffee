@@ -41,7 +41,7 @@ if Meteor.isClient
             Session.set('unit_number_filter',parseInt(val))
         'keyup .search_building_number': ->
             val = $('.search_building_number').val()
-            Session.set('building_number_filter',parseint(val))
+            Session.set('building_number_filter',parseInt(val))
             
         'click .clear_filters': ->
             Session.set('unit_number_filter',null)

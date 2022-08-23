@@ -1,28 +1,22 @@
 template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
     .ui.stackable.padded.grid
-        .row
+        .three.column.row
             if currentUser
-                .six.wide.column
+                .column
                     +work
                     +staff_tasks
-                .five.wide.column 
                     +staff_activity
-                .five.wide.column     
                     +active_checkins
-                .six.wide.column.smaller.scrolling
-                    +kiosk_settings
-                .five.wide.column     
+                .column
+                    .smaller.scrolling 
+                        +kiosk_settings
                     +latest_notes
-                .four.wide.column       
                     +stats
-                .five.wide.column     
                     +latest_requests
-                .four.wide.column     
                     +latest_rentals
-                .four.wide.column       
+                .column       
                     +guest_block
-                .four.wide.column       
                     +admin
                     +staff_checkin
             else 
@@ -48,9 +42,9 @@ template(name='home')
             //         +latest_checkins
             // .eight.wide.column
             //     +map_view
-        // .one.column.row
-        //     .column
-        //         +staff
+        .one.column.row
+            .column
+                +staff
           
           
 template(name='work')
@@ -135,49 +129,57 @@ template(name='staff_checkin')
 
 
 
-template(name='staff_tasks')          
-    a.ui.header.zoomer.fly_right(href='/tasks')
-        +i name='tasks'
-        |#{staff_task_docs.count} staff tasks
-    // .ui.icon.fluid.input 
-    //     i.plus.icon
-    //     input.task_quickadd(type='text' placeholder='quickadd')
-    // +sort_direction_toggle
-    // +session_set key='sort_key' value='_timestamp' label='when' icon='clock'
-    // +session_set key='sort_key' value='building_number' label='building' icon='building'
-    // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
-    // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
-    // +session_set key='sort_key' value='_author_username' label='author' icon='user'
-
-    .ui.divided.large.list.medscroll 
-        each staff_task_docs 
-            // a.item.fly_right(href="/task/#{_id}")
-            .item
-                .header
-                    if image_id
-                        img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    // if complete 
-                    //     i.large.green.checkmark.icon 
-                    // else 
-                    i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
-                    |#{title}
-                .content 
-                    // +author_info
-                    // if building_number
-                    //     +bu
-                    |!{description}
+template(name='staff_tasks')  
+    .ui.fluid.accordion
+        .title
+            // a.ui.header.zoomer.fly_right(href='/tasks')
+            .ui.header.zoomer
+                +i name='tasks'
+                |#{staff_task_docs.count} staff tasks
+                i.dropdown.icon
+        // .ui.icon.fluid.input 
+        //     i.plus.icon
+        //     input.task_quickadd(type='text' placeholder='quickadd')
+        // +sort_direction_toggle
+        // +session_set key='sort_key' value='_timestamp' label='when' icon='clock'
+        // +session_set key='sort_key' value='building_number' label='building' icon='building'
+        // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
+        // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
+        // +session_set key='sort_key' value='_author_username' label='author' icon='user'
+        .content
+            .ui.divided.large.list.medscroll 
+                each staff_task_docs 
+                    // a.item.fly_right(href="/task/#{_id}")
+                    .item
+                        .header
+                            if image_id
+                                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            // if complete 
+                            //     i.large.green.checkmark.icon 
+                            // else 
+                            i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
+                            |#{title}
+                        .content 
+                            // +author_info
+                            // if building_number
+                            //     +bu
+                            |!{description}
 
 
 template(name='staff_activity')
-    .ui.small.header 
-        +i name='realtime-protection'
-        |#{staff_activity_docs.count} staff activity
-    .ui.small.divided.list.medscroll
-        each staff_activity_docs 
-            .item.zoomer
-                |#{task_title}
-                +author_info
-                |{{long_date _timestamp}}
+    .ui.accordion
+        .title
+            .ui.small.header 
+                +i name='realtime-protection'
+                |#{staff_activity_docs.count} staff activity
+                i.dropdown.icon
+        .content
+            .ui.small.divided.list.medscroll
+                each staff_activity_docs 
+                    .item.zoomer
+                        |#{task_title}
+                        +author_info
+                        |{{long_date _timestamp}}
     .ui.inline.grey.header 
         // i.hiking.icon
         +i name='walking' classes='ui inline image'                
@@ -232,50 +234,61 @@ template(name='stats')
                 +i name='friends'
                 |#{guest_count_total} guests
 template(name='guest_block')
-    .ui.header 
-        +i name='friends'
-        |guests
-    .ui.selection.animated.big.list.medscroll
-        each guest_docs
-            .item #{name} #{_resident.username} #{_when}
-                +bu
-                if in_dev
-                    +print_this
-                a.ui.circular.icon.button(href="/guest/#{_id}")
-                    i.chevron.right.large.icon
+    .ui.accordion
+        .title
+            .ui.header 
+                +i name='friends'
+                |guests
+        .content
+            .ui.selection.animated.big.list.medscroll
+                each guest_docs
+                    .item #{name} #{_resident.username} #{_when}
+                        +bu
+                        if in_dev
+                            +print_this
+                        a.ui.circular.icon.button(href="/guest/#{_id}")
+                            i.chevron.right.large.icon
                 
 template(name='latest_requests')
-    a.ui.header.zoomer(href="/tasks" title='view all tasks')
-        +i name='wrench'
-        |#{kiosk_task_docs.count}
-        |latest requests
-    .medscroll
-        each kiosk_task_docs
-            .ui.segment
-                // img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                .ui.inline.header #{title}
-                |!{content} !{description}
-                +bu
-                |#{_when}
-                |#{resident_username}
-                a.fly_down(href="/task/#{_id}" title='view task')
-                    i.large.chevron.right.link.circular.icon.zoomer
+    .ui.accordion
+        .title
+            // a.ui.header.zoomer(href="/tasks" title='view all tasks')
+            .ui.header.zoomer
+                +i name='wrench'
+                |#{kiosk_task_docs.count}
+                |latest requests
+        .content
+            .medscroll
+                each kiosk_task_docs
+                    .ui.segment
+                        // img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        .ui.inline.header #{title}
+                        |!{content} !{description}
+                        +bu
+                        |#{_when}
+                        |#{resident_username}
+                        a.fly_down(href="/task/#{_id}" title='view task')
+                            i.large.chevron.right.link.circular.icon.zoomer
 template(name='latest_notes')
-    a.ui.header.zoomer(href="/posts" title='view posts')
-        +i name='chat'
-        |#{latest_note_docs.count} latest notes
-    .medscroll
-        each latest_note_docs
-            .ui.segment
-                if image_id
-                    img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                a.ui.inline.header.fly_down(href="/post/#{_id}")  !{content}
-                +bu
-                if currentUser.admin_mode
-                    +print_this
-                |#{when}
-                a.ui.large.icon.basic.circular.button.fly_down(href="/post/#{_id}") 
-                    i.large.chevron.right.icon
+    .ui.accordion 
+        .title 
+            // a.ui.header.zoomer(href="/posts" title='view posts')
+            .ui.header.zoomer(title='view posts')
+                +i name='chat'
+                |#{latest_note_docs.count} latest notes
+        .content
+            .medscroll
+                each latest_note_docs
+                    .ui.segment
+                        if image_id
+                            img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        a.ui.inline.header.fly_down(href="/post/#{_id}")  !{content}
+                        +bu
+                        if currentUser.admin_mode
+                            +print_this
+                        |#{when}
+                        a.ui.large.icon.basic.circular.button.fly_down(href="/post/#{_id}") 
+                            i.large.chevron.right.icon
             
 template(name='view_button')
     .ui.icon.button.fly_right(href="/#{model}/#{_id}")
