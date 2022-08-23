@@ -4,7 +4,8 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             if currentUser
-                .six.wide.column     
+                .six.wide.column
+                    +work
                     +staff_tasks
                 .five.wide.column 
                     +staff_activity
@@ -52,6 +53,17 @@ template(name='home')
         //     .column
         //         +staff
           
+          
+template(name='work')
+    .ui.header
+        +i name='wrench'
+        |record work 
+    .ui.input 
+        input.description(type='text')
+    div
+    .ui.list 
+        each work_docs 
+            .item #{description} #{_when}
           
           
 template(name='staff_checkin')          

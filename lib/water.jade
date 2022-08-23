@@ -65,7 +65,8 @@ template(name='hot_tub_readings')
                     .ui.large.label #{chlorine_message}
                 |#{_when}
                 +author_info
-                | #{when}
+                |#{_author_username}
+                
                 if currentUser.admin_mode
                     a.ui.large.icon.button.inline(href="/hot_tub_reading/edit/#{_id}")
                         i.pencil.icon
@@ -91,7 +92,7 @@ template(name='pool_readings')
                 .ui.large.label #{ph_message}
                 .ui.large.label #{chlorine_message}
                 +author_info
-                | #{when}
+                |#{_author_username}
                 if currentUser.admin_mode
                     a.ui.large.icon.button(href="/pool_reading/edit/#{_id}")
                         i.pencil.icon

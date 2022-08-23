@@ -5,6 +5,29 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
+        
+        
+    Template.work.onCreated ->
+        @autorun => @subscribe 'model_docs', 'work', ->
+            
+    Template.work.helpers 
+        work_docs: ->
+            Docs.find 
+                model:'work'
+    
+    Template.work.events 
+        'keyup .description': (e)->
+            if e.which is 13
+                val = $('.description').val()
+                # alert val
+                Docs.insert 
+                    model:'work'
+                    description:val
+                    staff_submitted:true
+                $('.description').val('')
+                
+            
+
     Template.stats.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'stats', ->
     
