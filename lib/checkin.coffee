@@ -188,30 +188,32 @@ if Meteor.isClient
         'click .yes': ->
             checkin = Docs.findOne model:'checkin'
             resident = Meteor.users.findOne checkin.resident_user_id
-            Meteor.users.update resident._id, 
-                $set:
-                    hiring_interest:true
-                    has_answered:true
-            $('body').toast({
-                title: "thanks for responding"
-                iconClass:'checkmark'
-                class: 'info massive'
-                position:'top center'
-            })
+            if resident 
+                Meteor.users.update resident._id, 
+                    $set:
+                        hiring_interest:true
+                        has_answered:true
+                $('body').toast({
+                    title: "thanks for responding"
+                    iconClass:'checkmark'
+                    class: 'info massive'
+                    position:'top center'
+                })
                     
         'click .no': ->
             checkin = Docs.findOne model:'checkin'
             resident = Meteor.users.findOne checkin.resident_user_id
-            Meteor.users.update resident._id, 
-                $set:
-                    hiring_interest:false
-                    has_answered:true
-            $('body').toast({
-                title: "thanks for responding"
-                iconClass:'checkmark'
-                class: 'info massive'
-                position:'top center'
-            })
+            if resident
+                Meteor.users.update resident._id, 
+                    $set:
+                        hiring_interest:false
+                        has_answered:true
+                $('body').toast({
+                    title: "thanks for responding"
+                    iconClass:'checkmark'
+                    class: 'info massive'
+                    position:'top center'
+                })
 
 
         'click .pick_guest': ->

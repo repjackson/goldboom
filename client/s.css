@@ -6,8 +6,8 @@ body {
     /*font-size: 120% !important; */
     /*line-height: 200% !important;*/
     transition: all 1s !important;
-    /*filter: invert(1) !important; */
-    /*background: rgba(0,0,0,.8) !important; */
+    filter: invert(1) !important; 
+    background: rgba(0,0,0,.8) !important; 
     /* background: rgba(200, 200, 200, .2) !important */
     /* background: #0e0e44 !important; */
 }
@@ -93,14 +93,14 @@ img {
 }
 
 
-.card .image {
-     /*filter: invert(1) !important; */
+.card .image, img {
+     filter: invert(1) !important; 
 }
 .image {
     /*filter: invert(1) !important; */
 }
 .segment > .image, .label {
-    /*filter: invert(1) !important; */
+    filter: invert(1) !important; 
 }
 
 /*.label, input, .input, .progress, .text, .invert{*/
@@ -500,11 +500,11 @@ img {
     margin: 0px !important;
 }
 
-/*.invert{*/
-/*    filter: invert(1) !important; */
-/*    background-color:white !important; */
-/*    height: 100% !important; */
-/* } */
+.invert{
+    /*filter: invert(1) !important; */
+    /*background-color:white !important; */
+    /*height: 100% !important; */
+ } 
 
 .red_flagged {
   border: 5px solid red !important;

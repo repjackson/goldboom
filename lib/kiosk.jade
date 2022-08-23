@@ -54,8 +54,8 @@ template(name='healthclub')
                 // .ui.big.inline.header
                     // |building
                 if kiosk_doc.current_building_number
-                    .ui.black.compact.massive.button.bigger.unpick_building
-                        .ui.inverted.inline.header 
+                    .ui.white.compact.massive.button.bigger.unpick_building
+                        .ui.inline.header 
                             // i.building.icon
                             +i name='building'
                             |##{kiosk_doc.current_building_number}
@@ -112,7 +112,7 @@ template(name='building_picker')
             // i.big.building.icon
             // +i name='apartment'
             unless is building_number 1
-                span.ui.brown.text #{building_number}
+                span.ui.red.text #{building_number}
 
                 
          
@@ -223,11 +223,13 @@ template(name='unit_picker')
                         
                         
 template(name='kiosk_settings')
-    .ui.padded.grid
-        .sixteen.wide.column
-            .ui.inline.header 
+    .ui.accordion
+        .title
+            .ui.header 
                 +i name='self-service-kiosk' classes='ui mini image'
                 |kiosk
+                i.dropdown.icon
+        .content
             if kiosk_doc
                 // if is_dev
                 //     .ui.icon.large.button.print_kiosk_doc(title='print session doc')
@@ -241,7 +243,6 @@ template(name='kiosk_settings')
                     |create kiosk doc
             +set_kiosk_template value='kiosk_away' label='away' icon='clock'
             +set_kiosk_template value='healthclub' label='check in' icon='checkmark'
-        .sixteen.wide.column.scrollin
             //- +healthclub
             with kiosk_doc
                 +Template.dynamic template=kiosk_view

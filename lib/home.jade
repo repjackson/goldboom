@@ -6,6 +6,7 @@ template(name='home')
                 .column
                     +work
                     +staff_tasks
+                    +hiring_interest
                     +staff_activity
                     +active_checkins
                 .column
@@ -48,27 +49,30 @@ template(name='home')
           
           
 template(name='work')
-    .ui.inline.header
-        +i name='wrench'
-        |work 
-    .ui.icon.input
-        i.lightning.icon
-        input.description(type='text' placeholder='quick add note...')
-    div
-    each work_docs 
-        .ui.segment 
-            if is_editing 
-                +html_edit key='description'
-                +bu_edit
-                +key_value_edit key='model' value='task' label='task' icon='tasks'
-                +key_value_edit key='model' value='post' label='post' icon='news'
-                +key_value_edit key='model' value='work' label='work' icon='wrench'
-            else 
-                .ui.small.inline.header !{description}
-                +author_info
-                +bu
-                .ui.label #{model}
-            +toggle_edit_button
+    .ui.accordion
+        .title
+            .ui.inline.header
+                +i name='wrench'
+                |work
+        .content
+            .ui.icon.input
+                i.lightning.icon
+                input.description(type='text' placeholder='quick add note...')
+            div
+            each work_docs 
+                .ui.segment 
+                    if is_editing 
+                        +html_edit key='description'
+                        +bu_edit
+                        +key_value_edit key='model' value='task' label='task' icon='tasks'
+                        +key_value_edit key='model' value='post' label='post' icon='news'
+                        +key_value_edit key='model' value='work' label='work' icon='wrench'
+                    else 
+                        .ui.small.inline.header !{description}
+                        +author_info
+                        +bu
+                        .ui.label #{model}
+                    +toggle_edit_button
           
 template(name='toggle_edit_button')
     if is_editing
@@ -80,9 +84,6 @@ template(name='toggle_edit_button')
             i.large.pencil.icon
           
 template(name='staff_checkin')          
-    .ui.header
-        +i name='shield'
-        |staff
     .ui.small.header 
         |staff list 
     .ui.selection.animated.list
@@ -205,46 +206,58 @@ template(name='staff_activity')
 
                 
 template(name='admin')
-    .ui.header admin 
-    .ui.input
-        input.upload_parking(type='file')
-     with kiosk_doc 
-        +key_value_edit key='invert_class' value='invert' label='night mode' icon='night'
-        +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
+    .ui.accordion 
+        .title 
+            .ui.header 
+                +i name='shield'
+                |admin 
+                i.dropdown.icon
+        .content
+            .ui.input
+                input.upload_parking(type='file')
+             with kiosk_doc 
+                +key_value_edit key='invert_class' value='invert' label='night mode' icon='night'
+                +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
    
 template(name='stats')
-    .ui.inline.header
-        +i name='line-chart'
-        |global stats
-    if currentUser
-        i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
-    .ui.big.list 
-        with global_stats_doc 
-            .item 
-                +i name='groups'
-                |#{user_count_total} users
-            .item 
-                // i.checkmark.icon
-                +i name='checkmark'
-                |#{checkin_count_total} check ins
-            .item
-                +i name='tasks'
-                |#{task_count_total} tasks
-            .item
-                +i name='friends'
-                |#{guest_count_total} guests
+    .ui.accordion 
+        .title
+            .ui.inline.header
+                +i name='line-chart'
+                |global stats
+        .content
+            if currentUser
+                i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
+            .ui.big.list 
+                with global_stats_doc 
+                    .item 
+                        +i name='groups'
+                        |#{user_count_total} users
+                    .item 
+                        // i.checkmark.icon
+                        +i name='checkmark'
+                        |#{checkin_count_total} check ins
+                    .item
+                        +i name='tasks'
+                        |#{task_count_total} tasks
+                    .item
+                        +i name='friends'
+                        |#{guest_count_total} guests
 template(name='guest_block')
     .ui.accordion
         .title
             .ui.header 
                 +i name='friends'
                 |guests
+                i.dropdown.icon
         .content
             .ui.selection.animated.big.list.medscroll
                 each guest_docs
-                    .item #{name} #{_resident.username} #{_when}
+                    .item 
+                        .header #{name} 
+                        |#{_resident.username} #{_when}
                         +bu
-                        if in_dev
+                        if currentUser.admin_mode
                             +print_this
                         a.ui.circular.icon.button(href="/guest/#{_id}")
                             i.chevron.right.large.icon
@@ -269,6 +282,13 @@ template(name='latest_requests')
                         |#{resident_username}
                         a.fly_down(href="/task/#{_id}" title='view task')
                             i.large.chevron.right.link.circular.icon.zoomer
+template(name='hiring_interest')
+    .ui.header 
+        |hiring interest
+    each no_answers
+        .ui.item #{username}
+    each yes_answers
+        .ui.item #{username}
 template(name='latest_notes')
     .ui.accordion 
         .title 
@@ -295,29 +315,39 @@ template(name='view_button')
         i.large.chevron.right.icon
             
 template(name='latest_rentals')
-    a.ui.header(href="/rentals" title='view rentals')
-        +i name='basketball'
-        |latest rentals
-    .medscroll
-        each rental_item_docs
-            .ui.segment
-                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                .ui.inline.header #{title}
-                    small #{_when}
-                // .ui.button.checkout_rental
-                //     i.big.checkmark.icon
-                //     // |checkout
+    .ui.accordion
+        .title
+            // a.ui.header(href="/rentals" title='view rentals')
+            .ui.header(title='view rentals')
+                +i name='basketball'
+                |latest rentals
+                i.dropdown.icon
+        .content
+            .medscroll
+                each rental_item_docs
+                    .ui.segment
+                        img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        .ui.inline.header #{title}
+                            small #{_when}
+                        // .ui.button.checkout_rental
+                        //     i.big.checkmark.icon
+                        //     // |checkout
                 
 template(name='active_checkins')
-    a.ui.header.zoomer(href="/checkins" title='view checkins')
-        +i name='clock'
-        |#{active_checkin_docs.count} checkins today
-    if subs_ready
-        .ui.divided.selection.list.medscroll
-            each active_checkin_docs 
-                +active_checkin_doc
-    else 
-        i.massive.loading.refresh.icon
+    .ui.accordion 
+        .title
+            // a.ui.header.zoomer(href="/checkins" title='view checkins')
+            .ui.header.zoomer(title='view checkins')
+                +i name='clock'
+                |#{active_checkin_docs.count} checkins today
+                i.dropdown.icon
+        .content
+            if subs_ready
+                .ui.divided.selection.list.medscroll
+                    each active_checkin_docs 
+                        +active_checkin_doc
+            else 
+                i.massive.loading.refresh.icon
         
 template(name='active_checkin_doc')
     .item.zoomer
