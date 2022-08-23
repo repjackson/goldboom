@@ -53,6 +53,11 @@ template(name='checkin_edit')
                 +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
                 +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
                 .ui.hidden.divider
+                a.ui.massive.fluid.green.button.submit_checkin(href="/kiosk")
+                    .ui.inverted.header
+                        i.checkmark.big.white.icon
+                        | check in
+                .ui.hidden.divider
                 unless has_answered 
                     .ui.big.fluid.info.message 
                         .ui.header the front desk is hiring, are you interested?
@@ -60,12 +65,6 @@ template(name='checkin_edit')
                             |yes 
                         .ui.red.basic.button.no 
                             |no
-                .ui.hidden.divider
-                a.ui.massive.fluid.green.button.submit_checkin(href="/kiosk")
-                    .ui.inverted.header
-                        i.checkmark.big.white.icon
-                        | check in
-                .ui.hidden.divider
             
                 // .ui.two.column.grid 
                 //     .column

@@ -146,6 +146,10 @@ if Meteor.isServer
         
 if Meteor.isClient
     Template.checkin_edit.helpers 
+        has_answered: ->
+            checkin = Docs.findOne model:'checkin'
+            resident = Meteor.users.findOne checkin.resident_user_id
+            resident.has_answered
         keys_on_file: ->
             kiosk = Docs.findOne model:'kiosk'
             current = Docs.findOne kiosk.currrent_checkin_id
@@ -181,6 +185,35 @@ if Meteor.isClient
             Docs.find 
                 model:'guest'
     Template.checkin_edit.events
+        'click .yes': ->
+            checkin = Docs.findOne model:'checkin'
+            resident = Meteor.users.findOne checkin.resident_user_id
+            Meteor.users.update resident._id, 
+                $set:
+                    hiring_interest:true
+                    has_answered:true
+            $('body').toast({
+                title: "thanks for responding"
+                iconClass:'checkmark'
+                class: 'info massive'
+                position:'top center'
+            })
+                    
+        'click .no': ->
+            checkin = Docs.findOne model:'checkin'
+            resident = Meteor.users.findOne checkin.resident_user_id
+            Meteor.users.update resident._id, 
+                $set:
+                    hiring_interest:false
+                    has_answered:true
+            $('body').toast({
+                title: "thanks for responding"
+                iconClass:'checkmark'
+                class: 'info massive'
+                position:'top center'
+            })
+
+
         'click .pick_guest': ->
             # doc = Docs.findOne Router.current().params.doc_id
             checkin = Docs.findOne model:'checkin'
