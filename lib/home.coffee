@@ -15,6 +15,12 @@ if Meteor.isClient
             Docs.find 
                 model:'work'
     
+    Template.toggle_edit_button.events
+        'click .toggle':->
+            if Session.equals('editing_id', @_id)
+                Session.set('editing_id', null)
+            else 
+                Session.set('editing_id', @_id)
     Template.work.events 
         'keyup .description': (e)->
             if e.which is 13

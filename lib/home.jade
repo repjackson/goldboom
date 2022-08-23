@@ -1,6 +1,5 @@
 template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
-
     .ui.stackable.padded.grid
         .row
             if currentUser
@@ -61,10 +60,28 @@ template(name='work')
     .ui.input 
         input.description(type='text')
     div
-    .ui.list 
-        each work_docs 
-            .item #{description} #{_when}
+    each work_docs 
+        .ui.segment 
+            +toggle_edit_button
+            if is_editing 
+                +html_edit key='description'
+                +bu_edit
+                +key_value_edit key='model' value='task' label='task' icon='tasks'
+                +key_value_edit key='model' value='post' label='post' icon='news'
+                +key_value_edit key='model' value='work' label='work' icon='wrench'
+            else 
+                |#{description} #{_when}
+                +bu
+                .ui.label #{model}
           
+template(name='toggle_edit_button')
+    if is_editing
+        .ui.big.green.button.toggle 
+            i.large.checkmark.icon
+            |save
+    else
+        .ui.icon.circular.basic.button.toggle(title='toggle editing')
+            i.large.pencil.icon
           
 template(name='staff_checkin')          
     .ui.header
