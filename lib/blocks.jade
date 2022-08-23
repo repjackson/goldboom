@@ -47,9 +47,16 @@ template(name='building_facet')
 
 template(name='bu')
     if building_number
-        +building_label
+        span.ui.basic.image.large.label
+            +i name='building'
+            |#{building_number}
     if unit_number
-        +unit_label
+        span.ui.basic.image.large.label
+            +i name='room'
+            // i.large.cube.icon
+            |#{unit_number}
+        
+        
 template(name='bu_edit')
     div
     +number_edit key='building_edit' label='building number' icon='building'
@@ -257,7 +264,7 @@ template(name='session_key_value_edit')
         |#{label}
 
 template(name='key_value_edit')
-    a.ui.image.link.label.set_key_value.zoomer(class="#{cl} #{calculated_class}")
+    a.ui.image.link.circular.label.set_key_value.zoomer(class="#{cl} #{calculated_class}")
         if icon 
             +i name=icon cl='ui avatar image'
             // i.large.icon(class=icon)

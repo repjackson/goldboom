@@ -1,12 +1,12 @@
 template(name='checkin_edit')   
     .spacer
-    .ui.basic.fluid.icon.massive.button.cancel_checkin
-        i.big.chevron.left.red.icon
-            // |cancel
     with current_checkin
         .ui.one.column.center.aligned.grid.z
             .column
                 .ui.hidden.divider
+                .ui.basic.red.large.circular.icon.button.cancel_checkin(title='cancel checkin')
+                    i.large.chevron.left.icon
+                    i.large.ban.icon
                 with _resident
                     .ui.massive.inline.header #{first_initial} #{last_initial}
                     .ui.large.basic.brown.image.label 
@@ -18,11 +18,10 @@ template(name='checkin_edit')
                         // i.large.cube.icon
                         |#{unit_number}
                 // +text_edit key='email' label='Email' direct=true
-                div
                 if currentUser.admin_mode 
                     +print_this
                 .ui.segment.alpha
-                    +boolean_edit key='has_guests' label='guests' icon='friends'
+                    +boolean_edit key='has_guests' label='add guests' icon='groups'
                     if has_guests
                         small (max 8/month, 3/visit)
         
@@ -35,26 +34,37 @@ template(name='checkin_edit')
                                 |#{name}
                         .ui.large.icon.active.input  
                             i.large.user.plus.icon
-                            input.add_guest(type='text' placeholder='add...')
+                            input.add_guest(type='text' placeholder='guest name...')
                 div
-                // .ui.inline.header
-                //     |purpose
-                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='big'
-                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='big'
-                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='big'
-                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='big'
-                +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='spa' cl='big'
-                +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl='big'
-                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='big'
-                // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='massive'
-                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='big'
+                // .ui.center.aligned.header
+                //     |purpose 
+                //     small (optional)
+                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='large'
+                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='large'
+                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='large'
+                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl='large'
+                +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='spa' cl='large'
+                +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl='large'
+                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
+                +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='woman-sunbathing' cl='large'
+                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='large'
                 // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='big'
-                // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='massive'
+                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
+                +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
+                +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
                 .ui.hidden.divider
-                a.ui.massive.fluid.green.circular.compact.button.submit_checkin(href="/kiosk")
-                    i.checkmark.big.white.icon
-                    | check in
+                unless has_answered 
+                    .ui.big.fluid.info.message 
+                        .ui.header the front desk is hiring, are you interested?
+                        .ui.green.basic.button.yes
+                            |yes 
+                        .ui.red.basic.button.no 
+                            |no
+                .ui.hidden.divider
+                a.ui.massive.fluid.green.button.submit_checkin(href="/kiosk")
+                    .ui.inverted.header
+                        i.checkmark.big.white.icon
+                        | check in
                 .ui.hidden.divider
             
                 // .ui.two.column.grid 

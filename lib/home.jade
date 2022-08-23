@@ -54,15 +54,15 @@ template(name='home')
           
           
 template(name='work')
-    .ui.header
+    .ui.inline.header
         +i name='wrench'
-        |record work 
-    .ui.input 
-        input.description(type='text')
+        |work 
+    .ui.icon.input
+        i.lightning.icon
+        input.description(type='text' placeholder='quick add note...')
     div
     each work_docs 
         .ui.segment 
-            +toggle_edit_button
             if is_editing 
                 +html_edit key='description'
                 +bu_edit
@@ -70,9 +70,11 @@ template(name='work')
                 +key_value_edit key='model' value='post' label='post' icon='news'
                 +key_value_edit key='model' value='work' label='work' icon='wrench'
             else 
-                |#{description} #{_when}
+                .ui.small.inline.header !{description}
+                +author_info
                 +bu
                 .ui.label #{model}
+            +toggle_edit_button
           
 template(name='toggle_edit_button')
     if is_editing

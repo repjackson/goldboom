@@ -239,7 +239,7 @@ if Meteor.isClient
                                 resident_username:formatted
                                 building_number:kiosk.current_building_number
                                 unit_number:kiosk.current_unit_number
-                        
+                                checkin_purpose:'gym'
                         Meteor.users.update res._id,
                             $set:
                                 checked_in:true
