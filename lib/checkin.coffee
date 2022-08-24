@@ -196,7 +196,7 @@ if Meteor.isClient
                         hiring_interest:true
                         has_answered:true
                 $('body').toast({
-                    title: "thanks for responding"
+                    title: "thanks, please add contact info"
                     iconClass:'checkmark'
                     class: 'info massive'
                     position:'top center'
@@ -217,7 +217,7 @@ if Meteor.isClient
                     title: "thanks for responding"
                     iconClass:'checkmark'
                     class: 'info massive'
-                    position:'top center'
+                    position:'bottom center'
                 })
 
 

@@ -20,11 +20,10 @@ template(name='checkin_edit')
                 // +text_edit key='email' label='Email' direct=true
                 if currentUser.admin_mode 
                     +print_this
-                .ui.segment.alpha
+                .ui.basic.segment
                     +boolean_edit key='has_guests' label='add guests' icon='groups'
                     if has_guests
-                        small (max 8/month, 3/visit)
-        
+                        // small (max 8/month, 3/visit)
                         // .ui.big.button.add_guest.bigger
                         //     i.plus.icon 
                         //     |add guest
@@ -54,7 +53,7 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='inverted'
                 .ui.hidden.divider
                 .ui.hidden.divider
-                a.ui.massive.fluid.green.button.submit_checkin(href="/kiosk")
+                a.ui.massive.fluid.green.button.submit_checkin.invert(href="/kiosk")
                     .ui.inverted.header
                         i.checkmark.big.white.icon
                         | check in
@@ -62,9 +61,9 @@ template(name='checkin_edit')
                 unless _resident.has_answered 
                     .ui.big.fluid.info.message 
                         .ui.header the front desk is hiring, are you interested?
-                        .ui.green.basic.button.yes
+                        .ui.green.basic.button.yes.invert
                             |yes 
-                        .ui.red.basic.button.no 
+                        .ui.red.basic.button.no.invert
                             |no
                 with _resident
                     if hiring_interest
