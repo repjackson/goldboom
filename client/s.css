@@ -69,6 +69,7 @@ img {
 .alpha {
     background-color:rgba(250, 250, 250, .5) !important;    
     /*opacity:.5 !important;*/
+    margin-bottom: 1em !important;
 }
 
 .toast-container {

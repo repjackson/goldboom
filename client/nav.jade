@@ -11,7 +11,8 @@ template(name='nav')
                 if in_dev 
                     i.large.code.icon
                 else 
-                    +i name='one-ring'
+                    // +i name='one-ring'
+                    +i name='house'
                 // if currentUser.show_labels
                 span.mobile.hidden gold run
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
@@ -32,7 +33,7 @@ template(name='nav')
                 
             a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
-                +i name='kindle'
+                +i name='ipad'
                 i.external.icon
                 span.mobile.hidden kiosk
             // a.item(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
@@ -47,8 +48,8 @@ template(name='nav')
             //             i.remove.icon
         unless subs_ready
             .icon.item
-                +i name='one-ring' cl='spinning'
-                // i.yin.yang.large.loading.icon
+                // +i name='one-ring' cl='spinning'
+                i.yin.yang.massive.loading.grey.icon
         unless is_connected
             a.item.zoomer2.reconnect
                 i.spinner.big.loading.icon
@@ -122,11 +123,12 @@ template(name='nav')
             //     span.mobile.hidden events
             a.zoomer2.item(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
-                +i name='alert'
+                // +i name='alert'
+                +i name='warning-shield'
                 span.mobile.hidden violations
                 
             a.item.zoomer2.clear_search(href="/guests" class="{{isActiveRoute 'guests'}}" title='guests')
-                +i name='friends'
+                +i name='amiable'
                 span.mobile.hidden guests
             a.item.zoomer2.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
                 +i name='car'

@@ -112,7 +112,7 @@ template(name='building_picker')
             // i.big.building.icon
             // +i name='apartment'
             unless is building_number 1
-                span.ui.red.text #{building_number}
+                span.ui.blue.text.invert #{building_number}
 
                 
          
@@ -223,13 +223,13 @@ template(name='unit_picker')
                         
                         
 template(name='kiosk_settings')
-    .ui.accordion
+    .ui.accordion.alpha.rounded
         .title
             .ui.header 
-                +i name='self-service-kiosk' classes='ui mini image'
+                +i name='self-service-kiosk' 
                 |kiosk
                 i.dropdown.icon
-        .content
+        .content.smaller.scrolling
             if kiosk_doc
                 // if is_dev
                 //     .ui.icon.large.button.print_kiosk_doc(title='print session doc')

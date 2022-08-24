@@ -10,8 +10,7 @@ template(name='home')
                     +staff_activity
                     +active_checkins
                 .column
-                    .smaller.scrolling 
-                        +kiosk_settings
+                    +kiosk_settings
                     +latest_notes
                     +stats
                     +latest_requests
@@ -49,11 +48,12 @@ template(name='home')
           
           
 template(name='work')
-    .ui.accordion
+    .ui.accordion.alpha.rounded
         .title
             .ui.inline.header
                 +i name='wrench'
                 |work
+                i.dropdown.icon
         .content
             .ui.icon.input
                 i.lightning.icon
@@ -131,10 +131,10 @@ template(name='staff_checkin')
 
 
 template(name='staff_tasks')  
-    .ui.fluid.accordion
-        .title
+    .ui.fluid.accordion.alpha.rounded
+        .title.zoomer
             // a.ui.header.zoomer.fly_right(href='/tasks')
-            .ui.header.zoomer
+            .ui.header
                 +i name='tasks'
                 |#{staff_task_docs.count} staff tasks
                 i.dropdown.icon
@@ -168,9 +168,9 @@ template(name='staff_tasks')
 
 
 template(name='staff_activity')
-    .ui.accordion
+    .ui.accordion.alpha.rounded
         .title
-            .ui.small.header 
+            .ui.header.zoomer 
                 +i name='realtime-protection'
                 |#{staff_activity_docs.count} staff activity
                 i.dropdown.icon
@@ -206,7 +206,7 @@ template(name='staff_activity')
 
                 
 template(name='admin')
-    .ui.accordion 
+    .ui.accordion.alpha.rounded 
         .title 
             .ui.header 
                 +i name='shield'
@@ -220,11 +220,12 @@ template(name='admin')
                 +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
    
 template(name='stats')
-    .ui.accordion 
+    .ui.accordion.alpha.rounded 
         .title
             .ui.inline.header
                 +i name='line-chart'
                 |global stats
+                i.dropdown.icon
         .content
             if currentUser
                 i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
@@ -244,10 +245,10 @@ template(name='stats')
                         +i name='friends'
                         |#{guest_count_total} guests
 template(name='guest_block')
-    .ui.accordion
+    .ui.accordion.alpha.rounded
         .title
             .ui.header 
-                +i name='friends'
+                +i name='amiable'
                 |guests
                 i.dropdown.icon
         .content
@@ -263,7 +264,7 @@ template(name='guest_block')
                             i.chevron.right.large.icon
                 
 template(name='latest_requests')
-    .ui.accordion
+    .ui.accordion.alpha.rounded
         .title
             // a.ui.header.zoomer(href="/tasks" title='view all tasks')
             .ui.header.zoomer
@@ -290,12 +291,13 @@ template(name='hiring_interest')
     each yes_answers
         .ui.item #{username}
 template(name='latest_notes')
-    .ui.accordion 
+    .ui.accordion.alpha.rounded 
         .title 
             // a.ui.header.zoomer(href="/posts" title='view posts')
             .ui.header.zoomer(title='view posts')
                 +i name='chat'
                 |#{latest_note_docs.count} latest notes
+                i.dropdown.icon
         .content
             .medscroll
                 each latest_note_docs
@@ -315,7 +317,7 @@ template(name='view_button')
         i.large.chevron.right.icon
             
 template(name='latest_rentals')
-    .ui.accordion
+    .ui.accordion.alpha.rounded
         .title
             // a.ui.header(href="/rentals" title='view rentals')
             .ui.header(title='view rentals')
@@ -334,7 +336,7 @@ template(name='latest_rentals')
                         //     // |checkout
                 
 template(name='active_checkins')
-    .ui.accordion 
+    .ui.accordion.alpha.rounded 
         .title
             // a.ui.header.zoomer(href="/checkins" title='view checkins')
             .ui.header.zoomer(title='view checkins')
@@ -386,7 +388,7 @@ template(name='latest_activity')
                 small #{_when} by #{_author_username}
                 
 template(name='latest_checkins')
-    .ui.segment.alpha
+    .ui.segment.alpha.rounded
         .ui.header 
             +i name='history'
             |#{latest_checkin_docs.count}
