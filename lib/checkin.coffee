@@ -202,7 +202,9 @@ if Meteor.isClient
                     
         'click .no': ->
             checkin = Docs.findOne model:'checkin'
+            console.log checkin
             resident = Meteor.users.findOne checkin.resident_user_id
+            console.log resident
             if resident
                 Meteor.users.update resident._id, 
                     $set:
@@ -486,6 +488,7 @@ if Meteor.isServer
         else
             kiosk = Docs.findOne 
                 model:'kiosk'
+                dev:$ne:true
         checkin = Docs.findOne kiosk.current_checkin_id
         Meteor.users.find {
             _id:checkin.resident_user_id

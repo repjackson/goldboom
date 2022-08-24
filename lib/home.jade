@@ -296,14 +296,16 @@ template(name='hiring_interest')
             .ui.list
                 each yes_answers
                     .item #{username}
-                        i.ban.icon.clear_answer
+                        if currentUser.admin_mode
+                            i.ban.icon.clear_answer
             .ui.small.header 
                 i.ban.red.icon
                 |no
             .ui.list
                 each no_answers
                     .item #{username}
-                        i.ban.icon.clear_answer
+                        if currentUser.admin_mode
+                            i.ban.icon.clear_answer
 template(name='latest_notes')
     .ui.accordion.alpha.rounded 
         .title 
