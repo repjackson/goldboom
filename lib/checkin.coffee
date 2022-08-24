@@ -137,6 +137,7 @@ if Meteor.isServer
             kiosk = 
                 Docs.findOne 
                     model:'kiosk'
+                    $ne:true
         checkin = Docs.findOne kiosk.current_checkin_id
         if checkin 
             Docs.find 
@@ -186,7 +187,8 @@ if Meteor.isClient
                 model:'guest'
     Template.checkin_edit.events
         'click .yes': ->
-            checkin = Docs.findOne model:'checkin'
+            kiosk = Docs.findOne model:'kiosk'
+            checkin = Docs.findOne kiosk.current_checkin_id
             resident = Meteor.users.findOne checkin.resident_user_id
             if resident 
                 Meteor.users.update resident._id, 
@@ -201,7 +203,8 @@ if Meteor.isClient
                 })
                     
         'click .no': ->
-            checkin = Docs.findOne model:'checkin'
+            kiosk = Docs.findOne model:'kiosk'
+            checkin = Docs.findOne kiosk.current_checkin_id
             console.log checkin
             resident = Meteor.users.findOne checkin.resident_user_id
             console.log resident
