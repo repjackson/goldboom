@@ -6,22 +6,22 @@ template(name='login')
                     +ibig name='one-ring' class='spinning' cl='ui inline image'
                     .ui.inline.big.header
                         | gold run login
-                .ui.inline.small.header 
+                .ui.inline.header 
                     +i name='user-male'
                     |username
-                .ui.fluid.large.input(class=login_class)
+                .ui.fluid.big.input(class=login_class)
                     input.username(type='text')
                 .spacer
-                .ui.inline.small.header 
+                .ui.inline.header 
                     +i name='password'
                     | password
-                .ui.fluid.large.input(class=login_class)
+                .ui.fluid.big.input(class=login_class)
                     input#pass(type='password')
                 //- if username
                 //- if logging_in
                 .ui.hidden.divider
-                .ui.fluid.big.green.button.enter(title="login #{username}" class=enter_class)
-                    +i name='internal' cl='ui mini inline image'
+                .ui.fluid.big.green.button.enter.invert(title="login #{username}" class=enter_class)
+                    +i name='enter-2' cl='ui mini inline image'
                     |login
                     strong #{username}
                     //- i.right.chevron.icon
@@ -30,7 +30,7 @@ template(name='login')
                     //     +i name='forgot-password' cl='ui mini inline image'                    
                     //     |forgot password
                     a.ui.button.fly_left(href='/register')
-                        +i name='plus'
+                        +i name='plus' cl='ui mini inline image' 
                         |register
 
 template(name='register')
@@ -39,7 +39,7 @@ template(name='register')
         .centered.middle.aligned.row
             .ten.wide.column
                 h1.ui.center.aligned.header
-                    +i name='one-ring'
+                    +i name='home' cl='ui image'
                     |gold run 
                     | register
                 .ui.inline.small.header 
@@ -62,7 +62,7 @@ template(name='register')
                 .ui.hidden.divider
                 if can_register
                     //- if registering
-                    .ui.fluid.big.basic.green.button.register(class=enter_class)
+                    .ui.fluid.big.green.button.register.invert(class=enter_class)
                         // i.user.plus.big.icon
                         +i name='plus'
                         |register
@@ -72,11 +72,12 @@ template(name='register')
                         +i name='plus'
                         |register
                     // // .ui.small.header username "#{username}" found
-                    
-                a.ui.button.fly_right(href='/login') 
-                    // i.right.chevron.icon
-                    +i name='internal' cl='ui avatar image'
-                    |login
+                .ui.horizontal.divider or
+                .ui.basic.center.aligned.segment
+                    a.ui.center.aligned.big.button.fly_right(href='/login') 
+                        // i.right.chevron.icon
+                        +i name='enter-2' 
+                        |login
 
 
 

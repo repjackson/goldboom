@@ -20,7 +20,7 @@ template(name='nav')
             a.zoomer2.item(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
                 // i.large.exchange.icon
                 +i name='building'
-                span.mobile.hidden buildings
+                span.mobile.hidden #{global_stats_doc.building_count_total} buildings
             a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                 // i.large.exchange.icon
                 +i name='cube'
@@ -29,7 +29,7 @@ template(name='nav')
                 +i name='groups'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden people
+                span.mobile.hidden #{global_stats_doc.user_count_total} people
                 
             a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon
@@ -63,7 +63,7 @@ template(name='nav')
                     span.mobilehidden register            
                 a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
                     // i.sign.in.large.green.zoomer2
-                    +i name='internal'
+                    +i name='enter-2'
                     span.mobile.hidden login
             if currentUser
                 a.item(href="/inbox" class="{{isActiveRoute 'inbox'}}" title='inbox')

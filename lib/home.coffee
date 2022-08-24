@@ -64,9 +64,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'stats', ->
     
     Template.stats.helpers 
-        global_stats_doc: ->
-            Docs.findOne 
-                model:'stats'
     
     Template.stats.events 
         'click .refresh_stats': ->
