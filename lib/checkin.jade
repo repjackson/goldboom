@@ -39,19 +39,19 @@ template(name='checkin_edit')
                 // .ui.center.aligned.header
                 //     |purpose 
                 //     small (optional)
-                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl=''
-                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl=''
-                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl=''
-                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='jacuzzi' cl=''
-                +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='spa' cl=''
-                +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl=''
-                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl=''
-                +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='woman-sunbathing' cl=''
-                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl=''
+                +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='inverted'
+                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='water' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='spa' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='woman-sunbathing' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='inverted'
                 // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl=''
-                +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl=''
-                +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl=''
+                +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='inverted'
+                +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='inverted'
                 .ui.hidden.divider
                 with _resident
                     if hiring_interest
@@ -61,7 +61,7 @@ template(name='checkin_edit')
                         i.checkmark.big.white.icon
                         | check in
                 .ui.hidden.divider
-                unless has_answered 
+                unless _resident.has_answered 
                     .ui.big.fluid.info.message 
                         .ui.header the front desk is hiring, are you interested?
                         .ui.green.basic.button.yes
