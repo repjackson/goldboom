@@ -93,7 +93,7 @@ if Meteor.isServer
                     model:'stats'
 if Meteor.isClient
     Template.staff_tasks.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'task', ->
+        @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
     Template.staff_tasks.events
         'keyup .task_quickadd': (e)->
@@ -259,7 +259,7 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'home_guests', ->
-        @autorun => Meteor.subscribe 'user_min', Session.get('current_search_user'), ->
+        # @autorun => Meteor.subscribe 'user_min', Session.get('current_search_user'), ->
         @autorun => Meteor.subscribe 'kiosk_document', ->
     
 if Meteor.isServer

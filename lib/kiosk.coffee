@@ -698,7 +698,7 @@ if Meteor.isServer
         else         
             Docs.find
                 model:'kiosk'
-            
+                dev:$ne:true
 
     Meteor.methods
         # convert_units: ->
