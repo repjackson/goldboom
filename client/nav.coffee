@@ -18,8 +18,8 @@ Template.nav.onRendered ->
     , 3000
 Template.home.onRendered ->
     Meteor.setTimeout ->
-        $('.ui.accordion').accordion()
-    , 5000
+        $('.ui.accordion').accordion('open')
+    , 3000
     # Meteor.setTimeout ->
     #     $('.ui.left.sidebar')
     #         .sidebar({

@@ -7,15 +7,15 @@ if Meteor.isClient
         ), name:'home'
         
         
-    Template.work.onCreated ->
+    Template.wywo.onCreated ->
         @autorun => @subscribe 'model_docs', 'work', ->
-    Template.work.helpers 
+    Template.wywo.helpers 
         work_docs: ->
             Docs.find 
                 model:'work'
     
     Template.hiring_interest.onCreated ->
-        @autorun => @subscribe 'answered_users', ->
+        @subscribe 'answered_users', ->
     Template.hiring_interest.helpers 
         no_answers: ->
             Meteor.users.find 
@@ -47,7 +47,7 @@ if Meteor.isClient
                 Session.set('editing_id', null)
             else 
                 Session.set('editing_id', @_id)
-    Template.work.events 
+    Template.wywo.events 
         'keyup .description': (e)->
             if e.which is 13
                 val = $('.description').val()
@@ -96,8 +96,9 @@ if Meteor.isServer
                     model:'stats'
 if Meteor.isClient
     Template.staff_tasks.onCreated ->
-        @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
-        @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
+        # @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
+        Meteor.subscribe 'latest_model_docs', 'task', 20, ->
+        Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
     Template.staff_tasks.events
         'keyup .task_quickadd': (e)->
             if e.which is 13 
@@ -109,7 +110,7 @@ if Meteor.isClient
                 new_title = $('.task_quickadd').val('')
                 
     Template.staff_checkin.onCreated ->
-        @autorun => Meteor.subscribe 'staff_users', ->
+        Meteor.subscribe 'staff_users', ->
     Template.staff_checkin.helpers
         staff_users: ->
             Meteor.users.find 
@@ -151,7 +152,7 @@ if Meteor.isClient
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkin_doc.onCreated ->
-        @autorun => Meteor.subscribe 'user_from_id', @data.resident_user_id, ->
+        Meteor.subscribe 'user_from_id', @data.resident_user_id, ->
     Template.active_checkin_doc.events
         'click .checkout': (e)->
             # $(e.currentTarget).closest('.item').transition('zoom', 250)
@@ -191,10 +192,10 @@ if Meteor.isClient
                 
                 
     Template.latest_rentals.onCreated ->
-        @autorun => Meteor.subscribe 'latest_rentals', ->
+        Meteor.subscribe 'latest_rentals', ->
 
     Template.latest_notes.onCreated ->
-        @autorun => Meteor.subscribe 'latest_notes', ->
+        Meteor.subscribe 'latest_notes', ->
     Template.latest_notes.helpers 
         latest_note_docs: ->
             Docs.find {
@@ -204,7 +205,7 @@ if Meteor.isClient
                 
 
     Template.latest_requests.onCreated ->
-        @autorun => Meteor.subscribe 'latest_requests', ->
+        Meteor.subscribe 'latest_requests', ->
     Template.latest_requests.helpers 
         kiosk_task_docs: ->
             Docs.find {

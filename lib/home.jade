@@ -4,7 +4,7 @@ template(name='home')
         .three.column.row
             if currentUser
                 .column
-                    +work
+                    +wywo
                     +staff_tasks
                     +hiring_interest
                     +staff_activity
@@ -46,15 +46,15 @@ template(name='home')
             //     +map_view
           
           
-template(name='work')
+template(name='wywo')
     .ui.accordion.alpha.rounded
-        .title
+        .active.title
             .ui.inline.header
-                +i name='wrench'
-                |work
+                +i name='edit'
+                |while you were out
                 i.dropdown.icon
-        .content
-            .ui.icon.input
+        .active.content
+            .ui.icon.large.inverted.input
                 i.lightning.icon
                 input.description(type='text' placeholder='quick add note...')
             div
@@ -63,15 +63,26 @@ template(name='work')
                     if is_editing 
                         +html_edit key='description'
                         +bu_edit
+                        +boolean_edit key='urgent' label='urgent' icon='alert'
                         +key_value_edit key='model' value='task' label='task' icon='tasks'
                         +key_value_edit key='model' value='post' label='post' icon='news'
                         +key_value_edit key='model' value='work' label='work' icon='wrench'
+                        if currentUser.admin_mode
+                            +print_this
                     else 
                         .ui.small.inline.header !{description}
                         +author_info
-                        +bu
+                        .ui.label #{building_number}
+                        .ui.label #{unit_number}
                         .ui.label #{model}
                     +toggle_edit_button
+          
+          
+template(name='online_users')
+    .ui.header online users 
+    each online_user_docs 
+        .ui.header #{username}
+          
           
 template(name='toggle_edit_button')
     if is_editing
@@ -84,12 +95,12 @@ template(name='toggle_edit_button')
           
 template(name='staff_checkin')    
     .ui.accordion.alpha.rounded
-        .title
+        .active.title
             .ui.header
                 +i name='user-shield'
                 |contacts 
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.header staff
             .ui.selection.animated.large.list
                 each staff_users 
@@ -137,7 +148,7 @@ template(name='staff_checkin')
 
 template(name='staff_tasks')  
     .ui.fluid.accordion.alpha.rounded
-        .title.zoomer
+        .active.title.zoomer
             // a.ui.header.zoomer.fly_right(href='/tasks')
             .ui.header
                 +i name='tasks'
@@ -152,7 +163,7 @@ template(name='staff_tasks')
         // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
         // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
         // +session_set key='sort_key' value='_author_username' label='author' icon='user'
-        .content
+        .active.content
             .ui.divided.large.list.medscroll 
                 each staff_task_docs 
                     // a.item.fly_right(href="/task/#{_id}")
@@ -165,7 +176,7 @@ template(name='staff_tasks')
                             // else 
                             i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
                             |#{title}
-                        .content 
+                        .active.content 
                             // +author_info
                             // if building_number
                             //     +bu
@@ -179,7 +190,7 @@ template(name='staff_activity')
                 +i name='realtime-protection'
                 |#{staff_activity_docs.count} staff activity
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.divided.list.medscroll
                 each staff_activity_docs 
                     .item.zoomer
@@ -290,19 +301,22 @@ template(name='latest_requests')
                             i.large.chevron.right.link.circular.icon.zoomer
 template(name='hiring_interest')
     .ui.fluid.accordion.alpha.rounded
-        .title.zoomer
+        .active.title.zoomer
             .ui.header 
                 +i name='money'
                 |#{yes_answers.count}
                 |hiring interest
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.header 
                 i.checkmark.green.icon
                 |yes
             .ui.list
                 each yes_answers
                     .item #{username}
+                        .ui.label
+                            i.info.icon
+                            |#{contact_info}
                         if currentUser.admin_mode
                             i.ban.icon.clear_answer
             .ui.small.header 
@@ -366,7 +380,7 @@ template(name='active_checkins')
                 +i name='clock'
                 |#{active_checkin_docs.count} checkins today
                 i.dropdown.icon
-        .content
+        .active.content
             if subs_ready
                 .ui.divided.selection.list.medscroll
                     each active_checkin_docs 
@@ -376,7 +390,7 @@ template(name='active_checkins')
         
 template(name='active_checkin_doc')
     .item.zoomer
-        .content
+        .active.content
             a.ui.large.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
                 | #{_resident.first_name}
                 | #{_resident.last_name}
