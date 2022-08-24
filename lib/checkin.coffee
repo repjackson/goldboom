@@ -118,11 +118,11 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'kiosk', ->
-        @autorun => Meteor.subscribe 'guests_by_checkin_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'docs_by_checkin_id', Router.current().params.doc_id, ->
-        # @autorun => Meteor.subscribe 'last_checkin', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'guests_by_checkin_id', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'docs_by_checkin_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'kiosk_checkin', ->
         @autorun => Meteor.subscribe 'checkin_resident', ->
         @autorun => Meteor.subscribe 'checkin_guests', ->
             

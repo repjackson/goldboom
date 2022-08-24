@@ -53,9 +53,7 @@ template(name='checkin_edit')
                 // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='inverted'
                 // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='inverted'
                 .ui.hidden.divider
-                with _resident
-                    if hiring_interest
-                        +text_edit key='contact_info' label='please add contact info' icon='info'
+                .ui.hidden.divider
                 a.ui.massive.fluid.green.button.submit_checkin(href="/kiosk")
                     .ui.inverted.header
                         i.checkmark.big.white.icon
@@ -68,6 +66,9 @@ template(name='checkin_edit')
                             |yes 
                         .ui.red.basic.button.no 
                             |no
+                with _resident
+                    if hiring_interest
+                        +text_edit key='contact_info' label='please add contact info' icon='info'
                 // .ui.two.column.grid 
                 //     .column
                 //         if verified 

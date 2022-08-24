@@ -98,6 +98,7 @@ if Meteor.isServer
         else
             kiosk = Docs.findOne 
                 model:'kiosk'
+                dev:$ne:true
         Docs.find kiosk.current_checkin_id
 if Meteor.isClient
     Template.order_view.helpers

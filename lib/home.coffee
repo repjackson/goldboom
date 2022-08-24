@@ -25,6 +25,15 @@ if Meteor.isClient
             Meteor.users.find 
                 hiring_interest:true
                 has_answered:true
+    Template.hiring_interest.events 
+        'click .clear_answer': ->
+            if confirm 'clear?'
+                Meteor.users.update @_id, 
+                    $unset:
+                        hiring_interest:1
+                        has_answered:1
+            
+                
 if Meteor.isServer 
     Meteor.publish 'answered_users', ->
         Meteor.users.find 
