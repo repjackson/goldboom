@@ -144,6 +144,8 @@ if Meteor.isClient
     
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
+    Template.active_checkin_doc.onCreated ->
+        @autorun => Meteor.subscribe 'user_from_id', @data.resident_user_id, ->
     Template.active_checkin_doc.events
         'click .checkout': (e)->
             # $(e.currentTarget).closest('.item').transition('zoom', 250)

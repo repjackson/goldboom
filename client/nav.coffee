@@ -16,9 +16,10 @@ Template.nav.onRendered ->
         $('.menu .item')
             .popup()
     , 3000
+Template.home.onRendered ->
     Meteor.setTimeout ->
-        $('.ui.dropdown').dropdown()
-    , 2000
+        $('.ui.accordion').accordion()
+    , 5000
     # Meteor.setTimeout ->
     #     $('.ui.left.sidebar')
     #         .sidebar({
@@ -35,10 +36,10 @@ Template.nav.onRendered ->
 
 Template.nav.events
     'click .reconnect': -> Meteor.reconnect()
-    'mouseenter img': (e)->
-        $(e.currentTarget).closest('.image').addClass('pulse')
-    'mouseleave img': (e)->
-        $(e.currentTarget).closest('.image').removeClass('pulse')
+    'mouseenter .item': (e)->
+        $(e.currentTarget).closest('.item').addClass('pulse')
+    'mouseleave .item': (e)->
+        $(e.currentTarget).closest('.item').removeClass('pulse')
         
 Template.nav_item.events 
     'click .go_route': -> 
