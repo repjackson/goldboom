@@ -6,10 +6,10 @@ template(name='home')
                 .column
                     +wywo
                     +staff_tasks
-                    +hiring_interest
                     +staff_activity
                     +active_checkins
                 .column
+                    +hiring_interest
                     +kiosk_settings
                     +latest_notes
                     +stats
@@ -47,7 +47,7 @@ template(name='home')
           
           
 template(name='wywo')
-    .ui.accordion.alpha.rounded
+    .ui.accordion.alpha.rounded.zoomer
         .active.title
             .ui.inline.header
                 +i name='edit'
@@ -94,7 +94,7 @@ template(name='toggle_edit_button')
             i.large.pencil.icon
           
 template(name='staff_checkin')    
-    .ui.accordion.alpha.rounded
+    .ui.accordion.alpha.rounded.zoomer
         .active.title
             .ui.header
                 +i name='user-shield'
@@ -184,7 +184,7 @@ template(name='staff_tasks')
 
 
 template(name='staff_activity')
-    .ui.accordion.alpha.rounded
+    .ui.accordion.alpha.rounded.zoomer
         .title
             .ui.header.zoomer 
                 +i name='realtime-protection'
@@ -222,7 +222,7 @@ template(name='staff_activity')
 
                 
 template(name='admin')
-    .ui.accordion.alpha.rounded 
+    .ui.accordion.alpha.rounded.zoomer 
         .title 
             .ui.header 
                 +i name='shield'
@@ -236,7 +236,7 @@ template(name='admin')
                 +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
    
 template(name='stats')
-    .ui.accordion.alpha.rounded 
+    .ui.accordion.alpha.rounded.zoomer 
         .title
             .ui.inline.header
                 +i name='line-chart'
@@ -261,7 +261,7 @@ template(name='stats')
                         +i name='friends'
                         |#{guest_count_total} guests
 template(name='guest_block')
-    .ui.accordion.alpha.rounded
+    .ui.accordion.alpha.rounded.zoomer
         .title
             .ui.header 
                 +i name='amiable'
@@ -280,7 +280,7 @@ template(name='guest_block')
                             i.chevron.right.large.icon
                 
 template(name='latest_requests')
-    .ui.accordion.alpha.rounded
+    .ui.accordion.alpha.rounded.zoomer
         .title
             // a.ui.header.zoomer(href="/tasks" title='view all tasks')
             .ui.header.zoomer
@@ -328,7 +328,7 @@ template(name='hiring_interest')
                         if currentUser.admin_mode
                             i.ban.icon.clear_answer
 template(name='latest_notes')
-    .ui.accordion.alpha.rounded 
+    .ui.accordion.alpha.rounded.zoomer 
         .title 
             // a.ui.header.zoomer(href="/posts" title='view posts')
             .ui.header.zoomer(title='view posts')
@@ -354,7 +354,7 @@ template(name='view_button')
         i.large.chevron.right.icon
             
 template(name='latest_rentals')
-    .ui.accordion.alpha.rounded
+    .ui.accordion.alpha.rounded.zoomer
         .title
             // a.ui.header(href="/rentals" title='view rentals')
             .ui.header(title='view rentals')
@@ -373,7 +373,7 @@ template(name='latest_rentals')
                         //     // |checkout
                 
 template(name='active_checkins')
-    .ui.accordion.alpha.rounded 
+    .ui.accordion.alpha.rounded.zoomer 
         .title
             // a.ui.header.zoomer(href="/checkins" title='view checkins')
             .ui.header.zoomer(title='view checkins')
