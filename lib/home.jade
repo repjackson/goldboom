@@ -82,15 +82,21 @@ template(name='toggle_edit_button')
         .ui.icon.circular.basic.button.toggle(title='toggle editing')
             i.large.pencil.icon
           
-template(name='staff_checkin')          
-    .ui.small.header 
-        |staff list 
-    .ui.selection.animated.list
-        each staff_users 
-            a.item.fly_right.zoomer(href="/user/#{username}") 
-                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                |#{first_name} #{last_name}
-                // |#{username}
+template(name='staff_checkin')    
+    .ui.accordion.alpha.rounded
+        .title
+            .ui.header
+                +i name='user-shield'
+                |contacts 
+                i.dropdown.icon
+        .content
+            .ui.small.header staff
+            .ui.selection.animated.large.list
+                each staff_users 
+                    a.item.fly_right.zoomer(href="/user/#{username}") 
+                        img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        |#{first_name} #{last_name}
+                        // |#{username}
     if checked_in
         .ui.button.clockout
             +i name='exit'
