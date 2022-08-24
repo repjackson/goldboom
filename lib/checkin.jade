@@ -4,70 +4,74 @@ template(name='checkin_edit')
         .ui.one.column.center.aligned.grid.z
             .column
                 .ui.hidden.divider
-                .ui.basic.red.large.circular.icon.button.cancel_checkin(title='cancel checkin')
-                    i.large.chevron.left.icon
-                    i.large.ban.icon
-                with _resident
-                    .ui.massive.inline.header #{first_initial} #{last_initial}
-                    .ui.large.basic.brown.image.inverted.label 
-                        +i name='apartment'
-                        // i.large.building.icon
-                        |#{building_number}
-                    .ui.large.basic.blue.image.inverted.label
-                        +i name='room'
-                        // i.large.cube.icon
-                        |#{unit_number}
-                // +text_edit key='email' label='Email' direct=true
-                if currentUser.admin_mode 
-                    +print_this
-                .ui.basic.segment
-                    +boolean_edit key='has_guests' label='add guests' icon='groups'
-                    if has_guests
-                        // small (max 8/month, 3/visit)
-                        // .ui.big.button.add_guest.bigger
-                        //     i.plus.icon 
-                        //     |add guest
-                        each resident_guests 
-                            .ui.big.button.pick_guest(class=guest_class)
-                                i.large.user.icon
-                                |#{name}
-                        .ui.large.icon.active.input  
-                            i.large.user.plus.icon
-                            input.add_guest(type='text' placeholder='guest name...')
-                div
-                // .ui.center.aligned.header
-                //     |purpose 
-                //     small (optional)
-                // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='inverted'
-                // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='water' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='woman-sunbathing' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='inverted'
-                // // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='inverted'
-                // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='inverted'
-                .ui.hidden.divider
-                .ui.hidden.divider
-                a.ui.massive.fluid.green.button.submit_checkin.invert(href="/kiosk")
-                    .ui.inverted.header
-                        i.checkmark.big.white.icon
-                        | check in
-                .ui.hidden.divider
-                unless _resident.has_answered 
-                    .ui.big.fluid.info.message 
-                        .ui.header the front desk is hiring, are you interested?
-                        .ui.green.basic.button.yes.invert
-                            |yes 
-                        .ui.red.basic.button.no.invert
-                            |no
-                with _resident
-                    if hiring_interest
-                        +text_edit key='contact_info' label='please add contact info' icon='info'
+                unless submitted
+                    .ui.basic.red.large.circular.icon.button.cancel_checkin(title='cancel checkin')
+                        i.large.chevron.left.icon
+                        i.large.ban.icon
+                    with _resident
+                        .ui.massive.inline.header #{first_initial} #{last_initial}
+                        .ui.large.basic.brown.image.inverted.label 
+                            +i name='apartment'
+                            // i.large.building.icon
+                            |#{building_number}
+                        .ui.large.basic.blue.image.inverted.label
+                            +i name='room'
+                            // i.large.cube.icon
+                            |#{unit_number}
+                    // +text_edit key='email' label='Email' direct=true
+                    if currentUser.admin_mode 
+                        +print_this
+                    .ui.basic.segment.bigger
+                        +boolean_edit key='has_guests' label='add guests' icon='groups'
+                        if has_guests
+                            // small (max 8/month, 3/visit)
+                            // .ui.big.button.add_guest.bigger
+                            //     i.plus.icon 
+                            //     |add guest
+                            each resident_guests 
+                                .ui.big.button.pick_guest(class=guest_class)
+                                    i.large.user.icon
+                                    |#{name}
+                            .ui.large.icon.active.input  
+                                i.large.user.plus.icon
+                                input.add_guest(type='text' placeholder='guest name...')
+                    div
+                    // .ui.center.aligned.header
+                    //     |purpose 
+                    //     small (optional)
+                    // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='barbell' cl='inverted'
+                    // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='water' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='pingpong' label='ping pong' icon='ping-pong' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='woman-sunbathing' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='basketball' cl='inverted'
+                    // // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
+                    // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='inverted'
+                    // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='inverted'
+                    .ui.hidden.divider
+                    a.ui.massive.fluid.button.submit_checkin.invert.breezy(href="/kiosk")
+                        .ui.inverted.header
+                            i.checkmark.big.white.icon
+                            | check in
+                    .ui.hidden.divider
+                    unless _resident.has_answered 
+                        .ui.big.fluid.info.message.alpha
+                            .ui.header the front desk is hiring, are you interested?
+                            .ui.green.basic.button.yes.invert
+                                |yes 
+                            .ui.red.basic.button.no.invert
+                                |no
+                    with _resident
+                        if hiring_interest
+                            +text_edit key='contact_info' label='please add contact info' icon='info'
+                if submitted 
+                    .ui.center.aligned.basic.segment.bigger
+                        i.massive.green.checkmark.icon.invert
+                        .ui.header checked in
                 // .ui.two.column.grid 
                 //     .column
                 //         if verified 

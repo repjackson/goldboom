@@ -100,7 +100,9 @@ template(name='healthclub')
                 
                 
 template(name='building_picker')
-    +i name='apartment'
+    .ui.inline.header 
+        +i name='apartment'
+        |pick building
     each building_docs 
         // a.ui.bigger.image.label.pick_building.zoomer(class=building_button_class)
         a.ui.bigger.compact.basic.button.pick_building.zoomer.invert(class=building_button_class)
@@ -160,7 +162,7 @@ template(name='resident_picker')
         //     |add resident
         div
         each checkedout_user_docs 
-            a.ui.bigger.massive.basic.label.pick_user.zoomer.fly_right
+            a.ui.bigger.massive.basic.inverted.label.pick_user.zoomer.fly_right
                 // if image_id
                 //     img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 // else 
@@ -204,7 +206,7 @@ template(name='unit_picker')
     // |&nbsp;
     // i.cube.big.icon.inline.bigger
     each unit_docs 
-        a.ui.massive.compact.white.label.pick_unit.zoomer.invert(class=unit_button_class)
+        a.ui.bigger.compact.white.inverted.big.label.pick_unit.zoomer.invert(class=unit_button_class)
             // i.cube.icon.inline
             // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             // +i name='room'

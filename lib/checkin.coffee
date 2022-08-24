@@ -372,25 +372,32 @@ if Meteor.isClient
             resident = 
                 Meteor.users.findOne @resident_user_id
                 
-            Swal.fire({
-                # title: "thanks, #{resident.first_name}, you're checked in"
-                # title: "checked in"
-                # text: "point bounty will be held "
-                icon: 'success'
-                timer:2000
-                # background: 'pink'
-                timerProgressBar:true
-                showClass: {popup: 'animate__animated animate__fadeInDown'}
-                hideClass: {popup: 'animate__animated animate__fadeOutUp'}
-                showConfirmButton:false
-                # confirmButtonText: 'publish'
-                # confirmButtonColor: 'green'
-                # showCancelButton: true
-                # cancelButtonText: 'cancel'
-                # reverseButtons: true
-            })
-            Docs.update kiosk._id, 
-                $set:current_route:'healthclub'
+            # Swal.fire({
+            #     # title: "thanks, #{resident.first_name}, you're checked in"
+            #     # title: "checked in"
+            #     # text: "point bounty will be held "
+            #     icon: 'success'
+            #     timer:2000
+            #     # background: 'pink'
+            #     timerProgressBar:true
+            #     showClass: {popup: 'animate__animated animate__fadeInDown'}
+            #     hideClass: {popup: 'animate__animated animate__fadeOutUp'}
+            #     showConfirmButton:false
+            #     # confirmButtonText: 'publish'
+            #     # confirmButtonColor: 'green'
+            #     # showCancelButton: true
+            #     # cancelButtonText: 'cancel'
+            #     # reverseButtons: true
+            # })
+            checkin = Docs.findOne kiosk.current_checkin_id
+            Docs.update checkin._id, 
+                $set:
+                    submitted:true 
+                    submitted_timestamp:Date.now()
+            Meteor.setTimeout =>
+                Docs.update kiosk._id, 
+                    $set:current_route:'healthclub'
+            , 3000
             # $('body').toast({
             #     title: "#{resident.first_name} #{resident.last_name} checked in"
             #     # message: 'Please see desk staff for key.'
