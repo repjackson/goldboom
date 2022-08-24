@@ -9,12 +9,29 @@ if Meteor.isClient
         
     Template.work.onCreated ->
         @autorun => @subscribe 'model_docs', 'work', ->
-            
     Template.work.helpers 
         work_docs: ->
             Docs.find 
                 model:'work'
     
+    Template.hiring_interest.onCreated ->
+        @autorun => @subscribe 'answered_users', ->
+    Template.hiring_interest.helpers 
+        no_answers: ->
+            Meteor.users.find 
+                hiring_interest:false
+                has_answered:true
+        yes_answers: ->
+            Meteor.users.find 
+                hiring_interest:true
+                has_answered:true
+if Meteor.isServer 
+    Meteor.publish 'answered_users', ->
+        Meteor.users.find 
+            has_answered:true
+            
+            
+if Meteor.isClient
     Template.toggle_edit_button.events
         'click .toggle':->
             if Session.equals('editing_id', @_id)

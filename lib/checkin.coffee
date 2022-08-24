@@ -122,7 +122,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'docs_by_checkin_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'last_checkin', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'last_checkin', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'checkin_resident', ->
         @autorun => Meteor.subscribe 'checkin_guests', ->
             

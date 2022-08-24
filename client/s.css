@@ -104,9 +104,9 @@ img {
     filter: invert(1) !important; 
 }
 
-/*.label, input, .input, .progress, .text, .invert{*/
-/*     filter: invert(1) !important; */
-/*} */
+.label, input, .input, .progress, .text, .invert{
+     filter: invert(1) !important; 
+} 
 ::-webkit-scrollbar {
   width: 3px !important;
 }

@@ -9,11 +9,11 @@ template(name='checkin_edit')
                     i.large.ban.icon
                 with _resident
                     .ui.massive.inline.header #{first_initial} #{last_initial}
-                    .ui.large.basic.brown.image.label 
+                    .ui.large.basic.brown.image.inverted.label 
                         +i name='apartment'
                         // i.large.building.icon
                         |#{building_number}
-                    .ui.large.basic.blue.image.label
+                    .ui.large.basic.blue.image.inverted.label
                         +i name='room'
                         // i.large.cube.icon
                         |#{unit_number}
@@ -55,7 +55,7 @@ template(name='checkin_edit')
                 .ui.hidden.divider
                 with _resident
                     if hiring_interest
-                        +text_edit key='contact_info' label='please add contact info'
+                        +text_edit key='contact_info' label='please add contact info' icon='info'
                 a.ui.massive.fluid.green.button.submit_checkin(href="/kiosk")
                     .ui.inverted.header
                         i.checkmark.big.white.icon

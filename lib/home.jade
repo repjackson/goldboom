@@ -19,6 +19,8 @@ template(name='home')
                     +guest_block
                     +admin
                     +staff_checkin
+                .column
+                    iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
             else 
                 .twelve.wide.column
                     +login
@@ -42,9 +44,6 @@ template(name='home')
             //         +latest_checkins
             // .eight.wide.column
             //     +map_view
-        .one.column.row
-            .column
-                +staff
           
           
 template(name='work')
@@ -284,12 +283,25 @@ template(name='latest_requests')
                         a.fly_down(href="/task/#{_id}" title='view task')
                             i.large.chevron.right.link.circular.icon.zoomer
 template(name='hiring_interest')
-    .ui.header 
-        |hiring interest
-    each no_answers
-        .ui.item #{username}
-    each yes_answers
-        .ui.item #{username}
+    .ui.fluid.accordion.alpha.rounded
+        .title.zoomer
+            .ui.header 
+                +i name='money'
+                |hiring interest
+                i.dropdown.icon
+        .content
+            .ui.small.header 
+                i.ban.icon
+                |no
+            .ui.list
+                each no_answers
+                    .item #{username}
+            .ui.small.header 
+                i.checkmark.icon
+                |yes
+            .ui.list
+                each yes_answers
+                    .item #{username}
 template(name='latest_notes')
     .ui.accordion.alpha.rounded 
         .title 
