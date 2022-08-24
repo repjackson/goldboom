@@ -180,19 +180,19 @@ template(name='staff_activity')
                         |#{task_title}
                         +author_info
                         |{{long_date _timestamp}}
-    .ui.inline.grey.header 
-        // i.hiking.icon
-        +i name='walking' classes='ui inline image'                
-        |shift walks
-    .ui.icon.button.log_staff_walked(title='log hourly shift walk')
-        i.plus.icon    
-    .ui.divided.selection.list
-        each shift_walks
-            // .item #{_when} 
-            .item.zoomer
-                +author_info
-                if currentUser.admin_mode
-                    i.remove.small.link.icon.remove_walk(title='remove walk entry')
+    // .ui.inline.grey.header 
+    //     // i.hiking.icon
+    //     +i name='walking' classes='ui inline image'                
+    //     |shift walks
+    // .ui.icon.button.log_staff_walked(title='log hourly shift walk')
+    //     i.plus.icon    
+    // .ui.divided.selection.list
+    //     each shift_walks
+    //         // .item #{_when} 
+    //         .item.zoomer
+    //             +author_info
+    //             if currentUser.admin_mode
+    //                 i.remove.small.link.icon.remove_walk(title='remove walk entry')
     // if checklist_completed
     //     +i name='todo-list' classes='ui inline image'
     //     // i.big.green.checkmark.icon

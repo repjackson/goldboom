@@ -367,7 +367,7 @@ if Meteor.isClient
             Meteor.setTimeout ->
                 Router.go "/task/#{new_id}/edit"
             , 1000
-        'click .submit_checkin': ->
+        'click .submit_checkin': (e)->
             kiosk = Docs.findOne model:'kiosk'
             resident = 
                 Meteor.users.findOne @resident_user_id
@@ -394,6 +394,9 @@ if Meteor.isClient
                 $set:
                     submitted:true 
                     submitted_timestamp:Date.now()
+            Meteor.setTimeout =>
+                $('.bounce').transition('jiggle', 1000)
+            , 300
             Meteor.setTimeout =>
                 Docs.update kiosk._id, 
                     $set:current_route:'healthclub'
