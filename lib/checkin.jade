@@ -53,7 +53,7 @@ template(name='checkin_edit')
                     // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large inverted'
                     // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large inverted'
                     .ui.hidden.divider
-                    a.ui.massive.fluid.button.submit_checkin.invert.brezy(href="/kiosk")
+                    a.ui.massive.fluid.green.button.submit_checkin.brey(href="/kiosk")
                         .ui.inverted.header
                             i.checkmark.big.white.icon
                             | check in
@@ -70,7 +70,7 @@ template(name='checkin_edit')
                             +text_edit key='contact_info' label='please add contact info' icon='info'
                 if submitted 
                     .ui.center.aligned.basic.segment.bigger
-                        i.massive.green.checkmark.icon.invert.bounce
+                        i.massive.green.checkmark.icon.invert.bounc
                         // img(src="https://i.gifer.com/FbYk.gif")
                         .ui.header checked in
                 // .ui.two.column.grid 
