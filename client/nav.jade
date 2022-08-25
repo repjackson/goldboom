@@ -95,10 +95,10 @@ template(name='nav')
             //     // i.large.exchange.icon
             //     +i name='cart'
             //     span.mobile.hidden.zoomer products
-            // a.zoomer2.item(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
-            //     // i.large.exchange.icon
-            //     +i name='users'
-            //     span.mobile.hidden.zoomer groups
+            a.zoomer2.item(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
+                // i.large.exchange.icon
+                +i name='campfire'
+                span.mobile.hidden.zoomer groups
             a.item.zoomer2.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
                 +i name='checkmark'
                 // i.large.users.icon
@@ -121,11 +121,11 @@ template(name='nav')
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden.zoomer rentals
-            // a.item.zoomer2.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
-            //     +i name='calendar'
-            //     // i.large.users.icon
-            //     // if currentUser.show_labels
-            //     span.mobile.hidden.zoomer events
+            a.item.zoomer2.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+                +i name='calendar'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden.zoomer schedule
             a.zoomer2.item(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
                 // +i name='alert'
