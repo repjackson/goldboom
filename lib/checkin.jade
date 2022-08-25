@@ -36,6 +36,7 @@ template(name='checkin_edit')
                                 i.large.user.plus.icon
                                 input.add_guest(type='text' placeholder='guest name...' value=kiosk_doc.current_guest_name)
                     div
+                    +text_edit key='notes' label='notes' icon='note' hide_label=true
                     // .ui.center.aligned.header
                     //     |purpose 
                     //     small (optional)
@@ -61,9 +62,9 @@ template(name='checkin_edit')
                     unless _resident.has_answered 
                         .ui.big.fluid.info.message.alpha
                             .ui.header the front desk is hiring, are you interested?
-                            .ui.green.basic.button.yes.invert
+                            .ui.green.basic.button.yes
                                 |yes 
-                            .ui.red.basic.button.no.invert
+                            .ui.red.basic.button.no
                                 |no
                     with _resident
                         if hiring_interest

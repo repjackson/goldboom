@@ -425,19 +425,22 @@ template(name='textarea_edit')
         
 template(name='text_edit')
     div
-    if icon
-        +i name=icon cl='ui avatar image'
     unless inline
         .ui.inline.small.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-                //- +clear_value
+            unless hide_label
+                if icon
+                    +i name=icon cl='ui avatar image'
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                    //- +clear_value
     .ui.icon.large.fluid.input
-        i.grey.icon(class=icon)
+        i.pencil.large.icon
+        // i.icon
+        //     +i name=icon
         input.edit_text(type='text' value=field_value placeholder=label autocomplete="off")
         
 

@@ -403,9 +403,10 @@ template(name='active_checkins')
             // a.ui.header.zoomer(href="/checkins" title='view checkins')
             .ui.header.zoomer(title='view checkins')
                 +i name='clock'
-                |#{active_checkin_docs.count} checkins today
+                |#{active_checkin_docs.count} checkins today 
+                span(title='unread checkin count') (#{unread_checkin_count})
                 i.dropdown.icon
-        .active.content
+        .content
             if subs_ready
                 .ui.divided.selection.list.medscroll
                     each active_checkin_docs 
@@ -414,7 +415,7 @@ template(name='active_checkins')
                 i.massive.loading.refresh.icon
         
 template(name='active_checkin_doc')
-    .item.zoomer
+    .item.zoomer.mark_read
         .active.content
             a.ui.large.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
                 | #{_resident.first_name}
@@ -422,6 +423,10 @@ template(name='active_checkin_doc')
             +bu
             | #{_when}
             small {{cal_time _timestamp}}
+            if notes 
+                .ui.big.label 
+                    +i name='note'
+                    |#{notes}
             a.fly_down(href="/checkin/#{_id}" title=resident_user_id)
                 i.circular.chevron.right.link.large.icon.zoomer
             if dev 

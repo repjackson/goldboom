@@ -187,6 +187,22 @@ if Meteor.isClient
     Template.active_checkin_doc.onCreated ->
         Meteor.subscribe 'user_from_id', @data.resident_user_id, ->
     Template.active_checkin_doc.events
+        'click .mark_read': ->
+            Docs.update @_id, 
+                $addToSet:
+                    read_user_ids:Meteor.userId()
+                $('body').toast({
+                    title: "marked read"
+                    # message: 'Please see desk staff for key.'
+                    class : 'success'
+                    showIcon:'eye'
+                    showProgress:'bottom'
+                    position:'bottom right'
+                    # className:
+                    #     toast: 'ui massive green fluid icon message'
+                    # displayTime: 5000
+                })
+
         'click .checkout': (e)->
             # $(e.currentTarget).closest('.item').transition('zoom', 250)
             resident = Meteor.users.findOne @resident_user_id
@@ -222,7 +238,13 @@ if Meteor.isClient
                 _timestamp:$gt:yesterday
             }, 
                 sort:_timestamp:-1
-                
+        unread_checkin_count: ->
+            Docs.find({
+                model:'checkin'
+                active:true
+                # _timestamp:$gt:yesterday
+                read_user_ids:$nin:[Meteor.userId()]
+            }).count()
                 
     Template.latest_rentals.onCreated ->
         Meteor.subscribe 'latest_rentals', ->
