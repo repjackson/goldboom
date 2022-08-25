@@ -535,9 +535,9 @@ if Meteor.isClient
     
     Template.text_edit.events
         'focus .edit_text': (e)->
-            $(e.currentTarget).closest('.input').transition('jiggle', 250)
-
-        'blur .edit_text': (e,t)->
+            $(e.currentTarget).closest('.input').transition('pulse', 250)
+            
+        'keyup .edit_text': _.throttle((e,t)->
             val = t.$('.edit_text').val()
             parent = Template.parentData()
     
@@ -556,7 +556,7 @@ if Meteor.isClient
                 displayTime: 'auto',
                 position: "bottom right"
             )
-    
+        , 500)
 
     Template.location_edit.events
         'blur .edit_text': (e,t)->

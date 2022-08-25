@@ -21,10 +21,11 @@ template(name='home')
                         +latest_requests
                         +latest_rentals
                     .column     
+                        +clockin
+                        +contacts
                         +shifts
                         +guest_block
                         +admin
-                        +staff_checkin
                     .column
                         iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
                 else 
@@ -58,12 +59,12 @@ template(name='your_tasks')
           
 template(name='wywo')
     .ui.accordion.alpha.rounded.zoomer
-        .active.title
+        .title
             .ui.inline.header
                 +i name='edit'
                 |while you were out
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.icon.large.inverted.input
                 i.lightning.icon
                 input.description(type='text' placeholder='quick add note...')
@@ -103,7 +104,7 @@ template(name='toggle_edit_button')
         .ui.icon.circular.basic.button.toggle(title='toggle editing')
             i.large.pencil.icon
           
-template(name='staff_checkin')    
+template(name='contacts')    
     .ui.accordion.alpha.rounded.zoomer
         .active.title
             .ui.header
@@ -118,44 +119,63 @@ template(name='staff_checkin')
                         img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{first_name} #{last_name}
                         // |#{username}
-    if checked_in
-        .ui.button.clockout
-            +i name='exit'
-            |clock out
-    else 
-        .ui.button.clockin
-            +i name='clock'
-            |clock in
-    if currentUser.admin_mode
-        +add_user_button
-        +call_method name='convert_units'
-    unless currentUser
-        .ui.massive.icon.input.lookup_user
-            i.search.icon
-            input.search_user(type='text' placeholder='search user...')
-        each checkedout_user_docs 
-            a.ui.big.image.label.pick_user 
-                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                |#{username}
-                |#{building_number}: ##{unit_number}
-    if currentUser 
-        if currentUser.checkedin 
-            .ui.header currently checked in
-            .ui.big.button.checkout
+template(name='clockin')  
+    .ui.segment.alpha
+        .ui.header 
+            +i name='time-machine'
+            |timecard
+        .ui.big.label 
+            |#{currentUser.status}
+            
+        if currentUser.clockedin
+            .ui.button.clockout
                 +i name='exit'
-                img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                |check out as #{currentUser.username}
+                |clock out
         else 
-            .ui.big.button.checkin 
-                +i name='internal'
-                img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                |check in as #{currentUser.username}
+            .ui.button.clockin
+                +i name='clock'
+                |clock in
+        .ui.list 
+            each staff_session_docs 
+                .item #{_author_username} #{_when}
+                    if active 
+                        .ui.label 
+                            |active 
+                    else 
+                        .ui.label 
+                            i.red.sign.out.icon
+                            |{{long_date clockout_timestamp}}
+                            |{{from_now clockout_timestamp}}
+        // if currentUser.admin_mode
+        //     +add_user_button
+        //     +call_method name='convert_units'
+        // unless currentUser
+        //     .ui.massive.icon.input.lookup_user
+        //         i.search.icon
+        //         input.search_user(type='text' placeholder='search user...')
+        //     each checkedout_user_docs 
+        //         a.ui.big.image.label.pick_user 
+        //             img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        //             |#{username}
+        //             |#{building_number}: ##{unit_number}
+        // if currentUser 
+        //     if currentUser.checkedin 
+        //         .ui.header currently checked in
+        //         .ui.big.button.checkout
+        //             +i name='exit'
+        //             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        //             |check out as #{currentUser.username}
+        //     else 
+        //         .ui.big.button.checkin 
+        //             +i name='internal'
+        //             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        //             |check in as #{currentUser.username}
 
 
 
 template(name='staff_tasks')  
     .ui.fluid.accordion.alpha.rounded
-        .active.title.zoomer
+        .title.zoomer
             // a.ui.header.zoomer.fly_right(href='/tasks')
             .ui.header
                 +i name='tasks'
@@ -170,7 +190,7 @@ template(name='staff_tasks')
         // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
         // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
         // +session_set key='sort_key' value='_author_username' label='author' icon='user'
-        .active.content
+        .content
             .ui.divided.large.list.medscroll 
                 each staff_task_docs 
                     // a.item.fly_right(href="/task/#{_id}")
@@ -197,7 +217,7 @@ template(name='staff_activity')
                 +i name='realtime-protection'
                 |#{staff_activity_docs.count} staff activity
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.small.divided.list.medscroll
                 each staff_activity_docs 
                     .item.zoomer

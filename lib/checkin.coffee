@@ -137,12 +137,12 @@ if Meteor.isServer
             kiosk = 
                 Docs.findOne 
                     model:'kiosk'
-                    $ne:true
+                    dev:$ne:true
         checkin = Docs.findOne kiosk.current_checkin_id
-        if checkin 
-            Docs.find 
-                model:'guest'
-                resident_user_id:checkin.resident_user_id
+        # if checkin 
+        Docs.find 
+            model:'guest'
+            resident_user_id:checkin.resident_user_id
         
         
 if Meteor.isClient

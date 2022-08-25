@@ -109,9 +109,42 @@ if Meteor.isClient
                         title:new_title
                 new_title = $('.task_quickadd').val('')
                 
-    Template.staff_checkin.onCreated ->
+    Template.clockin.onCreated ->
+        Meteor.subscribe 'model_docs','staff_session', ->
+    Template.clockin.events 
+        'click .clockin':->
+            new_id = 
+                Docs.insert 
+                    model:'staff_session'
+                    active:true
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    status:'working'
+                    clockedin:true
+                    clockin_timestamp:Date.now()
+            
+        'click .clockout':->
+            current_session =
+                Docs.findOne
+                    model:'staff_session'
+                    active:true
+            Docs.update current_session._id, 
+                $set:
+                    active:false 
+                    clockout_timestamp:Date.now()
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    status:'clocked out'
+                    clockedin:false
+                    clockout_timestamp:Date.now()
+    Template.clockin.helpers
+        staff_session_docs: ->
+            Docs.find 
+                model:'staff_session'
+            
+    Template.contacts.onCreated ->
         Meteor.subscribe 'staff_users', ->
-    Template.staff_checkin.helpers
+    Template.contacts.helpers
         staff_users: ->
             Meteor.users.find 
                 is_staff: true

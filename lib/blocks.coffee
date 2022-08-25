@@ -680,7 +680,7 @@ if Meteor.isClient
             if @cl
                 res += @cl
             if Session.equals(@key,@value)
-                res += ' active big '
+                res += ' active  big '
             else 
                 res += 'black '
             res
@@ -829,7 +829,7 @@ if Meteor.isClient
             parent = Template.parentData()
             # parent = Template.parentData()
             # if parent["#{@key}"] is @value then 'active' else ''
-            if parent["#{@key}"] is @value then "big active" else "basic"
+            if parent["#{@key}"] is @value then "big active " else "basic"
         
         is_selected: ->
             parent = Template.parentData()

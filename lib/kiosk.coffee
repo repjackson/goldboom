@@ -180,7 +180,7 @@ if Meteor.isClient
         
                 # Session.set('current_building_number', null)
                 # Session.set('current_unit_number',null)
-                $(e.currentTarget).closest('.label').transition('tada', 500)
+                $(e.currentTarget).closest('.label').transition('tada', 250)
             else 
                 # Session.set('current_building_number', @building_number)
                 # Session.set('current_unit_number',null)
@@ -190,7 +190,7 @@ if Meteor.isClient
                     $unset:
                         current_unit_number:1
                     )
-                $(e.currentTarget).closest('.label').transition('jiggle', 500)
+                $(e.currentTarget).closest('.label').transition('jiggle', 250)
     Template.unit_picker.events 
         'click .pick_unit': (e,t)->
             kiosk = Docs.findOne model:'kiosk'
@@ -200,15 +200,22 @@ if Meteor.isClient
                     $set:
                         current_unit_number:null
                 )
-                $(e.currentTarget).closest('.label').transition('shake', 500)
+                $(e.currentTarget).closest('.label').transition('shake', 250)
             else 
                 # Session.set('current_unit_number', @unit_number)
                 Docs.update(kiosk._id, 
                     $set:
                         current_unit_number:@unit_number
                     )
-                $(e.currentTarget).closest('.label').transition('tada', 500)
+                $(e.currentTarget).closest('.label').transition('tada', 250)
     Template.resident_picker.events
+        'keyup .new_resident_name':_.throttle((e)->
+            kiosk = Docs.findOne model:'kiosk'
+            current_name = $('.new_resident_name').val()
+            Docs.update kiosk._id, 
+                $set:
+                    current_resident_name:current_name
+        , 500)
         'keyup .new_resident_name':(e)->
             if e.which in [13,9]
                 kiosk = Docs.findOne model:'kiosk'
