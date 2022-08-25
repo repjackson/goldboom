@@ -57,6 +57,11 @@ template(name='nav')
                 |reconnect
                 i.large.circular.refresh.link.zoomer2.reconnect(title='reconnect now')
         .right.menu
+            .item.toggle_darkmode
+                if currentUser.darkmode
+                    i.large.moon.icon 
+                else
+                    i.large.sun.icon
             unless currentUser
                 a.item(href="/register" title='register')
                     +i name='plus'

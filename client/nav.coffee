@@ -40,6 +40,10 @@ Template.nav.events
         $(e.currentTarget).closest('.item').addClass('pulse')
     'mouseleave .item': (e)->
         $(e.currentTarget).closest('.item').removeClass('pulse')
+    'click .toggle_darkmode': ->
+        Meteor.users.update Meteor.userId(),
+            $set:
+                darkmode:!Meteor.user().darkmode
         
 Template.nav_item.events 
     'click .go_route': -> 

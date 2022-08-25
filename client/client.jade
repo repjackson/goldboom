@@ -19,7 +19,7 @@ head
     script(src='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js')
     
     
-    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+    // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
     script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
     script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
 
@@ -34,16 +34,16 @@ head
         gtag('config', 'G-P6E9390190');
   
 template(name='layout')
-    // div(class=darkmode_class)
-    // unless currentUser.darkmode
-    +nav
-    // .ui.bottom.attached.pushable.segment.scrollin.fullheight(class=darkmode_class)
-    img.ui.fluid.image.checkin_banner(src="{{c.url 'healthclub' width=1000 height=1000 crop='crop'}}")
-    .scrolling
-        +yield
-    +footer
+    div(class=darkmode_class)
+        // unless currentUser.darkmode
+        +nav
+        // .ui.bottom.attached.pushable.segment.scrollin.fullheight(class=darkmode_class)
+        // img.ui.fluid.image.checkin_banner(src="{{c.url 'healthclub' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
+        .scrollin.blackbg
+            +yield
+        +footer
 template(name='mlayout')
-    img.ui.fluid.image.checkin_banner(src="{{c.url 'healthclub' width=1000 height=1000 crop='crop'}}")
+    // img.ui.fluid.image.checkin_banner(src="{{c.url 'healthclub' width=1000 height=1000 crop='crop'}}")
     +yield
     if currentUser.admin_mode 
         +footer
