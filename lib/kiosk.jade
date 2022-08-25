@@ -78,11 +78,11 @@ template(name='healthclub')
                         +resident_picker
                 // +active_checkins
                 unless current_building_number
-                    // .ui.basic.label 
-                    //     +i name='cleaning-a-surface'
-                    //     |last equipment cleaning: {{from_now last_wipe_doc._timestamp}} 
-                    //     |by {{last_wipe_doc._author.first_name}}
-                    // +water_small
+                    .ui.basic.inverted.circular.label
+                        +i name='cleaning-a-surface'
+                        |last equipment cleaning: {{from_now last_wipe_doc._timestamp}} 
+                        |by {{last_wipe_doc._author.first_name}}
+                    +water_small
                     .ui.large.inline.header 
                         // i.grey.mail.icon
                         |maintenance@boomprop.com
@@ -130,7 +130,7 @@ template(name='hc_rental')
 template(name='water_small')
     div
     with latest_pool_reading
-        a.ui.big.basic.label.zoomer.goto_water
+        a.ui.basic.inverted.circular.label.zoomer.goto_water
             +i name='pool'
             |pool 
             strong #{temperature}
@@ -138,7 +138,7 @@ template(name='water_small')
             // #{ph}ph #{chlorine}chl
             small #{_when}
     with latest_hot_tub_reading
-        a.ui.big.basic.label.zoomer.goto_water
+        a.ui.basic.inverted.circular.label.zoomer.goto_water
             +i name='jacuzzi'
             |hot tub
             strong #{temperature} &deg;
@@ -245,6 +245,10 @@ template(name='kiosk_settings')
                     |create kiosk doc
             +set_kiosk_template value='kiosk_away' label='away' icon='clock'
             +set_kiosk_template value='healthclub' label='check in' icon='checkmark'
+            with kiosk_doc 
+                +key_value_edit key='invert_class' value='invert' label='night mode' icon='night'
+                +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
+            
             //- +healthclub
             with kiosk_doc
                 +Template.dynamic template=kiosk_view

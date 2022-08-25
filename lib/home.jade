@@ -238,9 +238,6 @@ template(name='admin')
         .content
             .ui.input
                 input.upload_parking(type='file')
-             with kiosk_doc 
-                +key_value_edit key='invert_class' value='invert' label='night mode' icon='night'
-                +key_value_edit key='invert_class' value='' label='day mode' icon='sun'
    
 template(name='stats')
     .ui.accordion.alpha.rounded.zoomer 
