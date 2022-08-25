@@ -272,6 +272,10 @@ if Meteor.isClient
             Docs.find {
                 model:'shift'
             }, sort: _timestamp:-1
+        staff_users: ->
+            Meteor.users.find {
+                is_staff:true
+            }, sort: username:-1
     Template.shifts.events 
         'click .add_shift': ->
             Docs.insert

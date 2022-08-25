@@ -48,20 +48,35 @@ template(name='events')
                
 template(name='shifts')
     .ui.segment
-        .ui.header 
+        .ui.inline.header 
             +i name='calendar'
             |staff shifts
-        .ui.button.add_shift
+        .ui.icon.button.add_shift
+            i.plus.icon
         each shift_docs 
-            .item #{title}
+            .ui.segment.alpha #{title}
                 .ui.label #{staff_username}
                 +toggle_edit_button
                 if is_editing 
+                    div
+                    .ui.inline.small.header shift
                     +key_value_edit key='shift_type' value='morning' icon='morning'
                     +key_value_edit key='shift_type' value='afternoon' icon='afternoon'
                     +key_value_edit key='shift_type' value='evening' icon='evening'
+                    div
+                    .ui.inline.small.header staff
+                    +key_value_edit key='staff_username' value='nikka' 
+                    +key_value_edit key='staff_username' value='brigitte' 
+                    +key_value_edit key='staff_username' value='mai' 
+                    +key_value_edit key='staff_username' value='eric' 
+                    +key_value_edit key='staff_username' value='tanner' 
+                    +date_edit key='date' label='date' icon='calendar'
+                    // +date_edit key='date' label='date' icon='day'
+                    +print_this
                 else 
+                    .ui.big.label #{staff_username}
                     .ui.big.label #{shift_type}
+                    .ui.big.label #{date}
             
                
 template(name='recent_checkins')
