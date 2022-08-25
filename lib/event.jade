@@ -47,11 +47,22 @@ template(name='events')
                
                
 template(name='shifts')
-    .ui.header staff shifts
-    each shift_docs 
-        .item #{title}
-            .ui.label #{staff_name}
-        
+    .ui.segment
+        .ui.header 
+            +i name='calendar'
+            |staff shifts
+        .ui.button.add_shift
+        each shift_docs 
+            .item #{title}
+                .ui.label #{staff_username}
+                +toggle_edit_button
+                if is_editing 
+                    +key_value_edit key='shift_type' value='morning' icon='morning'
+                    +key_value_edit key='shift_type' value='afternoon' icon='afternoon'
+                    +key_value_edit key='shift_type' value='evening' icon='evening'
+                else 
+                    .ui.big.label #{shift_type}
+            
                
 template(name='recent_checkins')
     .ui.header  

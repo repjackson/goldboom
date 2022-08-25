@@ -265,14 +265,25 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'event', ->
             
             
+    Template.shifts.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'shift', ->
     Template.shifts.helpers 
         shift_docs: ->
             Docs.find {
                 model:'shift'
             }, sort: _timestamp:-1
-    Template.shifts.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'shift', ->
-            
+    Template.shifts.events 
+        'click .add_shift': ->
+            Docs.insert
+                model:'shift'
+                taken:false
+                
+        'click .take_shift': ->
+            Docs.update @_id,
+                $set:
+                    taken:true 
+                    staff_username:Meteor.user()
+                    staff_id:Meteor.userId()
             
     Template.events.helpers 
         event_docs: ->
