@@ -405,10 +405,13 @@ template(name='appearance_settings')
         +key_value_edit key='navbar_class' value='inverted' label='black' icon='night'
         div 
         .ui.inline.header size
+        +key_value_edit key='navbar_size' value='tiny' label='tiny'
         +key_value_edit key='navbar_size' value='small' label='small'
         +key_value_edit key='navbar_size' value='' label='medium'
         +key_value_edit key='navbar_size' value='large' label='large'
         +key_value_edit key='navbar_size' value='big' label='big'
+        +key_value_edit key='navbar_size' value='huge' label='huge'
+        +key_value_edit key='navbar_size' value='massive' label='massive'
         if is navbar_class 'inverted'
             div 
             .ui.inline.header nav bar color

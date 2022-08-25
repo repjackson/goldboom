@@ -77,6 +77,14 @@ template(name='shifts')
                     .ui.big.label #{staff_username}
                     .ui.big.label #{shift_type}
                     .ui.big.label #{date}
+                    +viewing_info
+                    if is_assigned 
+                        .ui.button.give_up
+                            |give up
+                    if can_take 
+                        .ui.button.take_shift 
+                            |take
+                    +comments
             
                
 template(name='recent_checkins')
