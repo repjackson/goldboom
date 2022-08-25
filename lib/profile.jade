@@ -319,7 +319,7 @@ template(name='account')
         //- img.ui.fluid.image.checkin_banner(src="{{c.url banner_image_id width=1000 height=500 crop='crop'}}")    
         .ui.stackable.padded.grid.scrolling
             .three.column.row
-                .column
+                .column.medscroll
                     .ui.center.aligned.large.inline.grey.header
                     //- +i name='pencil'
                     .ui.small.inline.header @#{username}
@@ -354,6 +354,7 @@ template(name='account')
                     +text_edit key='status' label='status' icon='clock'
                     div
                 .column
+                    +appearance_settings
                     +array_edit key='tags' label='tags' icon='tags'
                     +html_edit key='bio' label='bio'
                 .column 
@@ -387,31 +388,6 @@ template(name='account')
                             i.remove.icon
                             |delete user
                 .column 
-                    .ui.segment.alpha
-                        .ui.header 
-                            +i name='template'
-                            |appearance 
-                        .ui.inline.header nav bar class
-                        +key_value_edit key='navbar_class' value='' label='white' icon='sun'
-                        +key_value_edit key='navbar_class' value='inverted' label='black' icon='night'
-                        if is navbar_class 'inverted'
-                            div 
-                            .ui.inline.header nav bar color
-                            +key_value_edit key='navbar_color' value='blue' label='blue' color='blue'
-                            +key_value_edit key='navbar_color' value='red' label='red' color='red'
-                            +key_value_edit key='navbar_color' value='black' label='black' color='black'
-                            +key_value_edit key='navbar_color' value='teal' label='teal' color='teal'
-                            +key_value_edit key='navbar_color' value='pink' label='pink' color='pink'
-                            +key_value_edit key='navbar_color' value='brown' label='brown' color='brown'
-                            +key_value_edit key='navbar_color' value='white' label='white' color='white'
-                        div 
-                        .ui.inline.header icon theme
-                        +key_value_edit key='icon_class' value='color' label='color' icon='rainbow'
-                        +key_value_edit key='icon_class' value='office' label='office' icon='office'
-                        +key_value_edit key='icon_class' value='ios' label='ios' icon='outline'
-                        +key_value_edit key='icon_class' value='ultraviolet' label='blue' icon='sky'
-                        +key_value_edit key='icon_class' value='neon' label='neon' icon='neon'
-                        +key_value_edit key='icon_class' value='simple' label='simple' icon='header'
                     .ui.inline.header
                         +i name='privacy'
                         |privacy
@@ -419,6 +395,45 @@ template(name='account')
                     +user_sessions
 
                     
+template(name='appearance_settings')
+    .ui.segment.alpha
+        .ui.header 
+            +i name='template'
+            |appearance 
+        .ui.inline.header nav bar class
+        +key_value_edit key='navbar_class' value='' label='white' icon='sun'
+        +key_value_edit key='navbar_class' value='inverted' label='black' icon='night'
+        div 
+        .ui.inline.header size
+        +key_value_edit key='navbar_size' value='small' label='small'
+        +key_value_edit key='navbar_size' value='' label='medium'
+        +key_value_edit key='navbar_size' value='large' label='large'
+        +key_value_edit key='navbar_size' value='big' label='big'
+        if is navbar_class 'inverted'
+            div 
+            .ui.inline.header nav bar color
+            +key_value_edit key='navbar_color' value='blue' label='blue' color='blue'
+            +key_value_edit key='navbar_color' value='red' label='red' color='red'
+            +key_value_edit key='navbar_color' value='black' label='black' color='black'
+            +key_value_edit key='navbar_color' value='teal' label='teal' color='teal'
+            +key_value_edit key='navbar_color' value='pink' label='pink' color='pink'
+            +key_value_edit key='navbar_color' value='brown' label='brown' color='brown'
+            +key_value_edit key='navbar_color' value='white' label='white' color='white'
+        div 
+        .ui.inline.header icon theme
+        +key_value_edit key='icon_class' value='color' label='color' icon='rainbow' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='office' label='office' icon='office' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='ios' label='ios' icon='outline' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='ultraviolet' label='blue' icon='sky' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='cotton' label='cotton' icon='neon' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='neon' label='neon' icon='neon' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='doodle' label='doodle' icon='doodle' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='fluency' label='fluency' icon='home' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='plasticine' label='plasticine' icon='plasticine' show_icon=true cl='large'
+        // +key_value_edit key='icon_class' value='3d-fluency' label='3d-fluency' icon='3d' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='avantgarde' label='avantgarde' icon='avantgarde' show_icon=true cl='large'
+        +key_value_edit key='icon_class' value='simple' label='simple' icon='header' show_icon=true cl='large'
+
 template(name='user_sessions')
     .column
         .ui.header 

@@ -259,8 +259,19 @@ if Meteor.isClient
         @layout 'layout'
         @render 'event_edit'
         ), name:'event_edit'
+    
+    
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event', ->
+            
+            
+    Template.shifts.helpers 
+        shift_docs: ->
+            Docs.find {
+                model:'shift'
+            }, sort: _timestamp:-1
+    Template.shifts.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'shift', ->
             
             
     Template.events.helpers 

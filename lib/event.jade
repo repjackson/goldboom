@@ -20,6 +20,7 @@ template(name='events')
                     // small #{count}
             +recent_checkins
         .twelve.wide.column.scrolling
+            +shifts 
             +sort_direction_toggle
             +session_set key='sort_key' value='_timestamp' label='created' icon='clock'
             +session_set key='sort_key' value='_author_username' label='author' icon='user-male'
@@ -41,7 +42,16 @@ template(name='events')
             else 
                 .ui.basic.center.aligned.segment
                     +ibig name='event' cl='spinning'
+            iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
+
                
+               
+template(name='shifts')
+    .ui.header staff shifts
+    each shift_docs 
+        .item #{title}
+            .ui.label #{staff_name}
+        
                
 template(name='recent_checkins')
     .ui.header  

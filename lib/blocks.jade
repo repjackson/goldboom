@@ -47,11 +47,11 @@ template(name='building_facet')
 
 template(name='bu')
     if building_number
-        span.ui.basic.image.large.label
+        span.ui.basic.image.large.inverted.label
             +i name='building'
             |#{building_number}
     if unit_number
-        span.ui.basic.image.large.label
+        span.ui.basic.image.large.inverted.label
             +i name='room'
             // i.large.cube.icon
             |#{unit_number}
@@ -265,9 +265,9 @@ template(name='session_key_value_edit')
 
 template(name='key_value_edit')
     a.ui.link.circular.label.set_key_value.zoomer(class="#{cl} #{calculated_class}")
-        // if icon 
-        //     // +i name=icon cl='ui avatar image zoomer'
-        //     i.large.icon(class=icon)
+        if show_icon 
+            +i name=icon cl='ui avatar image zoomer'
+            // i.large.icon(class=icon)
         // if is_selected
         if color 
             .ui.large.circular.inline.label(class=color)

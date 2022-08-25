@@ -3,7 +3,7 @@ template(name='nav')
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
     // #topnav.topnav.ui.attached.borderless.large.menu.hscroll
-    #topnav.topnav.ui.attached.borderless.menu.hscroll(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}}")
+    #topnav.topnav.ui.attached.borderless.menu.hscroll(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.zoomer
@@ -57,11 +57,11 @@ template(name='nav')
                 |reconnect
                 i.large.circular.refresh.link.zoomer2.reconnect(title='reconnect now')
         .right.menu
-            .item.toggle_darkmode
+            a.item.toggle_darkmode.zoomer(title='toggle darkmode')
                 if currentUser.darkmode
-                    i.large.moon.icon 
+                    i.large.moon.icon.zoomer
                 else
-                    i.large.sun.icon
+                    i.large.sun.icon.zoomer
             unless currentUser
                 a.item(href="/register" title='register')
                     +i name='plus'
@@ -90,7 +90,7 @@ template(name='nav')
                 // a.icon.item(href="/mail/inbox")
     if is_connected
         // .ui.attached.borderless.menu.hscroll.secnav
-        .ui.attached.borderless.menu.hscroll.secnav(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}}")
+        .ui.attached.borderless.menu.hscroll.secnav(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
             // a.zoomer2.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
             //     // i.large.exchange.icon
             //     +i name='cart'

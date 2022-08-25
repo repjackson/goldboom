@@ -1,51 +1,55 @@
 template(name='home')
     // img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
     // .ui.stackable.padded.grid(class=darkmode_class)
-    .ui.stackable.padded.grid.blackbg
-        .three.column.row
-            if currentUser
-                .column
-                    +your_tasks
-                    +wywo
-                    +staff_tasks
-                    +staff_activity
-                    +active_checkins
-                .column
-                    +hiring_interest
-                    +kiosk_settings
-                    +latest_notes
-                    +stats
-                    +latest_requests
-                    +latest_rentals
-                .column       
-                    +guest_block
-                    +admin
-                    +staff_checkin
-                .column
-                    iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
-            else 
-                .twelve.wide.column
-                    +login
+    unless subs_ready
+        i.massive.refresh.loading.icon
+    if subs_ready
+        .ui.stackable.padded.grid.blackbg
+            .three.column.row
+                if currentUser
+                    .column
+                        +your_tasks
+                        +wywo
+                        +staff_tasks
+                        +staff_activity
+                        +active_checkins
+                    .column
+                        +hiring_interest
+                        +kiosk_settings
+                        +latest_notes
+                        +stats
+                        +latest_requests
+                        +latest_rentals
+                    .column     
+                        +shifts
+                        +guest_block
+                        +admin
+                        +staff_checkin
+                    .column
+                        iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
+                else 
+                    .twelve.wide.column
+                        +login
+                    .four.wide.column       
+                        +stats
                 .four.wide.column       
-                    +stats
-            .four.wide.column       
-                .ui.header 
-                    +i name='info'
-                    | hours 7am-10pm
-                a.ui.large.compact.button.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
-                    +i name='marker'
-                    |2959 Shadow Creek Dr, Boulder, CO 80303
-                a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
-                    +i name='phone'
-                    |phone: (303) 545-1787
-            
-            // .four.wide.column
-            //     +latest_activity
-            // if currentUser
-            //     .four.wide.column
-            //         +latest_checkins
-            // .eight.wide.column
-            //     +map_view
+                    .ui.header 
+                        +i name='info'
+                        | hours 7am-10pm
+                    a.ui.large.compact.button.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
+                        +i name='marker'
+                        |2959 Shadow Creek Dr, Boulder, CO 80303
+                    a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
+                        +i name='phone'
+                        |phone: (303) 545-1787
+                
+                // .four.wide.column
+                //     +latest_activity
+                // if currentUser
+                //     .four.wide.column
+                //         +latest_checkins
+                // .eight.wide.column
+                //     +map_view
           
           
 template(name='your_tasks')
@@ -122,33 +126,30 @@ template(name='staff_checkin')
         .ui.button.clockin
             +i name='clock'
             |clock in
-    .ui.inline.header 
-        +i name='clock'
-        |staff shifts
     if currentUser.admin_mode
         +add_user_button
         +call_method name='convert_units'
-    // unless currentUser
-    //     .ui.massive.icon.input.lookup_user
-    //         i.search.icon
-    //         input.search_user(type='text' placeholder='search user...')
-    //     each checkedout_user_docs 
-    //         a.ui.big.image.label.pick_user 
-    //             img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-    //             |#{username}
-    //             |#{building_number}: ##{unit_number}
-    // if currentUser 
-    //     if currentUser.checkedin 
-    //         .ui.header currently checked in
-    //         .ui.big.button.checkout
-    //             +i name='exit'
-    //             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-    //             |check out as #{currentUser.username}
-    //     else 
-    //         .ui.big.button.checkin 
-    //             +i name='internal'
-    //             img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-    //             |check in as #{currentUser.username}
+    unless currentUser
+        .ui.massive.icon.input.lookup_user
+            i.search.icon
+            input.search_user(type='text' placeholder='search user...')
+        each checkedout_user_docs 
+            a.ui.big.image.label.pick_user 
+                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                |#{username}
+                |#{building_number}: ##{unit_number}
+    if currentUser 
+        if currentUser.checkedin 
+            .ui.header currently checked in
+            .ui.big.button.checkout
+                +i name='exit'
+                img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                |check out as #{currentUser.username}
+        else 
+            .ui.big.button.checkin 
+                +i name='internal'
+                img.ui.avatar.image(src="{{c.url currentUser.image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                |check in as #{currentUser.username}
 
 
 
@@ -319,20 +320,21 @@ template(name='hiring_interest')
                 |yes
             .ui.list
                 each yes_answers
-                    .item #{username}
+                    .item #{name}
+                        small #{username}
                         .ui.label
                             i.info.icon
                             |#{contact_info}
+                        +bu
                         if currentUser.admin_mode
                             i.ban.icon.clear_answer
             .ui.small.header 
                 i.ban.red.icon
                 |no
-            .ui.list
-                each no_answers
-                    .item #{username}
-                        if currentUser.admin_mode
-                            i.ban.icon.clear_answer
+            each no_answers
+                .ui.label #{username}
+                    if currentUser.admin_mode
+                        i.ban.icon.clear_answer
 template(name='latest_notes')
     .ui.accordion.alpha.rounded.zoomer 
         .title 
