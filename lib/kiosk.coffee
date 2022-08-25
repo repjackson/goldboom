@@ -209,18 +209,22 @@ if Meteor.isClient
                     )
                 $(e.currentTarget).closest('.label').transition('tada', 250)
     Template.resident_picker.events
-        'keyup .new_resident_name':_.throttle((e)->
+        # 'keyup .new_resident_name':_.throttle((e)->
+        # , 500)
+        'keyup .new_resident_name':(e)->
             kiosk = Docs.findOne model:'kiosk'
             current_name = $('.new_resident_name').val()
             Docs.update kiosk._id, 
                 $set:
                     current_resident_name:current_name
-        , 500)
-        'keyup .new_resident_name':(e)->
             if e.which in [13,9]
-                kiosk = Docs.findOne model:'kiosk'
+                # kiosk = Docs.findOne model:'kiosk'
                 # new_username = prompt('first and last name')
                 new_username = $('.new_resident_name').val()
+                Docs.update kiosk._id, 
+                    $set:
+                        current_resident_name:null
+
                 splitted = new_username.split(' ')
                 formatted = new_username.trim().split(' ').join('_').toLowerCase()
                 Meteor.call 'add_user', formatted, (err,res)=>

@@ -258,7 +258,12 @@ if Meteor.isClient
         'keyup .add_guest': (e)->
             kiosk = Docs.findOne model:'kiosk'
             val = $('.add_guest').val()
+            Docs.update kiosk._id, 
+                $set:current_guest_name:val
             if e.which is 13
+                Docs.update kiosk._id, 
+                    $set:current_guest_name:null
+
                 new_id = 
                     Docs.insert 
                         name:val
