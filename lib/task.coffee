@@ -15,11 +15,11 @@ if Meteor.isClient
     
     
     Router.route '/task/:doc_id', (->
-        @layout 'mlayout'
+        @layout 'layout'
         @render 'task_view'
         ), name:'task_view'
     Router.route '/task/:doc_id/edit', (->
-        @layout 'mlayout'
+        @layout 'layout'
         @render 'task_edit'
         ), name:'task_edit'
     Router.route '/tasks', (->

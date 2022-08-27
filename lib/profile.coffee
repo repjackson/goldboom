@@ -62,9 +62,12 @@ if Meteor.isServer
     Meteor.publish 'user_checkins', (username)->
         user = Meteor.users.findOne username:username
         if user 
-            Docs.find 
+            Docs.find {
                 model:'checkin'
                 resident_user_id:user._id
+            }, 
+                sort:_timestamp:-1
+                limit:10
 if Meteor.isClient
     Template.profile.onRendered ->
         document.title = "profile";

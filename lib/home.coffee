@@ -15,7 +15,7 @@ if Meteor.isClient
                 model:'work'
     
     Template.hiring_interest.onCreated ->
-        @subscribe 'answered_users', ->
+        @autorun => @subscribe 'answered_users', ->
     Template.hiring_interest.helpers 
         no_answers: ->
             Meteor.users.find 
@@ -97,8 +97,8 @@ if Meteor.isServer
 if Meteor.isClient
     Template.staff_tasks.onCreated ->
         # @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
-        Meteor.subscribe 'latest_model_docs', 'task', 20, ->
-        Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
+        @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
+        @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
     Template.staff_tasks.events
         'keyup .task_quickadd': (e)->
             if e.which is 13 
@@ -110,7 +110,7 @@ if Meteor.isClient
                 new_title = $('.task_quickadd').val('')
                 
     Template.clockin.onCreated ->
-        Meteor.subscribe 'model_docs','staff_session', ->
+        @autorun => Meteor.subscribe 'model_docs','staff_session', ->
     Template.clockin.events 
         'click .clockin':->
             new_id = 
@@ -143,7 +143,7 @@ if Meteor.isClient
                 model:'staff_session'
             
     Template.contacts.onCreated ->
-        Meteor.subscribe 'staff_users', ->
+        @autorun => Meteor.subscribe 'staff_users', ->
     Template.contacts.helpers
         staff_users: ->
             Meteor.users.find 
@@ -185,7 +185,7 @@ if Meteor.isClient
     Template.active_checkins.onCreated ->
         @autorun => Meteor.subscribe 'active_checkins', ->
     Template.active_checkin_doc.onCreated ->
-        Meteor.subscribe 'user_from_id', @data.resident_user_id, ->
+        @autorun => Meteor.subscribe 'user_from_id', @data.resident_user_id, ->
     Template.active_checkin_doc.events
         'click .mark_read': ->
             Docs.update @_id, 
@@ -242,12 +242,12 @@ if Meteor.isClient
             Docs.find({
                 model:'checkin'
                 active:true
-                # _timestamp:$gt:yesterday
+                _timestamp:$gt:yesterday
                 read_user_ids:$nin:[Meteor.userId()]
             }).count()
                 
     Template.latest_rentals.onCreated ->
-        Meteor.subscribe 'latest_rentals', ->
+        @autorun => Meteor.subscribe 'latest_rentals', ->
 
     Template.latest_notes.onCreated ->
         Meteor.subscribe 'latest_notes', ->
@@ -260,7 +260,7 @@ if Meteor.isClient
                 
 
     Template.latest_requests.onCreated ->
-        Meteor.subscribe 'latest_requests', ->
+        @autorun => Meteor.subscribe 'latest_requests', ->
     Template.latest_requests.helpers 
         kiosk_task_docs: ->
             Docs.find {

@@ -543,7 +543,7 @@ img {
     /*height: 100% !important; */
  } 
 .blackbg {
-    background: rgba(250,250,250,.5) !important; 
+    background: rgba(250,250,250,.8) !important; 
     /*background: white !important; */
 }
 .red_flagged {

@@ -6,6 +6,7 @@ template(name='tasks')
             .ui.inline.header 
                 +i name='tasks'
                 |#{artist_docs.count} tasks
+        .four.wide.column
             if current_search 
                 i.large.red.circular.link.remove.icon.clear
             .ui.large.input 
@@ -32,15 +33,15 @@ template(name='tasks')
                 +sort_direction_toggle
                 // +sort_key_toggle
                 +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-                // +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
                 +session_set key='sort_key' value='building_number' label='building' icon='building'
                 +session_set key='sort_key' value='unit_number' label='unit' icon='cube'
                 +session_set key='sort_key' value='views' label='views' icon='eye'
-                // +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
-                // +session_set key='limit' value=10
-                // +session_set key='limit' value=25
-                // +session_set key='limit' value=100
-        .sixteen.wide.column
+                +session_set key='sort_key' value='_author_username' label='author' icon='user'
+                +session_set key='limit' value=10
+                +session_set key='limit' value=25
+                +session_set key='limit' value=100
+        .twelve.wide.column
             if subs_ready
                 // if session_is 'view_mode' 'grid'
                 //     .ui.stackable.cards.scrolling
@@ -140,6 +141,7 @@ template(name='task_view')
                         i.big.green.checkmark.icon
                     else 
                         i.big.yellow.clock.icon
+                    +bu
                     
                 .eight.wide.column
                     if image_id
@@ -149,7 +151,7 @@ template(name='task_view')
                     .ui.segment
                         |by
                         a(href="/user/#{_author.username}") 
-                            img.ui.inline.small.pointer.zoomer.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            img.ui.inline.tiny.pointer.zoomer.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             .ui.inline.header.pointer.zoomer
                                 |#{_author.name}
                     if has_bounty
@@ -280,11 +282,12 @@ template(name='task_edit')
                         +boolean_edit key='private' label='private' icon='lock'
                         if private 
                             +multi_user_edit key='access_user_ids' label='user picker' 
+                        
                         // +boolean_edit key='has_content' icon='content' 
                         // if has_content
-                    .ui.fluid.big.green.circular.button.submit_task.zoomer
-                        i.large.save.icon 
-                        |submit
+                    // .ui.fluid.big.green.circular.button.submit_task.zoomer
+                    //     i.large.save.icon 
+                    //     |submit
                     if published
                         a.ui.green.big.circular.button.save.zoomer.fly_up(href="/task/#{_id}") 
                             i.save.large.icon
@@ -300,34 +303,40 @@ template(name='task_edit')
                      
                      
 template(name='save_and_publish_button')
-    a.ui.green.big.fluid.circular.button.save_and_publish.zoomer.fly_up(href="/kiosk") 
+    a.ui.green.big.fluid.circular.button.save_and_publish.zoomer.fly_up.invert(href="/kiosk") 
         i.save.large.icon
         // |save + publish
         |submit
 
 
 template(name='user_tasks')
-    .ui.inline.header 
-        +i name='tasks'
-        |#{user_task_docs.count} tasks
-    .ui.button.assign_task
-        i.plus.icon
-        |assign task
-    .ui.header 
-        +i name='pencil'
-        |authored
-    .ui.list 
-        each user_authored_tasks
-            a.item.zoomer.fly_right(href="/task/#{_id}") #{title}, !{description}
-    .ui.header 
-        +i name='assignment-turned-in'
-        |assigned
-    .ui.list 
-        each user_assigned_tasks
-            a.item.zoomer.fly_right(href="/task/#{_id}") #{title}, !{description}
-    .ui.header 
-        |completed
-    .ui.list 
-        each user_assigned_tasks
-            a.item.zoomer.fly_right(href="/task/#{_id}") #{title}, !{description}
-        
+    .ui.segment.alpha
+        .ui.inline.header 
+            +i name='tasks'
+            |#{user_task_docs.count} tasks
+        .medscroll
+            .ui.button.assign_task
+                i.plus.icon
+                |assign task
+            .ui.header 
+                +i name='pencil'
+                |authored
+            .ui.divided.selection.list 
+                each user_authored_tasks
+                    a.item.zoomer.fly_right(href="/task/#{_id}") #{title}, !{description} 
+                        small #{_when}
+            .ui.header 
+                +i name='assignment-turned-in'
+                |assigned
+            .ui.divided.selection.list 
+                each user_assigned_tasks
+                    a.item.zoomer.fly_right(href="/task/#{_id}") #{title}, !{description}
+                        small #{_when}
+            .ui.header
+                i.checkmark.icon
+                |completed
+            .ui.divided.selection.list 
+                each user_assigned_tasks
+                    a.item.zoomer.fly_right(href="/task/#{_id}") #{title}, !{description}
+                        small #{_when}
+            
