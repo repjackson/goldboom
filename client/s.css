@@ -130,18 +130,18 @@ img {
 }
 
 
-.card .image, img {
-     filter: invert(1) !important; 
+.invert > .image {
+     /*filter: invert(1) !important; */
 }
 .image {
     /*filter: invert(1) !important; */
 }
 .segment > .image, .label {
-    filter: invert(1) !important; 
+    /*filter: invert(1) !important; */
 }
 
 .label, input, .input, .progress, .text{
-     filter: invert(1) !important; 
+     /*filter: invert(1) !important; */
 } 
 ::-webkit-scrollbar {
   width: 3px !important;
@@ -543,7 +543,7 @@ img {
     /*height: 100% !important; */
  } 
 .blackbg {
-    background: rgba(250,250,250,.8) !important; 
+    background: rgba(250,250,250,.6) !important; 
     /*background: white !important; */
 }
 .red_flagged {

@@ -8,6 +8,8 @@ template(name='home')
             .three.column.row
                 if currentUser
                     .column
+                        +latest_activity
+                    .column
                         +your_tasks
                         +wywo
                         +staff_tasks
@@ -19,7 +21,7 @@ template(name='home')
                         +latest_notes
                         +stats
                         +latest_requests
-                        +latest_rentals
+                        // +latest_rentals
                     .column     
                         +clockin
                         +contacts
@@ -44,8 +46,6 @@ template(name='home')
                         +i name='phone'
                         |phone: (303) 545-1787
                 
-                // .four.wide.column
-                //     +latest_activity
                 // if currentUser
                 //     .four.wide.column
                 //         +latest_checkins
@@ -435,7 +435,16 @@ template(name='active_checkin_doc')
                 +i name='clock'
             +checkin_purpose_label
             i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
+            +read_info_small
             
+            
+template(name='read_info_small')
+    span(title='views')
+        i.grey.eye.icon 
+        |#{views}
+    |viewed by 
+    each viewers
+        .ui.small.label #{name}
                     
 template(name='checkin_purpose_label')
     if checkin_purpose
@@ -446,13 +455,37 @@ template(name='checkin_purpose_label')
         
         
 template(name='latest_activity')
-    .ui.header 
-        +i name='clock'
-        |latest activty 
-    .ui.large.list.medscroll
-        each activity_docs 
-            a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
-                small #{_when} by #{_author_username}
+    .ui.accordion.alpha 
+        .title
+            .ui.header 
+                +i name='clock'
+                |#{activity_docs.count} latest activity
+                span(title='unread count') (#{unread_activity_docs})
+                i.dropdown.icon
+                
+        .content
+            .ui.divided.list.medscroll
+                each latest_docs 
+                    a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                        small #{_when} by #{_author_username}
+                        // .ui.label #{type}
+                        .ui.label #{model}
+                        +view_info_small
+            .ui.small.header
+                +i name='history'
+                |latest logs
+            .ui.divided.list.medscroll
+                each log_docs 
+                    a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                        small #{_when} by #{_author_username}
+                        .ui.label #{type}
+                        +view_info_small
+                
+
+template(name='view_info_small')
+    i.grey.eye.icon
+    |#{views}
+                
                 
 template(name='latest_checkins')
     .ui.segment.alpha.rounded

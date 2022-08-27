@@ -59,16 +59,16 @@ template(name='checkin_edit')
                             i.checkmark.big.white.icon
                             | check in
                     .ui.hidden.divider
-                    unless _resident.has_answered 
-                        .ui.big.fluid.info.message.alpha
-                            .ui.header the front desk is hiring, are you interested?
-                            .ui.green.basic.button.yes
-                                |yes 
-                            .ui.red.basic.button.no
-                                |no
-                    with _resident
-                        if hiring_interest
-                            +text_edit key='contact_info' label='please add contact info' icon='info'
+                    // unless _resident.has_answered 
+                    //     .ui.big.fluid.info.message.alpha
+                    //         .ui.header the front desk is hiring, are you interested?
+                    //         .ui.green.basic.button.yes
+                    //             |yes 
+                    //         .ui.red.basic.button.no
+                    //             |no
+                    // with _resident
+                    //     if hiring_interest
+                    //         +text_edit key='contact_info' label='please add contact info' icon='info'
                 if submitted 
                     .ui.center.aligned.basic.segment.bigger
                         i.massive.green.checkmark.icon.inver.bounc

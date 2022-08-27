@@ -23,7 +23,7 @@ template(name='nav')
                 span.mobile.hidden.zoomer #{global_stats_doc.building_count_total} buildings
             a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                 // i.large.exchange.icon
-                +i name='cube'
+                +i name='room'
                 span.mobile.hidden.zoomer #{global_stats_doc.unit_count_total} units
             a.item.zoomer2.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
                 +i name='groups'
@@ -58,7 +58,7 @@ template(name='nav')
                 i.large.circular.refresh.link.zoomer2.reconnect(title='reconnect now')
         .right.menu
             a.item.toggle_darkmode.zoomer(title='toggle darkmode')
-                if currentUser.darkmode
+                if is_darkmode
                     i.large.moon.icon.zoomer
                 else
                     i.large.sun.icon.zoomer

@@ -239,6 +239,8 @@ if Meteor.isClient
             }, 
                 sort:_timestamp:-1
         unread_checkin_count: ->
+            yesterday = Date.now()-1000*60*60*10
+            
             Docs.find({
                 model:'checkin'
                 active:true
@@ -429,7 +431,11 @@ if Meteor.isClient
             Meteor.users.find match
     
     Template.latest_activity.helpers
-        activity_docs: ->
+        latest_docs: ->
+            Docs.find {},
+                limit:10
+                sort:_timestamp:-1
+        log_docs: ->
             Docs.find 
                 model:'log'
             

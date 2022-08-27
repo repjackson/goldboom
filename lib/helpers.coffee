@@ -356,7 +356,15 @@ if Meteor.isClient
     Template.registerHelper 'darkmode_class', () -> 
         if Meteor.user()
             if Meteor.user().darkmode then 'invert' else ''
-    
+        else 
+            if Session.get('darkmode') then 'invert' else ''
+            
+            
+    Template.registerHelper 'is_darkmode', () -> 
+        if Meteor.user()
+            if Meteor.user().darkmode then true else false
+        else 
+            if Session.get('darkmode') then true else false
     
     Template.registerHelper 'hostname', () -> 
         window.location.hostname
