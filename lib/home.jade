@@ -27,7 +27,7 @@ template(name='home')
                         +contacts
                         +shifts
                         +guest_block
-                        +admin
+                        // +admin
                     .column
                         iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
                 else 
@@ -54,6 +54,8 @@ template(name='home')
           
           
 template(name='your_tasks')
+    .ui.header 
+        |your tasks
           
           
           
@@ -466,7 +468,8 @@ template(name='latest_activity')
         .content
             .ui.divided.list.medscroll
                 each latest_docs 
-                    a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                    // a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                    a.ui.item.mark_read #{body} 
                         small #{_when} by #{_author_username}
                         // .ui.label #{type}
                         .ui.label #{model}

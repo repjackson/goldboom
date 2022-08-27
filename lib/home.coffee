@@ -430,6 +430,20 @@ if Meteor.isClient
                 match.username = {$regex:"#{Session.get('current_search_user')}", $options: 'i'}
             Meteor.users.find match
     
+    Template.latest_activity.events
+        'click .mark_read': (e)->
+            Meteor.call 'mark_read', @_id, ->
+                $(e.currentTarget).closest('.item').transition('pulse')
+                # $('.unread_icon').transition('pulse')
+                $('body').toast(
+                    message: "#{@model} marked read"
+                    showIcon: "checkmark"
+                    showProgress: 'bottom'
+                    class: 'success'
+                    # displayTime: 'auto',
+                    position: "bottom right"
+                )
+
     Template.latest_activity.helpers
         latest_docs: ->
             Docs.find {},
