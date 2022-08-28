@@ -181,19 +181,22 @@ if Meteor.isClient
 
     Template.delete_reading_button.events
         'click #delete_reading': (e,t)->
-            swal {
-                title: 'Delete Reading?'
-                # text: 'Confirm delete?'
-                model: 'error'
-                animation: false
-                showCancelButton: true
-                closeOnConfirm: true
-                cancelButtonText: 'Cancel'
-                confirmButtonText: 'Delete'
-                confirmButtonColor: '#da5347'
-            }, ->
-                Docs.remove Router.current().params.doc_id, ->
-                    Router.go "/readings"
+            if confirm 'delete reading?'
+            # swal {
+            #     title: 'Delete Reading?'
+            #     # text: 'Confirm delete?'
+            #     model: 'error'
+            #     animation: false
+            #     showCancelButton: true
+            #     closeOnConfirm: true
+            #     cancelButtonText: 'Cancel'
+            #     confirmButtonText: 'Delete'
+            #     confirmButtonColor: '#da5347'
+            # }, ->
+                $(e.currentTarget).closest('.grid').transition('fly right')
+
+                Docs.remove Router.current().params.doc_id
+                Router.go "/readings"
 
 
 

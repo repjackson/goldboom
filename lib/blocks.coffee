@@ -784,14 +784,16 @@ if Meteor.isClient
 Meteor.methods
     mark_read: (doc_id)->
         doc = Docs.findOne doc_id
-        Docs.update doc_id,
-            $addToSet:
-                read_user_ids: Meteor.userId()
-            $set:
-                last_viewed: Date.now() 
-            $inc:views:1
-        Meteor.users.update Meteor.userId(),
-            $inc:points:1
+        unless doc.read_user_ids and Meteor.userId() in doc.read_user_ids
+            Docs.update doc_id,
+                $addToSet:
+                    read_user_ids: Meteor.userId()
+                    read_usernames: Meteor.user().username
+                $set:
+                    last_viewed: Date.now() 
+                $inc:views:1
+            Meteor.users.update Meteor.userId(),
+                $inc:points:1
             
     mark_unread: (doc_id)->
         doc = Docs.findOne doc_id
