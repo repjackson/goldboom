@@ -10,11 +10,11 @@ template(name='checkin_edit')
                         i.large.ban.icon
                     with _resident
                         .ui.massive.inline.header #{first_initial} #{last_initial}
-                        .ui.large.basic.brown.image.inverted.label 
+                        .ui.large.basic.image.label 
                             +i name='apartment'
                             // i.large.building.icon
                             |#{building_number}
-                        .ui.large.basic.blue.image.inverted.label
+                        .ui.large.basic.image.label
                             +i name='room'
                             // i.large.cube.icon
                             |#{unit_number}
@@ -36,42 +36,42 @@ template(name='checkin_edit')
                                 i.large.user.plus.icon
                                 input.add_guest(type='text' placeholder='guest name...' value=kiosk_doc.current_guest_name)
                     div
-                    +text_edit key='notes' label='notes' icon='note' hide_label=true
+                    // +text_edit key='notes' label='notes' icon='note' hide_label=true
                     // .ui.center.aligned.header
                     //     |purpose 
                     //     small (optional)
-                    // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='large inverted'
-                    // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='large inverted'
-                    +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='large'
-                    +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='spa' cl='large'
-                    +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='large'
-                    +key_value_edit key='checkin_purpose' value='pingpong' label='ping-pong' icon='ping-pong' cl='large'
-                    +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
-                    +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='sun' cl='large'
-                    +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='large'
-                    // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                    +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
-                    +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
-                    +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='large '
+                    // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='large '
+                    // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='spa' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='pingpong' label='ping-pong' icon='ping-pong' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='sun' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='large'
+                    // // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
+                    // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
                     .ui.hidden.divider
                     a.ui.massive.fluid.green.button.submit_checkin.brey(href="/kiosk")
                         .ui.inverted.header
                             i.checkmark.big.white.icon
                             | check in
-                    .ui.hidden.divider
-                    unless _resident.has_answered 
-                        .ui.big.fluid.info.message.alpha
-                            .ui.header the front desk is hiring, are you interested?
-                            .ui.green.basic.button.yes
-                                |yes 
-                            .ui.red.basic.button.no
-                                |no
-                    with _resident
-                        if hiring_interest
-                            +text_edit key='contact_info' label='please add contact info' icon='info'
+                    // .ui.hidden.divider
+                    // unless _resident.has_answered 
+                    //     .ui.big.fluid.info.message.alpha
+                    //         .ui.header the front desk is hiring, are you interested?
+                    //         .ui.green.basic.button.yes
+                    //             |yes 
+                    //         .ui.red.basic.button.no
+                    //             |no
+                    // with _resident
+                    //     if hiring_interest
+                    //         +text_edit key='contact_info' label='please add contact info' icon='info'
                 if submitted 
                     .ui.center.aligned.basic.segment.bigger
-                        i.massive.green.checkmark.icon.inver.bounc
+                        i.massive.green.checkmark.icon.inver.bounce
                         // img(src="https://i.gifer.com/FbYk.gif")
                         .ui.header checked in
                 // .ui.two.column.grid 

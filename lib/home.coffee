@@ -11,9 +11,9 @@ if Meteor.isClient
         @autorun => @subscribe 'model_docs', 'work', ->
     Template.wywo.helpers 
         work_docs: ->
-            Docs.find 
+            Docs.find { 
                 model:'work'
-    
+            }, sort:_timestamp:-1
     Template.pinned_posts.onCreated ->
         @autorun => @subscribe 'pinned_posts', ->
     Template.pinned_posts.helpers 

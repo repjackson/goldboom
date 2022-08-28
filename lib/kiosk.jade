@@ -78,7 +78,7 @@ template(name='healthclub')
                         +resident_picker
                 // +active_checkins
                 unless current_building_number
-                    .ui.basic.inverted.circular.label
+                    .ui.basic.circular.label
                         +i name='cleaning-a-surface'
                         |last equipment cleaning: {{from_now last_wipe_doc._timestamp}} 
                         |by {{last_wipe_doc._author.first_name}}
@@ -131,7 +131,7 @@ template(name='hc_rental')
 template(name='water_small')
     div
     with latest_pool_reading
-        a.ui.basic.inverted.circular.label.zoomer.goto_water
+        a.ui.basic.circular.label.zoomer.goto_water
             +i name='pool'
             |pool 
             strong #{temperature}
@@ -139,7 +139,7 @@ template(name='water_small')
             // #{ph}ph #{chlorine}chl
             small #{_when}
     with latest_hot_tub_reading
-        a.ui.basic.inverted.circular.label.zoomer.goto_water
+        a.ui.basic.circular.label.zoomer.goto_water
             +i name='jacuzzi'
             |hot tub
             strong #{temperature} &deg;
@@ -163,7 +163,7 @@ template(name='resident_picker')
         //     |add resident
         div
         each checkedout_user_docs 
-            a.ui.bigger.massive.basic.inverted.label.pick_user.zoomer.fly_right
+            a.ui.bigger.massive.basic.label.pick_user.zoomer.fly_right
                 // if image_id
                 //     img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 // else 
@@ -207,7 +207,7 @@ template(name='unit_picker')
     // |&nbsp;
     // i.cube.big.icon.inline.bigger
     each unit_docs 
-        a.ui.bigger.compact.white.inverted.big.label.pick_unit.zoomer.invert(class=unit_button_class)
+        a.ui.bigger.compact.white.big.label.pick_unit.zoomer(class=unit_button_class)
             // i.cube.icon.inline
             // img.ui.tiny.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             // +i name='room'
@@ -428,7 +428,7 @@ template(name='kiosk_away')
 //                                 if user.rules_and_regulations_signed
 //                                     unless user.email_red_flagged
 //                                         .ui.massive.fluid.green.button.submit_checkin
-//                                             .ui.inline.inverted.header 
+//                                             .ui.inline.header 
 //                                                 | check in
 //                                                 //- i.checkmark.green.icon
 //                                                 //- if timer_engaged
