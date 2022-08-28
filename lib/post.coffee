@@ -23,11 +23,11 @@ if Meteor.isClient
     
     
     Router.route '/post/:doc_id', (->
-        @layout 'mlayout'
+        @layout 'layout'
         @render 'post_view'
         ), name:'post_view'
     Router.route '/post/:doc_id/edit', (->
-        @layout 'mlayout'
+        @layout 'layout'
         @render 'post_edit'
         ), name:'post_edit'
         
@@ -113,8 +113,8 @@ if Meteor.isClient
             })
 
     Template.post_edit.onCreated ->
-        # @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => @subscribe 'current_kiosk_doc', Router.current().params.doc_id, ->
+        @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        # @autorun => @subscribe 'current_kiosk_doc', Router.current().params.doc_id, ->
     Template.post_view.onRendered ->
         found_doc = Docs.findOne Router.current().params.doc_id
 if Meteor.isServer

@@ -126,7 +126,8 @@ template(name='post_item')
             if currentUser.admin_mode
                 a.ui.button(href="/post/#{_id}/edit")
                     i.pencil.icon
-            
+            if pinned 
+                i.big.map.pin.icon(title='pinned to home page')
             
                     
 template(name='post_view')
@@ -156,6 +157,9 @@ template(name='post_view')
                     i.chevron.left.icon
                     +i name='news'
                     |posts
+                if pinned 
+                    i.big.map.pin.icon(title='pinned to home page')
+                
                 +building_nav_button
                 +unit_nav_button
                 if thumbnail
@@ -195,7 +199,7 @@ template(name='post_view')
             
             
 template(name='post_edit')
-    with current_kiosk_doc
+    with current_doc
         .ui.stackable.padded.grid 
             .sixteen.wide.column
                 .ui.fluid.large.basic.red.button.cancel_note
@@ -210,11 +214,16 @@ template(name='post_edit')
                 +bu
                 .bigger
                     +html_edit key='content'
+                +boolean_edit key='pinned' label='pinned' icon='pin'
+                +boolean_edit key='private' label='private' icon='private'
                 if currentUser.admin_mode
                     +boolean_edit key='public' label='public'
-                a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post
+                a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post.fly_down(href="/post/#{_id}")
                     i.checkmark.big.icon
                     |submit
+                    
+                    
+                    
 template(name='post_edit2')
     with current_doc
         .ui.stackable.padded.grid 

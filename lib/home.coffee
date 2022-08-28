@@ -14,6 +14,19 @@ if Meteor.isClient
             Docs.find 
                 model:'work'
     
+    Template.pinned_posts.onCreated ->
+        @autorun => @subscribe 'pinned_posts', ->
+    Template.pinned_posts.helpers 
+        work_docs: ->
+            Docs.find 
+                model:'work'
+    
+if Meteor.isServer 
+    Meteor.publish 'pinned_posts', ->
+        Docs.find 
+            model:'post'
+            pinned:true
+if Meteor.isClient
     Template.hiring_interest.onCreated ->
         @autorun => @subscribe 'answered_users', ->
     Template.hiring_interest.helpers 

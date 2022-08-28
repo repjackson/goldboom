@@ -289,7 +289,7 @@ if Meteor.isClient
         doc_comments: ->
             if Router.current().params.doc_id
                 parent = Docs.findOne Router.current().params.doc_id
-            else
+            else if Template.parentData()
                 parent = Docs.findOne Template.parentData()._id
             Docs.find
                 parent_id:parent._id
