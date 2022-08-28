@@ -16,7 +16,7 @@ template(name='home')
                     .column
                         +pinned_posts
                     .column
-                        +open_shifts
+                        +shifts
                 .three.column.row
                     .column
                         +latest_activity
@@ -36,7 +36,6 @@ template(name='home')
                     .column     
                         +clockin
                         +contacts
-                        +shifts
                         +guest_block
                         // +admin
                     .column
@@ -70,31 +69,28 @@ template(name='home')
                             +readings
     
     
-template(name='open_shifts')
-    .ui.segment.alpha
-        .ui.header 
-            +i name='tear-off-calendar'
-            |open shifts
-        each open_shift_docs
-            .ui.item #{day} #{type} #{_when}
     
           
 template(name='pinned_posts')
     .ui.fluid.accordion.alpha 
-        .active.title
+        .title
             .ui.header
                 +i name='note'
                 |#{pinned_post_docs.count} pinned posts
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.cards 
                 each pinned_post_docs
-                    .card 
-                        .content 
+                    .card
+                        .content.smallscroll
                             .header #{title}
                             |!{body}
                             |!{content}
+                        .content 
+                            a.ui.button.fly_right(href="/post/{_id}")
+                                i.large.chevron.right.icon
                             +read_info_small
+                            
 template(name='your_tasks')
     .ui.header 
         |your tasks
@@ -153,12 +149,12 @@ template(name='toggle_edit_button')
           
 template(name='contacts')    
     .ui.accordion.alpha.rounded.zoomer
-        .active.title
+        .title
             .ui.header
                 +i name='user-shield'
                 |contacts 
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.small.header staff
             .ui.selection.animated.large.list
                 each staff_users 
@@ -169,7 +165,7 @@ template(name='contacts')
 template(name='clockin')  
     .ui.segment.alpha
         .ui.header 
-            +i name='time-machine'
+            +i name='time-card'
             |timecard
         .ui.big.label 
             |#{currentUser.status}

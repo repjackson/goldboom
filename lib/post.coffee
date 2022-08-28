@@ -184,18 +184,12 @@ if Meteor.isClient
         'click .toggle_tag': (e,t)-> picked_tags.push @valueOf()
         'click .print_me': (e,t)->
             
-    Template.post_view.events 
-        'click .get_comments':->
-            Meteor.call 'get_comments', Router.current().params.doc_id, ->
-                
     Template.post_view.helpers
         comment_docs: ->
             Docs.find 
                 model:'comment'
                 parent_id:Router.current().params.doc_id
     Template.posts.helpers
-        porn_class: ->
-            if Session.get('porn') then 'large red' else 'compact'
         full_doc_id: ->
             Session.get('full_doc_id')
         full_doc: ->

@@ -44,6 +44,15 @@ template(name='events')
                     +ibig name='event' cl='spinning'
             iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
 
+template(name='open_shifts')
+    .ui.segment.alpha
+        .ui.header 
+            +i name='tear-off-calendar'
+            |open shifts
+        each open_shift_docs
+            .ui.item #{date} #{shift_type} #{_when}
+                .ui.button.take_shift
+                    |take
                
                
 template(name='shifts')
@@ -52,9 +61,12 @@ template(name='shifts')
             .ui.inline.header 
                 +i name='calendar'
                 |staff shifts
+                i.dropdown.icon
         .content
+            +open_shifts
             .ui.icon.button.add_shift
                 i.plus.icon
+                |add shift
             each shift_docs 
                 .ui.segment.alpha #{title}
                     .ui.label #{staff_username}
@@ -76,17 +88,22 @@ template(name='shifts')
                         // +date_edit key='date' label='date' icon='day'
                         +print_this
                     else 
-                        .ui.big.label #{staff_username}
+                        if staff_username
+                            .ui.big.label #{staff_username}
+                        else 
+                            .ui.header 
+                                i.alert.icon 
+                                |no one assigned
                         .ui.big.label #{shift_type}
-                        .ui.big.label #{date}
-                        +viewing_info
+                        .ui.big.label #{date} {{long_date date}}
+                        // +viewing_info
                         if is_assigned 
                             .ui.button.give_up
                                 |give up
                         if can_take 
                             .ui.button.take_shift 
                                 |take
-                        +comments
+                        // +comments
                 
                
 template(name='recent_checkins')
