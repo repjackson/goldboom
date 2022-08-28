@@ -13,7 +13,10 @@ template(name='home')
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
                 .two.column.row
-                    +pinned_posts
+                    .column
+                        +pinned_posts
+                    .column
+                        +open_shifts
                 .three.column.row
                     .column
                         +latest_activity
@@ -38,8 +41,6 @@ template(name='home')
                         // +admin
                     .column
                         iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
-                    .column
-                        +water_small    
                 .four.wide.column       
                     .ui.header 
                         +i name='info'
@@ -58,20 +59,41 @@ template(name='home')
                 //     +map_view
             .one.column.row
                 .column
-                    +readings
+                    .ui.accordion 
+                        .title 
+                            .ui.inline.header 
+                                +i name='water'
+                                |water 
+                                i.dropdown.icon
+                            +water_small
+                        .content
+                            +readings
+    
+    
+template(name='open_shifts')
+    .ui.segment.alpha
+        .ui.header 
+            +i name='tear-off-calendar'
+            |open shifts
+        each open_shift_docs
+            .ui.item #{day} #{type} #{_when}
+    
           
 template(name='pinned_posts')
     .ui.fluid.accordion.alpha 
-        .title
+        .active.title
             .ui.header
                 +i name='note'
-                |pinned posts
-        .content
+                |#{pinned_post_docs.count} pinned posts
+                i.dropdown.icon
+        .active.content
             .ui.cards 
-                each pinned_post_doc 
+                each pinned_post_docs
                     .card 
                         .content 
                             .header #{title}
+                            |!{body}
+                            |!{content}
                             +read_info_small
 template(name='your_tasks')
     .ui.header 

@@ -17,15 +17,38 @@ if Meteor.isClient
     Template.pinned_posts.onCreated ->
         @autorun => @subscribe 'pinned_posts', ->
     Template.pinned_posts.helpers 
-        work_docs: ->
+        pinned_post_docs: ->
             Docs.find 
-                model:'work'
-    
+                model:'post'
+                pinned:true
 if Meteor.isServer 
     Meteor.publish 'pinned_posts', ->
         Docs.find 
             model:'post'
             pinned:true
+    
+    
+    
+    
+if Meteor.isClient
+    Template.open_shifts.onCreated ->
+        @autorun => @subscribe 'open_shifts', ->
+    Template.open_shifts.helpers 
+        open_shift_docs: ->
+            Docs.find 
+                model:'shift'
+                # pinned:true
+                staff_name:$exists:false
+if Meteor.isServer 
+    Meteor.publish 'open_shifts', ->
+        Docs.find 
+            model:'shift'
+            staff_name:$exists:false
+    
+    
+    
+    
+    
 if Meteor.isClient
     Template.hiring_interest.onCreated ->
         @autorun => @subscribe 'answered_users', ->
