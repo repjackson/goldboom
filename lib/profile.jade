@@ -438,6 +438,11 @@ template(name='appearance_settings')
         // +key_value_edit key='icon_class' value='3d-fluency' label='3d-fluency' icon='3d' show_icon=true cl='large'
         +key_value_edit key='icon_class' value='avantgarde' label='avantgarde' icon='avantgarde' show_icon=true cl='large'
         +key_value_edit key='icon_class' value='simple' label='simple' icon='header' show_icon=true cl='large'
+        .ui.inline.header hide menu labels
+        +boolean_edit key='hide_labels' label='hide labels' icon='invisible'
+        div
+        .ui.inline.header invert 
+        +boolean_edit key='darkmode' label='darkmode' icon='light'
 
 template(name='user_sessions')
     .column

@@ -1,14 +1,14 @@
 Router.route '/rental', -> @render 'rentals'
 Router.route '/rentals', (->
-    @layout 'mlayout'
+    @layout 'layout'
     @render 'rentals'
     ), name:'rentals'
 Router.route '/rental/:doc_id', (->
-    @layout 'mlayout'
+    @layout 'layout'
     @render 'rental_view'
     ), name:'rental_view'
 Router.route '/rental/:doc_id/edit', (->
-    @layout 'mlayout'
+    @layout 'layout'
     @render 'rental_edit'
     ), name:'rental_edit'
 

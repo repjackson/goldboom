@@ -288,7 +288,7 @@ if Meteor.isClient
             Docs.update @_id,
                 $set:
                     taken:true 
-                    staff_username:Meteor.user()
+                    staff_username:Meteor.user().username
                     staff_id:Meteor.userId()
             
     Template.events.helpers 

@@ -12,8 +12,9 @@ template(name='home')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                .two.column.row
+                .one.column.row
                     .column
+                        +search
                         +pinned_posts
                     .column
                         +shifts
@@ -87,7 +88,7 @@ template(name='pinned_posts')
                             |!{body}
                             |!{content}
                         .content 
-                            a.ui.button.fly_right(href="/post/{_id}")
+                            a.ui.icon.button.fly_right(href="/post/#{_id}")
                                 i.large.chevron.right.icon
                             +read_info_small
                             
@@ -100,7 +101,7 @@ template(name='your_tasks')
 
           
 template(name='wywo')
-    .ui.accordion.alpha.rounded.zoomer
+    .ui.accordion.alpha
         .title
             .ui.inline.header
                 +i name='edit'
@@ -148,7 +149,7 @@ template(name='toggle_edit_button')
             i.large.pencil.icon
           
 template(name='contacts')    
-    .ui.accordion.alpha.rounded.zoomer
+    .ui.accordion.alpha
         .title
             .ui.header
                 +i name='user-shield'
@@ -254,7 +255,7 @@ template(name='staff_tasks')
 
 
 template(name='staff_activity')
-    .ui.accordion.alpha.rounded.zoomer
+    .ui.accordion.alpha
         .title
             .ui.header.zoomer 
                 +i name='realtime-protection'
@@ -293,7 +294,7 @@ template(name='staff_activity')
 
                 
 template(name='admin')
-    .ui.accordion.alpha.rounded.zoomer 
+    .ui.accordion.alpha 
         .title 
             .ui.header 
                 +i name='shield'
@@ -304,7 +305,7 @@ template(name='admin')
                 input.upload_parking(type='file')
    
 template(name='stats')
-    .ui.accordion.alpha.rounded.zoomer 
+    .ui.accordion.alpha 
         .title
             .ui.inline.header
                 +i name='line-chart'
@@ -329,7 +330,7 @@ template(name='stats')
                         +i name='friends'
                         |#{guest_count_total} guests
 template(name='guest_block')
-    .ui.accordion.alpha.rounded.zoomer
+    .ui.accordion.alpha
         .title
             .ui.header 
                 +i name='amiable'
@@ -348,7 +349,7 @@ template(name='guest_block')
                             i.chevron.right.large.icon
                 
 template(name='latest_requests')
-    .ui.accordion.alpha.rounded.zoomer
+    .ui.accordion.alpha
         .title
             // a.ui.header.zoomer(href="/tasks" title='view all tasks')
             .ui.header.zoomer
@@ -397,7 +398,7 @@ template(name='hiring_interest')
                     if currentUser.admin_mode
                         i.ban.icon.clear_answer
 template(name='latest_notes')
-    .ui.accordion.alpha.rounded.zoomer 
+    .ui.accordion.alpha 
         .title 
             // a.ui.header.zoomer(href="/posts" title='view posts')
             .ui.header.zoomer(title='view posts')
@@ -423,7 +424,7 @@ template(name='view_button')
         i.large.chevron.right.icon
             
 template(name='latest_rentals')
-    .ui.accordion.alpha.rounded.zoomer
+    .ui.accordion.alpha
         .title
             // a.ui.header(href="/rentals" title='view rentals')
             .ui.header(title='view rentals')
