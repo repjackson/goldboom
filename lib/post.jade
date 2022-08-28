@@ -3,7 +3,7 @@ template(name='posts')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
-                +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
+                // +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
                 .ui.inline.header
                     +i name='news'
                     |{{comma total_post_count}}
@@ -73,10 +73,10 @@ template(name='posts')
                         // +session_icon_button key='view_mode' value='list' icon='list'
                         +sort_direction_toggle
                         +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
-                        // +session_set key='sort_key' value='comment_count' label='comments' icon='chat'
+                        +session_set key='sort_key' value='comment_count' label='comments' icon='chat'
                         // +session_set key='sort_key' value='domain' label='domain' icon='globe'
                         // +session_set key='sort_key' value='ups' label='ups' icon='thumbs up'
-                        // +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                        +session_set key='sort_key' value='points' label='points' icon='hashtag'
                     
                 if connected
                     // if searching 
@@ -113,8 +113,9 @@ template(name='post_item')
                     img.ui.image(src="{{c.url image_id width=600 height=600 crop='crop'}}")
             a.ui.inline.header.zoomer.fly_left(href="/post/#{_id}") !{title}
             +bu
-            |!{content} 
-            |!{body}
+            .smallscroll
+                |!{content} 
+                |!{body}
             .ui.label #{resident_username}
             .ui.label
                 i.comment.icon 
@@ -133,11 +134,7 @@ template(name='post_item')
 template(name='post_view')
     with current_doc
         if image_id
-            img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
-        else if watson.metadata.image
-            img.ui.fluid.image.checkin_banner(src=watson.metadata.image)
-        else
-            img.ui.fluid.image.checkin_banner(src=url)
+            img.ui.fluid.image.checkin_banner(src="{{c.url image_id width=1000 height=1000 crop='crop'}}")
         .ui.stackable.padded.grid 
             .eleven.wide.column
                 .ui.segment.alpha.scrollin
@@ -151,7 +148,6 @@ template(name='post_view')
                     if image_id 
                         +image_view key='image_id'
                     |!{body} !{content}
-                    +comments
             .five.wide.column
                 a.ui.compact.button.fly_left.zoomer(href="/posts" title='back to browse')
                     i.chevron.left.icon
@@ -176,6 +172,7 @@ template(name='post_view')
                     a.ui.large.label.zoomer.pick_flat_tag(title='search tag') #{this}
                 if group_id
                     +group_widget
+                +comments
             .sixteen.wide.column.scrollin
                 .ui.big.center.aligned.inline.header(class=emotion_color) 
                     if price
@@ -198,10 +195,10 @@ template(name='post_view')
 template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid 
-            .sixteen.wide.column
-                .ui.fluid.large.basic.red.button.cancel_note
-                    i.chevron.left.large.icon 
-                    |cancel
+            .eight.wide.column
+                // .ui.fluid.large.basic.red.button.cancel_note
+                //     i.chevron.left.large.icon 
+                //     |cancel
                 .spacer
                 if in_dev 
                     +print_this
@@ -209,8 +206,11 @@ template(name='post_edit')
                     +i name='pencil'
                     |editing note
                 +bu
-                .bigger
-                    +html_edit key='content'
+                +text_edit key='title' icon='header'
+                +image_edit key='image_id' 
+                // .bigger
+            .eight.wide.column
+                +html_edit key='content'
                 +boolean_edit key='pinned' label='pinned' icon='pin'
                 +boolean_edit key='private' label='private' icon='private'
                 if currentUser.admin_mode
@@ -218,7 +218,8 @@ template(name='post_edit')
                 a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post.fly_down(href="/post/#{_id}")
                     i.checkmark.big.icon
                     |submit
-                    
+                if can_edit 
+                    +remove_button
                     
                     
 template(name='post_edit2')

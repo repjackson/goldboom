@@ -89,13 +89,13 @@ template(name='shifts')
                         +print_this
                     else 
                         if staff_username
-                            .ui.big.label #{staff_username}
+                            .ui.label #{staff_username}
                         else 
                             .ui.header 
                                 i.alert.icon 
                                 |no one assigned
-                        .ui.big.label #{shift_type}
-                        .ui.big.label #{date} {{long_date date}}
+                        .ui.label #{shift_type}
+                        .ui.label #{date} {{long_date date}}
                         // +viewing_info
                         if is_assigned 
                             .ui.button.give_up

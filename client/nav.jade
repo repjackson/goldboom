@@ -97,6 +97,14 @@ template(name='nav')
             //     // i.large.exchange.icon
             //     +i name='cart'
             //     span.mobile.hidden.zoomer products
+            a.item.zoomer2.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
+                +i name='water'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden.zoomer readings
+            a.item.zoomer2.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
+                +i name='news'
+                span.mobile.hidden.zoomer #{global_stats_doc.post_count_total} posts
             a.zoomer2.item(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
                 // i.large.exchange.icon
                 +i name='campfire'
@@ -135,7 +143,7 @@ template(name='nav')
                 span.mobile.hidden.zoomer violations
                 
             a.item.zoomer2.clear_search(href="/guests" class="{{isActiveRoute 'guests'}}" title='guests')
-                +i name='amiable'
+                +i name='friends'
                 span.mobile.hidden.zoomer #{global_stats_doc.guest_count_total} guests
             a.item.zoomer2.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
                 +i name='car'
@@ -151,14 +159,6 @@ template(name='nav')
             //     // i.large.exchange.icon
             //     +i name='bell'
             //     span.mobile.hidden.zoomer services
-            a.item.zoomer2.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
-                +i name='water'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden.zoomer readings
-            a.item.zoomer2.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
-                +i name='news'
-                span.mobile.hidden.zoomer #{global_stats_doc.post_count_total} posts
 
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)

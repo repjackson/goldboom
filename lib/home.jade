@@ -164,6 +164,12 @@ template(name='contacts')
                     a.item.fly_right.zoomer(href="/user/#{username}") 
                         img.ui.avatar.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{first_name} #{last_name}
+                        .ui.label 
+                            i.phone.icon 
+                            |#{phone}
+                        .ui.label 
+                            i.envelope.icon 
+                            |#{email}
                         // |#{username}
 template(name='clockin')  
     .ui.segment.alpha

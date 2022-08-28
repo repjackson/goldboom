@@ -50,7 +50,7 @@ Meteor.users.find(_id:Meteor.userId()).observe({
 
 })
     
-Docs.find({model:'checkin'}).observe({
+Docs.find({model:'checkin',read_user_ids:$nin:[Meteor.userId()]}).observe({
     added: (new_doc)=>
         # if Meteor.userId() not in new_doc.read_user_ids
         $('body').toast({
@@ -62,7 +62,17 @@ Docs.find({model:'checkin'}).observe({
             position:'bottom right'
             # className:
             #     toast: 'ui massive message'
-            # displayTime: 5000
+            displayTime: 5000
+            actions:[{
+                text: 'mark read',
+                icon: 'eye',
+                class: 'fluid',
+                click: ()->
+                    Docs.update new_doc._id, 
+                        $addToSet:
+                            read_user_ids:Meteor.userId()
+                    $('body').toast({message:'marked read'});
+            }]
             transition:
               showMethod   : 'zoom',
               showDuration : 250,

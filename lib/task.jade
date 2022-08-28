@@ -1,12 +1,11 @@
 template(name='tasks')
     .ui.stackable.padded.grid 
-        .sixteen.wide.column
-            unless currentUser
-                +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
+        .four.wide.column
+            // unless currentUser
+            //     +set_route key='healthclub' label='back to kiosk' icon='home' cl='fluid big'
             .ui.inline.header 
                 +i name='tasks'
                 |#{artist_docs.count} tasks
-        .four.wide.column
             if current_search 
                 i.large.red.circular.link.remove.icon.clear
             .ui.large.input 
@@ -24,6 +23,7 @@ template(name='tasks')
             //     button.ui.circular.compact.black.button.pick_tag(tabindex="0" class=result_class title=count)
             //         |#{name}
             //         // small #{count}
+        .twelve.wide.column
             unless one_result
                 .ui.inline.header(title='result count') #{result_docs.count}
                 // +search_input key='title'
@@ -41,7 +41,6 @@ template(name='tasks')
                 +session_set key='limit' value=10
                 +session_set key='limit' value=25
                 +session_set key='limit' value=100
-        .twelve.wide.column
             if subs_ready
                 // if session_is 'view_mode' 'grid'
                 //     .ui.stackable.cards.scrolling
