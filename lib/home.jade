@@ -12,9 +12,9 @@ template(name='home')
                     .column
                         +your_tasks
                         +wywo
+                        +active_checkins
                         +staff_tasks
                         +staff_activity
-                        +active_checkins
                     .column
                         +hiring_interest
                         +kiosk_settings
@@ -95,6 +95,7 @@ template(name='wywo')
                         .ui.label #{unit_number}
                         .ui.label #{model}
                     +toggle_edit_button
+                    +read_info_small
           
           
 template(name='online_users')
@@ -232,6 +233,7 @@ template(name='staff_activity')
                         |#{task_title}
                         +author_info
                         |{{long_date _timestamp}}
+                        +read_info_small
     // .ui.inline.grey.header 
     //     // i.hiking.icon
     //     +i name='walking' classes='ui inline image'                
@@ -406,7 +408,7 @@ template(name='latest_rentals')
                         //     // |checkout
                 
 template(name='active_checkins')
-    .ui.accordion.alpha.rounded.zoomer 
+    .ui.accordion.alpha.rounded 
         .title
             // a.ui.header.zoomer(href="/checkins" title='view checkins')
             .ui.header.zoomer(title='view checkins')
@@ -451,7 +453,7 @@ template(name='read_info_small')
         i.grey.eye.icon 
         |#{views}
     |viewed by 
-    each viewers
+    each _viewers
         .ui.small.label #{name}
                     
 template(name='checkin_purpose_label')
@@ -474,12 +476,15 @@ template(name='latest_activity')
         .content
             .ui.divided.list.medscroll
                 each latest_docs 
-                    // a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
-                    a.ui.item.mark_read #{body} 
-                        small #{_when} by #{_author_username}
-                        // .ui.label #{type}
-                        .ui.label #{model}
-                        +view_info_small
+                    if is model 'checkin'
+                        +checkin_item_home
+                    else 
+                        // a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                        a.ui.item.mark_read #{body} 
+                            small #{_when} by #{_author_username}
+                            // .ui.label #{type}
+                            .ui.label #{model}
+                            +read_info_small
             .ui.small.header
                 +i name='history'
                 |latest logs
@@ -488,16 +493,9 @@ template(name='latest_activity')
                     a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
                         small #{_when} by #{_author_username}
                         .ui.label #{type}
-                        +view_info_small
+                        +read_info_small
                 
 
-template(name='view_info_small')
-    span(title='viewing info')
-        i.grey.eye.icon
-        |#{views}
-        each viewing_usernames
-            .ui.small.label #{this}
-                
                 
 template(name='latest_checkins')
     .ui.segment.alpha.rounded
@@ -507,23 +505,26 @@ template(name='latest_checkins')
             |latest checkins 
         .ui.selection.divided.list.medscroll
             each latest_checkin_docs 
-                // a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
-                .item
-                    if active
-                        i.large.green.checkmark.icon
-                    else 
-                        i.large.red.sign.out.alternate.icon
-                    |#{_when}
-                    |#{resident_username}
-                    with _resident
-                        +verification_label
-                    
-                    // +author_info
-                    if currentUser.admin_mode
-                        i.red.circular.remove.icon.delete_checkin
-                    a.ui.circular.icon.button.zoomer.fly_right(href="/checkin/#{_id}" title='view checkin')
-                        i.chevron.right.icon
+                +checkin_item
         
+template(name='checkin_item_home')
+    // a.item.fly_right(href="/checkin/#{_id}" title="view checkin") 
+    .item
+        if active
+            i.large.green.checkmark.icon
+        else 
+            i.large.red.sign.out.alternate.icon
+        |#{_when}
+        |#{resident_username}
+        with _resident
+            +verification_label
+        
+        // +author_info
+        if currentUser.admin_mode
+            i.red.circular.remove.icon.delete_checkin
+        a.ui.circular.icon.button.zoomer.fly_right(href="/checkin/#{_id}" title='view checkin')
+            i.chevron.right.icon
+
 template(name='verification_label')        
     if verified 
         .ui.image.large.label
