@@ -13,34 +13,44 @@ template(name='home')
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
                 .two.column.row
+                .three.column.row
                     .column
                         if currentUser.admin_mode
                             .ui.button.test 
                                 |test
-                        +search
+                        // +search
                         +pinned_posts
                     .column
-                        +shifts
-                .three.column.row
-                    .column
                         +latest_activity
+                    // .column
+                    //     +your_tasks
                     .column
-                        +your_tasks
                         +wywo
+                    .column
                         +active_checkins
+                    .column
                         +staff_tasks
+                    .column
                         +staff_activity
                     .column
                         +hiring_interest
+                    .column
                         +kiosk_settings
+                    .column
                         +latest_notes
+                    .column
                         +stats
+                    .column
                         +latest_requests
                         // +latest_rentals
                     .column     
                         +clockin
+                    .column
                         +contacts
+                    .column
                         +guest_block
+                    .column
+                        +shifts
                         // +admin
                     .column
                         iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
