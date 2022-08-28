@@ -69,7 +69,16 @@ if Meteor.isClient
                         hiring_interest:1
                         has_answered:1
             
-                
+    Template.home.events 
+        'click .test': ->
+            Notification.requestPermission().then((permission)=>
+                console.log permission
+                new Notification("Hi there!")
+                console.log typeof permission
+                if permission is "granted"
+                    new Notification("Hi there!")
+            )
+
 if Meteor.isServer 
     Meteor.publish 'answered_users', ->
         Meteor.users.find 

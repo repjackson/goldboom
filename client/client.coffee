@@ -27,28 +27,50 @@ Meteor.startup ->
     
 
 
-# Meteor.users.find(_id:Meteor.userId()).observe({
-#     changed: (new_doc, old_doc)->
-#         difference = new_doc.points-old_doc.points
-#         if difference > 0
-#             $('body').toast({
-#                 title: "#{new_doc.points-old_doc.points}p earned"
-#                 # message: 'Please see desk staff for key.'
-#                 class : 'success'
-#                 showIcon:'hashtag'
-#                 # showProgress:'bottom'
-#                 position:'bottom right'
-#                 # className:
-#                 #     toast: 'ui massive message'
-#                 # displayTime: 5000
-#                 transition:
-#                   showMethod   : 'zoom',
-#                   showDuration : 250,
-#                   hideMethod   : 'fade',
-#                   hideDuration : 250
-#                 })
+Meteor.users.find(_id:Meteor.userId()).observe({
+    changed: (new_doc, old_doc)->
+        difference = new_doc.points-old_doc.points
+        if difference > 0
+            $('body').toast({
+                title: "#{new_doc.points-old_doc.points}p earned"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'hashtag'
+                # showProgress:'bottom'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
 
-# })
+})
+    
+Docs.find({model:'checkin'}).observe({
+    added: (new_doc)=>
+        # if Meteor.userId() not in new_doc.read_user_ids
+        $('body').toast({
+            title: "#{new_doc.resident_username} ##{new_doc.building_number} ##{new_doc.unit_number} checked in"
+            # message: 'Please see desk staff for key.'
+            class : 'success'
+            showIcon:'checkmark'
+            # showProgress:'bottom'
+            position:'bottom right'
+            # className:
+            #     toast: 'ui massive message'
+            # displayTime: 5000
+            transition:
+              showMethod   : 'zoom',
+              showDuration : 250,
+              hideMethod   : 'fade',
+              hideDuration : 250
+            })
+
+})
     
     
     

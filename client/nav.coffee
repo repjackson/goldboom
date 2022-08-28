@@ -54,7 +54,9 @@ Template.nav_item.events
         picked_tags.clear()
 Template.nav.onCreated ->
     Session.setDefault 'limit', 20
+    
     @autorun -> Meteor.subscribe 'me', ->
+    @autorun -> Meteor.subscribe 'active_checkins', ->
     # @autorun -> Meteor.subscribe 'all_users_min', ->
     @autorun -> Meteor.subscribe 'model_docs','stats', ->
     # @autorun -> Meteor.subscribe 'model_docs','group', ->
