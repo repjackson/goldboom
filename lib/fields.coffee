@@ -322,7 +322,7 @@ if Meteor.isClient
                     $set:"#{@key}":val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -402,7 +402,7 @@ if Meteor.isClient
                         $unset:"#{@key}":1
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -499,7 +499,7 @@ if Meteor.isClient
                     $set:"#{@key}":textarea_val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -524,7 +524,7 @@ if Meteor.isClient
                     $set:"#{@key}":textarea_val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -550,13 +550,32 @@ if Meteor.isClient
                     $set:"#{@key}":val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
                 position: "bottom right"
             )
         , 500)
+        'blur .edit_text': (e,t)->
+            val = t.$('.edit_text').val()
+            parent = Template.parentData()
+    
+            doc = Docs.findOne parent._id
+            if doc
+                Docs.update parent._id,
+                    $set:"#{@key}":val
+            else 
+                Meteor.users.update parent._id, 
+                    $set:"#{@key}":val
+            $('body').toast(
+                showIcon: 'checkmark'
+                message: "#{@label} saved"
+                # showProgress: 'bottom'
+                class: 'success'
+                displayTime: 'auto',
+                position: "bottom right"
+            )
 
     Template.location_edit.events
         'blur .edit_text': (e,t)->
@@ -572,7 +591,7 @@ if Meteor.isClient
                     $set:"#{@key}":val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -602,7 +621,7 @@ if Meteor.isClient
                     $set:"#{@key}":val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -622,7 +641,7 @@ if Meteor.isClient
                     $set:"#{@key}":val
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -673,7 +692,7 @@ if Meteor.isClient
             # Meteor.call 'calc_user_points', ->
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -698,7 +717,7 @@ if Meteor.isClient
                     $set:"#{@key}":!parent["#{@key}"]
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -787,7 +806,7 @@ if Meteor.isClient
                         $set: "#{ref_field.key}": @slug
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',
@@ -862,7 +881,7 @@ if Meteor.isClient
                         $addToSet: "#{ref_field.key}": @slug
             $('body').toast(
                 showIcon: 'checkmark'
-                message: "#{@key} saved"
+                message: "#{@label} saved"
                 # showProgress: 'bottom'
                 class: 'success'
                 displayTime: 'auto',

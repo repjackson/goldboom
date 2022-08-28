@@ -9,11 +9,10 @@ template(name='buildings')
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             // +search_input key='title'
-            // +session_icon_button key='view_mode' value='grid' icon='th' 
-            // +session_icon_button key='view_mode' value='list' icon='list'
+            +session_icon_button key='view_mode' value='grid' icon='th' 
+            +session_icon_button key='view_mode' value='list' icon='list'
             
             +sort_direction_toggle
-            // +sort_key_toggle
             // +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
             +session_set key='sort_key' value='building_number' label='building #' icon='apartment'
             +session_set key='sort_key' value='building_letter' label='letter' icon='header'
@@ -26,19 +25,19 @@ template(name='buildings')
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
             if subs_ready
-                // if session_is 'view_mode' 'grid'
-                //     if one_result
-                //         .ui.stackable.centered.one.cards
-                //             each building_docs
-                //                 +building_card
-                //     else
-                //         .ui.stackable.centered.centered.cards
-                //             each building_docs
-                //                 +building_card
-                // else
-                .ui.divided.selection.animated.list.scrolling
-                    each building_docs
-                        +building_item
+                if session_is 'view_mode' 'grid'
+                    if one_result
+                        .ui.stackable.centered.one.cards.scrolling
+                            each building_docs
+                                +building_card
+                    else
+                        .ui.stackable.centered.centered.cards.scrolling
+                            each building_docs
+                                +building_card
+                else
+                    .ui.divided.selection.animated.list.scrolling
+                        each building_docs
+                            +building_item
 
 template(name='building_item')
     // a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
@@ -47,12 +46,45 @@ template(name='building_item')
             img.ui.small.inline.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
             .ui.inline.header #{building_letter}:
             .ui.inline.header ##{building_number}
+            div
+            .ui.inline.small.gray.header 
+                i.cube.icon
+                |#{unit_count} units
+            each units 
+                .ui.label ##{unit_number}
+            .ui.inline.small.gray.header 
+                i.users.icon
+                |#{resident_count} residents
+            // each units 
+            //     .ui.label ##{unit_number}
+            .ui.inline.small.gray.header 
+                i.money.icon
+                |owners
+            // each doc_owners 
+            //     .ui.label ##{unit_number}
+            .ui.inline.small.gray.header 
+                i.exclamation.icon
+                |violations
+            // each doc_violations 
+            //     .ui.label ##{unit_number}
+            if currentUser.admin_mode 
+                +edit_button
+            // a.ui.icon.button(href="/building/#{building_number}" title='view')
+            // a.ui.icon.button(href="/building/#{_id}" title='view')
+            //     i.chevron.right.large.icon
+template(name='building_card')
+    // a.ui.item.zoomer.fly_right(class=product_card_class title=ingredients href="/building/#{building_number}")
+    a.ui.card.zoomer.fly_right.calc_building_stats(class=building_item_class href="/building/#{_id}")
+        img.ui.image.zoomer(src="{{c.url image_id width=500 crop='lpad'}}")
+        .content
+            .ui.inline.header #{building_letter}:
+            .ui.inline.header ##{building_number}
             .ui.inline.header 
                 i.cube.icon
                 |#{unit_count} units
             each units 
                 .ui.label ##{unit_number}
-            .ui.inline.small.grey.header 
+            .ui.inline.small.gray.header 
                 i.users.icon
                 |#{resident_count} residents
             // each units 
@@ -126,6 +158,12 @@ template(name='building_segment')
         a.ui.header.zoomer.fly_up(href="/#{key}s")
             +i name=icon
             |#{key}s
+        .ui.selection.animated.list 
+            each child_docs
+                if is model 'unit'
+                    +building_unit_item
+                else 
+                    .item #{model} #{_when}
                 
 template(name='building_units')                
     .ui.segment.alpha
@@ -139,6 +177,12 @@ template(name='building_units')
                     .ui.inline.header #{unit_number}
         if is_springdale
             +building_permits
+
+template(name='building_unit_item')
+    a.item(href="/unit/#{_id}") 
+        img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+        .ui.inline.header #{unit_number}
+
 
             
 template(name='building_permits')            

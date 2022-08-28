@@ -14,8 +14,9 @@ template(name='home')
             .ui.stackable.padded.grid.blackbg.scrolling
                 .one.column.row
                     .column
-                        .ui.button.test 
-                            |test
+                        if currentUser.admin_mode
+                            .ui.button.test 
+                                |test
                         +search
                         +pinned_posts
                     .column
@@ -85,6 +86,7 @@ template(name='pinned_posts')
             .ui.cards 
                 each pinned_post_docs
                     .card
+                        img.ui.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
                         .content.smallscroll
                             .header #{title}
                             |!{body}

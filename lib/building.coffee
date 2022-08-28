@@ -12,7 +12,8 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number, ->
         # @autorun => Meteor.subscribe 'building_by_number', Router.current().params.building_number, ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'unit', 100, ->
+        # @autorun => Meteor.subscribe 'model_docs', 'unit', 100, ->
+        @autorun => Meteor.subscribe 'building_child_docs', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'building_residents', Router.current().params.doc_id, ->
     Template.building_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
@@ -30,6 +31,11 @@ if Meteor.isClient
                     model:'building'
             Router.go "/building/#{new_id}/edit"
 if Meteor.isServer
+    Meteor.publish 'building_child_docs', (building_id)->
+        building = Docs.findOne building_id
+        Docs.find 
+            model:$in:['violation','space','unit','permit']
+            building_number:building.building_number
     Meteor.methods 
         calc_building_stats: (building_id)->
             building = Docs.findOne building_id
@@ -90,6 +96,22 @@ if Meteor.isClient
                 Meteor.users.find {
                     building_number:building.building_number
                 }, sort: unit_number:1
+                    # building_slug:Router.current().params.building_number
+    Template.building_segment.helpers
+        child_docs: ->
+            console.log @
+            building = Docs.findOne Router.current().params.doc_id
+            if building
+                if @key is 'unit'
+                    Docs.find {
+                        model:@key
+                        building_number:building.building_number
+                    }, sort:unit_number:-1
+                else 
+                    Docs.find {
+                        model:@key
+                        building_number:building.building_number
+                    }, sort:_timestamp:-1
                     # building_slug:Router.current().params.building_number
 
     Template.buildings.events
