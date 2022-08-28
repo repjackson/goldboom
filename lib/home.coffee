@@ -71,13 +71,17 @@ if Meteor.isClient
             
     Template.home.events 
         'click .test': ->
-            Notification.requestPermission().then((permission)=>
-                console.log permission
-                new Notification("Hi there!")
-                console.log typeof permission
-                if permission is "granted"
-                    new Notification("Hi there!")
-            )
+            # Notification.requestPermission().then((permission)=>
+            #     console.log permission
+            #     console.log typeof permission
+            #     if permission is "granted"
+            #         new Notification("Hi there!")
+            # )
+            new Notification("Hi there!", {
+                body: 'This is a JavaScript Notification API demo',
+                # icon: './img/js.png',
+                vibrate: true
+            })
 
 if Meteor.isServer 
     Meteor.publish 'answered_users', ->

@@ -682,7 +682,7 @@ if Meteor.isClient
             if Session.equals(@key,@value)
                 res += ' active  big '
             else 
-                res += 'black '
+                res += 'basic '
             res
 
         is_active: -> Session.equals(@key,@value)

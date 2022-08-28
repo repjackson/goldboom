@@ -20,13 +20,40 @@ if Meteor.isClient
 
     Template.buildings.onRendered ->
 
+    Template.building_item.events
+        'click .calc_building_stats': ->
+            Meteor.call 'calc_building_stats', @_id, ->
     Template.buildings.events
         'click .add_building': ->
             new_id = 
                 Docs.insert 
                     model:'building'
             Router.go "/building/#{new_id}/edit"
-            
+if Meteor.isServer
+    Meteor.methods 
+        calc_building_stats: (building_id)->
+            building = Docs.findOne building_id
+            unit_count = 
+                Docs.find(
+                    model:'unit'
+                    building_number:building.building_number
+                ).count()
+            resident_count = 
+                Meteor.users.find(
+                    building_number:building.building_number
+                ).count()
+            task_count = 
+                Docs.find(
+                    model:'task'
+                    building_number:building.building_number
+                ).count()
+            Docs.update building_id, 
+                $set:
+                    unit_count:unit_count
+                    resident_count:resident_count
+                    task_count:task_count
+                    
+if Meteor.isClient
     Template.buildings.helpers
         building_docs: ->
             Docs.find {

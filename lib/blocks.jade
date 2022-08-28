@@ -47,11 +47,11 @@ template(name='building_facet')
 
 template(name='bu')
     if building_number
-        span.ui.basic.image.large.inverted.label
+        span.ui.basic.image.large.label
             +i name='building'
             |#{building_number}
     if unit_number
-        span.ui.basic.image.large.inverted.label
+        span.ui.basic.image.large.label
             +i name='room'
             // i.large.cube.icon
             |#{unit_number}
