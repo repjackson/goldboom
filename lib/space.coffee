@@ -27,19 +27,6 @@ if Meteor.isClient
                 
                 
                 
-    Template.doc_residents.onCreated ->
-        @autorun => Meteor.subscribe 'doc_residents', Router.current().params.doc_id
-    Template.doc_residents.helpers
-        doc_resident_docs: ->
-            space =
-                Docs.findOne
-                    _id: Router.current().params.doc_id
-            if space
-                Meteor.users.find
-                    # roles:$in:['resident','owner']
-                    # owner:$ne:true
-                    building_number:space.building_number
-                    space_number:space.space_number
 
 
     Template.space_view.helpers

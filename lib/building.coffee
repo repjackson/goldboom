@@ -11,8 +11,9 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'building', Router.current().params.building_number, ->
         # @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number, ->
         # @autorun => Meteor.subscribe 'building_by_number', Router.current().params.building_number, ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'model_docs', 'unit', 100, ->
+        @autorun => Meteor.subscribe 'building_residents', Router.current().params.doc_id, ->
     Template.building_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'building_units', Router.current().params.building_number
@@ -55,6 +56,14 @@ if Meteor.isClient
                 model:'unit'
             }, sort: unit_number:1
                 # building_slug:Router.current().params.building_number
+    Template.building_residents.helpers
+        building_resident_docs: ->
+            building = Docs.findOne Router.current().params.doc_id
+            if building
+                Meteor.users.find {
+                    building_number:building.building_number
+                }, sort: unit_number:1
+                    # building_slug:Router.current().params.building_number
 
     Template.buildings.events
         'mouseenter .home_segment': (e,t)->
@@ -100,9 +109,11 @@ if Meteor.isServer
             model:'building'
             building_number:parseInt(building_number)
 
-    Meteor.publish 'building_residents', (building_number)->
-        Meteor.users.find
-            building_number:parseInt(building_number)
+    Meteor.publish 'building_residents', (building_doc_id)->
+        building = Docs.findOne building_doc_id
+        if building
+            Meteor.users.find
+                building_number:building.building_number
 
 
     Meteor.publish 'building_units', (building_number)->

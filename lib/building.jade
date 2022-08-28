@@ -74,6 +74,8 @@ template(name='building_item')
 
 template(name='building_view')
     with current_doc
+        img.ui.fluid.image.checkin_banner(src="{{c.url image_id width=1000 height=1000 crop='crop'}}" class=darkmode_class)
+    
         .ui.stackable.padded.three.column.grid
             .column
                 a.ui.big.button(href="/buildings")
@@ -95,7 +97,7 @@ template(name='building_view')
                 .ui.header 
                     |building letter: #{building_letter}
             .column
-                +doc_residents
+                +building_residents
             .column
                 +building_segment key='unit' icon='room'
             .column
@@ -117,12 +119,6 @@ template(name='building_view')
                 
                 
                 
-template(name='doc_residents') 
-    .ui.header 
-        +i name='groups'
-        |residents
-    each child_residents 
-        .ui.header #{username}
                 
 template(name='building_segment')
     .ui.segment.alpha 
@@ -196,18 +192,18 @@ template(name='building_residents')
         .ui.header
             +i name='groups'
             // i.users.icon
-            |building residents
-        .ui.list
+            |#{building_resident_docs.count} building residents
+        .ui.selection.animatd.list.medscroll
             each building_resident_docs
-                .ui.item
+                a.ui.item.fly_right.zoomer(href="/user/#{username}" title='view profile')
                     img.ui.tiny.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     .content
                         a.header.fly_right(href="/user/#{username}")
                              |#{first_name} #{last_name} 
                             .meta @#{username}
-                            .meta 
-                                i.calendar.icon(title='expiration date')
-                                |#{expiration_date}
+                            // .meta 
+                            //     i.calendar.icon(title='expiration date')
+                            //     |#{expiration_date}
                             //- +array_view key='tags' label='Tags' 
 
 
