@@ -207,7 +207,7 @@ if Meteor.isServer
         # if username_search
         #     match.username = {$regex:"#{username_search}", $options: 'i'}
         Docs.find(match,{ 
-            limit:42, 
+            limit:limit, 
             sort:
                 "#{sort_key}":sort_direction
             # fields:

@@ -338,4 +338,7 @@ Meteor.publish 'inline_doc', (slug)->
     Docs.find
         model:'inline_doc'
         slug:slug
+Meteor.publish 'staff_users', ()->
+    Meteor.find
+        is_staff:true
 
