@@ -1,19 +1,45 @@
 template(name='keys')
     .ui.stackable.padded.grid
         // if currentUser
-        .sixteen.wide.column
+        .four.wide.column
             .ui.inline.header 
                 +i name='key'
                 |#{key_docs.count}
                 |keys
             if currentUser 
-                +add_button model='key'
+                .ui.button.add_key
+                    i.plus.icon 
+                    |key
             // .ui.icon.fluid.input 
             //     i.hashtag.icon
             //     input.search_key_number(type='text' placeholder='number')
             // .ui.icon.fluid.input 
             //     i.building.icon
             //     input.search_building_number(type='text' placeholder='building')
+            div
+            .ui.inline.header
+                +i name='apartment'
+                |buildings
+            if picked_buildings
+                each picked_buildings
+                    .unpick_building.ui.primary.compact.button
+                        strong #{this}
+            each building_results
+                .ui.compact.button.pick_building(class=cloud_tag_class) 
+                    strong #{name}
+            div
+            .ui.inline.header
+                +i name='room'
+                |units
+            if picked_units
+                each picked_units
+                    .unpick_unit.ui.primary.compact.button
+                        strong #{this}
+            each unit_results
+                .ui.compact.button.pick_unit(class=cloud_tag_class) 
+                    strong #{name}
+
+        .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
             // +search_input key='address'
             +sort_direction_toggle
@@ -26,14 +52,13 @@ template(name='keys')
             // +session_set key='limit' value=10
             // +session_set key='limit' value=25
             // +session_set key='limit' value=100
-
-        .sixteen.wide.column.scrolling
-            if subs_ready
-                .ui.divided.selection.animated.list
-                    each key_docs
-                        +key_item
-                // .ui.five.inverted.doubling.cards
-                // .ui.five.column.stackable.grid
+            .scrolling
+                if subs_ready
+                    .ui.divided.selection.animated.list
+                        each key_docs
+                            +key_item
+                    // .ui.five.inverted.doubling.cards
+                    // .ui.five.column.stackable.grid
         // else 
         //     .sixteen.wide.centered.column
         //         +login
@@ -45,31 +70,32 @@ template(name='key_item')
         // .ui.inline.header ##{key_number}
         img.ui.tiny.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
         // .content
-        .ui.inline.header 
-            // i.key.icon
-            |##{keytag_number}
-        if building_letter 
-            .ui.big.label(title='letter') #{building_letter}
-        if key_residents
-            .ui.large.label
-                +i name='groups'
-                each key_residents 
-                    |#{username}
-        .ui.massive.circular.label.invert(class=color)
-            // |#{color}
-        .ui.inline.header 
-            |#{description}
-        // +when
-        // +user_info
-        // if checked_out
-        //     .ui.label 
-        //         |checked out
-        // else
-        //     .ui.green.label 
-        //         |checked in
-        // if currentUser.admin_mode
-        span
-            +bu         
+        .content
+            .ui.inline.header 
+                // i.key.icon
+                |##{keytag_number}
+            if building_letter 
+                .ui.big.label(title='letter') #{building_letter}
+            if key_residents
+                .ui.large.label
+                    +i name='groups'
+                    each key_residents 
+                        |#{username}
+                .ui.massive.circular.label(class=color)
+                    // |#{color}
+                .ui.inline.header 
+                    |#{description}
+            +when
+                   
+            // +user_info
+            // if checked_out
+            //     .ui.label 
+            //         |checked out
+            // else
+            //     .ui.green.label 
+            //         |checked in
+            // if currentUser.admin_mode
+            +bu
             +author_info
             if currentUser.admin_mode
                 +edit_button

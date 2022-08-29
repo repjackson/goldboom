@@ -566,7 +566,8 @@ if Meteor.isServer
             model:'checkin'
             active:true
             _timestamp:$gt:yesterday
-        }
-            
+        }, 
+            limit:20
+            sort:_timestamp:-1
             
             
