@@ -261,7 +261,9 @@ template(name='footer_chat')
                 if author
                     img.ui.avatar.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |#{body}
-                small #{_when}
+                small #{_when} by 
+                a(href="/user/#{_author_username")
+                    |#{_author.name}
                 if is_author
                     span
                         i.remove.link.icon.remove_message.zoomer(title='delete message')

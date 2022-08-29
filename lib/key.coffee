@@ -1,10 +1,11 @@
-Router.route '/keys', -> @render 'keys'
-Router.route '/key', -> @render 'keys'
-Router.route '/key/:doc_id', -> @render 'key_view'
-Router.route '/key/:doc_id/edit', -> @render 'key_edit'
-
-
 if Meteor.isClient
+    Router.route '/keys', -> @render 'keys'
+    Router.route '/key', -> @render 'keys'
+    Router.route '/key/:doc_id', -> @render 'key_view'
+    Router.route '/key/:doc_id/edit', -> @render 'key_edit'
+
+
+    @picked_colors = new ReactiveArray []
     Template.keys.onCreated ->
         document.title = 'gr keys'
         Session.setDefault('sort_key','_timestamp')
@@ -16,12 +17,14 @@ if Meteor.isClient
             Session.get('unit_number')
             picked_buildings.array()
             picked_units.array()
+            picked_colors.array()
             , ->
         @autorun => Meteor.subscribe 'keys_pub', 
             Session.get('building_number')
             Session.get('unit_number')
             picked_buildings.array()
             picked_units.array()
+            picked_colors.array()
             # picked_user_tags.array()
             Session.get('sort_key')
             Session.get('sort_direction')
@@ -52,11 +55,15 @@ if Meteor.isClient
         picked_buildings: -> picked_buildings.array()
         unit_results: -> Results.find model:'unit_tag'
         picked_units: -> picked_units.array()
+        color_results: -> Results.find model:'color_tag'
+        picked_colors: -> picked_colors.array()
     Template.keys.events
         'click .pick_building': -> picked_buildings.push @name
         'click .unpick_building': -> picked_buildings.remove @valueOf()
         'click .pick_unit': -> picked_units.push @name
         'click .unpick_unit': -> picked_units.remove @valueOf()
+        'click .pick_color': -> picked_colors.push @name
+        'click .unpick_color': -> picked_colors.remove @valueOf()
 
 
 
@@ -118,6 +125,7 @@ if Meteor.isServer
         unit_number
         picked_buildings=[]
         picked_units=[]
+        picked_colors=[]
         )->
         # user = Meteor.users.findOne @userId
         # current_herd = user.profile.current_herd
@@ -130,26 +138,27 @@ if Meteor.isServer
             match.building_number = $all: picked_buildings
         if picked_units.length > 0
             match.unit_number = $all: picked_units
+        if picked_colors.length > 0
+            match.color = $all: picked_colors
             
         count = Docs.find(match).count()
-        # cloud = Meteor.users.aggregate [
-        #     { $match: match }
-        #     { $project: tags: 1 }
-        #     { $unwind: "$tags" }
-        #     { $group: _id: '$tags', count: $sum: 1 }
-        #     { $match: _id: $nin: picked_tags }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $match: count: $lt: count }
-        #     { $limit: 20 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # cloud.forEach (tag, i) ->
-    
-        #     self.added 'results', Random.id(),
-        #         name: tag.name
-        #         count: tag.count
-        #         model:'user_tag'
-        #         index: i
+        color_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: color: 1 }
+            # { $unwind: "$tags" }
+            { $group: _id: '$color', count: $sum: 1 }
+            { $match: _id: $nin: picked_colors }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        color_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'color_tag'
+                index: i
         building_cloud = Docs.aggregate [
             { $match: match }
             { $project: building_number: 1 }
@@ -193,6 +202,7 @@ if Meteor.isServer
         unit_number, 
         picked_buildings=[], 
         picked_units=[], 
+        picked_colors=[]
         # picked_user_tags=[], 
         # view_friends=false
         sort_key='points'
@@ -204,6 +214,7 @@ if Meteor.isServer
         #     match._id = $in: Meteor.user().friend_ids
         if picked_buildings.length > 0 then match.building_number = $all:picked_buildings 
         if picked_units.length > 0 then match.unit_number = $all:picked_units
+        if picked_colors.length > 0 then match.color_number = $all:picked_colors
         # if username_search
         #     match.username = {$regex:"#{username_search}", $options: 'i'}
         Docs.find(match,{ 

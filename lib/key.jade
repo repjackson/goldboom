@@ -38,6 +38,16 @@ template(name='keys')
             each unit_results
                 .ui.compact.button.pick_unit(class=cloud_tag_class) 
                     strong #{name}
+            div
+            .ui.inline.header
+                +i name='color-wheel'
+                |colors
+            each picked_colors
+                .unpick_color.ui.compact.button(class=this)
+                    strong #{this}
+            each color_results
+                .ui.compact.basic.button.pick_color(class=name) 
+                    strong #{name}
 
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
@@ -49,6 +59,7 @@ template(name='keys')
             // +session_set key='sort_key' value='views' label='views' icon='eye'
             +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
             +session_set key='sort_key' value='keytag_number' label='tag #' icon='key'
+            +session_set key='sort_key' value='color' label='color' icon='rainbow'
             +session_set key='limit' value=10
             +session_set key='limit' value=25
             +session_set key='limit' value=100
@@ -59,13 +70,15 @@ template(name='keys')
                             +key_item
                     // .ui.five.inverted.doubling.cards
                     // .ui.five.column.stackable.grid
+                else 
+                    i.massive.circular.loading.refresh.icon
         // else 
         //     .sixteen.wide.centered.column
         //         +login
             
 template(name='key_item')
-    // a.ui.inverted.segment.fly_right(href="/key/#{_id}" class=color) 
-    .ui.item(class=color) 
+    // .ui.item(class=color) 
+    a.ui.item.fly_right(href="/key/#{_id}" class=color) 
         // .ui.inline.header #{address}
         // .ui.inline.header ##{key_number}
         img.ui.tiny.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
@@ -88,12 +101,12 @@ template(name='key_item')
             +when
                    
             // +user_info
-            // if checked_out
-            //     .ui.label 
-            //         |checked out
-            // else
-            //     .ui.green.label 
-            //         |checked in
+            if checked_out
+                .ui.big.circular.label(title='status') 
+                    |out
+            else
+                .ui.green.big.circular.label(title='status')
+                    |in
             // if currentUser.admin_mode
             +bu
             +author_info
