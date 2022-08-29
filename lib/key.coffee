@@ -214,7 +214,7 @@ if Meteor.isServer
         #     match._id = $in: Meteor.user().friend_ids
         if picked_buildings.length > 0 then match.building_number = $all:picked_buildings 
         if picked_units.length > 0 then match.unit_number = $all:picked_units
-        if picked_colors.length > 0 then match.color_number = $all:picked_colors
+        if picked_colors.length > 0 then match.color = $all:picked_colors
         # if username_search
         #     match.username = {$regex:"#{username_search}", $options: 'i'}
         Docs.find(match,{ 

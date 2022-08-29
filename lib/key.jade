@@ -7,7 +7,7 @@ template(name='keys')
                 |#{key_docs.count}
                 |keys
             if currentUser 
-                .ui.icon.big.button.add_key(title='add key')
+                .ui.icon.big.basic.circular.button.add_key(title='add key')
                     i.plus.green.icon 
                     // |key
             // .ui.icon.fluid.input 
@@ -20,24 +20,24 @@ template(name='keys')
             .ui.inline.header
                 +i name='apartment'
                 |buildings
-            if picked_buildings
-                each picked_buildings
-                    .unpick_building.ui.primary.compact.button
-                        strong #{this}
+            each picked_buildings
+                .unpick_building.ui.primary.compact.button
+                    strong #{this}
             each building_results
-                .ui.compact.button.pick_building(class=cloud_tag_class) 
+                .ui.compact.circular.basic.button.pick_building(class=cloud_tag_class) 
                     strong #{name}
+                    small (#{count})
             div
             .ui.inline.header
                 +i name='room'
                 |units
-            if picked_units
-                each picked_units
-                    .unpick_unit.ui.primary.compact.button
-                        strong #{this}
+            each picked_units
+                .unpick_unit.ui.primary.compact.button
+                    strong #{this}
             each unit_results
-                .ui.compact.button.pick_unit(class=cloud_tag_class) 
+                .ui.compact.basic.button.pick_unit(class=cloud_tag_class) 
                     strong #{name}
+                    small (#{count})
             div
             .ui.inline.header
                 +i name='color-wheel'
@@ -48,6 +48,7 @@ template(name='keys')
             each color_results
                 .ui.compact.basic.button.pick_color(class=name) 
                     strong #{name}
+                    small (#{count})
 
         .twelve.wide.column
             .ui.inline.header(title='result count') #{result_docs.count}
@@ -95,7 +96,7 @@ template(name='key_item')
                     each key_residents 
                         |#{username}
                 .ui.massive.circular.label(class=color)
-                    // |#{color}
+                    |#{color}
                 .ui.inline.header 
                     |#{description}
             +when
