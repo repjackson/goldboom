@@ -173,6 +173,7 @@ template(name='footer')
         .ui.fluid.segment.stackable.grid.alpha
             .two.column.row
                 .column
+                    +footer_chat
                     // .ui.accordion
                     //     .title.zoomer
                     //         .ui.small.inline.header 
@@ -248,21 +249,21 @@ template(name='my_latest_activity')
 
                 
 template(name='footer_chat')
-    .ui.grey.inline.header 
-        i.outline.comments.icon
-        |chat
+    // .ui.grey.inline.header 
+    //     i.outline.comments.icon
+    //     |chat
+    .ui.bottom.attached.fluid.icon.input
+        i.plus.chat.large.icon
+        input.new_footer_chat_message(type='text' placeholder='quick chat')
     .ui.list.scroll
         each chat_messages
-            .item(title="by #{author.name} #{when}")
+            .item(title="by #{_author.name} #{_when}")
                 if author
-                    img.ui.avatar.image(src="{{c.url author.kiosk_photo width=200 height=200 gravity='face' crop='fill'}}")
-                |#{text}
-                //- small #{when}
+                    img.ui.avatar.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                |#{body}
+                small #{_when}
                 if is_author
                     span
-                        i.remove.link.icon.remove_message
-    .ui.bottom.attached.fluid.icon.input
-        i.plus.blue.icon
-        input.new_footer_chat_message(type='text' placeholder='add message')
+                        i.remove.link.icon.remove_message.zoomer(title='delete message')
 
 

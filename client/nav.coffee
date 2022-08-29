@@ -64,6 +64,26 @@ Template.nav.onCreated ->
     @autorun -> Meteor.subscribe 'staff_users', ->
 
 
+Template.footer_chat.onCreated ->
+    @autorun -> Meteor.subscribe 'model_docs','chat_message', ->
+Template.footer_chat.helpers
+    chat_messages: ->
+        Docs.find {
+            model:'chat_message'
+        }, sort:_timestamp:-1
+Template.footer_chat.events
+    'click  .remove_message': (e)->
+        if confirm "delete message? can't be undone"
+            Docs.remove @_id
+    'keyup .new_footer_chat_message': (e)->
+        if e.which is 13
+            val = $('.new_footer_chat_message').val()
+            new_message = 
+                Docs.insert 
+                    model:'chat_message'
+                    body:val
+            val = $('.new_footer_chat_message').val('')
+                
 Template.nav.events
     'click .clear_read': ->
         $('.ui.toast').toast('close')
