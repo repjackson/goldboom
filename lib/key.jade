@@ -7,9 +7,9 @@ template(name='keys')
                 |#{key_docs.count}
                 |keys
             if currentUser 
-                .ui.button.add_key
-                    i.plus.icon 
-                    |key
+                .ui.icon.big.button.add_key(title='add key')
+                    i.plus.green.icon 
+                    // |key
             // .ui.icon.fluid.input 
             //     i.hashtag.icon
             //     input.search_key_number(type='text' placeholder='number')
@@ -157,7 +157,7 @@ template(name='unit_nav_button')
             
 template(name='key_edit')         
     with current_doc
-        .ui.padded.one.column.centered.grid
+        .ui.padded.two.column.centered.stackable.grid
             .column
                 a.ui.big.icon.green.button(href="/key/#{_id}")
                     i.checkmark.big.icon
@@ -170,17 +170,19 @@ template(name='key_edit')
                 div
                 +number_edit key='building_number' label='building number' icon='building'
                 div
-                +image_edit key='image_id' label='image'
-                div
                 +text_edit key='building_letter' label='building_letter' icon='building'
                 div
+            .column
+                +image_edit key='image_id' label='image'
                 div
-                +key_value_edit key='color' label='blue' value='blue' color='blue'
-                +key_value_edit key='color' label='red' value='red' color='red'
-                +key_value_edit key='color' label='green' value='green'  color='green'
-                +key_value_edit key='color' label='orange' value='orange' color='orange'
-                +key_value_edit key='color' label='black' value='black'  color='black'
-                +key_value_edit key='color' label='yellow' value='yellow' color='yellow'
+                div
+                div
+                +key_value_edit key='color' label='blue' value='blue' color='blue' cl='bigger'
+                +key_value_edit key='color' label='red' value='red' color='red' cl='bigger'
+                +key_value_edit key='color' label='green' value='green'  color='green' cl='bigger'
+                +key_value_edit key='color' label='orange' value='orange' color='orange' cl='bigger'
+                +key_value_edit key='color' label='black' value='black'  color='black' cl='bigger'
+                +key_value_edit key='color' label='yellow' value='yellow' color='yellow' cl='bigger'
                 +textarea_edit key='description' label='description' 
                 if currentUser.admin_mode
                     +delete_button
