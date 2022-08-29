@@ -147,7 +147,7 @@ if Meteor.isClient
     Template.staff_tasks.onCreated ->
         # @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'task', 20, ->
-        @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 20, ->
+        @autorun => Meteor.subscribe 'latest_model_docs', 'completed_staff_task', 15, ->
     Template.staff_tasks.events
         'keyup .task_quickadd': (e)->
             if e.which is 13 
@@ -499,9 +499,11 @@ if Meteor.isClient
                 limit:10
                 sort:_timestamp:-1
         log_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'log'
-            
+            }, 
+                limit:10
+                sort:_timestamp:-1
     Template.latest_checkins.events 
         'click .delete_checkin': -> 
             if confirm 'delete checkin?'

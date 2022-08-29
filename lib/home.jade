@@ -12,8 +12,8 @@ template(name='home')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                .two.column.row
-                .three.column.row
+                // .two.column.row
+                .four.column.row
                     .column
                         if currentUser.admin_mode
                             .ui.button.test 
@@ -36,19 +36,19 @@ template(name='home')
                         +hiring_interest
                     .column
                         +kiosk_settings
-                    .column
-                        +latest_notes
+                    // .column
+                    //     +latest_notes
                     .column
                         +stats
-                    .column
-                        +latest_requests
+                    // .column
+                    //     +latest_requests
                         // +latest_rentals
                     .column     
                         +clockin
                     .column
                         +contacts
-                    .column
-                        +guest_block
+                    // .column
+                    //     +guest_block
                     .column
                         +shifts
                         // +admin
@@ -92,7 +92,7 @@ template(name='pinned_posts')
                 +i name='note'
                 |#{pinned_post_docs.count} pinned posts
                 i.dropdown.icon
-        .content
+        .active.content.medscroll
             .ui.cards 
                 each pinned_post_docs
                     .card.raised
@@ -121,7 +121,7 @@ template(name='wywo')
                 +i name='edit'
                 |while you were out
                 i.dropdown.icon
-        .content
+        .active.content.medscroll
             .ui.icon.large.inverted.input
                 i.lightning.icon
                 input.description(type='text' placeholder='quick add note...')
@@ -169,7 +169,7 @@ template(name='contacts')
                 +i name='user-shield'
                 |contacts 
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.header staff
             .ui.selection.animated.large.list
                 each staff_users 
@@ -254,7 +254,7 @@ template(name='staff_tasks')
         // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
         // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
         // +session_set key='sort_key' value='_author_username' label='author' icon='user'
-        .content
+        .active.content
             .ui.divided.large.list.medscroll 
                 each staff_task_docs 
                     // a.item.fly_right(href="/task/#{_id}")
@@ -281,7 +281,7 @@ template(name='staff_activity')
                 +i name='realtime-protection'
                 |#{staff_activity_docs.count} staff activity
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.divided.list.medscroll
                 each staff_activity_docs 
                     .item.zoomer
@@ -320,7 +320,7 @@ template(name='admin')
                 +i name='shield'
                 |admin 
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.input
                 input.upload_parking(type='file')
    
@@ -331,7 +331,7 @@ template(name='stats')
                 +i name='line-chart'
                 |global stats
                 i.dropdown.icon
-        .content
+        .active.content
             if currentUser
                 i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
             .ui.big.list 
@@ -376,7 +376,7 @@ template(name='latest_requests')
                 +i name='wrench'
                 |#{kiosk_task_docs.count}
                 |latest requests
-        .content
+        .active.content
             .medscroll
                 each kiosk_task_docs
                     .ui.segment
@@ -396,7 +396,7 @@ template(name='hiring_interest')
                 |#{yes_answers.count}
                 |hiring interest
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.header 
                 i.checkmark.green.icon
                 |yes
@@ -425,7 +425,7 @@ template(name='latest_notes')
                 +i name='chat'
                 |#{latest_note_docs.count} latest notes
                 i.dropdown.icon
-        .content
+        .active.content
             .medscroll
                 each latest_note_docs
                     .ui.segment
@@ -451,7 +451,7 @@ template(name='latest_rentals')
                 +i name='basketball'
                 |latest rentals
                 i.dropdown.icon
-        .content
+        .active.content
             .medscroll
                 each rental_item_docs
                     .ui.segment
@@ -471,7 +471,7 @@ template(name='active_checkins')
                 |#{active_checkin_docs.count} checkins today 
                 span(title='unread checkin count') (#{unread_checkin_count})
                 i.dropdown.icon
-        .content
+        .active.content
             if subs_ready
                 .ui.divided.selection.list.medscroll
                     each active_checkin_docs 
@@ -528,8 +528,8 @@ template(name='latest_activity')
                 span(title='unread count') (#{unread_activity_docs})
                 i.dropdown.icon
                 
-        .content
-            .ui.divided.list.medscroll
+        .active.content
+            .ui.divided.list.smallscroll
                 each latest_docs 
                     if is model 'checkin'
                         +checkin_item_home
@@ -541,9 +541,9 @@ template(name='latest_activity')
                             .ui.label #{model}
                             +read_info_small
             .ui.small.header
-                +i name='history'
+                +i name='rss'
                 |latest logs
-            .ui.divided.list.medscroll
+            .ui.divided.list.smallscroll
                 each log_docs 
                     a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
                         small #{_when} by #{_author_username}

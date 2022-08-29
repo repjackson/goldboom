@@ -20,7 +20,7 @@ template(name='login')
                 //- if username
                 //- if logging_in
                 .ui.hidden.divider
-                .ui.fluid.big.green.button.enter.invert(title="login #{username}" class=enter_class)
+                .ui.fluid.big.green.button.enter(title="login #{username}" class=enter_class)
                     +i name='enter-2' cl='ui mini inline image'
                     |login
                     strong #{username}
@@ -62,7 +62,7 @@ template(name='register')
                 .ui.hidden.divider
                 if can_register
                     //- if registering
-                    .ui.fluid.big.green.button.register.invert(class=enter_class)
+                    .ui.fluid.big.green.button.register(class=enter_class)
                         // i.user.plus.big.icon
                         +i name='plus'
                         |register
