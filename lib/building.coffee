@@ -106,7 +106,7 @@ if Meteor.isClient
                     Docs.find {
                         model:@key
                         building_number:building.building_number
-                    }, sort:unit_number:-1
+                    }, sort:unit_number:1
                 else 
                     Docs.find {
                         model:@key

@@ -15,7 +15,9 @@ if Meteor.isClient
                 model:'work'
             }, sort:_timestamp:-1
     Template.pinned_posts.onCreated ->
-        @autorun => @subscribe 'pinned_posts', ->
+        Session.set('pinned_ready',false)
+        @autorun => @subscribe 'pinned_posts', =>
+            Session.set('pinned_ready',true)
     Template.pinned_posts.helpers 
         pinned_post_docs: ->
             Docs.find 
@@ -492,6 +494,9 @@ if Meteor.isClient
                     # displayTime: 'auto',
                     position: "bottom right"
                 )
+
+    Template.home.helpers
+        subs_ready2: -> Template.instance().subscriptionsReady()
 
     Template.latest_activity.helpers
         latest_docs: ->

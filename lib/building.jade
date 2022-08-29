@@ -158,7 +158,7 @@ template(name='building_segment')
         a.ui.header.zoomer.fly_up(href="/#{key}s")
             +i name=icon
             |#{key}s
-        .ui.selection.animated.list 
+        .ui.selection.animated.divided.list 
             each child_docs
                 if is model 'unit'
                     +building_unit_item

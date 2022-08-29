@@ -1212,7 +1212,7 @@ h1.ui.header{
 	overflow-x:hidden !important;
 	max-height:250px !important;
 	/*max-height:85vh;*/
-	padding-top: 1em !important;
+	padding: 1em !important;
 	/*padding-left: 1em;*/
 }
 .smallcut{
@@ -1264,10 +1264,11 @@ h1.ui.header{
     width: 2px;
 }
 .smallscroll::-webkit-scrollbar {
-    width: 2px;
+    width: 3px !important;
 }
 .mediumscroll::-webkit-scrollbar {
-    display: none;
+    width: 3px !important;
+    /*display: none;*/
 }
 .menuscroll::-webkit-scrollbar {
     width: 5px;

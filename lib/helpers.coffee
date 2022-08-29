@@ -180,7 +180,6 @@ if Meteor.isClient
     # Template.registerHelper 'servings_available', () ->
     #     @price_per_serving * @servings_amount
     
-    Template.registerHelper 'session_is', (key, value)-> Session.equals(key, value)
     Template.registerHelper 'session_get', (key)-> Session.get(key)
     
     Template.registerHelper 'key_value_is', (key, value)->
@@ -509,7 +508,6 @@ if Meteor.isClient
     #     @price_per_serving * @servings_amount
     
     Template.registerHelper 'session_is', (key, value)-> Session.equals(key, value)
-    Template.registerHelper 'session_get', (key)-> Session.get(key)
     
     Template.registerHelper 'key_value_is', (key, value)->
         @["#{key}"] is value

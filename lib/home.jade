@@ -3,7 +3,7 @@ template(name='home')
     // .ui.stackable.padded.grid(class=darkmode_class)
     unless subs_ready
         i.massive.refresh.loading.icon
-    if subs_ready
+    if subs_ready2
         unless currentUser
             .ui.stackable.padded.grid.blackbg
                 .twelve.wide.column
@@ -93,18 +93,21 @@ template(name='pinned_posts')
                 |#{pinned_post_docs.count} pinned posts
                 i.dropdown.icon
         .active.content.medscroll
-            .ui.cards 
-                each pinned_post_docs
-                    .card.raised
-                        img.ui.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-                        .content.smallscroll
-                            .header #{title}
-                            |!{body}
-                            |!{content}
-                        .content 
-                            a.ui.icon.button.fly_right(href="/post/#{_id}")
-                                i.large.chevron.right.icon
-                            +read_info_small
+            if session_is 'pinned_ready' true
+                .ui.cards 
+                    each pinned_post_docs
+                        .card.raised
+                            img.ui.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                            .content.smallscroll
+                                .header #{title}
+                                |!{body}
+                                |!{content}
+                            .content 
+                                a.ui.icon.button.fly_right(href="/post/#{_id}")
+                                    i.large.chevron.right.icon
+                                +read_info_small
+            else 
+                i.big.refresh.loading.icon
                             
 template(name='your_tasks')
     .ui.header 
@@ -116,7 +119,7 @@ template(name='your_tasks')
           
 template(name='wywo')
     .ui.accordion.alpha
-        .title
+        .title.zoomer
             .ui.inline.header
                 +i name='edit'
                 |while you were out
@@ -184,32 +187,34 @@ template(name='contacts')
                             |#{email}
                         // |#{username}
 template(name='clockin')  
-    .ui.segment.alpha
-        .ui.header 
-            +i name='time-card'
-            |timecard
-        .ui.big.label 
-            |#{currentUser.status}
-            
-        if currentUser.clockedin
-            .ui.button.clockout
-                +i name='exit'
-                |clock out
-        else 
-            .ui.button.clockin
-                +i name='clock'
-                |clock in
-        .ui.list 
-            each staff_session_docs 
-                .item #{_author_username} #{_when}
-                    if active 
-                        .ui.label 
-                            |active 
-                    else 
-                        .ui.label 
-                            i.red.sign.out.icon
-                            |{{long_date clockout_timestamp}}
-                            |{{from_now clockout_timestamp}}
+    .ui.fluid.styled.accordion.alpha
+        .title.zoomer
+            .ui.header 
+                +i name='time-card'
+                |timecard
+            .ui.big.label 
+                |#{currentUser.status}
+                
+            if currentUser.clockedin
+                .ui.button.clockout
+                    +i name='exit'
+                    |clock out
+            else 
+                .ui.button.clockin
+                    +i name='clock'
+                    |clock in
+        .active.content.medscroll
+            .ui.list 
+                each staff_session_docs 
+                    .item #{_author_username} #{_when}
+                        if active 
+                            .ui.label 
+                                |active 
+                        else 
+                            .ui.label 
+                                i.red.sign.out.icon
+                                |{{long_date clockout_timestamp}}
+                                |{{from_now clockout_timestamp}}
         // if currentUser.admin_mode
         //     +add_user_button
         //     +call_method name='convert_units'
@@ -255,23 +260,26 @@ template(name='staff_tasks')
         // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
         // +session_set key='sort_key' value='_author_username' label='author' icon='user'
         .active.content
-            .ui.divided.large.list.medscroll 
-                each staff_task_docs 
-                    // a.item.fly_right(href="/task/#{_id}")
-                    .item
-                        .header
-                            if image_id
-                                img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            // if complete 
-                            //     i.large.green.checkmark.icon 
-                            // else 
-                            i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
-                            |#{title}
-                        .active.content 
-                            // +author_info
-                            // if building_number
-                            //     +bu
-                            |!{description}
+            if subs_ready
+                .ui.divided.large.list.medscroll 
+                    each staff_task_docs 
+                        // a.item.fly_right(href="/task/#{_id}")
+                        .item
+                            .header
+                                if image_id
+                                    img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                // if complete 
+                                //     i.large.green.checkmark.icon 
+                                // else 
+                                i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
+                                |#{title}
+                            .active.content 
+                                // +author_info
+                                // if building_number
+                                //     +bu
+                                |!{description}
+            else 
+                i.big.loading.refresh.icon
 
 
 template(name='staff_activity')
@@ -349,6 +357,9 @@ template(name='stats')
                     .item
                         +i name='friends'
                         |#{guest_count_total} guests
+                    .item
+                        +i name='key'
+                        |#{key_count_total} keys
 template(name='guest_block')
     .ui.accordion.alpha
         .title
@@ -396,7 +407,7 @@ template(name='hiring_interest')
                 |#{yes_answers.count}
                 |hiring interest
                 i.dropdown.icon
-        .active.content
+        .active.content.medscroll
             .ui.small.header 
                 i.checkmark.green.icon
                 |yes
@@ -507,9 +518,9 @@ template(name='read_info_small')
     span(title='views')
         i.grey.eye.icon 
         |#{views}
-    |viewed by 
+    // |viewed by 
     each _viewers
-        .ui.small.label #{name}
+        .ui.small.label(title='viewed by') #{name}
                     
 template(name='checkin_purpose_label')
     if checkin_purpose
@@ -529,27 +540,29 @@ template(name='latest_activity')
                 i.dropdown.icon
                 
         .active.content
-            .ui.divided.list.smallscroll
-                each latest_docs 
-                    if is model 'checkin'
-                        +checkin_item_home
-                    else 
-                        // a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
-                        a.ui.item.mark_read #{body} 
+            if subs_ready
+                .ui.divided.list.smallscroll
+                    each latest_docs 
+                        if is model 'checkin'
+                            +checkin_item_home
+                        else 
+                            // a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
+                            a.ui.item.mark_read #{body} 
+                                small #{_when} by #{_author_username}
+                                // .ui.label #{type}
+                                .ui.label #{model}
+                                +read_info_small
+                .ui.small.header
+                    +i name='rss'
+                    |latest logs
+                .ui.divided.list.smallscroll
+                    each log_docs 
+                        a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
                             small #{_when} by #{_author_username}
-                            // .ui.label #{type}
-                            .ui.label #{model}
+                            .ui.label #{type}
                             +read_info_small
-            .ui.small.header
-                +i name='rss'
-                |latest logs
-            .ui.divided.list.smallscroll
-                each log_docs 
-                    a.ui.item(href="/#{_parent_doc.model}/#{parent_id}") #{body} 
-                        small #{_when} by #{_author_username}
-                        .ui.label #{type}
-                        +read_info_small
-                
+            else 
+                i.massive.loading.refresh.icon
 
                 
 template(name='latest_checkins')
