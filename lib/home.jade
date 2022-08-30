@@ -210,27 +210,27 @@ template(name='clockin')
                         .item #{week_shift_count} shifts this week
                         .item hours this pay period #{hours_payperiod}
                 if session_is 'expand' true
-                    .column.smallscroll.hide
+                    .column.medscroll.hide
                         .ui.divided.list 
                             each staff_session_docs 
                                 .item 
+                                    .ui.inline.header #{duration} mins
                                     +author_info
                                     if active 
                                         .ui.green.big.label 
                                             |active since #{_when}
                                     else 
-                                        .ui.label 
+                                        .ui.small.basic.label 
                                             i.green.sign.in.icon
                                             |{{long_date _timestamp}}
-                                        .ui.label 
+                                        .ui.small.basic.label 
                                             |{{from_now _timestamp}}
                                         |to
-                                        .ui.label 
+                                        .ui.small.basic.label 
                                             i.red.sign.out.icon
                                             |{{long_date clockout_timestamp}}
-                                        .ui.label 
+                                        .ui.small.basic.label 
                                             |{{from_now clockout_timestamp}}
-                                        .ui.inline.header duration #{duration} minutes
                                     if currentUser.admin_mode 
                                         +remove_button
         // if currentUser.admin_mode
