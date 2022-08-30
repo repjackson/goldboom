@@ -210,7 +210,7 @@ template(name='clockin')
                         .item #{week_shift_count} shifts this week
                         .item hours this pay period #{hours_payperiod}
                 if session_is 'expand' true
-                    .column.smallscroll
+                    .column.smallscroll.hide
                         .ui.divided.list 
                             each staff_session_docs 
                                 .item 

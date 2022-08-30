@@ -163,8 +163,14 @@ if Meteor.isClient
     Template.clockin.onCreated ->
         @autorun => Meteor.subscribe 'model_docs','staff_session', ->
     Template.clockin.events 
-        'click .toggle_view': ->
-            Session.set('expand', !Session.get('expand'))
+        'click .toggle_view': (e)->
+            if Session.get('expand')
+                $('.hide').transition('fade right', 500)
+                Meteor.setTimeout =>
+                    Session.set('expand', false)
+                , 500
+            else 
+                Session.set('expand',true)
         'click .clockin':->
             new_id = 
                 Docs.insert 
