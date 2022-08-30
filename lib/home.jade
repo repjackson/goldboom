@@ -12,19 +12,20 @@ template(name='home')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                .three.column.row
-                    .column
+                .row
+                    +clockin
+                    .four.wide.column
                         if currentUser.admin_mode
                             .ui.button.test 
                                 |test
                         // +search
                         +pinned_posts
-                    .column
+                    .four.wide.column
                         .ui.header #{current_time}
                         +latest_activity
                     // .column
                     //     +your_tasks
-                    .column
+                    .four.wide.column
                         +wywo
                 .four.column.row
                     .column
@@ -33,8 +34,8 @@ template(name='home')
                         +staff_tasks
                     .column
                         +staff_activity
-                    .column
-                        +hiring_interest
+                    // .column
+                    //     +hiring_interest
                     .column
                         +kiosk_settings
                     // .column
@@ -45,7 +46,6 @@ template(name='home')
                     //     +latest_requests
                         // +latest_rentals
                     .column     
-                        +clockin
                 .three.column.row
                     .column
                         +contacts
@@ -189,34 +189,45 @@ template(name='contacts')
                             |#{email}
                         // |#{username}
 template(name='clockin')  
-    .ui.fluid.styled.accordion.alpha
-        .title.zoomer
-            .ui.header 
-                +i name='time-card'
-                |timecard
-            .ui.big.label 
-                |#{currentUser.status}
-                
-            if currentUser.clockedin
-                .ui.button.clockout
-                    +i name='exit'
-                    |clock out
-            else 
-                .ui.button.clockin
-                    +i name='clock'
-                    |clock in
-        .active.content.medscroll
-            .ui.list 
-                each staff_session_docs 
-                    .item #{_author_username} #{_when}
-                        if active 
-                            .ui.label 
-                                |active 
-                        else 
-                            .ui.label 
-                                i.red.sign.out.icon
-                                |{{long_date clockout_timestamp}}
-                                |{{from_now clockout_timestamp}}
+    div(class=expand_class)
+        .ui.fluid.styled.accordio.alpha
+            .title.zoome
+                .ui.inline.header 
+                    +i name='time-card'
+                    |timecard
+                span.toggle_view
+                    +i name='resize'
+                .ui.big.label 
+                    |#{currentUser.status}
+                .ui.list 
+                    .item
+                    .item hours today: #{hours_today}
+                    .item #{sessions_today_count} sessions today
+                    .item hours this week: #{hours_week}
+                    .item #{week_shift_count} shifts this week
+                    .item hours this pay period #{hours_payperiod}
+                if currentUser.clockedin
+                    .ui.big.green.label 
+                        |clocked in
+                    .ui.button.clockout
+                        +i name='exit'
+                        |clock out
+                else 
+                    .ui.button.clockin
+                        +i name='clock'
+                        |clock in
+            .active.content.medscroll
+                .ui.list 
+                    each staff_session_docs 
+                        .item #{_author_username} #{_when}
+                            if active 
+                                .ui.label 
+                                    |active 
+                            else 
+                                .ui.label 
+                                    i.red.sign.out.icon
+                                    |{{long_date clockout_timestamp}}
+                                    |{{from_now clockout_timestamp}}
         // if currentUser.admin_mode
         //     +add_user_button
         //     +call_method name='convert_units'
@@ -505,6 +516,8 @@ template(name='active_checkin_doc')
                 .ui.big.label 
                     +i name='note'
                     |#{notes}
+            if has_guests
+                +i name='groups'
             a.fly_down(href="/checkin/#{_id}" title=resident_user_id)
                 i.circular.chevron.right.link.large.icon.zoomer
             if dev 

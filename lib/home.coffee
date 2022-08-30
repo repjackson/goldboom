@@ -163,6 +163,8 @@ if Meteor.isClient
     Template.clockin.onCreated ->
         @autorun => Meteor.subscribe 'model_docs','staff_session', ->
     Template.clockin.events 
+        'click .toggle_view': ->
+            Session.set('expand_timecard', true)
         'click .clockin':->
             new_id = 
                 Docs.insert 
@@ -189,10 +191,29 @@ if Meteor.isClient
                     clockedin:false
                     clockout_timestamp:Date.now()
     Template.clockin.helpers
+        expand_class:-> 
+            if Session.get('expand_timecard')
+                "sixteen wide column"
+            else 
+                "four wide column"
         staff_session_docs: ->
             Docs.find 
                 model:'staff_session'
+        hours_today: ->
+        sessions_today_count: ->
+            yesterday = Date.now()-1000*60*60*10
+            Docs.find(
+                model:'staff_session'
+                _author_id:Meteor.userId()
+                _timestamp:$gt:yesterday
+            ).count()
+        sessions_total_today_count: ->
+            Docs.find(
+                model:'staff_session'
+                _author_id:Meteor.userId()
+            ).count()
             
+
     Template.contacts.onCreated ->
         @autorun => Meteor.subscribe 'staff_users', ->
     Template.contacts.helpers
