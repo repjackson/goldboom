@@ -230,6 +230,7 @@ template(name='clockin')
                                             |{{long_date clockout_timestamp}}
                                         .ui.label 
                                             |{{from_now clockout_timestamp}}
+                                        .ui.inline.header duration #{duration} minutes
                                     if currentUser.admin_mode 
                                         +remove_button
         // if currentUser.admin_mode

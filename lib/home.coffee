@@ -226,6 +226,10 @@ if Meteor.isClient
                 active:true
             )
             
+        duration: ->
+            start = moment(@_timestamp)
+            stop = moment(@clockout_timestamp)
+            moment.duration(start.diff(stop)).as('minutes').toFixed(2)
 
     Template.contacts.onCreated ->
         @autorun => Meteor.subscribe 'staff_users', ->
