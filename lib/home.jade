@@ -21,6 +21,7 @@ template(name='home')
                         // +search
                         +pinned_posts
                     .four.wide.column
+                        +latest_notes
                         .ui.header #{current_time}
                         +latest_activity
                     // .column
@@ -31,6 +32,7 @@ template(name='home')
                     .column
                         +active_checkins
                     .column
+                    .column
                         +staff_tasks
                     .column
                         +staff_activity
@@ -38,8 +40,6 @@ template(name='home')
                     //     +hiring_interest
                     .column
                         +kiosk_settings
-                    // .column
-                    //     +latest_notes
                     .column
                         +stats
                     // .column
@@ -458,15 +458,16 @@ template(name='latest_notes')
             .medscroll
                 each latest_note_docs
                     .ui.segment
-                        if image_id
-                            img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        a.ui.inline.header.fly_down(href="/post/#{_id}")  !{content}
-                        +bu
+                        // if image_id
+                        //     img.ui.tiny.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        // a.ui.inline.header.fly_down(href="/post/#{_id}")  !{content}
+                        // +bu
                         if currentUser.admin_mode
                             +print_this
-                        |#{when}
-                        a.ui.large.icon.basic.circular.button.fly_down(href="/post/#{_id}") 
-                            i.large.chevron.right.icon
+                        |#{_when}
+                        .ui.header #{body}
+                        // a.ui.large.icon.basic.circular.button.fly_down(href="/post/#{_id}") 
+                        //     i.large.chevron.right.icon
             
 template(name='view_button')
     .ui.icon.button.fly_right(href="/#{model}/#{_id}")

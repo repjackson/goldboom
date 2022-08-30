@@ -162,6 +162,19 @@ if Meteor.isClient
             Docs.update found._id, 
                 $set:kiosk_view:'settings'
     Template.healthclub.events 
+        'click .add_note': ->
+            kiosk = Docs.findOne model:'kiosk'
+            Docs.update kiosk._id, 
+                $set: adding_note:true    
+        'click .submit_note': ->
+            kiosk = Docs.findOne model:'kiosk'
+            Docs.update kiosk._id, 
+                $set: adding_note:false
+            kiosk_new = Docs.findOne model:'kiosk'
+            console.log kiosk_new.note_content 
+            Docs.insert 
+                model:'note'
+                body:kiosk_new.note_content
         'click .clear_all': ->
             kiosk = Docs.findOne model:'kiosk'
             Docs.update kiosk._id, 

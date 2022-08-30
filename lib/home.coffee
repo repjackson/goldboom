@@ -345,7 +345,7 @@ if Meteor.isClient
     Template.latest_notes.helpers 
         latest_note_docs: ->
             Docs.find {
-                model:'post'
+                model:'note'
             }, 
                 sort:_timestamp:-1
                 
@@ -390,7 +390,7 @@ if Meteor.isServer
             limit:20
     Meteor.publish 'latest_notes', ->
         Docs.find {
-            model:'post'
+            model:'note'
         },
             sort:_timestamp:-1
             limit:20

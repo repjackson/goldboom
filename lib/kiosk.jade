@@ -36,68 +36,83 @@ template(name='healthclub')
             .center.aligned.column
                 // .ui.segment.alpha
                 // .spacer
-                if kiosk_doc.current_building_number
-                    .ui.red.icon.button.clear_all
-                        i.large.remove.icon
-                if currentUser.admin_mode
-                    a.ui.big.header(href="/" title='go home')
-                        // i.chevron.left.icon
-                        // i.home.icon
-                        +i name='home'
-                // i.big.building.brown.icon.inline
-                // unless kiosk_doc.current_building_number
-                //     .ui.big.inline.header
-                //         +i name='apartment'
-                //         // |pick building
-                // // if kiosk_doc.current_building_number
-                // +ibig name='apartment' cl='ui inline image'
-                // .ui.big.inline.header
-                    // |building
-                if kiosk_doc.current_building_number
-                    .ui.white.compact.massive.button.bigger.unpick_building
-                        .ui.inline.header 
-                            // i.building.icon
-                            +i name='building'
-                            |##{kiosk_doc.current_building_number}
-                unless kiosk_doc.current_building_number
-                    +building_picker
-                // div
-                if kiosk_doc.current_building_number
-                    if is kiosk_doc.current_building_number 2959
-                        +hc_rental
-                    else 
-                        +unit_picker
-                // .ui.massive.icon.input
-                //     i.large.building.icon
-                //     input.building_number(type='text' placeholder='building #...')
-                // .ui.massive.icon.input.lookup_user
-                //     i.search.icon
-                //     input.search_user(type='text' placeholder='search user...')
-                if kiosk_doc.current_building_number
-                    if kiosk_doc.current_unit_number
-                        +resident_picker
-                // +active_checkins
-                unless current_building_number
-                    // .ui.basic.circular.label
-                    //     +i name='cleaning-a-surface'
-                    //     |last equipment cleaning: {{from_now last_wipe_doc._timestamp}} 
-                    //     |by {{last_wipe_doc._author.first_name}}
-                    +water_small
-                    .ui.large.inline.header 
-                        // i.grey.mail.icon
-                        |maintenance@boomprop.com
-                    img.ui.tiny.inline.image.rounded(src="/emailqr.png")
-                    .ui.big.header 
-                        |303.402.6900
-                    // .spacer
-                    // +set_route key='posts' icon='news'
-                    // +set_route key='tasks' icon='tasks'
-                    // +set_route key='readings' icon='water'
-                    // +set_route key='rentals' icon='clock'
-                    // +set_route key='checkins' icon='checkmark'
-                    // +set_route key='violations' icon='alert'
-                
-                
+                if kiosk_doc.adding_note
+                    .ui.header 
+                        +i name='post'
+                        |new note
+                    with kiosk_doc
+                        +textarea_edit key='note_content'
+                    .ui.fluid.green.button.submit_note 
+                        i.check.large.icon
+                        |submit note
+                else 
+                    unless kiosk_doc.current_building_number
+                        .ui.fluid.compact.basic.blue.button.add_note 
+                            .ui.inline.header 
+                                +i name='edit'
+                                |add note
+                    if kiosk_doc.current_building_number
+                        .ui.red.icon.button.clear_all
+                            i.large.remove.icon
+                    if currentUser.admin_mode
+                        a.ui.big.header(href="/" title='go home')
+                            // i.chevron.left.icon
+                            // i.home.icon
+                            +i name='home'
+                    // i.big.building.brown.icon.inline
+                    // unless kiosk_doc.current_building_number
+                    //     .ui.big.inline.header
+                    //         +i name='apartment'
+                    //         // |pick building
+                    // // if kiosk_doc.current_building_number
+                    // +ibig name='apartment' cl='ui inline image'
+                    // .ui.big.inline.header
+                        // |building
+                    if kiosk_doc.current_building_number
+                        .ui.white.compact.massive.button.bigger.unpick_building
+                            .ui.inline.header 
+                                // i.building.icon
+                                +i name='building'
+                                |##{kiosk_doc.current_building_number}
+                    unless kiosk_doc.current_building_number
+                        +building_picker
+                    // div
+                    if kiosk_doc.current_building_number
+                        if is kiosk_doc.current_building_number 2959
+                            +hc_rental
+                        else 
+                            +unit_picker
+                    // .ui.massive.icon.input
+                    //     i.large.building.icon
+                    //     input.building_number(type='text' placeholder='building #...')
+                    // .ui.massive.icon.input.lookup_user
+                    //     i.search.icon
+                    //     input.search_user(type='text' placeholder='search user...')
+                    if kiosk_doc.current_building_number
+                        if kiosk_doc.current_unit_number
+                            +resident_picker
+                    // +active_checkins
+                    unless current_building_number
+                        // .ui.basic.circular.label
+                        //     +i name='cleaning-a-surface'
+                        //     |last equipment cleaning: {{from_now last_wipe_doc._timestamp}} 
+                        //     |by {{last_wipe_doc._author.first_name}}
+                        +water_small
+                        .ui.large.inline.header 
+                            // i.grey.mail.icon
+                            |maintenance@boomprop.com
+                        img.ui.tiny.inline.image.rounded(src="/emailqr.png")
+                        .ui.big.header 
+                            |303.402.6900
+                        // .spacer
+                        // +set_route key='posts' icon='news'
+                        // +set_route key='tasks' icon='tasks'
+                        // +set_route key='readings' icon='water'
+                        // +set_route key='rentals' icon='clock'
+                        // +set_route key='checkins' icon='checkmark'
+                        // +set_route key='violations' icon='alert'
+                    
+                    
                 
 template(name='building_picker')
     .ui.inline.header 
