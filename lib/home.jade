@@ -84,9 +84,6 @@ template(name='home')
                         .content
                             +readings
     
-    
-    
-          
 template(name='pinned_posts')
     .ui.fluid.accordion.alpha 
         .title
@@ -115,9 +112,6 @@ template(name='your_tasks')
     .ui.header 
         |your tasks
           
-          
-          
-
 template(name='wywo')
     .ui.accordion.alpha
         .title.zoomer
@@ -150,12 +144,10 @@ template(name='wywo')
                     +toggle_edit_button
                     +read_info_small
           
-          
 template(name='online_users')
     .ui.header online users 
     each online_user_docs 
         .ui.header #{username}
-          
           
 template(name='toggle_edit_button')
     if is_editing
@@ -198,8 +190,8 @@ template(name='clockin')
                 //     |#{currentUser.status}
                 if currentUser.clockedin
                     .ui.big.green.label 
-                        |clocked in
-                    .ui.button.clockout
+                        |clocked in since {{from_now active_clockin_doc._timestamp}}
+                    .ui.compact.basic.button.clockout
                         +i name='exit'
                         |clock out
                 else 
@@ -208,7 +200,8 @@ template(name='clockin')
                         |clock in
                 a.toggle_view.zoomer.pointer.floated.right(title='toggle expand')
                     +i name='resize' cl='zoomer middle aligned'
-                .active.content.medscroll
+            .ui.equal.width.grid
+                .active.content.medscroll.column
                     .ui.list 
                         .item
                         .item hours today: #{hours_today}
@@ -216,28 +209,29 @@ template(name='clockin')
                         .item hours this week: #{hours_week}
                         .item #{week_shift_count} shifts this week
                         .item hours this pay period #{hours_payperiod}
-            if session_is 'expand' true
-                    .ui.list 
-                        each staff_session_docs 
-                            .item 
-                                +author_info
-                                if active 
-                                    .ui.green.big.label 
-                                        |active since #{_when}
-                                else 
-                                    .ui.label 
-                                        i.green.sign.in.icon
-                                        |{{long_date _timestamp}}
-                                    .ui.label 
-                                        |{{from_now _timestamp}}
-                                    |to
-                                    .ui.label 
-                                        i.red.sign.out.icon
-                                        |{{long_date clockout_timestamp}}
-                                    .ui.label 
-                                        |{{from_now clockout_timestamp}}
-                                if currentUser.admin_mode 
-                                    +remove_button
+                if session_is 'expand' true
+                    .column.smallscroll
+                        .ui.divided.list 
+                            each staff_session_docs 
+                                .item 
+                                    +author_info
+                                    if active 
+                                        .ui.green.big.label 
+                                            |active since #{_when}
+                                    else 
+                                        .ui.label 
+                                            i.green.sign.in.icon
+                                            |{{long_date _timestamp}}
+                                        .ui.label 
+                                            |{{from_now _timestamp}}
+                                        |to
+                                        .ui.label 
+                                            i.red.sign.out.icon
+                                            |{{long_date clockout_timestamp}}
+                                        .ui.label 
+                                            |{{from_now clockout_timestamp}}
+                                    if currentUser.admin_mode 
+                                        +remove_button
         // if currentUser.admin_mode
         //     +add_user_button
         //     +call_method name='convert_units'

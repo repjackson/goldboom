@@ -213,6 +213,12 @@ if Meteor.isClient
                 model:'staff_session'
                 _author_id:Meteor.userId()
             ).count()
+        active_clockin_doc: ->
+            Docs.findOne(
+                model:'staff_session'
+                _author_id:Meteor.userId()
+                active:true
+            )
             
 
     Template.contacts.onCreated ->
