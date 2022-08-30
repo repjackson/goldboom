@@ -263,8 +263,19 @@ if Meteor.isClient
     
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event', ->
-            
-            
+    Template.events.helpers 
+        today: ->
+            moment()
+        next_days: ->
+            [
+                moment().add(1,'days').format("YYYY-MM-DD")
+                moment().add(2,'days').format("YYYY-MM-DD")
+                moment().add(3,'days').format("YYYY-MM-DD")
+                moment().add(4,'days').format("YYYY-MM-DD")
+                moment().add(5,'days').format("YYYY-MM-DD")
+                moment().add(6,'days').format("YYYY-MM-DD")
+                moment().add(7,'days').format("YYYY-MM-DD")
+            ]
     Template.shifts.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shift', ->
     Template.shifts.helpers 

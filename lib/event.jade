@@ -18,8 +18,14 @@ template(name='events')
                 // button.ui.large.label.button.pick_tag(tabindex="0" class=result_class title=count)
                     // |#{name}
                     // small #{count}
+                    
+            .ui.header today: #{today}
+            .ui.header next 
+            each next_days
+                .item #{this}
             +recent_checkins
         .twelve.wide.column.scrolling
+            +schedule
             +shifts 
             +sort_direction_toggle
             +session_set key='sort_key' value='_timestamp' label='created' icon='clock'
@@ -57,13 +63,13 @@ template(name='open_shifts')
                
 template(name='shifts')
     .ui.fluid.accordion.alpha
-        .title
+        .active.title
             .ui.inline.header 
                 +i name='calendar'
-                |staff shifts (not working)
+                |staff shifts
                 i.dropdown.icon
-        .content
-            +open_shifts
+        .active.content
+            // +open_shifts
             .ui.icon.button.add_shift
                 i.plus.icon
                 |add shift

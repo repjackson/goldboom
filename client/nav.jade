@@ -102,6 +102,11 @@ template(name='nav')
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden.zoomer readings
+            a.item.zoomer2.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+                +i name='calendar'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden.zoomer schedule
             a.item.zoomer2.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
                 +i name='news'
                 span.mobile.hidden.zoomer #{global_stats_doc.post_count_total} posts
@@ -113,7 +118,9 @@ template(name='nav')
                 +i name='checkmark'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden.zoomer #{global_stats_doc.checkin_count_total} checkins
+                span.mobile.hidden.zoomer 
+                    small #{global_stats_doc.checkin_count_total} 
+                    |checkins
             if currentUser
                 a.item.zoomer2.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
                     +i name='key'
@@ -131,11 +138,6 @@ template(name='nav')
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden.zoomer rentals
-            a.item.zoomer2.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
-                +i name='calendar'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden.zoomer schedule
             a.zoomer2.item(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
                 // i.large.exchange.icon
                 // +i name='alert'
