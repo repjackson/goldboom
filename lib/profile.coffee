@@ -3,18 +3,6 @@ if Meteor.isClient
         @layout 'layout'
         @render 'profile'
         ), name:'profile'
-    Router.route '/inbox', (->
-        @layout 'layout'
-        @render 'user_inbox'
-        ), name:'inbox'
-
-
-    Template.user_inbox.onCreated ->
-        @autorun -> Meteor.subscribe 'unread_logs',->
-    Template.user_inbox.events
-        'click .mark_all_read': ->
-            $('.ui.toast').toast('close')
-            Meteor.call 'mark_unread_logs_read', ->
             
     Template.user_models.onCreated ->
         @autorun => Meteor.subscribe 'user_model_docs',@data.key,->

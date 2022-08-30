@@ -2,16 +2,27 @@ template(name='inbox')
     .ui.padded.stackable.grid
         .row
             .four.wide.column
-                i.inbox.icon
-                .ui.inline.header inbox
+                .ui.inline.header
+                    i.inbox.icon
+                    |inbox
                 //- +view_notifications
+                .ui.button.new_message
+                    i.plus.icon
+                    |new message
             .twelve.wide.column
-                each messages
+                with editing_doc 
+                    .ui.segment 
+                        |edit message 
+                        +text_edit key='title'
+                        +html_edit key='body'
+                        .ui.big.green.button.submit
+                            |submit
+                each all_messages
                     +message_segment
 
-template(name='message_segment')                    
+template(name='message_segment')                  
     .ui.segment
-        .ui.header #{title} #{when}
+        .ui.header #{title} #{_when}
         .ui.header #{body}
         +author_info
         .ui.header parent #{parent_id} #{parent_doc.model}

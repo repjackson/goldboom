@@ -112,6 +112,10 @@ template(name='user_item')
             div
             |joined {{long_date createdAt}}
             small {{from_now createdAt}}
+            if is_staff 
+                .ui.big.label 
+                    +i name='user-shield'
+                    |staff
             if tags 
                 each five_tags 
                     .ui.large.label #{this}

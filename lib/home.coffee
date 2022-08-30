@@ -1,5 +1,5 @@
 if Meteor.isClient 
-    papa =  require 'papaparse'
+    # papa =  require 'papaparse'
     
     Router.route '/', (->
         @layout 'layout'
