@@ -118,7 +118,6 @@ template(name='your_tasks')
           
           
 
-          
 template(name='wywo')
     .ui.accordion.alpha
         .title.zoomer
@@ -195,17 +194,8 @@ template(name='clockin')
                 .ui.inline.header 
                     +i name='time-card'
                     |timecard
-                span.toggle_view
-                    +i name='resize'
-                .ui.big.label 
-                    |#{currentUser.status}
-                .ui.list 
-                    .item
-                    .item hours today: #{hours_today}
-                    .item #{sessions_today_count} sessions today
-                    .item hours this week: #{hours_week}
-                    .item #{week_shift_count} shifts this week
-                    .item hours this pay period #{hours_payperiod}
+                // .ui.big.label 
+                //     |#{currentUser.status}
                 if currentUser.clockedin
                     .ui.big.green.label 
                         |clocked in
@@ -216,18 +206,38 @@ template(name='clockin')
                     .ui.button.clockin
                         +i name='clock'
                         |clock in
-            .active.content.medscroll
-                .ui.list 
-                    each staff_session_docs 
-                        .item #{_author_username} #{_when}
-                            if active 
-                                .ui.label 
-                                    |active 
-                            else 
-                                .ui.label 
-                                    i.red.sign.out.icon
-                                    |{{long_date clockout_timestamp}}
-                                    |{{from_now clockout_timestamp}}
+                a.toggle_view.zoomer.pointer.floated.right(title='toggle expand')
+                    +i name='resize' cl='zoomer middle aligned'
+                .active.content.medscroll
+                    .ui.list 
+                        .item
+                        .item hours today: #{hours_today}
+                        .item #{sessions_today_count} sessions today
+                        .item hours this week: #{hours_week}
+                        .item #{week_shift_count} shifts this week
+                        .item hours this pay period #{hours_payperiod}
+            if session_is 'expand' true
+                    .ui.list 
+                        each staff_session_docs 
+                            .item 
+                                +author_info
+                                if active 
+                                    .ui.green.big.label 
+                                        |active since #{_when}
+                                else 
+                                    .ui.label 
+                                        i.green.sign.in.icon
+                                        |{{long_date _timestamp}}
+                                    .ui.label 
+                                        |{{from_now _timestamp}}
+                                    |to
+                                    .ui.label 
+                                        i.red.sign.out.icon
+                                        |{{long_date clockout_timestamp}}
+                                    .ui.label 
+                                        |{{from_now clockout_timestamp}}
+                                if currentUser.admin_mode 
+                                    +remove_button
         // if currentUser.admin_mode
         //     +add_user_button
         //     +call_method name='convert_units'

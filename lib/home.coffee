@@ -164,7 +164,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs','staff_session', ->
     Template.clockin.events 
         'click .toggle_view': ->
-            Session.set('expand_timecard', true)
+            Session.set('expand', !Session.get('expand'))
         'click .clockin':->
             new_id = 
                 Docs.insert 
@@ -177,22 +177,23 @@ if Meteor.isClient
                     clockin_timestamp:Date.now()
             
         'click .clockout':->
-            current_session =
-                Docs.findOne
-                    model:'staff_session'
-                    active:true
-            Docs.update current_session._id, 
-                $set:
-                    active:false 
-                    clockout_timestamp:Date.now()
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    status:'clocked out'
-                    clockedin:false
-                    clockout_timestamp:Date.now()
+            if confirm 'confirm clock out?'
+                current_session =
+                    Docs.findOne
+                        model:'staff_session'
+                        active:true
+                Docs.update current_session._id, 
+                    $set:
+                        active:false 
+                        clockout_timestamp:Date.now()
+                Meteor.users.update Meteor.userId(),
+                    $set:
+                        status:'clocked out'
+                        clockedin:false
+                        clockout_timestamp:Date.now()
     Template.clockin.helpers
         expand_class:-> 
-            if Session.get('expand_timecard')
+            if Session.get('expand')
                 "sixteen wide column"
             else 
                 "four wide column"
