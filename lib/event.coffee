@@ -260,7 +260,33 @@ if Meteor.isClient
         @render 'event_edit'
         ), name:'event_edit'
     
-    
+    Router.route '/shift/:date/', (->
+        @layout 'layout'
+        @render 'day_shifts'
+        ), name:'day_shifts'
+    Template.day_shifts.onCreated ->
+        @autorun => Meteor.subscribe 'shift_by_date', Router.current().params.date, ->
+    Template.day_shifts.helpers
+        current_date: -> Router.current().params.date
+        current_shifts: ->
+            Docs.find
+                model:'shift'
+                date:Router.current().params.date
+    Template.day_shifts.events 
+        'click .add_shift': ->
+            new_id = 
+                Docs.insert 
+                    model:'shift'
+                    date:Router.current().params.date
+      
+if Meteor.isServer
+    Meteor.publish 
+        shift_by_date: (date)->
+            console.log date 
+            Docs.find 
+                model:'shift'
+                date:date
+if Meteor.isClient
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event', ->
     Template.events.helpers 
@@ -268,13 +294,13 @@ if Meteor.isClient
             moment()
         next_days: ->
             [
-                moment().add(1,'days').format("YYYY-MM-DD")
-                moment().add(2,'days').format("YYYY-MM-DD")
-                moment().add(3,'days').format("YYYY-MM-DD")
-                moment().add(4,'days').format("YYYY-MM-DD")
-                moment().add(5,'days').format("YYYY-MM-DD")
-                moment().add(6,'days').format("YYYY-MM-DD")
-                moment().add(7,'days').format("YYYY-MM-DD")
+                moment().add(1,'days').format("MM-DD-YY")
+                moment().add(2,'days').format("MM-DD-YY")
+                moment().add(3,'days').format("MM-DD-YY")
+                moment().add(4,'days').format("MM-DD-YY")
+                moment().add(5,'days').format("MM-DD-YY")
+                moment().add(6,'days').format("MM-DD-YY")
+                moment().add(7,'days').format("MM-DD-YY")
             ]
     Template.shifts.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shift', ->

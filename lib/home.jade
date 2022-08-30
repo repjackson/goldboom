@@ -12,7 +12,6 @@ template(name='home')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                // .two.column.row
                 .three.column.row
                     .column
                         if currentUser.admin_mode
@@ -21,11 +20,13 @@ template(name='home')
                         // +search
                         +pinned_posts
                     .column
+                        .ui.header #{current_time}
                         +latest_activity
                     // .column
                     //     +your_tasks
                     .column
                         +wywo
+                .four.column.row
                     .column
                         +active_checkins
                     .column
@@ -45,6 +46,7 @@ template(name='home')
                         // +latest_rentals
                     .column     
                         +clockin
+                .three.column.row
                     .column
                         +contacts
                     // .column

@@ -475,6 +475,7 @@ if Meteor.isClient
             }, 
                 sort:_timestamp:-1
     Template.home.helpers
+        current_time: -> moment().format('MMMM Do YYYY, h:mm a')
         checkedout_user_docs: ->
             match = {}
             if Session.get('current_search_user').length > 0

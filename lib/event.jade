@@ -20,9 +20,10 @@ template(name='events')
                     // small #{count}
                     
             .ui.header today: #{today}
-            .ui.header next 
-            each next_days
-                .item #{this}
+            .ui.header upcoming week
+            .ui.large.selection.animated.list
+                each next_days
+                    a.item(href="/shift/#{this}") #{this}
             +recent_checkins
         .twelve.wide.column.scrolling
             +schedule
@@ -112,6 +113,10 @@ template(name='shifts')
                         // +comments
                 
                
+template(name='day_shifts')
+    .ui.padded.stackable.grid 
+        .sixteen.wide.column
+            .ui.header day shifts for #{current_date}
 template(name='recent_checkins')
     .ui.header  
         +i name='clock'
