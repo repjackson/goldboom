@@ -20,13 +20,13 @@ template(name='events')
                     // small #{count}
                     
             .ui.header today: #{today}
-            .ui.header upcoming week
-            .ui.large.selection.animated.list
-                each next_days
-                    a.item(href="/shift/#{this}") #{this}
+            // .ui.header upcoming week
+            // .ui.large.selection.animated.list
+            //     each next_days
+            //         a.item(href="/shift/#{this}") #{this}
             +recent_checkins
         .twelve.wide.column.scrolling
-            +schedule
+            // +schedule
             +shifts 
             +sort_direction_toggle
             +session_set key='sort_key' value='_timestamp' label='created' icon='clock'
@@ -62,61 +62,6 @@ template(name='open_shifts')
                     |take
                
                
-template(name='shifts')
-    .ui.fluid.accordion.alpha
-        .active.title
-            .ui.inline.header 
-                +i name='calendar'
-                |staff shifts
-                i.dropdown.icon
-        .active.content
-            // +open_shifts
-            .ui.icon.button.add_shift
-                i.plus.icon
-                |add shift
-            each shift_docs 
-                .ui.segment.alpha #{title}
-                    .ui.label #{staff_username}
-                    +toggle_edit_button
-                    if is_editing 
-                        div
-                        .ui.inline.small.header shift
-                        +key_value_edit key='shift_type' value='morning' icon='morning'
-                        +key_value_edit key='shift_type' value='afternoon' icon='afternoon'
-                        +key_value_edit key='shift_type' value='evening' icon='evening'
-                        div
-                        .ui.inline.small.header staff
-                        +key_value_edit key='staff_username' value='nikka' 
-                        +key_value_edit key='staff_username' value='brigitte' 
-                        +key_value_edit key='staff_username' value='mai' 
-                        +key_value_edit key='staff_username' value='eric' 
-                        +key_value_edit key='staff_username' value='tanner' 
-                        +date_edit key='date' label='date' icon='calendar'
-                        // +date_edit key='date' label='date' icon='day'
-                        +print_this
-                    else 
-                        if staff_username
-                            .ui.label #{staff_username}
-                        else 
-                            .ui.header 
-                                i.alert.icon 
-                                |no one assigned
-                        .ui.label #{shift_type}
-                        .ui.label #{date} {{long_date date}}
-                        // +viewing_info
-                        if is_assigned 
-                            .ui.button.give_up
-                                |give up
-                        if can_take 
-                            .ui.button.take_shift 
-                                |take
-                        // +comments
-                
-               
-template(name='day_shifts')
-    .ui.padded.stackable.grid 
-        .sixteen.wide.column
-            .ui.header day shifts for #{current_date}
 template(name='recent_checkins')
     .ui.header  
         +i name='clock'
