@@ -47,10 +47,9 @@ template(name='healthclub')
                         |submit note
                 else 
                     unless kiosk_doc.current_building_number
-                        .ui.fluid.compact.basic.blue.button.add_note 
-                            .ui.inline.header 
-                                +i name='edit'
-                                |add note
+                        .ui.fluid.compact.basic.button.add_note 
+                            +i name='edit'
+                            |add note
                     if kiosk_doc.current_building_number
                         .ui.red.icon.button.clear_all
                             i.large.remove.icon
