@@ -20,18 +20,18 @@ Template.home.onRendered ->
     Meteor.setTimeout ->
         $('.ui.accordion').accordion('open')
     , 3000
-    # Meteor.setTimeout ->
-    #     $('.ui.left.sidebar')
-    #         .sidebar({
-    #             context: $('.bottom.segment')
-    #             transition:'push'
-    #             mobileTransition:'push'
-    #             exclusive:true
-    #             duration:200
-    #             scrollLock:true
-    #         })
-    #         .sidebar('attach events', '.toggle_leftbar')
-    # , 4000
+    Meteor.setTimeout ->
+        $('.ui.left.sidebar')
+            .sidebar({
+                context: $('.bottom.segment')
+                transition:'push'
+                mobileTransition:'push'
+                exclusive:true
+                duration:200
+                scrollLock:true
+            })
+            .sidebar('attach events', '.toggle_leftbar')
+    , 4000
         
 
 Template.nav.events

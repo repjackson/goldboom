@@ -331,10 +331,9 @@ template(name='account')
                     +image_edit key='image_id' icon='picture' title='profile image' 
                     +image_edit key='background_image_id' icon='picture' title='background image' 
                     // if currentUser.admin_mode
-                    if in_dev
+                    if currentUser.admin_mode
                         +boolean_edit key='admin' label='admin' icon='shield' 
                         +boolean_edit key='is_staff' label='is staff' icon='shield' 
-                    if currentUser.admin_mode
                         +print_this
                     +boolean_edit key='verified' label='verified' icon='verified-account'
                 .column

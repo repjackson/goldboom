@@ -28,10 +28,12 @@ template(name='home')
                     //     +your_tasks
                     .four.wide.column
                         +wywo
-                .four.column.row
+                .two.column.row
+                    .column
+                        +kiosk_settings
                     .column
                         +active_checkins
-                    .column
+                .four.column.row
                     .column
                         +staff_tasks
                     .column
@@ -39,34 +41,29 @@ template(name='home')
                     // .column
                     //     +hiring_interest
                     .column
-                        +kiosk_settings
-                    .column
                         +stats
+                        .ui.header 
+                            +i name='info'
+                            | hours 7am-10pm
+                        a.ui.large.compact.button.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
+                            +i name='marker'
+                            |2959 Shadow Creek Dr, Boulder, CO 80303
+                        a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
+                            +i name='phone'
+                            |phone: (303) 545-1787
                     // .column
                     //     +latest_requests
                         // +latest_rentals
-                    .column     
-                .three.column.row
                     .column
                         +contacts
                     // .column
                     //     +guest_block
+                .two.column.row
                     .column
                         +shifts
                         // +admin
                     .column
                         iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
-                .four.wide.column       
-                    .ui.header 
-                        +i name='info'
-                        | hours 7am-10pm
-                    a.ui.large.compact.button.zoomer(href="https://goo.gl/maps/Xzx6XiWAikcdMAso7" target="_window") 
-                        +i name='marker'
-                        |2959 Shadow Creek Dr, Boulder, CO 80303
-                    a.ui.large.compact.button.zoomer(href="tel:303-545-1787") 
-                        +i name='phone'
-                        |phone: (303) 545-1787
-                
                 // if currentUser
                 //     .four.wide.column
                 //         +latest_checkins

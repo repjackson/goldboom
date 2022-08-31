@@ -39,8 +39,13 @@ template(name='layout')
         +nav
         // .ui.bottom.attached.pushable.segment.scrollin.fullheight(class=darkmode_class)
         img.ui.fluid.image.checkin_banner(src="{{c.url 'healthclub' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
-        .scrollin.blackbg
-            +yield
+        .ui.bottom.attached.pushable.segment.scrollin.fullheight
+            // img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
+            +topbar
+            +leftbar
+            +rightbar
+            .scrollin.blackbg
+                +yield
         +footer
 template(name='mlayout')
     // img.ui.fluid.image.checkin_banner(src="{{c.url 'healthclub' width=1000 height=1000 crop='crop'}}")
