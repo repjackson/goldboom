@@ -274,7 +274,7 @@ if Meteor.isClient
                                 current_unit_number:null
                                 current_route: 'checkin_edit'
                                 current_checkin_id:new_id
-                        $(e.currentTarget).closest('.grid').transition('fly right', 500)
+                        # $(e.currentTarget).closest('.grid').transition('fly right', 500)
                         # Router.go "/checkin/#{new_id}/edit"
                         
                         $('body').toast({
@@ -318,7 +318,7 @@ if Meteor.isClient
                     current_search_user:null
                     current_building_number:null
                     current_unit_number:null
-            $(e.currentTarget).closest('.grid').transition('fly right', 500)
+            # $(e.currentTarget).closest('.grid').transition('fly right', 500)
             Docs.update kiosk._id, 
                 $set:
                     current_checkin_id:new_id
@@ -454,11 +454,11 @@ if Meteor.isClient
     Template.water_small.events 
         'click .goto_water':->
             kiosk = Docs.findOne model:'kiosk'
-            $('.grid').transition('fade right', 500)
-            Meteor.setTimeout =>
-                Docs.update kiosk._id, 
-                    $set:current_route:'readings'
-            , 500
+            # $('.grid').transition('fade right', 500)
+            Docs.update kiosk._id, 
+                $set:current_route:'readings'
+            # Meteor.setTimeout =>
+            # , 500
     Template.water_small.helpers
         latest_pool_reading: ->
             Docs.findOne
