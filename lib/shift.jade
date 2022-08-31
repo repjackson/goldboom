@@ -60,16 +60,25 @@ template(name='shift_day_item')
             .ui.header morning 7-12
             with morning_shift
                 .ui.label #{staff_username}
+            else 
+                +add_shift_button type='morning'
         .column
             .ui.header afternoon 12-5
             with afternoon_shift
                 .ui.label #{staff_username}
+            else 
+                +add_shift_button type='afternoon'
         .column
             .ui.header evening 5-10
             with evening_shift
                 .ui.label #{staff_username}
+            else 
+                +add_shift_button type='evening'
 
-                
+template(name='add_shift_button')
+    .ui.button.add_shift 
+        i.plus.icon
+        |shift
                
 template(name='day_shifts')
     .ui.padded.stackable.grid 

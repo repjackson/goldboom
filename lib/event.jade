@@ -19,12 +19,12 @@ template(name='events')
                     // |#{name}
                     // small #{count}
                     
-            .ui.header today: #{today}
+            .ui.header today: {{med_date today}}
             // .ui.header upcoming week
             // .ui.large.selection.animated.list
             //     each next_days
             //         a.item(href="/shift/#{this}") #{this}
-            +recent_checkins
+            // +recent_checkins
         .twelve.wide.column.scrolling
             // +schedule
             +shifts 

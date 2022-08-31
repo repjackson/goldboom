@@ -31,7 +31,7 @@ Template.home.onRendered ->
                 scrollLock:true
             })
             .sidebar('attach events', '.toggle_leftbar')
-    , 4000
+    , 6000
         
 
 Template.nav.events
