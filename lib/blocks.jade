@@ -265,8 +265,8 @@ template(name='session_key_value_edit')
 
 template(name='key_value_edit')
     a.ui.link.circular.label.set_key_value.zoomer(class="#{cl} #{calculated_class}")
-        if show_icon 
-            +i name=icon cl='ui avatar image zoomer'
+        +i name=icon cl='ui avatar image zoomer'
+        // if show_icon 
             // i.large.icon(class=icon)
         // if is_selected
         // if color 

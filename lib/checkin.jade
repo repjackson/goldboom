@@ -41,19 +41,19 @@ template(name='checkin_edit')
                     //     small (optional)
                     // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='big '
                     // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='big '
-                    // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='spa' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='pingpong' label='ping-pong' icon='ping-pong' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='sun' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='big'
-                    // // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                    // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='big'
-                    // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='big'
-                    // if is checkin_purpose 'note'
-                    //     +text_edit key='notes' label='notes' icon='note' hide_label=true
+                    +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='large'
+                    +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='spa' cl='large'
+                    +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='large'
+                    +key_value_edit key='checkin_purpose' value='pingpong' label='ping-pong' icon='ping-pong' cl='large'
+                    +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
+                    +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='sun' cl='large'
+                    +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
+                    +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
+                    +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
+                    +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
+                    if is checkin_purpose 'note'
+                        +text_edit key='notes' label='notes' icon='note' hide_label=true
                     .ui.hidden.divider
                     a.ui.massive.fluid.green.button.submit_checkin.brey(href="/kiosk")
                         .ui.inverted.header
