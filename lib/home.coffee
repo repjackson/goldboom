@@ -375,12 +375,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
-    Meteor.publish 'staff_users', ->
-        Meteor.users.find {
-            is_staff:true
-        },
-            sort:_timestamp:-1
-            limit:20
     Meteor.publish 'latest_requests', ->
         Docs.find {
             model:'task'

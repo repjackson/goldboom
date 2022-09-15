@@ -12,9 +12,15 @@ template(name='home')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
+                .two.column.row
+                    .column
+                        +kiosk_settings
+                    .column
+                        +active_checkins
                 .row
                     +clockin
                     .four.wide.column
+                        +call_method name='send_sms'
                         if currentUser.admin_mode
                             .ui.button.test 
                                 |test
@@ -28,11 +34,6 @@ template(name='home')
                     //     +your_tasks
                     .four.wide.column
                         +wywo
-                .two.column.row
-                    .column
-                        +kiosk_settings
-                    .column
-                        +active_checkins
                 .four.column.row
                     .column
                         +staff_tasks
