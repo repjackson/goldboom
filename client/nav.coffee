@@ -100,6 +100,6 @@ Template.nav.events
     #     Router.go "/doc/#{new_id}/edit"
 
 Template.nav.events
-    'click .item': (e,t)-> $(e.currentTarget).closest('.item').transition('bounce', 1000)
+    'click .item': (e,t)-> $(e.currentTarget).closest('.item').transition('jiggle', 1000)
 Template.nav_item.events
-    'click .tada': (e,t)-> $(e.currentTarget).closest('.icon').transition('bounce', 1000)
+    'click .tada': (e,t)-> $(e.currentTarget).closest('.icon').transition('jiggle', 1000)

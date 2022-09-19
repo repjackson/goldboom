@@ -1,7 +1,7 @@
 template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
     // .ui.stackable.padded.grid(class=darkmode_class)
-    .ui.center.aligned.grid
+    .ui.grid
         .sixteen.wide.column
             if currentUser
                 +role_switcher
@@ -77,8 +77,11 @@ template(name='staff')
                     .column
                         +shifts
                         // +admin
-                    .column
-                        iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
+                    .column.smaller
+                        a.ui.compact.button.zoomer(href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml" target='_window') 
+                            i.external.icon
+                            |schedule link
+                        iframe.rounded.smaller(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" height="100%" width="100%")
                     .column 
                         with currentUser
                             +appearance_settings
@@ -178,10 +181,9 @@ template(name='contacts')
         .title
             .ui.header
                 +i name='user-shield'
-                |contacts 
+                |staff list 
                 i.dropdown.icon
         .content
-            .ui.small.header staff
             .ui.selection.animated.large.list
                 each staff_users 
                     a.item.fly_right.zoomer(href="/user/#{username}") 
@@ -193,6 +195,8 @@ template(name='contacts')
                         .ui.label 
                             i.envelope.icon 
                             |#{email}
+                        each roles 
+                            .ui.label #{this}
                         // |#{username}
 template(name='clockin')  
     div(class=expand_class)

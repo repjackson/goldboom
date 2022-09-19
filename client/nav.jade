@@ -12,6 +12,8 @@ template(name='nav')
                 //     i.large.code.icon
                 // else 
                 //     // +i name='one-ring'
+                unless subs_ready
+                    i.large.loading.refresh.icon
                 +icolor name='one-ring'
                 // if currentUser.show_labels
                 span.mobile.hidden gold run

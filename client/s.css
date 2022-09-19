@@ -1007,9 +1007,13 @@ h1.ui.header{
 
 .menu > .item:active{
     transform: translate(0, 4px); 
+    border-radius: 15px !important;
+    background-color: grey !important;
 }
 
-
+.menu > .item{
+    border-radius: 15px !important;
+}
 
 @media screen and (max-width: 1100px) {
   .header-logo {
