@@ -12,7 +12,7 @@ template(name='nav')
                 //     i.large.code.icon
                 // else 
                 //     // +i name='one-ring'
-                +i name='home'
+                +icolor name='one-ring'
                 // if currentUser.show_labels
                 span.mobile.hidden gold run
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
@@ -175,14 +175,15 @@ template(name='footer')
         .ui.fluid.segment.stackable.grid.alpha
             .two.column.row
                 .column
+                    +role_switcher
                     +footer_chat
-                    // .ui.accordion
-                    //     .title.zoomer
-                    //         .ui.small.inline.header 
-                    //             |goldrun is community supported and will never sell your info
-                    //         // i.dropdown.grey.icon
-                    //     .content
-                    //         img.ui.image(src="{{c.url 'dao_venmo'}}")
+                    .ui.accordion
+                        .title.zoomer
+                            .ui.small.inline.header 
+                                |goldrun is community supported and will never sell your info
+                            // i.dropdown.grey.icon
+                        .content
+                            img.ui.image(src="{{c.url 'dao_venmo'}}")
                     // +music
                     if currentUser
                         with currentUser
@@ -222,6 +223,13 @@ template(name='footer')
                                 |#{building_number}: #{unit_number}
                                 
                             +print_this
+
+template(name='role_switcher')
+    .ui.header role switcher
+    each currentUser.roles 
+        .ui.label #{this}
+    
+
 
 
 template(name='my_latest_activity')

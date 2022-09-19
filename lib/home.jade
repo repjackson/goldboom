@@ -1,6 +1,11 @@
 template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
     // .ui.stackable.padded.grid(class=darkmode_class)
+    if currentUser.is_staff 
+        +staff
+        
+        
+template(name='staff')
     unless subs_ready
         i.massive.refresh.loading.icon
     if subs_ready2
@@ -29,6 +34,7 @@ template(name='home')
                     .four.wide.column
                         +latest_notes
                         .ui.header #{current_time}
+                    .four.wide.column
                         +latest_activity
                     // .column
                     //     +your_tasks
@@ -64,7 +70,7 @@ template(name='home')
                         +shifts
                         // +admin
                     .column
-                        iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=1717288470&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
+                        iframe.rounded(src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" height="600" width="100%")
                     .column 
                         with currentUser
                             +appearance_settings

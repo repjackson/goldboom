@@ -71,7 +71,7 @@ if Meteor.isClient
                         hiring_interest:1
                         has_answered:1
             
-    Template.home.events 
+    Template.staff.events 
         'click .test': ->
             # Notification.requestPermission().then((permission)=>
             #     console.log permission
@@ -402,7 +402,7 @@ if Meteor.isServer
             sort:_timestamp:-1
     
 if Meteor.isClient 
-    Template.home.onCreated ->
+    Template.staff.onCreated ->
         @autorun => Meteor.subscribe 'latest_model_docs', 'log', ->
         @autorun => Meteor.subscribe 'home_guests', ->
         # @autorun => Meteor.subscribe 'user_min', Session.get('current_search_user'), ->
@@ -430,7 +430,7 @@ if Meteor.isClient
                     rental_id:@_id
                     parent_id:@_id
             Router.go "/order/#{new_id}/edit"
-    Template.home.events
+    Template.staff.events
     
         # 'click .pick_user': ->
         #     Docs.insert 
@@ -506,7 +506,7 @@ if Meteor.isClient
                 model:'guest'
             }, 
                 sort:_timestamp:-1
-    Template.home.helpers
+    Template.staff.helpers
         current_time: -> moment().format('MMMM Do YYYY, h:mm a')
         checkedout_user_docs: ->
             match = {}
@@ -528,7 +528,7 @@ if Meteor.isClient
                     position: "bottom right"
                 )
 
-    Template.home.helpers
+    Template.staff.helpers
         subs_ready2: -> Template.instance().subscriptionsReady()
 
     Template.latest_activity.helpers

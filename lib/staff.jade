@@ -1,77 +1,77 @@
-template(name='staff')
-    .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-                .ui.large.header 
-                    +i name='user-shield'
-                    |staff
-                //- i.massive.loading.brown.poo.icon
-                a.ui.large.compact.button(href='/add_resident')
-                    +i name='plus'
-                    |resident
-                //- .ui.header
-                //-     |#{checkedin_members.count} checked in members
-                +inline_doc slug='staff_notices' classes='ui small grey header'
-                a.ui.button(href='/buildings')
-                    // i.building.large.icon
-                    +i name='building' classes='ui mini inline image'
-                    | buildings
-                a.ui.button(href='/residents')
-                    // i.large.users.icon
-                    +i name='groups' classes='ui mini inline image'
-                    | residents
-                a.ui.button(href='/healthclub')
-                    // i.large.tablet.icon
-                    +i name='android-tablet' classes='ui mini inline image'
-                    | kiosk view
-                +unit_key_widget
-                a.ui.compact.large.button(href='readings')
-                    +ismall name='water' classes='ui inline image' 
-                    // i.water.icon               
-                    |water
-                div
-                .ui.small.grey.header 
-                    // i.swimmer.icon
-                    +i name='pool'
-                    |pool
-                each shift_pool_readings
-                    .item #{ph}ph #{br}br #{temperature}deg #{when}
-                        if ph_message
-                            .ui.label #{ph_message}
-                        if chlorine_message
-                            .ui.label #{chlorine_message}
-                div
-                .ui.small.grey.header 
-                    +i name='spa'
-                    // i.hot.tub.icon
-                    |upper hot tub
-                each shift_upper_hot_tub_readings
-                    .item #{ph}ph #{br}br #{temperature}deg #{when}
-                        if ph_message
-                            .ui.label #{ph_message}
-                        if chlorine_message
-                            .ui.label #{chlorine_message}
-                div
-                .ui.small.grey.header 
-                    +i name='spa'
-                    // i.hot.tub.icon
-                    |lower hot tub
-                each shift_lower_hot_tub_readings
-                    .item #{ph}ph #{br}br #{temperature}deg #{when}
-                        if ph_message
-                            .ui.label #{ph_message}
-                        if chlorine_message
-                            .ui.label #{chlorine_message}
-                .ui.hidden.divider
+// template(name='staff')
+//     .ui.stackable.padded.grid
+//         .row
+//             .four.wide.column
+//                 .ui.large.header 
+//                     +i name='user-shield'
+//                     |staff
+//                 //- i.massive.loading.brown.poo.icon
+//                 a.ui.large.compact.button(href='/add_resident')
+//                     +i name='plus'
+//                     |resident
+//                 //- .ui.header
+//                 //-     |#{checkedin_members.count} checked in members
+//                 +inline_doc slug='staff_notices' classes='ui small grey header'
+//                 a.ui.button(href='/buildings')
+//                     // i.building.large.icon
+//                     +i name='building' classes='ui mini inline image'
+//                     | buildings
+//                 a.ui.button(href='/residents')
+//                     // i.large.users.icon
+//                     +i name='groups' classes='ui mini inline image'
+//                     | residents
+//                 a.ui.button(href='/healthclub')
+//                     // i.large.tablet.icon
+//                     +i name='android-tablet' classes='ui mini inline image'
+//                     | kiosk view
+//                 +unit_key_widget
+//                 a.ui.compact.large.button(href='readings')
+//                     +ismall name='water' classes='ui inline image' 
+//                     // i.water.icon               
+//                     |water
+//                 div
+//                 .ui.small.grey.header 
+//                     // i.swimmer.icon
+//                     +i name='pool'
+//                     |pool
+//                 each shift_pool_readings
+//                     .item #{ph}ph #{br}br #{temperature}deg #{when}
+//                         if ph_message
+//                             .ui.label #{ph_message}
+//                         if chlorine_message
+//                             .ui.label #{chlorine_message}
+//                 div
+//                 .ui.small.grey.header 
+//                     +i name='spa'
+//                     // i.hot.tub.icon
+//                     |upper hot tub
+//                 each shift_upper_hot_tub_readings
+//                     .item #{ph}ph #{br}br #{temperature}deg #{when}
+//                         if ph_message
+//                             .ui.label #{ph_message}
+//                         if chlorine_message
+//                             .ui.label #{chlorine_message}
+//                 div
+//                 .ui.small.grey.header 
+//                     +i name='spa'
+//                     // i.hot.tub.icon
+//                     |lower hot tub
+//                 each shift_lower_hot_tub_readings
+//                     .item #{ph}ph #{br}br #{temperature}deg #{when}
+//                         if ph_message
+//                             .ui.label #{ph_message}
+//                         if chlorine_message
+//                             .ui.label #{chlorine_message}
+//                 .ui.hidden.divider
 
-            .twelve.wide.column
-                +kiosk_settings
-                +schedule
-                // .ui.fluid.segment 
-                .ui.inline.grey.header #{checkedin_members.count} checked in members
-                .ui.stackable.four.cards
-                    each sessions
-                        +hc_session
+//             .twelve.wide.column
+//                 +kiosk_settings
+//                 +schedule
+//                 // .ui.fluid.segment 
+//                 .ui.inline.grey.header #{checkedin_members.count} checked in members
+//                 .ui.stackable.four.cards
+//                     each sessions
+//                         +hc_session
 
 
 template(name='hc_session')

@@ -258,6 +258,10 @@ if Meteor.isClient
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
                 Router.go "/users"
+    Template.user_sessions.events
+        'click .signout_others': ->
+            Meteor.logoutOtherClients ->
+                alert 'signed out'
         'click .clear_session': (e)->
             user = Meteor.users.findOne username:Router.current().params.username
             $(e.currentTarget).closest('.item').transition('fly left', 500)
