@@ -6,6 +6,11 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
         
+    Template.home.events
+        'click .scrolldown': ->
+            window.scrollTo(0, document.querySelector(".footer").scrollHeight);
+
+
         
     Template.wywo.onCreated ->
         @autorun => @subscribe 'model_docs', 'work', ->

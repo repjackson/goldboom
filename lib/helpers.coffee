@@ -131,7 +131,6 @@ if Meteor.isClient
     Template.registerHelper '_parent_doc', () ->
         Docs.findOne @parent_id
         # Template.parentData()
-    Template.registerHelper 'current_time', () -> moment().format("h:mm a")
     
     Template.registerHelper 'current_kiosk_doc', () ->
         kiosk = Docs.findOne model:'kiosk'
@@ -386,6 +385,7 @@ if Meteor.isClient
     Template.registerHelper 'current_limit', () -> parseInt(Session.get('limit'))
     
     Template.registerHelper 'current_time', () -> moment().format("h:mm a")
+    Template.registerHelper 'current_date', () -> moment().format("MMM Do")
     Template.registerHelper 'subs_ready', () -> 
         Template.instance().subscriptionsReady()
     

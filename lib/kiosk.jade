@@ -30,7 +30,7 @@ template(name='set_route')
             
             
 template(name='healthclub')
-    // img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
+    img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
     .ui.stackable.padded.grid.z
         .one.column.row
             .center.aligned.column
@@ -246,7 +246,7 @@ template(name='kiosk_settings')
                 +i name='self-service-kiosk' 
                 |kiosk
                 i.dropdown.icon
-        .active.content.smaller.scrolling
+        .content.smaller.scrolling
             if kiosk_doc
                 // if is_dev
                 //     .ui.icon.large.button.print_kiosk_doc(title='print session doc')

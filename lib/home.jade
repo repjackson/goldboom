@@ -1,10 +1,19 @@
 template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
     // .ui.stackable.padded.grid(class=darkmode_class)
-    if currentUser.is_staff 
-        +staff
-        
-        
+    .ui.center.aligned.grid
+        .sixteen.wide.column
+            if currentUser
+                +role_switcher
+            .ui.compact.button.scrolldown
+                i.big.chevron.down.icon 
+                |scroll to bottom
+            .ui.inline.header #{current_time} #{current_date}
+                
+        if is currentUser.current_role 'staff' 
+            +staff
+            
+            
 template(name='staff')
     unless subs_ready
         i.massive.refresh.loading.icon
@@ -33,7 +42,6 @@ template(name='staff')
                         +pinned_posts
                     .four.wide.column
                         +latest_notes
-                        .ui.header #{current_time}
                     .four.wide.column
                         +latest_activity
                     // .column
@@ -98,7 +106,7 @@ template(name='pinned_posts')
                 +i name='note'
                 |#{pinned_post_docs.count} pinned posts
                 i.dropdown.icon
-        .active.content.medscroll
+        .content.medscroll
             if session_is 'pinned_ready' true
                 .ui.cards 
                     each pinned_post_docs
@@ -126,7 +134,7 @@ template(name='wywo')
                 +i name='edit'
                 |while you were out
                 i.dropdown.icon
-        .active.content.medscroll
+        .content.medscroll
             .ui.icon.large.inverted.input
                 i.lightning.icon
                 input.description(type='text' placeholder='quick add note...')
@@ -172,7 +180,7 @@ template(name='contacts')
                 +i name='user-shield'
                 |contacts 
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.small.header staff
             .ui.selection.animated.large.list
                 each staff_users 
@@ -208,7 +216,7 @@ template(name='clockin')
                 a.toggle_view.zoomer.pointer.floated.right(title='toggle expand')
                     +i name='resize' cl='zoomer middle aligned'
             .ui.equal.width.grid
-                .active.content.medscroll.column
+                .content.medscroll.column
                     .ui.list 
                         .item
                         .item hours today: #{hours_today}
@@ -284,7 +292,7 @@ template(name='staff_tasks')
         // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
         // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
         // +session_set key='sort_key' value='_author_username' label='author' icon='user'
-        .active.content
+        .content
             if subs_ready
                 .ui.divided.large.list.medscroll 
                     each staff_task_docs 
@@ -298,7 +306,7 @@ template(name='staff_tasks')
                                 // else 
                                 i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
                                 |#{title}
-                            .active.content 
+                            .content 
                                 // +author_info
                                 // if building_number
                                 //     +bu
@@ -314,7 +322,7 @@ template(name='staff_activity')
                 +i name='realtime-protection'
                 |#{staff_activity_docs.count} staff activity
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.small.divided.list.medscroll
                 each staff_activity_docs 
                     .item.zoomer
@@ -353,7 +361,7 @@ template(name='admin')
                 +i name='shield'
                 |admin 
                 i.dropdown.icon
-        .active.content
+        .content
             .ui.input
                 input.upload_parking(type='file')
    
@@ -364,7 +372,7 @@ template(name='stats')
                 +i name='line-chart'
                 |global stats
                 i.dropdown.icon
-        .active.content
+        .content
             if currentUser
                 i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
             .ui.big.list 
@@ -412,7 +420,7 @@ template(name='latest_requests')
                 +i name='wrench'
                 |#{kiosk_task_docs.count}
                 |latest requests
-        .active.content
+        .content
             .medscroll
                 each kiosk_task_docs
                     .ui.segment
@@ -432,7 +440,7 @@ template(name='hiring_interest')
                 |#{yes_answers.count}
                 |hiring interest
                 i.dropdown.icon
-        .active.content.medscroll
+        .content.medscroll
             .ui.small.header 
                 i.checkmark.green.icon
                 |yes
@@ -461,7 +469,7 @@ template(name='latest_notes')
                 +i name='chat'
                 |#{latest_note_docs.count} latest notes
                 i.dropdown.icon
-        .active.content
+        .content
             .medscroll
                 each latest_note_docs
                     .ui.segment
@@ -488,7 +496,7 @@ template(name='latest_rentals')
                 +i name='basketball'
                 |latest rentals
                 i.dropdown.icon
-        .active.content
+        .content
             .medscroll
                 each rental_item_docs
                     .ui.segment
@@ -508,7 +516,7 @@ template(name='active_checkins')
                 |#{active_checkin_docs.count} checkins today 
                 span(title='unread checkin count') (#{unread_checkin_count})
                 i.dropdown.icon
-        .active.content
+        .content
             if subs_ready
                 .ui.divided.selection.list.medscroll
                     each active_checkin_docs 
@@ -518,7 +526,7 @@ template(name='active_checkins')
         
 template(name='active_checkin_doc')
     .item.zoomer.mark_read
-        .active.content
+        .content
             a.ui.large.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
                 | #{_resident.first_name}
                 | #{_resident.last_name}
@@ -567,7 +575,7 @@ template(name='latest_activity')
                 span(title='unread count') (#{unread_activity_docs})
                 i.dropdown.icon
                 
-        .active.content
+        .content
             if subs_ready
                 .ui.divided.list.smallscroll
                     each latest_docs 

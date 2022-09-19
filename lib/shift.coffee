@@ -11,7 +11,7 @@ if Meteor.isClient
                 shift_type:@type
     Template.shift_day_item.helpers
         morning_shift: ->
-            console.log @
+            # console.log @
             Docs.findOne
                 model:'shift'
                 shift_type:'morning'    
@@ -22,7 +22,7 @@ if Meteor.isClient
                 shift_type:'afternoon'    
                 date:@valueOf()
         evening_shift: ->
-            console.log @valueOf()
+            # console.log @valueOf()
             Docs.findOne
                 model:'shift'
                 date:@valueOf()

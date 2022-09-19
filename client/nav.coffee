@@ -34,6 +34,11 @@ Template.home.onRendered ->
     , 6000
         
 
+Template.role_switcher.events
+    'click .switch_role': ->
+        Meteor.users.update Meteor.userId(), 
+            $set:
+                current_role: @valueOf()
 Template.nav.events
     'click .reconnect': -> Meteor.reconnect()
     'mouseenter .item': (e)->
