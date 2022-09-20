@@ -36,20 +36,20 @@ template(name='healthclub')
             .center.aligned.column
                 // .ui.segment.alpha
                 // .spacer
-                if kiosk_doc.adding_note
-                    .ui.header 
-                        +i name='post'
-                        |new note
-                    with kiosk_doc
-                        +textarea_edit key='note_content'
-                    .ui.fluid.green.button.submit_note 
-                        i.check.large.icon
-                        |submit note
-                else 
-                    unless kiosk_doc.current_building_number
-                        .ui.fluid.compact.basic.button.add_note 
-                            +i name='edit'
-                            |add note
+                // if kiosk_doc.adding_note
+                //     .ui.header 
+                //         +i name='post'
+                //         |new note
+                //     with kiosk_doc
+                //         +textarea_edit key='note_content'
+                //     .ui.fluid.green.button.submit_note 
+                //         i.check.large.icon
+                //         |submit note
+                unless kiosk_doc.adding_note
+                    // unless kiosk_doc.current_building_number
+                    //     .ui.fluid.compact.basic.button.add_note 
+                    //         +i name='edit'
+                    //         |add note
                     if kiosk_doc.current_building_number
                         .ui.red.icon.button.clear_all
                             i.large.remove.icon
@@ -99,17 +99,20 @@ template(name='healthclub')
                         // +water_small
                         .ui.large.inline.header 
                             // i.grey.mail.icon
-                            |maintenance@boomprop.com
-                        img.ui.tiny.inline.image.rounded(src="/emailqr.png")
-                        .ui.big.header 
-                            |303.402.6900
+                            // |maintenance@boomprop.com
+                            +icolor name='slack'
+                            |slack channel
+                        // img.ui.tiny.inline.image.rounded(src="/emailqr.png")
+                        img.ui.tiny.inline.image.rounded(src="/slackqr.png")
+                        // .ui.big.header 
+                        //     |303.402.6900
                         .spacer
-                        +set_route key='posts' icon='news'
-                        +set_route key='tasks' icon='tasks'
-                        +set_route key='readings' icon='water'
-                        +set_route key='rentals' icon='clock'
-                        +set_route key='checkins' icon='checkmark'
-                        +set_route key='violations' icon='alert'
+                        // +set_route key='posts' icon='news'
+                        // +set_route key='tasks' icon='tasks'
+                        // +set_route key='readings' icon='water'
+                        // +set_route key='rentals' icon='clock'
+                        // +set_route key='checkins' icon='checkmark'
+                        // +set_route key='violations' icon='alert'
                     
                     
                 
