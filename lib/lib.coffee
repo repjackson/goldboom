@@ -11,25 +11,26 @@ Router.configure
     loadingTemplate: 'splash'
     trackPageView: false
 
-# force_loggedin =  ()->
-#     if !Meteor.userId()
-#         @render 'login'
-#     else
-#         @next()
+force_loggedin =  ()->
+    if !Meteor.userId()
+        @render 'login'
+    else
+        @next()
 
-# Router.onBeforeAction(force_loggedin, {
-#   # only: ['admin']
-#   # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
-#   except: [
-      
-#     'kiosk'
-#     'register'
-#     'forgot_password'
-#     'reset_password'
-#     'verify-email'
-#     'login'
-#   ]
-# });
+Router.onBeforeAction(force_loggedin, {
+  # only: ['admin']
+  # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
+  except: [
+    'kiosk'
+    'kiosk_container'
+    'checkin_edit'
+    'register'
+    'forgot_password'
+    'reset_password'
+    'verify-email'
+    'login'
+  ]
+});
 
 
 
