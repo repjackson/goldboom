@@ -1,5 +1,5 @@
 if Meteor.isClient 
-    # papa =  require 'papaparse'
+    papa =  require 'papaparse'
     
     Router.route '/', (->
         @layout 'layout'
@@ -563,6 +563,7 @@ if Meteor.isClient
 
     Template.admin.onCreated ->
         @autorun => Meteor.subscribe 'model_docs','stats',->
+        @autorun => Meteor.subscribe 'model_docs','key',->
     Template.admin.events 
         'change .upload_parking': (e,t)->
             papa.parse(e.target.files[0], {
@@ -573,6 +574,26 @@ if Meteor.isClient
                     # )
                 skipEmptyLines: true
             })
+
+        'click .unparse': (e,t)->
+            data = Docs.find({
+                model:'key'
+            },{limit:10}).fetch()
+            console.log data
+            result = papa.unparse(data,
+                {
+                    complete: (results)->
+                    	console.log("Parsing complete:", results);
+                })
+            console.log result
+            # papa.unparse(data, {
+            #     header: true
+            #     complete: (results)->
+            #         Meteor.call 'parse_parking', results, ->
+            #         # _.each(results.data, (csvData)-> 
+            #         # )
+            #     skipEmptyLines: true
+            # })
 
 
 if Meteor.isServer

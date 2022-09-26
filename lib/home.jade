@@ -28,6 +28,7 @@ template(name='staff')
             .ui.stackable.padded.grid.blackbg.scrolling
                 .two.column.row
                     .column
+                        +admin
                         +kiosk_settings
                     .column
                         +active_checkins
@@ -76,7 +77,6 @@ template(name='staff')
                 .three.column.row
                     .column
                         +shifts
-                        // +admin
                     .column.smaller
                         a.ui.compact.button.zoomer(href="https://docs.google.com/spreadsheets/d/e/2PACX-1vT_MUu-oEgWNLVf4EWa92xag_NY1EdkoI7XkGCbYYYYmQvfLWgPtHGKuiOV-U7tMhDXVgg4BRooAUmK/pubhtml" target='_window') 
                             i.external.icon
@@ -365,6 +365,8 @@ template(name='admin')
                 +i name='shield'
                 |admin 
                 i.dropdown.icon
+        .ui.big.button.unparse
+            |unparse
         .content
             .ui.input
                 input.upload_parking(type='file')
