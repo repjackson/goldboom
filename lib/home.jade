@@ -5,14 +5,29 @@ template(name='home')
         .sixteen.wide.column
             if currentUser
                 +role_switcher
-            .ui.compact.button.scrolldown
+            .ui.compact.icon.button.scrolldown(title='scroll to bottom')
                 i.big.chevron.down.icon 
-                |scroll to bottom
+                // |scroll to bottom
             .ui.inline.header #{current_time} #{current_date}
                 
         if is currentUser.current_role 'staff' 
             +staff
+        if is currentUser.current_role 'user'
+            +user_dashboard
             
+            
+template(name='user_dashboard')
+    .ui.header user dashboard 
+    +market 
+    
+
+
+template(name='market')
+    .ui.header market         
+    .ui.list 
+        each products 
+            .item 
+                .header #{title}        
             
 template(name='staff')
     unless subs_ready
