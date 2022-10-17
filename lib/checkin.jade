@@ -94,17 +94,17 @@ template(name='checkin_edit')
                             .ui.label 
                                 +i name='id-not-verified'
                                 |email unverified
-                    .column
-                        .ui.inline.small.grey.header 
-                            // i.chat.outline.icon
-                            +i name='chat'
-                            |#{resident_notes.count} notes
-                        .ui.icon.circular.compact.large.button.add_note
-                            i.plus.large.icon
-                        .ui.selection.animated.list 
-                            each resident_notes
-                                a.item.fly_right(href="/post/#{_id}") !{content}
-                                    |#{_when}
+                    // .column
+                    //     .ui.inline.small.grey.header 
+                    //         // i.chat.outline.icon
+                    //         +i name='chat'
+                    //         |#{resident_notes.count} notes
+                    //     .ui.icon.circular.compact.large.button.add_note
+                    //         i.plus.large.icon
+                    //     .ui.selection.animated.list 
+                    //         each resident_notes
+                    //             a.item.fly_right(href="/post/#{_id}") !{content}
+                    //                 |#{_when}
                     .column
                         .ui.inline.small.grey.header
                             // i.wrench.icon

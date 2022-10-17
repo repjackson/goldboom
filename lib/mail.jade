@@ -37,7 +37,7 @@ template(name='chat_message')
     .item(title="by #{_author.name} #{_when}")
         if author
             img.ui.avatar.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
-        |#{body}
+        |!{body}
         small #{_when} by 
         a(href="/user/#{_author_username")
             |#{_author.name}
@@ -49,7 +49,7 @@ template(name='chat_message')
 template(name='message_segment')                  
     .ui.segment
         .ui.header #{title} #{_when}
-        .ui.header #{body}
+        .ui.header !{body}
         +author_info
         .ui.header parent #{parent_id} #{parent_doc.model}
         +remove_button
