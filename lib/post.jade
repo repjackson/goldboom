@@ -90,9 +90,9 @@ template(name='posts')
             .sixteen.wide.column
                 if subs_ready
                     if session_is 'view_mode' 'list'
-                        .ui.segment.alpha
-                            .ui.selection.animated.divided.list
-                                +post_item
+                        .ui.segment.alpha.selection.animated.divided.list
+                            each doc_results
+                                    +post_item
                     else 
                         .ui.three.stackable.cards
                             each doc_results
