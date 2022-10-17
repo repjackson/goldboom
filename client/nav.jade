@@ -38,6 +38,10 @@ template(name='nav')
                 +i name='ipad'
                 i.external.icon
                 span.mobile.hidden.zoomer kiosk
+            a.zoomer2.item(href="/search" class="{{isActiveRoute 'search'}}" title='search' target="_window")
+                // i.large.exchange.icon
+                +i name='search'
+                span.mobile.hidden.zoomer search
             // a.item(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
