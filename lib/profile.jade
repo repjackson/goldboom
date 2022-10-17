@@ -1,4 +1,5 @@
-template(name='profile')
+template(name='profile_layout')
+    +nav
     with user_from_username_param
         if background_image_id
             img.ui.image.profile_banner(src="{{c.url background_image_id height=1000 crop='crop'}}")
@@ -67,64 +68,68 @@ template(name='profile')
                         // +follow_button
                         // +friend_button
                 .twelve.wide.column
-                    // .ui.segment.alpha
-                    //     +profile_nav_item section='dashboard' icon='dashboard'
-                    //     +profile_nav_item section='posts' icon='news'
-                    //     +profile_nav_item section='inbox' icon='inbox'
-                    //     +profile_nav_item section='events' icon='calendar'
-                    //     +profile_nav_item section='points' icon='coins'
-                    //     +profile_nav_item section='groups' icon='groups'
-                    //     // +profile_nav_item section='reviews' icon='megaphone'
-                    //     +profile_nav_item section='checkins' icon='checkmark'
-                    //     +profile_nav_item section='products' icon='shopping-cart'
-                    //     +profile_nav_item section='services' icon='wrench'
-                    //     +profile_nav_item section='tasks' icon='tasks'
-                    //     +profile_nav_item section='favorites' icon='heart'
-                    //     +profile_nav_item section='social' icon='friends'
-                    //     +profile_nav_item section='food' icon='food'
-                    //     +profile_nav_item section='voting' icon='facebook-like'
+                    .ui.segment.alpha
+                        +profile_nav_item section='dashboard' icon='dashboard'
+                        +profile_nav_item section='posts' icon='news'
+                        +profile_nav_item section='inbox' icon='inbox'
+                        +profile_nav_item section='events' icon='calendar'
+                        +profile_nav_item section='points' icon='coins'
+                        +profile_nav_item section='groups' icon='groups'
+                        // +profile_nav_item section='reviews' icon='megaphone'
+                        +profile_nav_item section='checkins' icon='checkmark'
+                        +profile_nav_item section='products' icon='shopping-cart'
+                        +profile_nav_item section='services' icon='wrench'
+                        +profile_nav_item section='tasks' icon='tasks'
+                        +profile_nav_item section='favorites' icon='heart'
+                        +profile_nav_item section='social' icon='friends'
+                        +profile_nav_item section='food' icon='food'
+                        +profile_nav_item section='voting' icon='facebook-like'
                 
                     .ui.two.column.stackable.grid
-                        .column
-                            if status 
-                                .ui.label(title='status')
-                                    +i name='clock'
-                                    |#{status}
-                            +text_view key='display_name' label='display name'
-                            div
-                            +array_view key='tags' label='tags' icon='tags'
-                            +html_view key='bio' label='bio'
-                            +text_view key='status' label='status' icon='clock'
-                            +text_view key='address' label='address' icon='marker' 
-                            +phone_view key='phone' label='phone' icon='phone' 
-                        // .column
-                        //     +membership_status
-                        .column
-                            +user_unit
-                        .column
-                            +user_tasks
-                        .column
-                            +user_models key='guest' icon='friends'
-                        .column
-                            +user_models key='space' icon='garage'
-                        .column
-                            +user_checkins
-                            // +user_models key='checkin' icon='checkmark'
-                        .column
-                            +user_models key='violation' icon='foul'
-                        .column
-                            +user_models key='permit' icon='id-card'
-                        // .column
-                        //     +comments
-                        .column
-                            +user_inbox
-                        .column
-                            a.ui.header.zoomers.calc_user_points
-                                // i.line.chart.icon
-                                +i name='line-chart'
-                                |stats
-                            +profile_stats
-         
+                        +yield
+                        
+                        
+template(name='account_dashboard')
+    .column
+        if status 
+            .ui.label(title='status')
+                +i name='clock'
+                |#{status}
+        +text_view key='display_name' label='display name'
+        div
+        +array_view key='tags' label='tags' icon='tags'
+        +html_view key='bio' label='bio'
+        +text_view key='status' label='status' icon='clock'
+        +text_view key='address' label='address' icon='marker' 
+        +phone_view key='phone' label='phone' icon='phone' 
+    // .column
+    //     +membership_status
+    .column
+        +user_unit
+    .column
+        +user_tasks
+    .column
+        +user_models key='guest' icon='friends'
+    .column
+        +user_models key='space' icon='garage'
+    .column
+        +user_checkins
+        // +user_models key='checkin' icon='checkmark'
+    .column
+        +user_models key='violation' icon='foul'
+    .column
+        +user_models key='permit' icon='id-card'
+    // .column
+    //     +comments
+    .column
+        +user_inbox
+    .column
+        a.ui.header.zoomers.calc_user_points
+            // i.line.chart.icon
+            +i name='line-chart'
+            |stats
+        +profile_stats
+
          
 template(name='user_checkins')
     .ui.header 

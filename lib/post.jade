@@ -35,30 +35,30 @@ template(name='posts')
                     //- input#search(type='text' autofocus='' autocomplete="off" value=current_query)
                     input#search(type='text' autofocus='' autocomplete="off" placeholder='')
                     //- .ui.header #{connection.status}
-                    // with emotion_avg_result
-                    //     // .ui.label
-                    //     //     |{{to_percent avg_sent_score}}%
-                    //     //     small sentiment
-                    //     if above_50 avg_joy_score
-                    //         .ui.green.big.label
-                    //             |{{to_percent avg_joy_score}}%
-                    //             small joyful
-                    //     if above_50 avg_anger_score
-                    //         .ui.red.big.label
-                    //             |{{to_percent avg_anger_score}}%
-                    //             small angry
-                    //     if above_50 avg_sadness_score
-                    //         .ui.blue.big.label
-                    //             |{{to_percent avg_sadness_score}}%
-                    //             small sad
-                    //     if above_50 avg_disgust_score
-                    //         .ui.orange.big.label
-                    //             |{{to_percent avg_disgust_score}}%
-                    //             small disgusted
-                    //     if above_50 avg_fear_score
-                    //         .ui.grey.big.label
-                    //             |{{to_percent avg_fear_score}}%
-                    //             small fearful
+                    with emotion_avg_result
+                        // .ui.label
+                        //     |{{to_percent avg_sent_score}}%
+                        //     small sentiment
+                        if above_50 avg_joy_score
+                            .ui.green.big.label
+                                |{{to_percent avg_joy_score}}%
+                                small joyful
+                        if above_50 avg_anger_score
+                            .ui.red.big.label
+                                |{{to_percent avg_anger_score}}%
+                                small angry
+                        if above_50 avg_sadness_score
+                            .ui.blue.big.label
+                                |{{to_percent avg_sadness_score}}%
+                                small sad
+                        if above_50 avg_disgust_score
+                            .ui.orange.big.label
+                                |{{to_percent avg_disgust_score}}%
+                                small disgusted
+                        if above_50 avg_fear_score
+                            .ui.grey.big.label
+                                |{{to_percent avg_fear_score}}%
+                                small fearful
                     
                 unless connected
                     //- .ui.header disconnected
@@ -69,14 +69,14 @@ template(name='posts')
                 // .ui.hidden.divider
                 unless is one_result
                     span.sorting
-                        // +session_icon_button key='view_mode' value='grid' icon='grid' 
-                        // +session_icon_button key='view_mode' value='list' icon='list'
+                        +session_icon_button key='view_mode' value='grid' icon='th' 
+                        +session_icon_button key='view_mode' value='list' icon='list'
                         +sort_direction_toggle
                         +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
                         +session_set key='sort_key' value='comment_count' label='comments' icon='chat'
-                        // +session_set key='sort_key' value='domain' label='domain' icon='globe'
-                        // +session_set key='sort_key' value='ups' label='ups' icon='thumbs up'
-                        +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                        +session_set key='sort_key' value='building_number' label='building #' icon='building'
+                        +session_set key='sort_key' value='unit_number' label='unit #' icon='room'
+                        // +session_set key='sort_key' value='points' label='points' icon='hashtag'
                     
                 if connected
                     // if searching 
@@ -88,13 +88,15 @@ template(name='posts')
                             +agg_tag
                 // .ui.hidden.divider
             .sixteen.wide.column
-                // if subs_ready
-                //     // if session_is 'view_mode' 'list'
-                // .ui.segment.alpha
-                    // .ui.selection.animated.divided.list 
-                .ui.three.stackable.cards
-                    each doc_results
-                        +post_item
+                if subs_ready
+                    if session_is 'view_mode' 'list'
+                        .ui.segment.alpha
+                            .ui.selection.animated.divided.list
+                                +post_item
+                    else 
+                        .ui.three.stackable.cards
+                            each doc_results
+                                +post_item
                             
 template(name='unpick_tag')
     button.ui.big.image.link.label.zoomer.unpick_tag.pointer(tabindex="0" class="#{loading_class} #{active_term_class}")

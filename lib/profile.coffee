@@ -1,8 +1,12 @@
 if Meteor.isClient
     Router.route '/user/:username', (->
+        @layout 'profile_layout'
+        @render 'account_dashboard'
+        ), name:'account_dashboard'
+    Router.route '/user/:username/events', (->
         @layout 'layout'
-        @render 'profile'
-        ), name:'profile'
+        @render 'user_events'
+        ), name:'user_events'
             
     Template.user_models.onCreated ->
         @autorun => Meteor.subscribe 'user_model_docs',@data.key,->
@@ -43,7 +47,7 @@ if Meteor.isClient
                 model:'checkin'
                 resident_username:Router.current().params.username
             }, sort:_timestamp:-1
-    Template.profile.onCreated ->
+    Template.profile_layout.onCreated ->
         Meteor.call 'calc_user_stats', Router.current().params.username, ->
         # Meteor.call 'calc_user_points', Router.current().params.username, ->
 if Meteor.isServer 
@@ -57,20 +61,20 @@ if Meteor.isServer
                 sort:_timestamp:-1
                 limit:10
 if Meteor.isClient
-    Template.profile.onRendered ->
+    Template.profile_layout.onRendered ->
         document.title = "profile";
         Meteor.call 'increment_profile_view', Router.current().params.username, ->
         Meteor.setTimeout ->
             $('.ui.accordion').accordion()
         , 2000
-    # Template.profile.onRendered ->
+    # Template.profile_layout.onRendered ->
     #     Meteor.setTimeout ->
     #         $('.accordion').accordion()
     #     , 1000
         
         
                 
-    Template.profile.onRendered ->
+    Template.profile_layout.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
             $('.avatar').popup()
@@ -80,9 +84,9 @@ if Meteor.isClient
     #         $('.item').popup()
     #     , 1000
 
-    Template.profile.events
+    Template.profile_layout.events
 
-    Template.profile.helpers
+    Template.profile_layout.helpers
         my_unread_log_docs: ->
             Docs.find 
                 model:'log'
@@ -169,11 +173,11 @@ if Meteor.isServer
             username:username
 
 if Meteor.isClient
-    Template.profile.onCreated ->
+    Template.profile_layout.onCreated ->
         @autorun => Meteor.subscribe 'user_deposts', Router.current().params.username, ->
         @autorun => Meteor.subscribe 'user_from_username_param', Router.current().params.username, ->
 
-    Template.profile.helpers
+    Template.profile_layout.helpers
         owner_earnings: ->
             Docs.find
                 model:'order'
