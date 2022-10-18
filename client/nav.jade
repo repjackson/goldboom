@@ -5,8 +5,8 @@ template(name='nav')
     // #topnav.topnav.ui.attached.borderless.large.menu.hscroll
     #topnav.topnav.ui.attached.borderless.menu.hscroll(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
         if is_connected
-            a.icon.item.toggle_leftbar.zoomer
-                i.large.bars.grey.icon.zoomer
+            // a.icon.item.toggle_leftbar.zoomer
+            //     i.large.bars.grey.icon.zoomer
             a.header.item.zoomer2(href="/" title='home')
                 // if in_dev 
                 //     i.large.code.icon
@@ -32,6 +32,11 @@ template(name='nav')
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden.zoomer #{global_stats_doc.user_count_total} accounts
+            a.item.zoomer2.clear_search(href="/persons" class="{{isActiveRoute 'persons'}}" title='persons')
+                +i name='groups'
+                // i.large.users.icon
+                // if currentUser.show_labels
+                span.mobile.hidden.zoomer #{global_stats_doc.person_count_total} people
                 
             a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                 // i.large.exchange.icon

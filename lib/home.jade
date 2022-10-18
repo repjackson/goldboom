@@ -41,24 +41,24 @@ template(name='staff')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                .two.column.row
+                .four.column.row
                     .column
                         +admin
                         +kiosk_settings
                     .column
                         +active_checkins
-                .row
-                    +clockin
-                    .four.wide.column
+                    .column
+                        +clockin
+                    .column
                         +call_method name='send_sms'
                         if currentUser.admin_mode
                             .ui.button.test 
                                 |test
                         // +search
                         +pinned_posts
-                    .four.wide.column
+                    .column
                         +latest_notes
-                    .four.wide.column
+                    .column
                         +latest_activity
                     // .column
                     //     +your_tasks
@@ -234,10 +234,9 @@ template(name='clockin')
                         |clock in
                 a.toggle_view.zoomer.pointer.floated.right(title='toggle expand')
                     +i name='resize' cl='zoomer middle aligned'
-            .ui.equal.width.grid
+            .ui.equal.width.padded.grid
                 .content.medscroll.column
                     .ui.list 
-                        .item
                         .item hours today: #{hours_today}
                         .item #{sessions_today_count} sessions today
                         .item hours this week: #{hours_week}

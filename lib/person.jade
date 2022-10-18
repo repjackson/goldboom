@@ -1,0 +1,153 @@
+template(name='persons')
+    .ui.stackable.padded.grid 
+        .four.wide.column.scrolling
+            .ui.inline.header 
+                +i name='person'
+                |#{person_docs.count} persons
+            if current_search 
+                i.large.red.circular.link.remove.icon.clear
+            .ui.large.input 
+                input.person_search(type='text' placeholder='search...' value=current_search)
+            .ui.header your points #{currentUser.points}
+            a.ui.big.icon.button.new_person
+                i.big.green.plus.icon
+            +i name='tags'
+            each picked_persons_tags
+                button.ui.blue.compact.circular.button.unpick_tag(tabindex='0')
+                    //- i.remove.icon
+                    | #{this}
+            each persons_tag_results
+                button.ui.circular.compact.black.button.pick_tag(tabindex="0" class=result_class title=count)
+                    |#{name}
+                    // small #{count}
+        .twelve.wide.column
+            unless one_result
+                .ui.inline.header(title='result count') #{result_docs.count}
+                // +search_input key='title'
+                +session_icon_button key='view_mode' value='grid' icon='grid' 
+                +session_icon_button key='view_mode' value='list' icon='list'
+                
+                +sort_direction_toggle
+                // +sort_key_toggle
+                +session_set key='sort_key' value='_timestamp' label='added' icon='clock'
+                +session_set key='sort_key' value='points' label='points' icon='hashtag'
+                +session_set key='sort_key' value='views' label='views' icon='eye'
+                +session_set key='sort_key' value='intFormedYear' label='year started' icon='calendar'
+                // +session_set key='limit' value=10
+                // +session_set key='limit' value=25
+                // +session_set key='limit' value=100
+            .ui.hidden.divider
+            if subs_ready
+                if session_is 'view_mode' 'grid'
+                    .ui.stackable.cards.scrolling.padding
+                        if one_result
+                            .ui.one.cards
+                                each person_docs 
+                                    +person_card
+                        else
+                            .ui.cards
+                                each person_docs 
+                                    +person_card
+                else
+                    .ui.large.divided.list 
+                        each person_docs 
+                            +person_item
+            else 
+                .ui.center.aligned.basic.segment
+                    i.massive.yin.yang.loading.grey.icon
+        
+template(name='person_card')
+    .card
+        .content
+            span(title='recipient')
+                +i name='lend'
+                with _target
+                    +user_info
+            .ui.header #{first_name} #{last_name}
+            .ui.header #{amount}pts
+            .ui.label 
+                i.user.icon
+                |#{_author_username}
+            +bu
+            each tags 
+                .ui.label #{this}
+            span.smallscroll
+                |!{description}
+            .ui.label #{_when}
+            a.ui.icon.button.zoomer(href="/person/#{_id}")
+                i.right.large.chevron.icon
+template(name='person_item')
+    .item
+        .content
+            span(title='recipient')
+                +i name='lend'
+                with _target
+                    +user_info
+            .ui.header #{first_name} #{last_name}
+            .ui.label 
+                i.clock.icon
+                |#{_when}
+            .ui.label 
+                i.user.icon
+                |#{_author_username}
+            +bu
+            span.smallscroll
+                |!{description}
+            a.ui.icon.button.zoomer(href="/person/#{_id}")
+                i.right.large.chevron.icon
+        
+
+template(name='person_view')
+    .ui.stackable.padded.grid
+        .row 
+            .four.wide.column.scrolling
+                .ui.header #{title}
+                if can_edit 
+                    +edit_button
+                +image_view key='image_id'
+                .ui.inline.grey.header {{from_now start_datetime}}
+                .ui.list
+                    .item #{views} views
+                each viewers
+                    .ui.label #{username
+                +comments
+                +array_view key='location_tags' label='location_tags' 
+            .twelve.wide.column.scrolling   
+                .ui.button.add_review 
+                    |add review
+                .ui.header reviews 
+                each person_reviews
+                    .ui.item #{body}
+
+template(name='person_edit')
+    with current_doc 
+        .ui.stackable.padded.grid
+            .row
+                .sixteen.wide.column
+                    .ui.inline.header 
+                        i.pencil.icon
+                        |editing person
+                    a.ui.green.button(href="/person/#{_id}")
+                        i.save.icon 
+                        |save
+                .eight.wide.column
+                    +text_edit key='first_name' label='first name' 
+                    +text_edit key='last_name' label='last name' 
+                    +array_edit key='roles' label='roles' icon='shield'
+                    +image_edit key='image_id' label='image' 
+                    +link_edit key='link' label='external link' 
+                    div
+                    +float_edit key='price_usd' label='price' icon='us-dollar-circled'
+                    div
+                    +number_edit key='price_points' label='point price' icon='coins'
+                    div
+                    // +text_edit key='size_content' label='size description' icon='content'
+                    div
+                    +number_edit key='price' label='price (pts)' icon='coins'
+                    div
+                    +array_edit key='location_tags' label='location tags' icon='marker' 
+                    div
+                    +audience_settings
+                
+                
+                
