@@ -9,11 +9,16 @@ template(name='home')
                 i.big.chevron.down.icon 
                 // |scroll to bottom
             .ui.inline.header #{current_time} #{current_date}
-                
+        unless currentUser 
+            +public_dashboard
         if is currentUser.current_role 'staff' 
             +staff
         if is currentUser.current_role 'user'
             +user_dashboard
+            
+            
+template(name='public_dashboard')
+    +posts
             
             
 template(name='user_dashboard')

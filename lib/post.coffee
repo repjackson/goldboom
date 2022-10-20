@@ -11,8 +11,8 @@ if Meteor.isClient
         #     picked_tags.array()
         #     Session.get('dummy')
         @autorun => Meteor.subscribe 'model_counter','post', ->
-        @autorun => Meteor.subscribe 'kiosk_posts', ->
-        # @autorun => @subscribe 'model_docs', 'post', ->
+        # @autorun => Meteor.subscribe 'kiosk_posts', ->
+        @autorun => @subscribe 'model_docs', 'post', ->
         # @autorun => @subscribe 'post_tag_results',
         #     picked_tags.array()
             

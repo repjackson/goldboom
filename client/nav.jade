@@ -16,37 +16,38 @@ template(name='nav')
                     i.large.loading.refresh.icon
                 +icolor name='one-ring'
                 // if currentUser.show_labels
-                span.mobile.hidden gold run
+                span.mobile.hidden Gold Run Community
             // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
             //     +i name='line-chart'
-            a.zoomer2.item(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
-                // i.large.exchange.icon
-                +i name='building'
-                span.mobile.hidden.zoomer #{global_stats_doc.building_count_total} buildings
-            a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
-                // i.large.exchange.icon
-                +i name='room'
-                span.mobile.hidden.zoomer #{global_stats_doc.unit_count_total} units
-            a.item.zoomer2.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
-                +i name='groups'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden.zoomer #{global_stats_doc.user_count_total} accounts
-            a.item.zoomer2.clear_search(href="/persons" class="{{isActiveRoute 'persons'}}" title='persons')
-                +i name='groups'
-                // i.large.users.icon
-                // if currentUser.show_labels
-                span.mobile.hidden.zoomer #{global_stats_doc.person_count_total} people
-                
-            a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
-                // i.large.exchange.icon
-                +i name='ipad'
-                i.external.icon
-                span.mobile.hidden.zoomer kiosk
-            a.zoomer2.item(href="/search" class="{{isActiveRoute 'search'}}" title='search' target="_window")
-                // i.large.exchange.icon
-                +i name='search'
-                span.mobile.hidden.zoomer search
+            if currentUser
+                a.zoomer2.item(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
+                    // i.large.exchange.icon
+                    +i name='building'
+                    span.mobile.hidden.zoomer #{global_stats_doc.building_count_total} buildings
+                a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
+                    // i.large.exchange.icon
+                    +i name='room'
+                    span.mobile.hidden.zoomer #{global_stats_doc.unit_count_total} units
+                a.item.zoomer2.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
+                    +i name='groups'
+                    // i.large.users.icon
+                    // if currentUser.show_labels
+                    span.mobile.hidden.zoomer #{global_stats_doc.user_count_total} accounts
+                a.item.zoomer2.clear_search(href="/persons" class="{{isActiveRoute 'persons'}}" title='persons')
+                    +i name='groups'
+                    // i.large.users.icon
+                    // if currentUser.show_labels
+                    span.mobile.hidden.zoomer #{global_stats_doc.person_count_total} people
+                    
+                a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
+                    // i.large.exchange.icon
+                    +i name='ipad'
+                    i.external.icon
+                    span.mobile.hidden.zoomer kiosk
+                a.zoomer2.item(href="/search" class="{{isActiveRoute 'search'}}" title='search' target="_window")
+                    // i.large.exchange.icon
+                    +i name='search'
+                    span.mobile.hidden.zoomer search
             // a.item(href="/healthclub" class="{{isActiveRoute 'healthclub'}}" title='healthclub')
             //     // i.large.users.icon
             //     +i name='fitness'
@@ -105,7 +106,7 @@ template(name='nav')
                 // a.icon.item(href="/mail/inbox")
                 a.icon.item(href="/user/#{currentUser._id}/edit" title='account settings')
                     i.cog.large.icon
-    if is_connected
+    if currentUser
         // .ui.attached.borderless.menu.hscroll.secnav
         .ui.attached.borderless.menu.hscroll.secnav(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
             a.item.zoomer2.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')

@@ -94,9 +94,9 @@ template(name='posts')
                             each doc_results
                                     +post_item
                     else 
-                        .ui.three.stackable.cards
+                        .ui.stackable.cards
                             each doc_results
-                                +post_item
+                                +post_card
                             
 template(name='unpick_tag')
     button.ui.big.image.link.label.zoomer.unpick_tag.pointer(tabindex="0" class="#{loading_class} #{active_term_class}")
@@ -108,6 +108,32 @@ template(name='unpick_tag')
 
                             
 template(name='post_item')
+    .card 
+        .content
+            if image_id
+                a.fly_right(href="/post/#{_id}")
+                    img.ui.image(src="{{c.url image_id width=600 height=600 crop='crop'}}")
+            a.ui.inline.header.zoomer.fly_left(href="/post/#{_id}") !{title}
+            +bu
+            .smallscroll
+                |!{content} 
+                |!{body}
+            .ui.label #{resident_username}
+            .ui.label
+                i.comment.icon 
+                |#{num_comments}
+            .ui.label 
+                i.plus.icon
+                |#{_when}
+            // +voting
+            if currentUser.admin_mode
+                a.ui.button(href="/post/#{_id}/edit")
+                    i.pencil.icon
+            if pinned 
+                i.big.map.pin.icon(title='pinned to home page')
+            
+                    
+template(name='post_card')
     .card 
         .content
             if image_id

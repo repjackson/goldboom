@@ -21,7 +21,10 @@ Router.onBeforeAction(force_loggedin, {
   # only: ['admin']
   # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
   except: [
+    'home'
     'kiosk'
+    'post_view'
+    'posts'
     'kiosk_container'
     'checkin_edit'
     'register'
@@ -29,7 +32,7 @@ Router.onBeforeAction(force_loggedin, {
     'reset_password'
     'verify-email'
     'login'
-  ]
+    ]
 });
 
 
