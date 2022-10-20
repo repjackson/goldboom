@@ -74,9 +74,9 @@ template(name='nav')
                 else
                     i.large.sun.icon.zoomer
             unless currentUser
-                a.item(href="/register" title='register')
-                    +i name='plus'
-                    span.mobilehidden register            
+                // a.item(href="/register" title='register')
+                //     +i name='plus'
+                //     span.mobilehidden register            
                 a.item(href='/login' title='login' class="{{isActiveRoute 'login'}}" ) 
                     // i.sign.in.large.green.zoomer2
                     +i name='enter-2'

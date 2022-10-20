@@ -39,21 +39,21 @@ template(name='checkin_edit')
                     // .ui.center.aligned.header
                     //     |purpose 
                     //     small (optional)
-                    +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='big '
-                    // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='big '
-                    +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='large'
-                    +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='spa' cl='large'
-                    +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='large'
-                    +key_value_edit key='checkin_purpose' value='pingpong' label='ping-pong' icon='ping-pong' cl='large'
-                    +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
-                    +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='sun' cl='large'
-                    +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='large'
-                    // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
-                    +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
-                    +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
-                    // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
-                    if is checkin_purpose 'note'
-                        +text_edit key='notes' label='notes' icon='note' hide_label=true
+                    // +key_value_edit key='checkin_purpose' value='gym' label='gym' icon='fitness' cl='big '
+                    // // // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='pool' cl='big '
+                    // +key_value_edit key='checkin_purpose' value='pool' label='pool' icon='water' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='hottub' label='hottub' icon='spa' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='sauna' label='sauna' icon='wave-lines' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='pingpong' label='ping-pong' icon='ping-pong' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='racquetball' label='racquetball' icon='racquetball' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='roof' label='roof' icon='sun' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='rental' label='rental' icon='clock' cl='large'
+                    // // +key_value_edit key='checkin_purpose' value='garden' label='garden' icon='flower' cl='massive'
+                    // +key_value_edit key='checkin_purpose' value='key' label='key' icon='key' cl='large'
+                    // +key_value_edit key='checkin_purpose' value='note' label='note' icon='edit' cl='large'
+                    // // +key_value_edit key='checkin_purpose' value='other' label='other' icon='' cl='large'
+                    // if is checkin_purpose 'note'
+                    //     +text_edit key='notes' label='notes' icon='note' hide_label=true
                     .ui.hidden.divider
                     a.ui.massive.fluid.green.button.submit_checkin.brey(href="/kiosk")
                         .ui.inverted.header
@@ -75,80 +75,80 @@ template(name='checkin_edit')
                         i.massive.green.checkmark.icon.inver.bounce
                         // img(src="https://i.gifer.com/FbYk.gif")
                         .ui.header checked in
-                .ui.two.column.grid 
-                    .column
-                        if verified 
-                            .ui.large.basic.label 
-                                +i name='id-verified'
-                                |id verified
-                        else 
-                            .ui.large.basic.label(title='show id to staff for verification')
-                                +i name='id-not-verified'
-                                |id unverified
-                        // +image_edit key='image_id' label='profile image'
-                        if email_verified 
-                            .ui.label 
-                                +i name='id-verified'
-                                |email verified
-                        else 
-                            .ui.label 
-                                +i name='id-not-verified'
-                                |email unverified
-                    // .column
-                    //     .ui.inline.small.grey.header 
-                    //         // i.chat.outline.icon
-                    //         +i name='chat'
-                    //         |#{resident_notes.count} notes
-                    //     .ui.icon.circular.compact.large.button.add_note
-                    //         i.plus.large.icon
-                    //     .ui.selection.animated.list 
-                    //         each resident_notes
-                    //             a.item.fly_right(href="/post/#{_id}") !{content}
-                    //                 |#{_when}
-                    .column
-                        .ui.inline.small.grey.header
-                            // i.wrench.icon
-                            +i name='wrench'
-                            |#{resident_unit_tasks.count}
-                            |maintenance requests
-                        // .ui.icon.circular.compact.large.button.add_task
-                        //     i.plus.large.icon 
-                        .ui.selection.animated.list 
-                            each resident_unit_tasks
-                                a.item.fly_right(href="/task/#{_id}") !{content} !{description}
-                                    small #{_when}
-                        div         
-                    .column
-                        .ui.inline.small.grey.header 
-                            // i.key.icon
-                            +i name='key'
-                            |#{unit_key_checkouts.count}
-                            |key checkouts
-                        if keys_on_file.count
-                            .ui.circular.compact.large.button.new_key_checkout
-                                i.large.plus.icon
-                                |checkout
-                        .ui.small.grey.header
-                            +i name='hanging'
-                            |#{keys_on_file.count}
-                            |keys on file
-                        .ui.list
-                            each keys_on_file
-                                .ui.item added #{_when}
-                        each unit_key_checkouts
-                            .item #{_when}
-                        div
-                    .column
-                        .spacer
-                        .ui.inline.small.grey.header 
-                            +i name='clock'
-                            // i.clock.icon
-                            |rentals
-                        .ui.icon.circular.compact.large.button.add_rental
-                            i.large.plus.icon
-                        .ui.list
-                            each resident_rental_docs
-                                a.item.fly_right(href="/rental/#{_id}") #{_when}
+                // .ui.two.column.grid 
+                //     .column
+                //         if verified 
+                //             .ui.large.basic.label 
+                //                 +i name='id-verified'
+                //                 |id verified
+                //         else 
+                //             .ui.large.basic.label(title='show id to staff for verification')
+                //                 +i name='id-not-verified'
+                //                 |id unverified
+                //         // +image_edit key='image_id' label='profile image'
+                //         if email_verified 
+                //             .ui.label 
+                //                 +i name='id-verified'
+                //                 |email verified
+                //         else 
+                //             .ui.label 
+                //                 +i name='id-not-verified'
+                //                 |email unverified
+                //     // .column
+                //     //     .ui.inline.small.grey.header 
+                //     //         // i.chat.outline.icon
+                //     //         +i name='chat'
+                //     //         |#{resident_notes.count} notes
+                //     //     .ui.icon.circular.compact.large.button.add_note
+                //     //         i.plus.large.icon
+                //     //     .ui.selection.animated.list 
+                //     //         each resident_notes
+                //     //             a.item.fly_right(href="/post/#{_id}") !{content}
+                //     //                 |#{_when}
+                //     .column
+                //         .ui.inline.small.grey.header
+                //             // i.wrench.icon
+                //             +i name='wrench'
+                //             |#{resident_unit_tasks.count}
+                //             |maintenance requests
+                //         // .ui.icon.circular.compact.large.button.add_task
+                //         //     i.plus.large.icon 
+                //         .ui.selection.animated.list 
+                //             each resident_unit_tasks
+                //                 a.item.fly_right(href="/task/#{_id}") !{content} !{description}
+                //                     small #{_when}
+                //         div         
+                //     .column
+                //         .ui.inline.small.grey.header 
+                //             // i.key.icon
+                //             +i name='key'
+                //             |#{unit_key_checkouts.count}
+                //             |key checkouts
+                //         if keys_on_file.count
+                //             .ui.circular.compact.large.button.new_key_checkout
+                //                 i.large.plus.icon
+                //                 |checkout
+                //         .ui.small.grey.header
+                //             +i name='hanging'
+                //             |#{keys_on_file.count}
+                //             |keys on file
+                //         .ui.list
+                //             each keys_on_file
+                //                 .ui.item added #{_when}
+                //         each unit_key_checkouts
+                //             .item #{_when}
+                //         div
+                //     .column
+                //         .spacer
+                //         .ui.inline.small.grey.header 
+                //             +i name='clock'
+                //             // i.clock.icon
+                //             |rentals
+                //         .ui.icon.circular.compact.large.button.add_rental
+                //             i.large.plus.icon
+                //         .ui.list
+                //             each resident_rental_docs
+                //                 a.item.fly_right(href="/rental/#{_id}") #{_when}
 
 
 
