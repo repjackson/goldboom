@@ -157,15 +157,15 @@ template(name='post_card')
                     i.pencil.icon
             if pinned 
                 i.big.map.pin.icon(title='pinned to home page')
-            
-                    
+            a.ui.large.icon.button.fly_right(href="/post/#{_id}")
+                i.large.chevron.right.icon                    
 template(name='post_view')
     with current_doc
         if image_id
             img.ui.fluid.image.checkin_banner(src="{{c.url image_id width=1000 height=1000 crop='crop'}}")
         .ui.stackable.padded.grid 
             .eleven.wide.column
-                .ui.segment.alpha.scrollin
+                .ui.segment.alpha
                     .ui.inline.header #{title}
                     if can_edit 
                         a.ui.button.fly_down(href="/post/#{_id}/edit")
@@ -173,9 +173,10 @@ template(name='post_view')
                             |edit
                     if in_dev
                         +print_this
-                    if image_id 
-                        +image_view key='image_id'
-                    |!{body} !{content}
+                    .scrolling
+                        if image_id 
+                            +image_view key='image_id'
+                        |!{body} !{content}
             .five.wide.column
                 a.ui.compact.button.fly_left.zoomer(href="/posts" title='back to browse')
                     i.chevron.left.icon
@@ -200,6 +201,7 @@ template(name='post_view')
                     a.ui.large.label.zoomer.pick_flat_tag(title='search tag') #{this}
                 if group_id
                     +group_widget
+                +boolean_view key='public' label='public' icon='eye'
                 +comments
             .sixteen.wide.column.scrollin
                 .ui.big.center.aligned.inline.header(class=emotion_color) 
@@ -239,6 +241,7 @@ template(name='post_edit')
                 // .bigger
             .eight.wide.column
                 +html_edit key='content'
+                +boolean_edit key='public' label='public' icon='eye'
                 +boolean_edit key='pinned' label='pinned' icon='pin'
                 +boolean_edit key='private' label='private' icon='private'
                 if currentUser.admin_mode

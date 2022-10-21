@@ -628,12 +628,15 @@ if Meteor.isServer
             
     Meteor.publish 'active_checkins', ()->
         yesterday = Date.now()-(60*60*24*1000)
-        Docs.find {
-            model:'checkin'
-            active:true
-            _timestamp:$gt:yesterday
-        }, 
-            limit:20
-            sort:_timestamp:-1
+        if Meteor.user()
+            Docs.find {
+                model:'checkin'
+                active:true
+                _timestamp:$gt:yesterday
+            }, 
+                limit:20
+                sort:_timestamp:-1
+        else 
+            []
             
             

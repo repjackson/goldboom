@@ -673,7 +673,7 @@ if Meteor.isClient
     Template.boolean_edit.helpers
         boolean_toggle_class: ->
             parent = Template.parentData()
-            if parent["#{@key}"] then 'active big blue' else 'large'
+            if parent["#{@key}"] then 'active big blue' else 'big'
     
     
     Template.boolean_edit.events
