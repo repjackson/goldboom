@@ -25,13 +25,13 @@ template(name='login')
                     |login
                     strong #{username}
                     //- i.right.chevron.icon
-                // .ui.center.aligned.basic.segment    
-                //     // a.ui.compact.small.button(href='/forgot_password')
-                //     //     +i name='forgot-password' cl='ui mini inline image'                    
-                //     //     |forgot password
-                //     a.ui.button.fly_left(href='/register')
-                //         +i name='plus' cl='ui mini inline image' 
-                //         |register
+                .ui.center.aligned.basic.segment    
+                    // a.ui.compact.small.button(href='/forgot_password')
+                    //     +i name='forgot-password' cl='ui mini inline image'                    
+                    //     |forgot password
+                    a.ui.button.fly_left(href='/register')
+                        +i name='plus' cl='ui mini inline image' 
+                        |register
 
 template(name='register')
     //- img.ui.fluid.image.bg_overlay(src="{{c.url 'forest-bg2' width=1000 crop='fit'}}")    
