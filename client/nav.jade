@@ -26,7 +26,17 @@ template(name='nav')
                     i.external.icon
                     +i name='shop'
                     span.mobile.hidden.zoomer gro market
-                
+                a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
+                    // i.large.exchange.icon
+                    +i name='ipad'
+                    i.external.icon
+                    span.mobile.hidden.zoomer kiosk
+                a.item.zoomer2.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
+                    +i name='water'
+                    // i.large.users.icon
+                    // if currentUser.show_labels
+                    span.mobile.hidden.zoomer readings
+
             if currentUser
                 a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                     // i.large.exchange.icon
@@ -43,11 +53,6 @@ template(name='nav')
                     // if currentUser.show_labels
                     span.mobile.hidden.zoomer #{global_stats_doc.person_count_total} people
                     
-                a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
-                    // i.large.exchange.icon
-                    +i name='ipad'
-                    i.external.icon
-                    span.mobile.hidden.zoomer kiosk
                 // a.zoomer2.item(href="/search" class="{{isActiveRoute 'search'}}" title='search' target="_window")
                 //     // i.large.exchange.icon
                 //     +i name='search'

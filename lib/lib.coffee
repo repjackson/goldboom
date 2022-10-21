@@ -27,6 +27,7 @@ Router.onBeforeAction(force_loggedin, {
     'buildings'
     'building_view'
     'posts'
+    'readings'
     'kiosk_container'
     'checkin_edit'
     'register'
