@@ -3,7 +3,7 @@ template(name='nav')
         https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.big.menu.hscroll(style="background-color:#{currentUser.theme_color_main}")
     // #topnav.topnav.ui.attached.borderless.large.menu.hscroll
-    #topnav.topnav.ui.attached.borderless.menu.hscroll(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
+    #topnav.topnav.ui.attached.large.menu.hscroll(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
         if is_connected
             // a.icon.item.toggle_leftbar.zoomer
             //     i.large.bars.grey.icon.zoomer
@@ -17,13 +17,17 @@ template(name='nav')
                 +icolor name='one-ring'
                 // if currentUser.show_labels
                 span.mobile.hidden Gold Run Community
-            // a.item(href='/global_stats' class="{{isActivePath '/global_stats'}}")
-            //     +i name='line-chart'
+            a.zoomer2.item(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
+                // i.large.exchange.icon
+                +i name='building'
+                span.mobile.hidden.zoomer #{global_stats_doc.building_count_total} buildings
+            unless currentUser
+                a.zoomer2.item(href="https://www.goldrun.online" title='units' target='_window')
+                    i.external.icon
+                    +i name='shop'
+                    span.mobile.hidden.zoomer gro market
+                
             if currentUser
-                a.zoomer2.item(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
-                    // i.large.exchange.icon
-                    +i name='building'
-                    span.mobile.hidden.zoomer #{global_stats_doc.building_count_total} buildings
                 a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                     // i.large.exchange.icon
                     +i name='room'

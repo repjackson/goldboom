@@ -2,8 +2,8 @@ template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
     // .ui.stackable.padded.grid(class=darkmode_class)
     .ui.grid
-        .sixteen.wide.column
-            if currentUser
+        if currentUser
+            .sixteen.wide.column
                 +role_switcher
             .ui.compact.icon.button.scrolldown(title='scroll to bottom')
                 i.big.chevron.down.icon 

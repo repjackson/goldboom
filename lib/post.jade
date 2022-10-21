@@ -157,6 +157,10 @@ template(name='post_card')
                     i.pencil.icon
             if pinned 
                 i.big.map.pin.icon(title='pinned to home page')
+            if public 
+                .ui.label 
+                    i.eye.icon 
+                    |public
             a.ui.large.icon.button.fly_right(href="/post/#{_id}")
                 i.large.chevron.right.icon                    
 template(name='post_view')
