@@ -84,7 +84,7 @@ template(name='transfer_view')
                     if is_dev
                         +remove_button
                     .f14
-                        |#{description}
+                        |!{description}
                     .spacer
                     +image_view key='image_id' label='image' direct=true
                     div 
@@ -101,10 +101,10 @@ template(name='transfer_view')
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
-                    a(href="/user/#{recipient.username}")
+                    a(href="/user/#{recipient_username}")
                         img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.large.center.aligned.header.pointer.zoom
-                            |#{recipient.name}
+                            |#{recipient_username}
                             
                             
                             
@@ -146,7 +146,7 @@ template(name='transfer_edit')
                             //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             //         |#{name}
                             //         small #{points}p
-                    +textarea_edit key='description' label='description' direct=true
+                    +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     if in_dev 
                         +print_this
@@ -198,9 +198,18 @@ template(name='transfer_edit')
                                 
                                 
 template(name='bank')
-    .ui.header 
-        |bank
-        +i name='bank'
-    .ui.list 
-        each my_transfer_docs 
-            .item #{_when}
+    .ui.padded.stackable.grid 
+        .sixteen.wdie.column
+            .ui.header 
+                +i name='bank'
+                |bank
+            +send_transfer_button 
+            .ui.list 
+                each my_transfer_docs 
+                    .item #{_when}
+                    
+                    
+                    
+template(name='send_transfer_button')
+    .ui.button.new_transfer
+        |send transfer

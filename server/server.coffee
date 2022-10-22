@@ -108,11 +108,11 @@ Meteor.publish 'latest_order_docs', ()->
     Docs.find {
         model:'order'
     }, sort:_timestamp:-1
-Meteor.publish 'public_posts', (child_id)->
-    Docs.find {
-        model:'post'
-        private:$ne:true
-    }, limit:20
+# Meteor.publish 'public_posts', (child_id)->
+#     Docs.find {
+#         model:'post'
+#         private:$ne:true
+#     }, limit:20
 
 
 

@@ -108,6 +108,13 @@ if Meteor.isClient
             Docs.find 
                 model:'transfer'
                 _author_id:Meteor.userId()
+                
+    Template.send_transfer_button.events 
+        'click .new_transfer': ->
+            new_id = 
+                Docs.insert 
+                    model:'transfer'
+            Router.go "/transfer/#{new_id}/edit"
 if Meteor.isServer 
     Meteor.publish 'my_transfers', ->
         Docs.find 

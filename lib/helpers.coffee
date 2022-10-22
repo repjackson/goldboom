@@ -141,6 +141,10 @@ if Meteor.isClient
             _id:kiosk.current_doc_id
     Template.registerHelper 'kiosk_doc', () ->
         Docs.findOne model:'kiosk'
+    Template.registerHelper '_recipient', () -> 
+        Meteor.users.findOne 
+            _id:@recipient_id
+
     Template.registerHelper 'id_from_building_number', () -> 
         found = 
             Docs.findOne 
