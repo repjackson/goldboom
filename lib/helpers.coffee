@@ -132,6 +132,9 @@ if Meteor.isClient
         Docs.findOne @parent_id
         # Template.parentData()
     
+    Template.registerHelper 'model_docs_helper', (model)->
+        Docs.find 
+            model:model
     Template.registerHelper 'current_kiosk_doc', () ->
         kiosk = Docs.findOne model:'kiosk'
         Docs.findOne 

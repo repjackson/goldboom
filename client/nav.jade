@@ -187,6 +187,10 @@ template(name='nav')
             // i.large.exchange.icon
             +i name='shop'
             span.mobile.hidden.zoomer products
+        a.zoomer2.item(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
+            // i.large.exchange.icon
+            +i name='transfer'
+            span.mobile.hidden.zoomer transfers
 
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)
