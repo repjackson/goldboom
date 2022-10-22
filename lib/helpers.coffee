@@ -147,6 +147,10 @@ if Meteor.isClient
             found._id
     Template.registerHelper 'is_connected', () -> Meteor.status().connected
     
+    Template.registerHelper 'in_role', (role) -> 
+        if Meteor.user()
+            Meteor.user().roles and role in Meteor.user().roles
+            
     Template.registerHelper 'sorting_up', () ->
         parseInt(Session.get('sort_direction')) is 1
     

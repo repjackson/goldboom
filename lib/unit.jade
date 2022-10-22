@@ -200,18 +200,19 @@ template(name='unit_residents')
             +i name='person-at-home'
             |#{unit_resident_docs.count} unit residents
         .ui.cards
-            each unit_resident_docs
-                .ui.card
-                    .image
-                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    .content
-                        a.header(href="/user/#{username}")
-                             |#{first_name} #{last_name} 
-                            .meta @#{username}
-                            .meta 
-                                i.calendar.icon(title='expiration date')
-                                |#{expiration_date}
-                            //- +array_view key='tags' label='Tags' 
+            if in_role 'staff'
+                each unit_resident_docs
+                    .ui.card
+                        .image
+                            img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        .content
+                            a.header(href="/user/#{username}")
+                                 |#{first_name} #{last_name} 
+                                .meta @#{username}
+                                .meta 
+                                    i.calendar.icon(title='expiration date')
+                                    |#{expiration_date}
+                                //- +array_view key='tags' label='Tags' 
 
 
 template(name='user_key')

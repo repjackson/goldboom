@@ -237,19 +237,20 @@ template(name='building_residents')
             +i name='groups'
             // i.users.icon
             |#{building_resident_docs.count} building residents
-        .ui.selection.animatd.list.medscroll
-            each building_resident_docs
-                a.ui.item.fly_right.zoomer(href="/user/#{username}" title='view profile')
-                    // img.ui.tiny.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    .content
-                        a.header.fly_right(href="/user/#{username}")
-                             |#{first_name} #{last_name} 
-                            span @#{username}
-                            +bu
-                            // .meta 
-                            //     i.calendar.icon(title='expiration date')
-                            //     |#{expiration_date}
-                            //- +array_view key='tags' label='Tags' 
+        if in_role 'staff'
+            .ui.selection.animatd.list.medscroll
+                each building_resident_docs
+                    a.ui.item.fly_right.zoomer(href="/user/#{username}" title='view profile')
+                        // img.ui.tiny.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        .content
+                            a.header.fly_right(href="/user/#{username}")
+                                 |#{first_name} #{last_name} 
+                                span @#{username}
+                                +bu
+                                // .meta 
+                                //     i.calendar.icon(title='expiration date')
+                                //     |#{expiration_date}
+                                //- +array_view key='tags' label='Tags' 
 
 
 
