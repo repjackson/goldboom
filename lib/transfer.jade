@@ -121,6 +121,10 @@ template(name='transfer_edit')
                         .ui.inline.header
                             img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{_author.name}
+                    +date_edit key='date' label='date' direct=true   
+                    +time_edit key='time' label='time' direct=true   
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                .six.wide.column
                     .ui.segment
                         .ui.header recipient
                         with recipient
@@ -132,7 +136,7 @@ template(name='transfer_edit')
                         unless recipient
                             .ui.divider
                             // i.large.user.plus.icon
-                            +single_user_edit key='recipient_id' label='search member' icon='user plus' direct=true
+                            +single_user_edit key='recipient' label='search member' icon='user plus' direct=true
                             // .ui.icon.input
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')
@@ -142,12 +146,10 @@ template(name='transfer_edit')
                             //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             //         |#{name}
                             //         small #{points}p
-                    +date_edit key='date' label='date' direct=true   
-                    +time_edit key='time' label='time' direct=true   
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
-                .six.wide.column
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
+                    if in_dev 
+                        +print_this
                     div 
                     div
                     .ui.inline.header
@@ -156,22 +158,22 @@ template(name='transfer_edit')
                     .ui.input
                         input.new_tag(type='text' placeholder='+' autocomplete="off")
                         //- +clear_value                
-                    each terms 
-                        a.ui.large.circular.basic.button.select_term(href='#')
-                            if image
-                                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{title}
+                    // each terms 
+                    //     a.ui.large.circular.basic.button.select_term(href='#')
+                    //         if image
+                    //             img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    //         |#{title}
                     each tags
                         .ui.big.basic.circular.label
                             i.delete.icon.remove_element
                             |#{this}
-                    if suggestions
-                        .ui.small.inline.header suggestions
-                    each suggestions
-                        a.ui.large.circular.basic.button.select_term(href='#')
-                            // if image
-                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{title}
+                    // if suggestions
+                    //     .ui.small.inline.header suggestions
+                    // each suggestions
+                    //     a.ui.large.circular.basic.button.select_term(href='#')
+                    //         // if image
+                    //         //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    //         |#{title}
                 .five.wide.center.aligned.column
                     .ui.big.header #{amount}pts
                     .ui.big.input

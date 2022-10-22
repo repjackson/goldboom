@@ -891,10 +891,15 @@ if Meteor.isClient
     
     Template.single_user_edit.onCreated ->
         @user_results = new ReactiveVar
-        # @autorun => Meteor.subscribe 'user_info_min', ->
+        @autorun => Meteor.subscribe 'searching_users', (Session.get('user_query')),->
         @autorun => Meteor.subscribe 'user_by_ref', @data.key, Template.parentData(),->
             
 if Meteor.isServer
+    Meteor.publish 'searching_users', (query)->
+        if query.length > 1
+            match {}
+            match.username = {$regex:"#{query}", $options: 'i'}
+            Meteor.users.find match
     Meteor.publish 'user_by_ref', (key, parent)->
         Meteor.users.find 
             _id: parent["#{key}_id"]

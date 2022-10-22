@@ -99,7 +99,7 @@ if Meteor.isClient
         
         
     Template.transfer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'all_users', ->
+        # @autorun => Meteor.subscribe 'all_users', ->
         @autorun => Meteor.subscribe 'recipient_from_transfer_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
@@ -114,8 +114,8 @@ if Meteor.isClient
 
 
     Template.transfer_edit.helpers
-        terms: ->
-            Terms.find()
+        # terms: ->
+        #     Terms.find()
         suggestions: ->
             Tags.find()
         recipient: ->
@@ -252,7 +252,7 @@ if Meteor.isClient
                             position: 'top-end',
                             timer: 1000
                         )
-                        Router.go "/transfer/#{@_id}/view"
+                        Router.go "/transfer/#{@_id}"
             )
 
 
