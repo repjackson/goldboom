@@ -194,3 +194,13 @@ template(name='transfer_edit')
                             .ui.green.huge.circular.disabled.button
                                 i.send.big.icon
                                 |send                            
+                                
+                                
+                                
+template(name='bank')
+    .ui.header 
+        |bank
+        +i name='bank'
+    .ui.list 
+        each my_transfer_docs 
+            .item #{_when}

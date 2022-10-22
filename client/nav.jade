@@ -100,10 +100,10 @@ template(name='nav')
                 //     +i name='comments'
                 //     if unread_chat_count
                 //         strong #{unread_chat_count}
-                if currentUser.points 
-                    a.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_points'}}" title='points')
-                        |#{currentUser.points}
-                        +i name='coins'
+                // if currentUser.points 
+                a.item(href="/bank" class="{{isActiveRoute 'bank'}}" title='bank')
+                    |#{currentUser.points}
+                    +i name='coins'
                 a.zoomer2.item.tada(href="/user/#{currentUser.username}" class=user_nav_button_class title='profile' class="{{isActiveRoute 'profile'}}" )
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=300 height=300 gravity='face' crop='fill'}}")

@@ -96,8 +96,25 @@ if Meteor.isClient
         @layout 'layout'
         @render 'transfer_edit'
         ), name:'transfer_edit'
+    Router.route '/bank', (->
+        @layout 'layout'
+        @render 'bank'
+        ), name:'bank'
         
+    Template.bank.onCreated ->
+        @autorun => Meteor.subscribe 'my_transfers', ->
+    Template.bank.helpers
+        my_transfer_docs: ->
+            Docs.find 
+                model:'transfer'
+                _author_id:Meteor.userId()
+if Meteor.isServer 
+    Meteor.publish 'my_transfers', ->
+        Docs.find 
+            model:'transfer'
+            _author_id:Meteor.userId()
         
+if Meteor.isClient
     Template.transfer_edit.onCreated ->
         # @autorun => Meteor.subscribe 'all_users', ->
         @autorun => Meteor.subscribe 'recipient_from_transfer_id', Router.current().params.doc_id
