@@ -218,6 +218,7 @@ template(name='bank')
                     |#{points} pts
             
         .twelve.wide.column
+            +action_points
             .ui.list 
                 each my_transfer_docs 
                     a.item.fly_right(href="/transfer/#{_id}") #{_when}
@@ -225,7 +226,13 @@ template(name='bank')
                         each tags 
                             .ui.label #{this}
                     
-                    
+template(name='action_points')
+    .ui.header action points 
+    .ui.large.list 
+        .item 
+            |docs read: #{user_docs_read}
+        .item 
+            |logins: #{login_count}
                     
 template(name='send_transfer_button')
     .ui.button.new_transfer

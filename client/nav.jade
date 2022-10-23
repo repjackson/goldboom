@@ -25,28 +25,32 @@ template(name='nav')
                 a.zoomer2.item(href="https://www.goldrun.online" title='units' target='_window')
                     i.external.icon
                     +i name='shop'
-                    span.mobile.hidden.zoomer gro market
+                    unless currentUser.hide_labels
+                        span.mobile.hidden.zoomer gro market
                 a.zoomer2.item(href="/kiosk" class="{{isActiveRoute 'kiosk'}}" title='kiosk' target="_window")
                     // i.large.exchange.icon
                     +i name='ipad'
                     i.external.icon
-                    span.mobile.hidden.zoomer kiosk
+                    unless currentUser.hide_labels
+                        span.mobile.hidden.zoomer kiosk
                 a.item.zoomer2.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
                     +i name='water'
                     // i.large.users.icon
                     // if currentUser.show_labels
-                    span.mobile.hidden.zoomer readings
-
+                    unless currentUser.hide_labels
+                        span.mobile.hidden.zoomer readings
             if currentUser
                 a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                     // i.large.exchange.icon
                     +i name='room'
-                    span.mobile.hidden.zoomer #{global_stats_doc.unit_count_total} units
+                    unless currentUser.hide_labels
+                        span.mobile.hidden.zoomer #{global_stats_doc.unit_count_total} units
                 a.item.zoomer2.clear_search(href="/users" class="{{isActiveRoute 'users'}}" title='users')
                     +i name='groups'
                     // i.large.users.icon
                     // if currentUser.show_labels
-                    span.mobile.hidden.zoomer #{global_stats_doc.user_count_total} accounts
+                    unless currentUser.hide_labels
+                        span.mobile.hidden.zoomer #{global_stats_doc.user_count_total} accounts
                 // a.item.zoomer2.clear_search(href="/persons" class="{{isActiveRoute 'persons'}}" title='persons')
                 //     +i name='groups'
                 //     // i.large.users.icon
@@ -120,50 +124,60 @@ template(name='nav')
     .ui.attached.borderless.menu.hscroll.secnav(class="{{currentUser.navbar_class}} {{currentUser.navbar_color}} {{currentUser.navbar_size}}")
         a.item.zoomer2.clear_search(href="/posts" class="{{isActiveRoute 'posts'}}" title='posts')
             +i name='news'
-            span.mobile.hidden.zoomer #{global_stats_doc.post_count_total} posts
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer #{global_stats_doc.post_count_total} posts
         a.zoomer2.item(href="/groups" class="{{isActiveRoute 'groups'}}" title='groups')
             // i.large.exchange.icon
             +i name='campfire'
-            span.mobile.hidden.zoomer groups
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer groups
         if is currentUser.current_role 'staff'
             a.item.zoomer2.clear_search(href="/readings" class="{{isActiveRoute 'readings'}}" title='readings')
                 +i name='water'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden.zoomer readings
+                unless currentUser.hide_labels
+                    span.mobile.hidden.zoomer readings
             a.item.zoomer2.clear_search(href="/events" class="{{isActiveRoute 'events'}}" title='events')
                 +i name='calendar'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden.zoomer schedule
+                unless currentUser.hide_labels
+                    span.mobile.hidden.zoomer schedule
             a.item.zoomer2.clear_search(href="/checkins" class="{{isActiveRoute 'checkins'}}" title='checkins')
                 +i name='checkmark'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden.zoomer 
-                    small #{global_stats_doc.checkin_count_total} 
-                    |checkins
+                unless currentUser.hide_labels
+                    span.mobile.hidden.zoomer 
+                        small #{global_stats_doc.checkin_count_total} 
+                        |checkins
             if currentUser
                 a.item.zoomer2.clear_search(href="/keys" class="{{isActiveRoute 'keys'}}" title='keys')
                     +i name='key'
                     // i.large.users.icon
                     // if currentUser.show_labels
-                    span.mobile.hidden.zoomer #{global_stats_doc.key_count_total} keys
+                    unless currentUser.hide_labels
+                        span.mobile.hidden.zoomer #{global_stats_doc.key_count_total} keys
             a.item.zoomer2.clear_search(href="/guests" class="{{isActiveRoute 'guests'}}" title='guests')
                 +i name='friends'
-                span.mobile.hidden.zoomer #{global_stats_doc.guest_count_total} guests
+                unless currentUser.hide_labels
+                    span.mobile.hidden.zoomer #{global_stats_doc.guest_count_total} guests
             a.item.zoomer2.clear_search(href="/spaces" class="{{isActiveRoute 'spaces'}}" title='spaces')
                 +i name='car'
                 // i.large.users.icon
                 // if currentUser.show_labels
-                span.mobile.hidden.zoomer parking
+                unless currentUser.hide_labels
+                    span.mobile.hidden.zoomer parking
         a.zoomer2.item(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
             // i.large.exchange.icon
             +i name='transfer'
-            span.mobile.hidden.zoomer transfers
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer transfers
         a.item.zoomer2.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
             +i name='tasks'
-            .mobile.hidden #{global_stats_doc.task_count_total} tasks
+            unless currentUser.hide_labels
+                .mobile.hidden #{global_stats_doc.task_count_total} tasks
             // i.large.users.icon
             // if currentUser.show_labels
             // span.mobile.hidden.zoomer tasks
@@ -171,18 +185,21 @@ template(name='nav')
             +i name='clock'
             // i.large.users.icon
             // if currentUser.show_labels
-            span.mobile.hidden.zoomer rentals
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer rentals
         a.zoomer2.item(href="/violations" class="{{isActiveRoute 'violations'}}" title='violations')
             // i.large.exchange.icon
             // +i name='alert'
             +i name='warning-shield'
-            span.mobile.hidden.zoomer violations
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer violations
             
         a.item.zoomer2.clear_search(href="/orders" class="{{isActiveRoute 'orders'}}" title='orders')
             +i name='money'
             // i.large.users.icon
             // if currentUser.show_labels
-            span.mobile.hidden.zoomer orders
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer orders
         // a.zoomer2.item(href="/services" class="{{isActiveRoute 'services'}}" title='services')
         //     // i.large.exchange.icon
         //     +i name='bell'
