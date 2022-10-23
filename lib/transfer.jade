@@ -199,14 +199,23 @@ template(name='transfer_edit')
                                 
 template(name='bank')
     .ui.padded.stackable.grid 
-        .sixteen.wdie.column
+        .four.wide.column
             .ui.header 
                 +i name='bank'
                 |bank
             +send_transfer_button 
+            with currentUser 
+                .ui.header.recalc
+                    +i name='coins'
+                    |#{points} pts
+            
+        .twelve.wide.column
             .ui.list 
                 each my_transfer_docs 
                     .item #{_when}
+                        .ui.header #{amount}
+                        each tags 
+                            .ui.label #{this}
                     
                     
                     

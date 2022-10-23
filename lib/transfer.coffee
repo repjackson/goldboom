@@ -108,7 +108,29 @@ if Meteor.isClient
             Docs.find 
                 model:'transfer'
                 _author_id:Meteor.userId()
+    Template.bank.events 
+        'click .recalc': ->
+            Meteor.call 'recalc_points', ->
                 
+if Meteor.isServer
+    Meteor.methods 
+        recalc_points: ->
+            transfers = 
+                Docs.find
+                    model:'transfer'
+                    _author_id:Meteor.userId()
+            points = 0
+            for transfer in transfers.fetch()
+                points = points - transfer.amount
+            Meteor.users.update _id:Meteor.userId(),
+                $set:
+                    points:points
+                
+                
+                
+                
+                
+if Meteor.isClient
     Template.send_transfer_button.events 
         'click .new_transfer': ->
             new_id = 
