@@ -29,7 +29,14 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'transfer'
+            Router.go "/transfer/#{new_id}/edit"
             
+        'click .request_transfer': ->
+            new_id = 
+                Docs.insert 
+                    model:'transfer'
+                    request:true
+                    status:'draft'
             Router.go "/transfer/#{new_id}/edit"
             
         

@@ -174,6 +174,7 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.profile_layout.onCreated ->
+        @autorun => Meteor.subscribe 'me', ->
         @autorun => Meteor.subscribe 'user_deposts', Router.current().params.username, ->
         @autorun => Meteor.subscribe 'user_from_username_param', Router.current().params.username, ->
 

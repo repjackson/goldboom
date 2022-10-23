@@ -16,7 +16,7 @@ template(name='nav')
                     i.large.loading.refresh.icon
                 +icolor name='one-ring'
                 // if currentUser.show_labels
-                span.mobile.hidden Gold Run Community
+                span.mobile.hidden grc
             a.zoomer2.item(href="/buildings" class="{{isActiveRoute 'buildings'}}" title='buildings')
                 // i.large.exchange.icon
                 +i name='building'
@@ -47,11 +47,11 @@ template(name='nav')
                     // i.large.users.icon
                     // if currentUser.show_labels
                     span.mobile.hidden.zoomer #{global_stats_doc.user_count_total} accounts
-                a.item.zoomer2.clear_search(href="/persons" class="{{isActiveRoute 'persons'}}" title='persons')
-                    +i name='groups'
-                    // i.large.users.icon
-                    // if currentUser.show_labels
-                    span.mobile.hidden.zoomer #{global_stats_doc.person_count_total} people
+                // a.item.zoomer2.clear_search(href="/persons" class="{{isActiveRoute 'persons'}}" title='persons')
+                //     +i name='groups'
+                //     // i.large.users.icon
+                //     // if currentUser.show_labels
+                //     span.mobile.hidden.zoomer #{global_stats_doc.person_count_total} people
                     
                 // a.zoomer2.item(href="/search" class="{{isActiveRoute 'search'}}" title='search' target="_window")
                 //     // i.large.exchange.icon
@@ -70,7 +70,7 @@ template(name='nav')
         unless subs_ready
             .icon.item
                 // +i name='one-ring' cl='spinning'
-                i.yin.yang.massive.loading.grey.icon
+                i.home.massive.loading.grey.icon
         unless is_connected
             a.item.zoomer2.reconnect
                 i.spinner.big.loading.icon
@@ -157,6 +157,10 @@ template(name='nav')
                 // i.large.users.icon
                 // if currentUser.show_labels
                 span.mobile.hidden.zoomer parking
+        a.zoomer2.item(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
+            // i.large.exchange.icon
+            +i name='transfer'
+            span.mobile.hidden.zoomer transfers
         a.item.zoomer2.clear_search(href="/tasks" class="{{isActiveRoute 'tasks'}}" title='checkins')
             +i name='tasks'
             .mobile.hidden #{global_stats_doc.task_count_total} tasks
@@ -179,18 +183,14 @@ template(name='nav')
             // i.large.users.icon
             // if currentUser.show_labels
             span.mobile.hidden.zoomer orders
-        a.zoomer2.item(href="/services" class="{{isActiveRoute 'services'}}" title='services')
-            // i.large.exchange.icon
-            +i name='bell'
-            span.mobile.hidden.zoomer services
-        a.zoomer2.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
-            // i.large.exchange.icon
-            +i name='shop'
-            span.mobile.hidden.zoomer products
-        a.zoomer2.item(href="/transfers" class="{{isActiveRoute 'transfers'}}" title='transfers')
-            // i.large.exchange.icon
-            +i name='transfer'
-            span.mobile.hidden.zoomer transfers
+        // a.zoomer2.item(href="/services" class="{{isActiveRoute 'services'}}" title='services')
+        //     // i.large.exchange.icon
+        //     +i name='bell'
+        //     span.mobile.hidden.zoomer services
+        // a.zoomer2.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
+        //     // i.large.exchange.icon
+        //     +i name='shop'
+        //     span.mobile.hidden.zoomer products
 
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)

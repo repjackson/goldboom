@@ -6,25 +6,32 @@ template(name='transfers')
                 |transfers
             .ui.basic.icon.button.add_transfer
                 i.large.plus.icon
+            .ui.button.request_transfer 
+                i.bullhorn.icon 
+                |request
         .sixteen.wide.column
             .ui.five.stackable.centered.cards
                 each model_docs_helper 'transfer'
-                    .ui.card.zoomer
-                        a.fly_right(href="/transfer/#{_id}") 
-                            img.ui.image(src="{{c.url image_id width=400 height=400 crop='pad'}}")
-                        a.content(href="/transfer/#{_id}") 
-                            .ui.header 
-                                |#{amount}p
-                            i.tag.icon
-                            each tags 
-                                .ui.label #{this}
-                            if location_tags
-                                i.marker.icon
-                            each location_tags 
-                                .ui.label #{this}
-                            |#{when} by #{_author_username} to
-                            with target_user_id
-                                +user_info
+                    +transfer_card
+                    
+template(name='transfer_card')
+    .ui.card.zoomer
+        a.fly_right(href="/transfer/#{_id}") 
+            img.ui.image(src="{{c.url image_id width=400 height=400 crop='pad'}}")
+        a.content(href="/transfer/#{_id}") 
+            .ui.header 
+                |#{amount}p
+            i.tag.icon
+            each tags 
+                .ui.label #{this}
+            if location_tags
+                i.marker.icon
+            each location_tags 
+                .ui.label #{this}
+            |#{when} by #{_author_username} to
+            |#{recipient_username}
+            with target_user_id
+                +user_info
                 
 // template(name='transfer_edit')
 //     with current_doc
@@ -126,6 +133,7 @@ template(name='transfer_edit')
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .six.wide.column
                     .ui.segment
+                        +boolean_edit key='request' label='is request'
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
@@ -212,7 +220,7 @@ template(name='bank')
         .twelve.wide.column
             .ui.list 
                 each my_transfer_docs 
-                    .item #{_when}
+                    a.item.fly_right(href="/transfer/#{_id}") #{_when}
                         .ui.header #{amount}
                         each tags 
                             .ui.label #{this}
