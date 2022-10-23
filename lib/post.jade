@@ -198,6 +198,7 @@ template(name='post_view')
                         strong #{_author_username}
                         small #{_when}
                 +voting_full
+                .ui.header #{user_views} user views
                 .ui.large.label.zoomer
                     +i name='chat'
                     |#{comment_count} comments

@@ -39,7 +39,7 @@ template(name='nav')
                     // if currentUser.show_labels
                     unless currentUser.hide_labels
                         span.mobile.hidden.zoomer readings
-            if currentUser
+            if in_role 'staff'
                 a.zoomer2.item(href="/units" class="{{isActiveRoute 'units'}}" title='units')
                     // i.large.exchange.icon
                     +i name='room'
