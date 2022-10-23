@@ -26,6 +26,9 @@ template(name='profile_layout')
                         .ui.big.label(title='status')
                             i.clock.icon 
                             |#{status}
+                    .ui.header.recalc
+                        |read doc count
+                        |#{read_doc_count}
                     +online_label
                     +verification_label
                     div
@@ -68,22 +71,22 @@ template(name='profile_layout')
                         // +follow_button
                         // +friend_button
                 .twelve.wide.column
-                    .ui.segment.alpha
-                        +profile_nav_item section='dashboard' icon='dashboard'
-                        +profile_nav_item section='posts' icon='news'
-                        +profile_nav_item section='inbox' icon='inbox'
-                        +profile_nav_item section='events' icon='calendar'
-                        +profile_nav_item section='points' icon='coins'
-                        +profile_nav_item section='groups' icon='groups'
-                        // +profile_nav_item section='reviews' icon='megaphone'
-                        +profile_nav_item section='checkins' icon='checkmark'
-                        +profile_nav_item section='products' icon='shopping-cart'
-                        +profile_nav_item section='services' icon='wrench'
-                        +profile_nav_item section='tasks' icon='tasks'
-                        +profile_nav_item section='favorites' icon='heart'
-                        +profile_nav_item section='social' icon='friends'
-                        +profile_nav_item section='food' icon='food'
-                        +profile_nav_item section='voting' icon='facebook-like'
+                    // .ui.segment.alpha
+                    //     +profile_nav_item section='dashboard' icon='dashboard'
+                    //     +profile_nav_item section='posts' icon='news'
+                    //     +profile_nav_item section='inbox' icon='inbox'
+                    //     +profile_nav_item section='events' icon='calendar'
+                    //     +profile_nav_item section='points' icon='coins'
+                    //     +profile_nav_item section='groups' icon='groups'
+                    //     // +profile_nav_item section='reviews' icon='megaphone'
+                    //     +profile_nav_item section='checkins' icon='checkmark'
+                    //     +profile_nav_item section='products' icon='shopping-cart'
+                    //     +profile_nav_item section='services' icon='wrench'
+                    //     +profile_nav_item section='tasks' icon='tasks'
+                    //     +profile_nav_item section='favorites' icon='heart'
+                    //     +profile_nav_item section='social' icon='friends'
+                    //     +profile_nav_item section='food' icon='food'
+                    //     +profile_nav_item section='voting' icon='facebook-like'
                 
                     .ui.two.column.stackable.grid
                         +yield

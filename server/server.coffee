@@ -175,6 +175,17 @@ Meteor.methods
         Meteor.call 'calc_user_points', ->
         Meteor.call 'calc_user_points', doc._author_id, ->
 
+
+    calc_user_points: (user_id)->
+        user = Meteor.users.findOne user_id 
+        read_docs = 
+            Docs.find 
+                read_user_ids: $in: [user_id]
+        Meteor.users.update user_id, 
+            $set:
+                read_doc_count:read_docs.count()
+                
+
     insert_log: (type, user_id)->
         if type
             new_id = 

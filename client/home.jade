@@ -15,6 +15,15 @@ template(name='home')
             +staff
         if is currentUser.current_role 'user'
             +user_dashboard
+        +site_activity
+        
+        
+template(name='site_activity')
+    .ui.header site activity
+    .ui.list 
+        each site_activity_docs 
+            .item #{title}
+                |#{when}
             
             
 template(name='public_dashboard')

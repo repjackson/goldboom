@@ -51,6 +51,8 @@ if Meteor.isClient
             Docs.find 
                 model:'post'
 
+    Template.post_view.onRendered ->
+        Meteor.call 'log_view', Router.current().params.doc_id, ->
     Template.post_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.post_edit.events

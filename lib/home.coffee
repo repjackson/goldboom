@@ -11,9 +11,19 @@ if Meteor.isClient
             window.scrollTo(0, document.querySelector(".footer").scrollHeight);
 
 
+    Template.site_activity.onCreated ->
+        @autorun => @subscribe 'model_docs', 'log', 20,->
+    Template.site_activity.helpers 
+        site_activity_docs: ->
+            Docs.find 
+                model:'log'
+        
         
     Template.wywo.onCreated ->
         @autorun => @subscribe 'model_docs', 'work', ->
+    Template.profile_layout.events 
+        'click .recalc': ->
+            Meteor.call 'calc_user_points', Meteor.userId(), ->
     Template.wywo.helpers 
         work_docs: ->
             Docs.find { 
