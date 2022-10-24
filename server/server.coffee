@@ -176,16 +176,30 @@ Meteor.methods
         Meteor.call 'calc_user_points', doc._author_id, ->
 
 
-    calc_user_points: (user_id)->
-        user = Meteor.users.findOne user_id 
+    calc_user_points: (username)->
+        user = Meteor.users.findOne username:username
+        
+        checkin_cursor = 
+            Docs.find 
+                model:'checkin'
+                resident_username:username
+        
+        checkin_count_ranking = 
+            Meteor.users.find(
+                total_checkin_count:$gt:checkin_cursor.count()
+            ).count()
+        
         read_docs = 
             Docs.find 
-                read_user_ids: $in: [user_id]
-        Meteor.users.update user_id, 
+                read_user_ids: $in: [user._id]
+        Meteor.users.update user._id, 
             $set:
                 read_doc_count:read_docs.count()
+                total_checkin_count:checkin_cursor.count()
+                total_checkin_points:checkin_cursor.count()*10
+                checkin_count_ranking:checkin_count_ranking
                 
-
+                
     insert_log: (type, user_id)->
         if type
             new_id = 

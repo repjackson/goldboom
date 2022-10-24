@@ -94,6 +94,12 @@ template(name='profile_layout')
                         
 template(name='account_dashboard')
     .column
+        .ui.header.calc_user_points healthclub stats 
+        .ui.list 
+            .item #{total_checkin_count} total checkins
+            .item #{total_checkin_points} checkin points earned
+            .item #{checkin_count_ranking} checkin count ranking
+    .column
         if status 
             .ui.label(title='status')
                 +i name='clock'

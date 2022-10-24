@@ -49,7 +49,7 @@ if Meteor.isClient
             }, sort:_timestamp:-1
     Template.profile_layout.onCreated ->
         Meteor.call 'calc_user_stats', Router.current().params.username, ->
-        # Meteor.call 'calc_user_points', Router.current().params.username, ->
+        Meteor.call 'calc_user_points', Router.current().params.username, ->
 if Meteor.isServer 
     Meteor.publish 'user_checkins', (username)->
         user = Meteor.users.findOne username:username
