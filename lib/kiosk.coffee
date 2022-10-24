@@ -309,7 +309,7 @@ if Meteor.isClient
             if Meteor.isDevelopment
                 new_checkin.dev = true
             new_id = Docs.insert new_checkin 
-            
+            Meteor.call 'calc_user_points', @username, ->
             # Meteor.users.update @_id,
             #     $set:
             #         checked_in:true

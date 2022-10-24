@@ -1,7 +1,7 @@
 template(name='home')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}" class=darkmode_class)
     // .ui.stackable.padded.grid(class=darkmode_class)
-    .ui.grid
+    .ui.padded.grid
         if currentUser
             .sixteen.wide.column
                 +role_switcher
@@ -27,7 +27,9 @@ template(name='site_activity')
             
             
 template(name='public_dashboard')
-    +posts
+    .sixteen.wide.column
+        +site_activity
+        +posts
             
             
 template(name='user_dashboard')

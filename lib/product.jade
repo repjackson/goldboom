@@ -199,7 +199,12 @@ template(name='product_view')
                 .ui.big.green.button.quickbuy
                     i.lightning.icon
                     |quickbuy
+                if is_rentable 
+                    .ui.big.label 
+                        +i name='clock'
+                        |rentable
                 +bookmark_button
+                +array_view key='tags' label='tags' icon='tags'
                 .ui.large.button.generate_qrcode
                     i.large.qrcode.icon
                     |generate qr code
@@ -245,8 +250,8 @@ template(name='tags')
 template(name='product_edit')
     with current_doc 
         .ui.stackable.padded.grid
-            .row
-                .sixteen.wide.column
+            .three.column.row
+                .column
                     .ui.inline.header 
                         i.pencil.icon
                         |editing product
@@ -255,20 +260,28 @@ template(name='product_edit')
                         |save
                     +number_edit key='building_number' label='building number' icon='building'
                     +number_edit key='unit_number' label='unit number' icon='room'
-                .eight.wide.column
                     +text_edit key='title' label='title' 
                     +image_edit key='image_id' label='image' 
+                .column
                     +image_edit key='image_id2' label='alt image' 
                     +link_edit key='link' label='external link' 
                     // div
                     +float_edit key='price_usd' label='price' icon='us-dollar-circled'
                     +float_edit key='price_points' label='price (pts)' icon='us-dollar-circled'
                     // +text_edit key='size_content' label='size description' icon='content'
+                    +boolean_edit key='is_rentable' label='rentable' icon='clock'
+                    if is_rentable 
+                        +boolean_edit key='can_rent_hourly' label='can rent hourly' icon='clock'
+                        +number_edit key='rent_hourly_price' label='hourly rent price' icon='money'
+                        +boolean_edit key='can_rent_daily' label='daily' icon='day'
+                        +boolean_edit key='can_rent_weekly' label='weekly' icon='week'
+                        +boolean_edit key='can_rent_monthly' label='monthly' icon='month'
+                        
                     .ui.inline.header 
-                        +i name='product'
-                        |product
-                    +boolean_edit key='is_product' label='is product' icon='product'
-                    if is_product
+                        +i name='food'
+                        |food
+                    +boolean_edit key='is_food' label='is food' icon='food'
+                    if is_food
                         +boolean_edit key='gluten_free' label='gluten free' icon='no-gluten'
                         +boolean_edit key='paleo' label='paleo' icon='caveman'
                         +boolean_edit key='vegetarian' label='vegetarian' icon='vegetarian-mark'
@@ -284,7 +297,8 @@ template(name='product_edit')
                         div
                         +number_edit key='calories' label='calories' icon='product'
                     div
-                .eight.wide.column
+                .column
+                    +array_edit key='tags' label='tags' icon='tags'
                     +boolean_edit key='is_managing_inventory' label='manage inventory' icon='inventory'
                     if is_managing_inventory
                         .ui.segment 

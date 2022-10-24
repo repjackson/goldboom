@@ -18,6 +18,8 @@ template(name='checkin_edit')
                             +i name='room'
                             // i.large.cube.icon
                             |#{unit_number}
+                        .ui.label #{total_checkin_count} checkins
+                        .ui.label ##{checkin_count_ranking} ranking
                     // +text_edit key='email' label='Email' direct=true
                     if currentUser.admin_mode 
                         +print_this

@@ -25,6 +25,7 @@ Router.onBeforeAction(force_loggedin, {
     'kiosk'
     'post_view'
     'buildings'
+    'market'
     'groups'
     'group_view'
     'rentals'
