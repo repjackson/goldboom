@@ -51,7 +51,7 @@ template(name='staff')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                .three.column.row
+                .two.column.row
                     .column
                         // +admin
                         +kiosk_settings
@@ -572,7 +572,12 @@ template(name='active_checkin_doc')
             if dev 
                 i.large.code.icon(title='dev')
             if rental_id 
-                +i name='clock'
+                .ui.big.label 
+                    +i name='clock'
+                    |rental 
+                    with _rental
+                        img.ui.avatar.inline.image(src="{{c.url image_id height=300 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        strong #{title}
             +checkin_purpose_label
             i.sign.out.red.large.circular.link.icon.checkout.zoomer(title='check out')
             +read_info_small

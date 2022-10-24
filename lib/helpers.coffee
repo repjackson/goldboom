@@ -81,6 +81,9 @@ if Meteor.isClient
     Template.registerHelper 'stats_doc', (input) -> 
         Docs.findOne 
             model:'stats'
+    Template.registerHelper '_rental', (input) -> 
+        Docs.findOne 
+            _id:@rental_id
     Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
     Template.registerHelper 'first_initial', (input) -> 
         if @first_name
