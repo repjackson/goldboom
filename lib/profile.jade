@@ -108,6 +108,9 @@ template(name='account_dashboard')
     // .column
     //     +membership_status
     .column
+        +user_sent_points
+        +user_received_points
+    .column
         +user_unit
     .column
         +user_tasks
@@ -134,6 +137,25 @@ template(name='account_dashboard')
         +profile_stats
 
          
+         
+template(name='user_sent_points')  
+    .ui.header 
+        +i name='sent'
+        |sent points
+    .ui.button.send_points 
+        |send points
+    .ui.list 
+        each sent_transfers 
+            .item #{when}
+template(name='user_received_points')         
+    .ui.header 
+        +i name='gift'
+        |received points
+    .ui.button.receive_points 
+        |request points
+    .ui.list 
+        each received_transfers
+            .item #{when}
 template(name='user_checkins')
     .ui.header 
         +i name='checkmark'

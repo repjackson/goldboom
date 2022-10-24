@@ -198,6 +198,7 @@ template(name='post_view')
                         strong #{_author_username}
                         small #{_when}
                 +voting_full
+                +tip_block
                 .ui.header #{user_views} user views
                 .ui.large.label.zoomer
                     +i name='chat'
@@ -225,6 +226,15 @@ template(name='post_view')
                 //     |#{target.username}
 
             
+template(name='tip_block')
+    .ui.header 
+        +i name='donate'
+        |tips 
+    .ui.button tip 
+    .ui.list 
+        each doc_tips
+            .item #{when}
+            
             
             
 template(name='post_edit')
@@ -249,6 +259,11 @@ template(name='post_edit')
                 +boolean_edit key='public' label='public' icon='eye'
                 +boolean_edit key='pinned' label='pinned' icon='pin'
                 +boolean_edit key='private' label='private' icon='private'
+                .ui.basic.segment 
+                    +boolean_edit key='has_cost' label='has_cost' icon='money'
+                    if has_cost 
+                        div
+                        +number_edit key='price' label='price (pts)' icon='money'
                 if currentUser.admin_mode
                     +boolean_edit key='public' label='public'
                 a.ui.large.fluid.green.button.zoom.zoomer.publish.submit_post.fly_down(href="/post/#{_id}")

@@ -87,11 +87,11 @@ if Meteor.isClient
             #     # reverseButtons: true
             # })
         'click .submit_post': ->
-            kiosk = Docs.findOne model:'kiosk'
-            Docs.update kiosk._id, 
-                $set:
-                    current_route:'checkin_edit'
-                    current_doc_id:null
+            # kiosk = Docs.findOne model:'kiosk'
+            # Docs.update kiosk._id, 
+            #     $set:
+            #         current_route:'checkin_edit'
+            #         current_doc_id:null
             
             Docs.update @_id,
                 submitted:true

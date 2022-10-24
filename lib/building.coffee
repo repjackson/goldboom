@@ -99,7 +99,7 @@ if Meteor.isClient
                     # building_slug:Router.current().params.building_number
     Template.building_segment.helpers
         child_docs: ->
-            console.log @
+            # console.log @
             building = Docs.findOne Router.current().params.doc_id
             if building
                 if @key is 'unit'

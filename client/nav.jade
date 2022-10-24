@@ -71,6 +71,16 @@ template(name='nav')
             //             // i.envelope.icon
             //             +i name='alarm'
             //             i.remove.icon
+        a.zoomer2.item(href="/services" class="{{isActiveRoute 'services'}}" title='services')
+            // i.large.exchange.icon
+            +i name='bell'
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer services
+        a.zoomer2.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
+            // i.large.exchange.icon
+            +i name='shop'
+            unless currentUser.hide_labels
+                span.mobile.hidden.zoomer products
         unless subs_ready
             .icon.item
                 // +i name='one-ring' cl='spinning'
@@ -200,14 +210,6 @@ template(name='nav')
             // if currentUser.show_labels
             unless currentUser.hide_labels
                 span.mobile.hidden.zoomer orders
-        // a.zoomer2.item(href="/services" class="{{isActiveRoute 'services'}}" title='services')
-        //     // i.large.exchange.icon
-        //     +i name='bell'
-        //     span.mobile.hidden.zoomer services
-        // a.zoomer2.item(href="/products" class="{{isActiveRoute 'products'}}" title='products')
-        //     // i.large.exchange.icon
-        //     +i name='shop'
-        //     span.mobile.hidden.zoomer products
 
 template(name='nav_item')
     a.item.zoomer.fly_right.clear_search.go_route.tada.mobile.hidden(href="/#{key}s" class="{{nav_item_class key}}" title=key)
