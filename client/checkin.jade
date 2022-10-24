@@ -18,12 +18,11 @@ template(name='checkin_edit')
                             +i name='room'
                             // i.large.cube.icon
                             |#{unit_number}
-                        .ui.label #{total_checkin_count} checkins
-                        .ui.label ##{checkin_count_ranking} ranking
+                        .ui.label #{total_checkin_count} checkins ##{checkin_count_ranking}
                     // +text_edit key='email' label='Email' direct=true
                     if currentUser.admin_mode 
                         +print_this
-                    .ui.basic.segment.bigger
+                    .ui.basic.segment.bigge
                         +boolean_edit key='has_guests' label='guests' icon='groups'
                         if has_guests
                             // small (max 8/month, 3/visit)

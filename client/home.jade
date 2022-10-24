@@ -5,10 +5,10 @@ template(name='home')
         if currentUser
             .sixteen.wide.column
                 +role_switcher
-            .ui.compact.icon.button.scrolldown(title='scroll to bottom')
-                i.big.chevron.down.icon 
-                // |scroll to bottom
-            .ui.inline.header #{current_time} #{current_date}
+                .ui.compact.icon.button.scrolldown(title='scroll to bottom')
+                    i.big.chevron.down.icon 
+                    // |scroll to bottom
+                .ui.inline.header #{current_time} #{current_date}
         unless currentUser 
             +public_dashboard
         if is currentUser.current_role 'staff' 
@@ -51,30 +51,29 @@ template(name='staff')
                     +stats
         if currentUser
             .ui.stackable.padded.grid.blackbg.scrolling
-                .four.column.row
+                .three.column.row
                     .column
-                        +admin
+                        // +admin
                         +kiosk_settings
                     .column
                         +active_checkins
-                    .column
-                        +clockin
-                    .column
-                        +call_method name='send_sms'
-                        if currentUser.admin_mode
-                            .ui.button.test 
-                                |test
-                        // +search
-                        +pinned_posts
-                    .column
-                        +latest_notes
+                    // .column
+                    //     +clockin
+                    // .column
+                    //     +call_method name='send_sms'
+                    //     if currentUser.admin_mode
+                    //         .ui.button.test 
+                    //             |test
+                    //     // +search
+                    //     +pinned_posts
+                    // .column
+                    //     +latest_notes
                     .column
                         +latest_activity
                     // .column
                     //     +your_tasks
-                    .four.wide.column
+                    .column
                         +wywo
-                .four.column.row
                     .column
                         +staff_tasks
                     .column
@@ -99,7 +98,6 @@ template(name='staff')
                         +contacts
                     // .column
                     //     +guest_block
-                .three.column.row
                     .column
                         +shifts
                     .column.smaller
@@ -118,33 +116,33 @@ template(name='staff')
             .one.column.row
                 .column
                     .ui.accordion 
-                        .title 
+                        .active.title 
                             .ui.inline.header 
                                 +i name='water'
                                 |water 
                                 i.dropdown.icon
                             +water_small
-                        .content
+                        .active.content
                             +readings
     
 template(name='pinned_posts')
     .ui.fluid.accordion.alpha 
-        .title
+        .active.title
             .ui.header
                 +i name='note'
                 |#{pinned_post_docs.count} pinned posts
                 i.dropdown.icon
-        .content.medscroll
+        .active.content.medscroll
             if session_is 'pinned_ready' true
                 .ui.cards 
                     each pinned_post_docs
                         .card.raised
                             img.ui.image.zoomer(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-                            .content.smallscroll
+                            .active.content.smallscroll
                                 .header #{title}
                                 |!{body}
                                 |!{content}
-                            .content 
+                            .active.content 
                                 a.ui.icon.button.fly_right(href="/post/#{_id}")
                                     i.large.chevron.right.icon
                                 +read_info_small
@@ -157,12 +155,12 @@ template(name='your_tasks')
           
 template(name='wywo')
     .ui.accordion.alpha
-        .title.zoomer
+        .active.title.zoomer
             .ui.inline.header
                 +i name='edit'
                 |while you were out
                 i.dropdown.icon
-        .content.medscroll
+        .active.content.medscroll
             .ui.icon.large.inverted.input
                 i.lightning.icon
                 input.description(type='text' placeholder='quick add note...')
@@ -203,7 +201,7 @@ template(name='toggle_edit_button')
           
 template(name='contacts')    
     .ui.accordion.alpha
-        .title
+        .active.title
             .ui.header
                 +i name='user-shield'
                 |staff list 
@@ -226,7 +224,7 @@ template(name='contacts')
 template(name='clockin')  
     div(class=expand_class)
         .ui.fluid.styled.accordio.alpha
-            .title.zoome
+            .active.title.zoome
                 .ui.inline.header 
                     +i name='time-card'
                     |timecard
@@ -305,7 +303,7 @@ template(name='clockin')
 
 template(name='staff_tasks')  
     .ui.fluid.accordion.alpha.rounded
-        .title.zoomer
+        .active.title.zoomer
             // a.ui.header.zoomer.fly_right(href='/tasks')
             .ui.header
                 +i name='tasks'
@@ -320,7 +318,7 @@ template(name='staff_tasks')
         // +session_set key='sort_key' value='unit_number' label='unit' icon='room'
         // +session_set key='sort_key' value='complete' label='complete' icon='checkmark'
         // +session_set key='sort_key' value='_author_username' label='author' icon='user'
-        .content
+        .active.content
             if subs_ready
                 .ui.divided.large.list.medscroll 
                     each staff_task_docs 
@@ -334,7 +332,7 @@ template(name='staff_tasks')
                                 // else 
                                 i.large.circle.outline.link.icon.zoomer.mark_did(title='mark complete')
                                 |#{title}
-                            .content 
+                            .active.content 
                                 // +author_info
                                 // if building_number
                                 //     +bu
@@ -345,12 +343,12 @@ template(name='staff_tasks')
 
 template(name='staff_activity')
     .ui.accordion.alpha
-        .title
+        .active.title
             .ui.header.zoomer 
                 +i name='realtime-protection'
                 |#{staff_activity_docs.count} staff activity
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.small.divided.list.medscroll
                 each staff_activity_docs 
                     .item.zoomer
@@ -384,25 +382,25 @@ template(name='staff_activity')
                 
 template(name='admin')
     .ui.accordion.alpha 
-        .title 
+        .active.title 
             .ui.header 
                 +i name='shield'
                 |admin 
                 i.dropdown.icon
         .ui.big.button.unparse
             |unparse
-        .content
+        .active.content
             .ui.input
                 input.upload_parking(type='file')
    
 template(name='stats')
     .ui.accordion.alpha 
-        .title
+        .active.title
             .ui.inline.header
                 +i name='line-chart'
                 |global stats
                 i.dropdown.icon
-        .content
+        .active.content
             if currentUser
                 i.refresh.link.icon.zoomer.refresh_stats(title='refresh stats')
             .ui.big.list 
@@ -425,12 +423,12 @@ template(name='stats')
                         |#{key_count_total} keys
 template(name='guest_block')
     .ui.accordion.alpha
-        .title
+        .active.title
             .ui.header 
                 +i name='amiable'
                 |guests
                 i.dropdown.icon
-        .content
+        .active.content
             .ui.selection.animated.big.list.medscroll
                 each guest_docs
                     .item 
@@ -444,13 +442,13 @@ template(name='guest_block')
                 
 template(name='latest_requests')
     .ui.accordion.alpha
-        .title
+        .active.title
             // a.ui.header.zoomer(href="/tasks" title='view all tasks')
             .ui.header.zoomer
                 +i name='wrench'
                 |#{kiosk_task_docs.count}
                 |latest requests
-        .content
+        .active.content
             .medscroll
                 each kiosk_task_docs
                     .ui.segment
@@ -464,13 +462,13 @@ template(name='latest_requests')
                             i.large.chevron.right.link.circular.icon.zoomer
 template(name='hiring_interest')
     .ui.fluid.accordion.alpha.rounded
-        .title.zoomer
+        .active.title.zoomer
             .ui.header 
                 +i name='money'
                 |#{yes_answers.count}
                 |hiring interest
                 i.dropdown.icon
-        .content.medscroll
+        .active.content.medscroll
             .ui.small.header 
                 i.checkmark.green.icon
                 |yes
@@ -493,13 +491,13 @@ template(name='hiring_interest')
                         i.ban.icon.clear_answer
 template(name='latest_notes')
     .ui.accordion.alpha 
-        .title 
+        .active.title 
             // a.ui.header.zoomer(href="/posts" title='view posts')
             .ui.header.zoomer(title='view posts')
                 +i name='chat'
                 |#{latest_note_docs.count} latest notes
                 i.dropdown.icon
-        .content
+        .active.content
             .medscroll
                 each latest_note_docs
                     .ui.segment
@@ -520,13 +518,13 @@ template(name='view_button')
             
 template(name='latest_rentals')
     .ui.accordion.alpha
-        .title
+        .active.title
             // a.ui.header(href="/rentals" title='view rentals')
             .ui.header(title='view rentals')
                 +i name='basketball'
                 |latest rentals
                 i.dropdown.icon
-        .content
+        .active.content
             .medscroll
                 each rental_item_docs
                     .ui.segment
@@ -539,14 +537,14 @@ template(name='latest_rentals')
                 
 template(name='active_checkins')
     .ui.accordion.alpha.rounded 
-        .title
+        .active.title
             // a.ui.header.zoomer(href="/checkins" title='view checkins')
             .ui.header.zoomer(title='view checkins')
                 +i name='clock'
                 |#{active_checkin_docs.count} checkins today 
                 span(title='unread checkin count') (#{unread_checkin_count})
                 i.dropdown.icon
-        .content
+        .active.content
             if subs_ready
                 .ui.divided.selection.list.medscroll
                     each active_checkin_docs 
@@ -556,7 +554,7 @@ template(name='active_checkins')
         
 template(name='active_checkin_doc')
     .item.zoomer.mark_read
-        .content
+        .active.content
             a.ui.large.basic.label.fly_down.zoomer(href="/user/#{resident_username}" title='view user') 
                 | #{_resident.first_name}
                 | #{_resident.last_name}
@@ -598,14 +596,14 @@ template(name='checkin_purpose_label')
         
 template(name='latest_activity')
     .ui.accordion.alpha 
-        .title
+        .active.title
             .ui.header 
                 +i name='clock'
                 |#{activity_docs.count} latest activity
                 span(title='unread count') (#{unread_activity_docs})
                 i.dropdown.icon
                 
-        .content
+        .active.content
             if subs_ready
                 .ui.divided.list.smallscroll
                     each latest_docs 
