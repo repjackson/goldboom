@@ -81,7 +81,10 @@ template(name='checkin_edit')
                     .ui.center.aligned.basic.segment.bigger
                         i.massive.green.checkmark.icon.inver.bounce
                         // img(src="https://i.gifer.com/FbYk.gif")
-                        .ui.header checked in
+                        if rental_id 
+                            .ui.massive.header see desk staff
+                        else 
+                            .ui.massive.header checked in
                 // .ui.two.column.grid 
                 //     .column
                 //         if verified 
