@@ -24,6 +24,27 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'transfer', 20, ->
             
             
+    Template.transfers.helpers 
+        points_sent: ->
+            found = 
+                Docs.find 
+                    model:'transfer'
+                    _author_id:Meteor.userId()
+            total = 0
+            for doc in found.fetch()
+                if doc.amount
+                    total += doc.amount
+            total
+        points_received: ->
+            found = 
+                Docs.find 
+                    model:'transfer'
+                    target_user_id:Meteor.userId()
+            total = 0
+            for doc in found.fetch()
+                if doc.amount
+                    total += doc.amount
+            total
     Template.transfers.events
         'click .add_transfer': ->
             new_id = 
@@ -164,8 +185,15 @@ if Meteor.isClient
             Session.get('dummy')
         
     Template.transfer_edit.onRendered ->
-
-
+if Meteor.isServer
+    Meteor.publish 'recipient_from_transfer_id', (parent_id)->
+        parent = Docs.findOne parent_id 
+        if parent 
+            Meteor.users.find
+                _id:parent.recipient_id
+        
+        
+if Meteor.isClient
     Template.transfer_edit.helpers
         # terms: ->
         #     Terms.find()

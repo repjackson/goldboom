@@ -1,6 +1,6 @@
 template(name='transfers')
     .ui.stackable.padded.grid
-        .sixteen.wide.column
+        .four.wide.column
             .ui.inline.header 
                 +i name='donate'
                 |transfers
@@ -9,7 +9,9 @@ template(name='transfers')
             .ui.button.request_transfer 
                 i.bullhorn.icon 
                 |request
-        .sixteen.wide.column
+            .ui.header #{points_sent} pts sent
+            .ui.header #{points_received} pts received
+        .twelve.wide.column
             .ui.five.stackable.centered.cards
                 each model_docs_helper 'transfer'
                     +transfer_card
@@ -21,6 +23,8 @@ template(name='transfer_card')
         a.content(href="/transfer/#{_id}") 
             .ui.header 
                 |#{amount}p
+            if description
+                |!{description}
             i.tag.icon
             each tags 
                 .ui.label #{this}

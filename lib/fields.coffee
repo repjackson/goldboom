@@ -891,19 +891,22 @@ if Meteor.isClient
     
     Template.single_user_edit.onCreated ->
         @user_results = new ReactiveVar
-        @autorun => Meteor.subscribe 'searching_users', (Session.get('user_query')),->
+        @autorun => Meteor.subscribe 'searching_users', (Session.get('current_user_search')),->
         @autorun => Meteor.subscribe 'user_by_ref', @data.key, Template.parentData(),->
             
 if Meteor.isServer
-    Meteor.publish 'searching_users', (query)->
+    Meteor.publish 'searching_users', (query='')->
         if query.length > 1
-            match {}
+            match ={}
             match.username = {$regex:"#{query}", $options: 'i'}
             Meteor.users.find match
     Meteor.publish 'user_by_ref', (key, parent)->
-        Meteor.users.find 
+        console.log 'key', key
+        console.log 'parent', parent
+        console.log 'value', parent["#{key}_id"]
+        Meteor.users.find {
             _id: parent["#{key}_id"]
-    
+        }, limit:1
 if Meteor.isClient
     Template.single_user_edit.helpers
         picked_user: ->
@@ -915,7 +918,9 @@ if Meteor.isClient
                 parent_user_value = Meteor.users.findOne(username:Router.current().params.username)["#{@key}_id"]
                 found = Meteor.users.findOne _id:parent_user_value
         user_results: ->
-            Meteor.users.find()
+            match = {}
+            match.username = {$regex:"#{Session.get('current_user_search')}", $options: 'i'}
+            Meteor.users.find(match)
             # Template.instance().user_results.get()
         current_user_search: -> 
             Session.get('current_user_search')
@@ -958,7 +963,8 @@ if Meteor.isClient
                         "#{field.key}_username":@username
                 
             $('.single_user_select_input').val ''
-            # location.reload()
+            Session.set('current_user_search', null)
+            location.reload()
             # Docs.update page_doc._id,
             #     $set: assignment_timestamp:Date.now()
     
