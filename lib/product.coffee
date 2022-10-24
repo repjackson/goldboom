@@ -39,6 +39,7 @@ if Meteor.isClient
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.product_view.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => @subscribe 'product_orders', Router.current().params.doc_id, ->
     Template.products.onCreated ->
         document.title = 'gr shop'
         # window.speechSynthesis.speak new SpeechSynthesisUtterance 'gr shop'
@@ -65,11 +66,34 @@ if Meteor.isClient
         instruction_steps: ->
             @details.analyzedInstructions[0].steps
             
+if Meteor.isServer
+    Meteor.publish 'product_orders', (product_id)->
+        Docs.find
+            model:'order'
+            product_id:product_id
+if Meteor.isClient
+    Template.product_orders.helpers 
+        product_order_docs: ->
+            Docs.find 
+                model:'order'
+                product_id:Router.current().params.doc_id
     Template.product_view.events
         'click .pick_product_tag': ->
             picked_tags.push @valueOf()
             Router.go "/products"
             
+        'click .quickbuy': ->
+            if confirm 'quickbuy?'
+                Meteor.users.update Meteor.userId(), 
+                    $inc:
+                        points:-@price_points
+                new_id = 
+                    Docs.insert 
+                        model:'order'
+                        product_id:Router.current().params.doc_id
+                        status:'complete'
+                        order_amount:@price_points 
+                Router.go "/order/#{new_id}/"
             
             
 if Meteor.isClient

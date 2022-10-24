@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.posts.onCreated ->
-        document.title = 'gr posts'
+        # document.title = 'gr posts'
         
         Session.setDefault('view_mode', 'list')
         Session.setDefault('current_search', null)
@@ -35,6 +35,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'posts'
         ), name:'posts'
+    Router.route '/market', (->
+        @layout 'layout'
+        @render 'market'
+        ), name:'market'
         
 if Meteor.isServer
     Meteor.publish 'public_posts', ->

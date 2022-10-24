@@ -1,3 +1,7 @@
+template(name='market')
+    +products
+    +services
+
 template(name='products')
     .ui.stackable.padded.grid 
         .four.wide.column
@@ -184,7 +188,7 @@ template(name='product_view')
                 +link_view key='amazon_referral_link' label='amazon link' icon='amazon'
                 +link_view key='external_link' label='external link' icon='globe'
                 
-                // +product_orders
+                +product_orders
             .four.wide.column
                 if price_points
                     .ui.header #{price_points} points
@@ -192,11 +196,14 @@ template(name='product_view')
                 .ui.big.green.button.add_to_cart
                     i.cart.plus.large.icon
                     |add to cart
+                .ui.big.green.button.quickbuy
+                    i.lightning.icon
+                    |quickbuy
                 +bookmark_button
-                // .ui.large.button.generate_qrcode
-                //     i.large.qrcode.icon
-                //     |generate qr code
-                // #qrcode(width='400px')
+                .ui.large.button.generate_qrcode
+                    i.large.qrcode.icon
+                    |generate qr code
+                #qrcode(width='400px')
                 if is_managing_inventory
                     .ui.segment
                         +product_inventory
@@ -207,8 +214,8 @@ template(name='product_view')
                     .item calculated inventory
                     .item #{total_units_sold} total units sold
                     .item $#{total_revenue} total revenue
-                    // .item expected inventory
-                    // .item query params: #{query_params}
+                    .item expected inventory
+                    .item query params: #{query_params}
                 i.refresh.large.link.icon.calc_stats(title='refresh_stats')
             .four.wide.column
                 +product_reviews
@@ -255,6 +262,7 @@ template(name='product_edit')
                     +link_edit key='link' label='external link' 
                     // div
                     +float_edit key='price_usd' label='price' icon='us-dollar-circled'
+                    +float_edit key='price_points' label='price (pts)' icon='us-dollar-circled'
                     // +text_edit key='size_content' label='size description' icon='content'
                     .ui.inline.header 
                         +i name='product'
@@ -419,11 +427,11 @@ template(name='product_orders')
         .ui.header #{_author_username}
     .ui.header 
         +i name='order-history'
-        |#{product_orders.count}
+        |#{product_order_docs.count}
         |orders
         |(${{fixed product_order_total}})
     .ui.basic.segments
-        each product_orders
+        each product_order_docs
             +product_order_card
     .ui.header #{views} views
     +order_status_icons
