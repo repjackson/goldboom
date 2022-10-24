@@ -160,9 +160,11 @@ if Meteor.isClient
                     building_number:current.building_number
                     unit_number:current.unit_number
         rental_items: ->
-            Docs.find 
-                model:'rental'
-        
+            if @rental_id
+                Docs.find @rental_id
+            else 
+                Docs.find 
+                    model:'rental'
         resident_notes:->
             Docs.find 
                 model:'post'
@@ -189,6 +191,23 @@ if Meteor.isClient
         resident_guests: ->
             Docs.find 
                 model:'guest'
+    Template.checkin_rental_item.helpers
+        rental_item_class: ->
+            p = Template.parentData()
+            if p.rental_id is @_id then 'big blue' else 'compact large basic'
+    Template.checkin_rental_item.events
+        'click .pick_rental': ->
+            p = Template.parentData()
+            console.log p
+            console.log @
+            if p.rental_id
+                Docs.update p._id, 
+                    $unset:
+                        rental_id:1
+            else 
+                Docs.update p._id, 
+                    $set:
+                        rental_id:@_id
     Template.checkin_edit.events
         'click .yes': ->
             kiosk = Docs.findOne model:'kiosk'

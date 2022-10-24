@@ -24,7 +24,7 @@ template(name='checkin_edit')
                     if currentUser.admin_mode 
                         +print_this
                     .ui.basic.segment.bigger
-                        +boolean_edit key='has_guests' label='add guests' icon='groups'
+                        +boolean_edit key='has_guests' label='guests' icon='groups'
                         if has_guests
                             // small (max 8/month, 3/visit)
                             // .ui.big.button.add_guest.bigger
@@ -41,10 +41,7 @@ template(name='checkin_edit')
                         if has_rental
                             div
                             each rental_items 
-                                .ui.big.basic.button.pick_rental
-                                    img.ui.tiny.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
-                                    .content
-                                        |#{title}
+                                +checkin_rental_item
                     div
                     // .ui.center.aligned.header
                     //     |purpose 
@@ -159,6 +156,13 @@ template(name='checkin_edit')
                 //         .ui.list
                 //             each resident_rental_docs
                 //                 a.item.fly_right(href="/rental/#{_id}") #{_when}
+
+
+template(name='checkin_rental_item')
+    .ui.button.pick_rental(class=rental_item_class)
+        img.ui.mini.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
+        .content
+            |#{title}
 
 
 
