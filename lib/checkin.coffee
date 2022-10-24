@@ -117,7 +117,7 @@ if Meteor.isClient
     Template.checkin_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
-        # @autorun => Meteor.subscribe 'model_docs', 'kiosk', ->
+        @autorun => Meteor.subscribe 'model_docs', 'rental', ->
         # @autorun => Meteor.subscribe 'guests_by_checkin_id', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'resident_by_id', Router.current().params.doc_id, ->
@@ -159,6 +159,10 @@ if Meteor.isClient
                     model:'key'
                     building_number:current.building_number
                     unit_number:current.unit_number
+        rental_items: ->
+            Docs.find 
+                model:'rental'
+        
         resident_notes:->
             Docs.find 
                 model:'post'

@@ -37,6 +37,14 @@ template(name='checkin_edit')
                             .ui.large.icon.active.input  
                                 i.large.user.plus.icon
                                 input.add_guest(type='text' placeholder='guest name...' value=kiosk_doc.current_guest_name)
+                        +boolean_edit key='has_rental' label='rental' icon='clock'
+                        if has_rental
+                            div
+                            each rental_items 
+                                .ui.big.basic.button.pick_rental
+                                    img.ui.tiny.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
+                                    .content
+                                        |#{title}
                     div
                     // .ui.center.aligned.header
                     //     |purpose 
