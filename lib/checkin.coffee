@@ -208,6 +208,7 @@ if Meteor.isClient
                 Docs.update p._id, 
                     $set:
                         rental_id:@_id
+                        rental_title:@title
     Template.checkin_edit.events
         'click .yes': ->
             kiosk = Docs.findOne model:'kiosk'

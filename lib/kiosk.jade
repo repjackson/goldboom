@@ -31,7 +31,7 @@ template(name='set_route')
             
 template(name='healthclub')
     // img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
-    .ui.stackable.padded.grid.z
+    .ui.stackable.grid.z
         .one.column.row
             .center.aligned.column
                 // .ui.segment.alpha
@@ -45,6 +45,9 @@ template(name='healthclub')
                 //     .ui.fluid.green.button.submit_note 
                 //         i.check.large.icon
                 //         |submit note
+                .ui.fluid.error.attached.message 
+                    i.large.cancel.icon
+                    |sorry, the hot tub is closed
                 unless kiosk_doc.adding_note
                     // unless kiosk_doc.current_building_number
                     //     .ui.fluid.compact.basic.button.add_note 

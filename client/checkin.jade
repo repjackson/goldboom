@@ -22,7 +22,7 @@ template(name='checkin_edit')
                     // +text_edit key='email' label='Email' direct=true
                     if currentUser.admin_mode 
                         +print_this
-                    .ui.basic.segment.bigge
+                    .ui.basic.segment.bigger
                         +boolean_edit key='has_guests' label='guests' icon='groups'
                         if has_guests
                             // small (max 8/month, 3/visit)
@@ -36,6 +36,7 @@ template(name='checkin_edit')
                             .ui.large.icon.active.input  
                                 i.large.user.plus.icon
                                 input.add_guest(type='text' placeholder='guest name...' value=kiosk_doc.current_guest_name)
+                        div
                         +boolean_edit key='has_rental' label='rental' icon='clock'
                         if has_rental
                             div
@@ -61,10 +62,18 @@ template(name='checkin_edit')
                     // if is checkin_purpose 'note'
                     //     +text_edit key='notes' label='notes' icon='note' hide_label=true
                     .ui.hidden.divider
+                    // if has_rental
+                    //     if rental_id 
+                        
                     a.ui.massive.fluid.green.button.submit_checkin.brey(href="/kiosk")
-                        .ui.inverted.header
-                            i.checkmark.big.white.icon
-                            | check in
+                        if rental_id 
+                            .ui.inverted.header
+                                i.sign.out.large.icon 
+                                | check out #{rental_title}
+                        else 
+                            .ui.inverted.header
+                                i.checkmark.big.white.icon
+                                | check in
                     // .ui.hidden.divider
                     // unless _resident.has_answered 
                     //     .ui.big.fluid.info.message.alpha
@@ -162,7 +171,7 @@ template(name='checkin_edit')
 
 template(name='checkin_rental_item')
     .ui.button.pick_rental(class=rental_item_class)
-        img.ui.mini.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
+        img.ui.tiny.inline.image.rounded(src="{{c.url image_id height=300 crop='pad'}}")
         .content
             |#{title}
 
