@@ -117,6 +117,7 @@ if Meteor.isClient
     Template.checkin_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.checkin_edit.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'request', ->
         @autorun => Meteor.subscribe 'model_docs', 'rental', ->
         # @autorun => Meteor.subscribe 'guests_by_checkin_id', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
@@ -147,6 +148,13 @@ if Meteor.isServer
         
 if Meteor.isClient
     Template.checkin_edit.helpers 
+        request_docs: ->
+            Docs.find 
+                model:'request'
+        editing_request: ->
+            Session.get('editing_id')
+        editing_request_doc: ->
+            Docs.findOne Session.get('editing_id')
         has_answered: ->
             checkin = Docs.findOne model:'checkin'
             resident = Meteor.users.findOne checkin.resident_user_id
@@ -244,7 +252,18 @@ if Meteor.isClient
                     position:'bottom center'
                 })
 
+            
+        'click .delete_request': ->
+            if confirm 'delete ?'
+                Docs.remove @_id
 
+        'click .upvote': ->
+            Docs.update @_id, 
+                $inc:
+                    votes:1
+
+        'click .save_request': ->
+            Session.set('editing_id', null)
         'click .pick_guest': ->
             # doc = Docs.findOne Router.current().params.doc_id
             checkin = Docs.findOne model:'checkin'
@@ -352,7 +371,7 @@ if Meteor.isClient
             checkin = Docs.findOne model:'checkin'
             new_id = 
                 Docs.insert 
-                    model:'task'
+                    model:'request'
                     kiosk:true
                     building_number:@building_number
                     unit_number:@unit_number
@@ -360,10 +379,11 @@ if Meteor.isClient
                     resident_username:@resident_username
                     parent_id:checkin._id
                     checkin_id:checkin._id
-            $(e.currentTarget).closest('.grid').transition('fly left',1000)
-            Meteor.setTimeout ->
-                Router.go "/task/#{new_id}/edit"
-            , 1000
+            Session.set('editing_id',new_id)
+            # $(e.currentTarget).closest('.grid').transition('fly left',1000)
+            # Meteor.setTimeout ->
+            #     Router.go "/task/#{new_id}/edit"
+            # , 1000
         'click .add_rental': (e)->
             kiosk = Docs.findOne model:'kiosk'
             new_id = 

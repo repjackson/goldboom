@@ -22,7 +22,7 @@ template(name='checkin_edit')
                     // +text_edit key='email' label='Email' direct=true
                     if currentUser.admin_mode 
                         +print_this
-                    .ui.basic.segment.bigger
+                    .ui.basic.segment.bigge
                         +boolean_edit key='has_guests' label='guests' icon='groups'
                         if has_guests
                             // small (max 8/month, 3/visit)
@@ -42,6 +42,33 @@ template(name='checkin_edit')
                             div
                             each rental_items 
                                 +checkin_rental_item
+                            div
+                            .ui.inline.header 
+                                |requests
+                            unless editing_request
+                                .ui.button.add_request  
+                                    |add request
+                            div
+                            // if editing_request 
+                            with editing_request_doc
+                                +text_edit key='title'
+                                .ui.button.save_request
+                                    i.checkmark.icon
+                                    |save
+                            // .ui.input 
+                            //     input.add_request(type='text' placeholder='add request')
+                            .ui.inverted.list
+                                each request_docs
+                                    .ui.item 
+                                        |#{title}
+                                        // if in_dev
+                                        //     i.remove.icon.delete_request
+                                        .ui.icon.compact.button.upvote
+                                            i.thumbs.up.outline.icon
+                                        |#{votes}
+                                    // .ui.card 
+                                    //     .content 
+                                    //         |#{title}
                     div
                     // .ui.center.aligned.header
                     //     |purpose 
