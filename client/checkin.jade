@@ -42,33 +42,34 @@ template(name='checkin_edit')
                             div
                             each rental_items 
                                 +checkin_rental_item
-                            div
-                            .ui.inline.header 
-                                |requests
-                            unless editing_request
-                                .ui.button.add_request  
-                                    |add request
-                            div
-                            // if editing_request 
-                            with editing_request_doc
-                                +text_edit key='title'
-                                .ui.button.save_request
-                                    i.checkmark.icon
-                                    |save
-                            // .ui.input 
-                            //     input.add_request(type='text' placeholder='add request')
-                            .ui.inverted.list
-                                each request_docs
-                                    .ui.item 
-                                        |#{title}
-                                        // if in_dev
-                                        //     i.remove.icon.delete_request
-                                        .ui.icon.compact.button.upvote
-                                            i.thumbs.up.outline.icon
-                                        |#{votes}
-                                    // .ui.card 
-                                    //     .content 
-                                    //         |#{title}
+                            unless rental_id
+                                .ui.divider
+                                .ui.inline.header 
+                                    |requests
+                                unless editing_request
+                                    .ui.button.add_request  
+                                        |add request
+                                div
+                                // if editing_request 
+                                with editing_request_doc
+                                    +text_edit key='title'
+                                    .ui.button.save_request
+                                        i.checkmark.icon
+                                        |save
+                                // .ui.input 
+                                //     input.add_request(type='text' placeholder='add request')
+                                .ui.inverted.list
+                                    each request_docs
+                                        .ui.item 
+                                            |#{title}
+                                            // if in_dev
+                                            //     i.remove.icon.delete_request
+                                            .ui.icon.compact.button.upvote
+                                                i.thumbs.up.outline.icon
+                                            |#{votes}
+                                        // .ui.card 
+                                        //     .content 
+                                        //         |#{title}
                     div
                     // .ui.center.aligned.header
                     //     |purpose 
